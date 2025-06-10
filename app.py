@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import requests
 import os
 import json
@@ -6,11 +6,18 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-app = Flask(__name__)
-
 API_KEY = os.environ.get('DFO_API_KEY', 'sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ')
 
 DATA_DIR = "datas"
+ICON_BASE_FOLDER = "assets\equipments"
+WEAPON_PREFIXES = [
+    "One in a Hundred",
+    "One of a Kind",
+    "Legendary Lore",
+    "Heroic Saga",
+    "Primeval Star"
+]
+
 
 def get_character_id(server, name):
     url = f"https://api.dfoneople.com/df/servers/{server}/characters?characterName={name}&apikey={API_KEY}"
@@ -32,6 +39,7 @@ def get_equipment(server, character_id):
     r = requests.get(url)
     r.raise_for_status()
     return r.json()
+
 
 @app.route("/search", methods=["POST"])
 def search():
