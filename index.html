@@ -188,6 +188,7 @@
             Belt: [39, 40],
             Shoes: [7, 72],
             Weapon: [181, 8],
+            SecondaryWeapon: [167, 8],
             Title: [213, 8],
             Bracelet: [181, 40],
             Necklace: [213, 40],
@@ -267,8 +268,13 @@
         container.style.position = "absolute";
         container.style.left = `${x * SCALE}px`;
         container.style.top = `${y * SCALE}px`;
+        
         container.style.width = `${iconSize}px`;
         container.style.height = `${iconSize}px`;
+        if (slotKey === "SecondaryWeapon") {
+            container.style.transform = "scale(0.5)";
+            container.style.transformOrigin = "top left";
+        }
 
         const img = document.createElement("img");
         img.src = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
