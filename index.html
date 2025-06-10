@@ -4,146 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DFO Gear Tracker</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #121212;
-      color: #e0e0e0;
-    }
-    .navbar {
-      display: flex;
-      align-items: center;
-      background-color: #1f1f1f;
-      padding: 10px 20px;
-      border-bottom: 1px solid #333;
-    }
-    .navbar img {
-      width: 32px;
-      height: 32px;
-      margin-right: 20px;
-    }
-    .nav-buttons {
-      display: flex;
-      gap: 20px;
-    }
-    .nav-buttons a {
-      color: #e0e0e0;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .nav-buttons a:hover {
-      color: #ffcc29;
-    }
-    .main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: calc(100vh - 60px);
-      text-align: center;
-    }
-    .logo {
-      font-size: 40px;
-      font-weight: bold;
-      margin-bottom: 40px;
-    }
-    .search-box {
-      display: flex;
-      background-color: #2a2a2a;
-      border-radius: 6px;
-      overflow: hidden;
-      border: 1px solid #444;
-    }
-    select, input {
-      border: none;
-      outline: none;
-      padding: 12px;
-      font-size: 14px;
-      background-color: #2a2a2a;
-      color: #fff;
-    }
-    select {
-      border-right: 1px solid #444;
-    }
-    input {
-      flex: 1;
-      min-width: 300px;
-    }
-    button {
-      color: #fff;
-      background-color: #2196f3;
-      border: none;
-      padding: 0 20px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #1976d2;
-    }
-    /* Result cards */
-    #results {
-      margin-top: 40px;
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .card {
-      background: #232323;
-      padding: 24px 32px;
-      border-radius: 16px;
-      min-width: 240px;
-      box-shadow: 0 4px 18px #0008;
-      cursor: pointer;
-      transition: .2s;
-      font-size: 18px;
-      text-align: left;
-      position: relative;
-    }
-    .card:hover {
-      box-shadow: 0 6px 28px #000a;
-      background: #292929;
-    }
-    .card-title {
-      font-weight: bold;
-      font-size: 22px;
-    }
-    .card-detail {
-      color: #aaa;
-      font-size: 14px;
-      margin-top: 6px;
-    }
-    /* Modal */
-    .modal-bg {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-    .modal {
-      background: #181818;
-      color: #fff;
-      border-radius: 12px;
-      padding: 32px 40px;
-      box-shadow: 0 8px 36px #000a;
-      min-width: 320px;
-      position: relative;
-      max-width: 90vw;
-    }
-    .modal-close {
-      position: absolute;
-      top: 16px; right: 18px;
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 20px;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="navbar">
@@ -167,96 +28,88 @@
     </div>
     <div id="results"></div>
   </div>
-  <script>
-    document.querySelector('button').addEventListener('click', async function() {
-      const server = document.querySelector('select').value.toLowerCase();
-      const keyword = document.querySelector('input').value.trim();
 
-      if (!keyword) {
+<script>
+    function serverToApiValue(s) {
+    // 'Sirocco' => 'siroco', 'Cain' => 'cain'
+    if (s.toLowerCase() === "sirocco") return "siroco";
+    return s.toLowerCase();
+    }
+    function showCard(profile, explorerName) {
+    const spritePath = `assets/characters/${profile.jobName}.png`;
+    return `
+        <div class="card" style="cursor:pointer">
+        <img src="${spritePath}" alt="${profile.jobName}" style="width:200px;height:230px;object-fit:contain;margin-bottom:12px;border-radius:10px;background:#191919;box-shadow:0 1px 4px #0004;">
+        <div style="color:#7db88a;font-size:1.08em;font-weight:600;margin-bottom:2px;">${explorerName ?? '-'}</div>
+        <div class="card-title" style="color:#b6aa8f;font-size:2.05em;font-weight:800;margin-bottom:5px;line-height:1.1;">${profile.characterName ?? '-'}</div>
+        <div style="color:#A0844B;font-size:1.02em;margin-bottom:12px;letter-spacing:0.2px;">[${profile.jobGrowName ?? '-'}]</div>
+        <div style="display:flex;align-items:center;justify-content:center;margin-top:4px;">
+            <img src="assets/image/fame.png" alt="Fame" style="width:15px;height:13px;vertical-align:middle;margin-right:7px;">
+            <span style="color:#3ba042;font-size:1.12em;font-weight:bold;letter-spacing:1px;">${profile.fame ?? '-'}</span>
+        </div>
+        </div>
+    `;
+    }
+
+    document.querySelector('button').addEventListener('click', async function() {
+    const serverSel = document.querySelector('select').value;
+    const explorerName = document.querySelector('input').value.trim();
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = "";
+
+    if (!explorerName) {
         alert("Please enter a name!");
         return;
-      }
-      let serverName = server;
-      if (serverName === "all servers") {
-        alert("Please select a server!");
+    }
+    if (serverSel === "All Servers") {
+        resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Please select a server.</div>`;
         return;
-      }
+    }
 
-      // Construct JSON path
-      const url = `datas/${serverName}/${keyword}/characterId.json`;
+    const serverId = serverToApiValue(serverSel);
 
-      try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("No data");
+    try {
+        // Flask /search POST 요청
+        const res = await fetch('/search', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({server: serverId, name: explorerName})
+        });
+        if (!res.ok) throw new Error("Not found");
         const data = await res.json();
+        const characterId = data.characterId;
+        const profile = data.profile;
 
-        // Show card
-        showCard(data, serverName, keyword);
+        resultsDiv.innerHTML = showCard(profile, explorerName);
 
-      } catch (e) {
-        document.getElementById('results').innerHTML =
-          `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
-      }
+        // 카드 클릭시 /equipment 요청
+        const cardElem = document.querySelector('.card');
+        cardElem.addEventListener('click', async () => {
+        try {
+            const eqRes = await fetch('/equipment', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({server: serverId, name: explorerName})
+            });
+            if (!eqRes.ok) throw new Error("Equipment error");
+            const eqData = await eqRes.json();
+            alert(eqData.changed
+            ? "Equipment updated!\n(변동 있음, history 갱신됨)"
+            : "No change in equipment.\n(장비 변동 없음)");
+            // 콘솔에 장비 데이터 찍기
+            console.log(eqData.equipment);
+        } catch(e) {
+            alert("장비 정보 불러오기/저장에 실패했습니다.");
+        }
+        });
+
+    } catch (e) {
+        resultsDiv.innerHTML =
+        `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
+    }
     });
+</script>
 
-    function showCard(data, server, explorerName) {
-      // Adjust field names as needed based on actual JSON
-      const { name, fame, level, job } = data;
 
-      const resultsDiv = document.getElementById('results');
-      resultsDiv.innerHTML = `
-        <div class="card" onclick="showDetails('${server}', '${explorerName}')">
-          <div class="card-title">${name ?? 'No Name'}</div>
-          <div>Server: ${capitalize(server)}</div>
-          <div>Class: ${job ?? '-'}</div>
-          <div>Level: ${level ?? '-'}</div>
-          <div>Fame: ${fame ?? '-'}</div>
-          <div class="card-detail">(Click for more details)</div>
-        </div>
-      `;
-    }
-
-    // Utility: capitalize first letter
-    function capitalize(s) {
-      return s.charAt(0).toUpperCase() + s.slice(1);
-    }
-
-    // Simple modal for details (replace alert with real modal)
-    window.showDetails = async function(server, explorerName) {
-      // In actual app, fetch full info and show
-      const url = `datas/${server}/${explorerName}/characterId.json`;
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
-        showModal(data);
-      } catch {
-        alert("Could not load character details.");
-      }
-    };
-
-    // Modal render
-    function showModal(data) {
-      // You can add more fields as needed
-      const { name, fame, level, job } = data;
-      let html = `
-        <button class="modal-close" onclick="closeModal()">×</button>
-        <div style="font-size:26px; font-weight:bold; margin-bottom:14px;">${name ?? 'No Name'}</div>
-        <div><b>Class:</b> ${job ?? '-'}</div>
-        <div><b>Level:</b> ${level ?? '-'}</div>
-        <div><b>Fame:</b> ${fame ?? '-'}</div>
-        <div style="margin-top:22px; color:#aaa; font-size:15px;">(Add more details here)</div>
-      `;
-      const bg = document.createElement('div');
-      bg.className = 'modal-bg';
-      bg.innerHTML = `<div class="modal">${html}</div>`;
-      bg.onclick = function(e) {
-        if (e.target === bg) closeModal();
-      };
-      document.body.appendChild(bg);
-      window.closeModal = function() {
-        if (bg && bg.parentNode) bg.parentNode.removeChild(bg);
-      }
-    }
-  </script>
 </body>
 </html>
