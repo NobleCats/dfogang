@@ -1,1 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DFO Gear Tracker</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+    }
 
+    /* Navigation Bar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      background-color: #1f1f1f;
+      padding: 10px 20px;
+      border-bottom: 1px solid #333;
+    }
+
+    .navbar img {
+      width: 32px;
+      height: 32px;
+      margin-right: 20px;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-buttons a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .nav-buttons a:hover {
+      color: #ffcc29;
+    }
+
+    /* Main Section */
+    .main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: calc(100vh - 60px);
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 40px;
+    }
+
+    .search-box {
+      display: flex;
+      background-color: #2a2a2a;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #444;
+    }
+
+    select, input {
+      border: none;
+      outline: none;
+      padding: 12px;
+      font-size: 14px;
+      background-color: #2a2a2a;
+      color: #fff;
+    }
+
+    select {
+      border-right: 1px solid #444;
+    }
+
+    input {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    button {
+      color: #fff;
+      background-color: #2196f3;
+      border: none;
+      padding: 0 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1976d2;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <img src="assets/ch49gang.png" alt="Logo">
+    <div class="nav-buttons">
+      <a href="#">Gear Viewer</a>
+      <a href="#">Fame Tracker</a>
+      <a href="#">Rankings</a>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="logo">DFO Gear Tracker</div>
+    <div class="search-box">
+      <select>
+        <option>All Servers</option>
+        <option>Cain</option>
+        <option>Sirocco</option>
+      </select>
+      <input type="text" placeholder="Character, Adventurer, or Guild Name">
+      <button>SEARCH</button>
+    </div>
+  </div>
+</body>
+</html>
