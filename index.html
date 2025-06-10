@@ -1,171 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DFO Gear Tracker</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      background-color: #121212;
-      color: #e0e0e0;
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DFO Gear Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-    .navbar {
-      display: flex;
-      align-items: center;
-      background-color: #1f1f1f;
-      padding: 10px 20px;
-      border-bottom: 1px solid #333;
-    }
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #1f1f1f;
+            padding: 10px 20px;
+            border-bottom: 1px solid #333;
+        }
 
-    .navbar img {
-      width: 32px;
-      height: 32px;
-      margin-right: 20px;
-    }
+        .navbar img {
+            width: 32px;
+            height: 32px;
+            margin-right: 20px;
+        }
 
-    .nav-buttons {
-      display: flex;
-      gap: 20px;
-    }
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+        }
 
-    .nav-buttons a {
-      color: #e0e0e0;
-      text-decoration: none;
-      font-weight: bold;
-    }
+        .nav-buttons a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-    .main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px;
-    }
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+        }
 
-    .search-box {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
 
-    #detail-view {
-      padding: 20px;
-    }
+        #detail-view {
+            padding: 20px;
+        }
 
-    .character-detail {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 300px 300px;
-      gap: 20px;
-    }
+        .character-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 300px 300px;
+            gap: 20px;
+        }
 
-    .top-left {
-      position: relative;
-    }
+        .top-left {
+            position: relative;
+        }
 
-    .character-canvas {
-      position: relative;
-      width: 400px;
-      height: 300px;
-    }
+        .character-canvas {
+            position: relative;
+            width: 400px;
+            height: 300px;
+        }
 
-    .character-canvas img.background {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      z-index: 0;
-    }
+        .character-canvas img.background {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 0;
+        }
 
-    .character-sprite {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 250px;
-      z-index: 1;
-    }
+        .character-sprite {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 250px;
+            z-index: 1;
+        }
 
-    .equipment-layer {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-    }
+        .equipment-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
 
-    .equipment-icon {
-      width: 32px;
-      height: 32px;
-      position: absolute;
-    }
+        .equipment-icon {
+            width: 32px;
+            height: 32px;
+            position: absolute;
+        }
 
-    .top-right, .bottom-left, .bottom-right {
-      background-color: #1a1a1a;
-      border: 1px solid #444;
-      padding: 10px;
-      color: #aaa;
-    }
-  </style>
+        .top-right,
+        .bottom-left,
+        .bottom-right {
+            background-color: #1a1a1a;
+            border: 1px solid #444;
+            padding: 10px;
+            color: #aaa;
+        }
+
+        .character-canvas {
+            position: relative;
+            width: calc(246px * 2);
+            height: calc(177px * 2);
+        }
+
+        .character-canvas img.background {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 0;
+        }
+
+        .character-sprite {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 250px;
+            /* 그대로 유지 */
+            z-index: 1;
+        }
+
+        .equipment-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .equipment-icon {
+            position: absolute;
+            /* 크기 JS에서 지정 */
+        }
+        .tune-icon {
+            position: absolute;
+            z-index: 3;
+        }
+    </style>
 </head>
+
 <body>
-  <div class="navbar">
-    <img src="assets/image/ch49gang.png" alt="Logo" />
-    <div class="nav-buttons">
-      <a href="#">Gear Viewer</a>
-      <a href="#">Fame Tracker</a>
-      <a href="#">Rankings</a>
+    <div class="navbar">
+        <img src="assets/image/ch49gang.png" alt="Logo" />
+        <div class="nav-buttons">
+            <a href="#">Gear Viewer</a>
+            <a href="#">Fame Tracker</a>
+            <a href="#">Rankings</a>
+        </div>
     </div>
-  </div>
 
-  <div class="main" id="main-view">
-    <div class="logo">DFO Gear Tracker</div>
-    <div class="search-box">
-      <select>
-        <option>All Servers</option>
-        <option>Cain</option>
-        <option>Sirocco</option>
-      </select>
-      <input type="text" placeholder="Character, Adventurer, or Guild Name" />
-      <button>SEARCH</button>
+    <div class="main" id="main-view">
+        <div class="logo">DFO Gear Tracker</div>
+        <div class="search-box">
+            <select>
+                <option>All Servers</option>
+                <option>Cain</option>
+                <option>Sirocco</option>
+            </select>
+            <input type="text" placeholder="Character, Adventurer, or Guild Name" />
+            <button>SEARCH</button>
+        </div>
+        <div id="results"></div>
     </div>
-    <div id="results"></div>
-  </div>
 
-  <div id="detail-view" style="display:none;"></div>
+    <div id="detail-view" style="display:none;"></div>
 
-  <script>
-    const API_ROOT = "http://localhost:5000";
+    <script>
+        const API_ROOT = "http://localhost:5000";
 
-    const SLOT_POSITION = {
-      HeadShoulder: [7, 8],
-      Top: [39, 8],
-      Bottom: [7, 40],
-      Belt: [39, 40],
-      Shoes: [7, 72],
-      Weapon: [181, 8],
-      Title: [213, 8],
-      Bracelet: [181, 40],
-      Necklace: [213, 40],
-      Ring: [213, 72],
-      SubEquipment: [181, 72],
-      Earrings: [181, 104],
-      MagicStone: [213, 104]
-    };
+        const SLOT_POSITION = {
+            HeadShoulder: [7, 8],
+            Top: [39, 8],
+            Bottom: [7, 40],
+            Belt: [39, 40],
+            Shoes: [7, 72],
+            Weapon: [181, 8],
+            Title: [213, 8],
+            Bracelet: [181, 40],
+            Necklace: [213, 40],
+            Ring: [213, 72],
+            SubEquipment: [181, 72],
+            Earrings: [181, 104],
+            MagicStone: [213, 104]
+        };
 
-    function normalizeSlot(slot) {
-      return slot.replace(/[\s\/]/g, "");
-    }
+        function normalizeSlot(slot) {
+            return slot.replace(/[\s\/]/g, "");
+        }
 
-    function serverToApiValue(s) {
-      if (s.toLowerCase() === "sirocco") return "siroco";
-      return s.toLowerCase();
-    }
+        function serverToApiValue(s) {
+            if (s.toLowerCase() === "sirocco") return "siroco";
+            return s.toLowerCase();
+        }
 
-    function showCard(profile, explorerName) {
-      const spritePath = `assets/characters/${profile.jobName}.png`;
-      return `
+        function showCard(profile, explorerName) {
+            const spritePath = `assets/characters/${profile.jobName}.png`;
+            return `
         <div class="card" style="
             cursor:pointer;
             display: flex; flex-direction: column;
@@ -182,130 +225,168 @@
         </div>
         </div>
       `;
-    }
+        }
 
-    function renderCharacterDetail(profile, equipmentList) {
-      document.getElementById("main-view").style.display = "none";
-      const detailView = document.getElementById("detail-view");
-      detailView.style.display = "block";
+        const SCALE = 2.0;
 
-      detailView.innerHTML = `
+        function renderCharacterDetail(profile, equipmentList) {
+            document.getElementById("main-view").style.display = "none";
+            const detailView = document.getElementById("detail-view");
+            detailView.style.display = "block";
+
+            const canvasWidth = 246 * SCALE;
+            const canvasHeight = 177 * SCALE;
+            const spriteHeight = 250 * SCALE * 0.75;
+            const iconSize = 28 * SCALE;
+            const tuneSize = [8 * SCALE, 10 * SCALE];
+
+            detailView.innerHTML = `
         <button onclick="goBack()" style="margin:10px;padding:6px 12px;font-weight:bold;">← Back</button>
         <div class="character-detail">
-          <div class="top-left">
-            <div class="character-canvas">
-              <img class="background" src="assets/image/background.png" alt="Background">
-              <img class="character-sprite" id="char-sprite" src="assets/characters/${profile.jobName}.png" alt="Character">
-              <div class="equipment-layer" id="equipment-layer"></div>
+        <div class="top-left">
+            <div class="character-canvas" style="width:${canvasWidth}px;height:${canvasHeight}px;">
+            <img class="background" src="assets/image/background.png" alt="Background" style="width:100%;height:100%;position:absolute;z-index:0;">
+            <img class="character-sprite" src="assets/characters/${profile.jobName}.png"
+                style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+                    height:${spriteHeight}px;z-index:1;" />
+            <div class="equipment-layer" id="equipment-layer" style="position:absolute;width:100%;height:100%;z-index:2;"></div>
             </div>
-          </div>
-          <div class="top-right">[명성 변동 그래프 영역]</div>
-          <div class="bottom-left">[장비 상세 정보 영역]</div>
-          <div class="bottom-right">[장비 변경 이력 영역]</div>
         </div>
-      `;
+        <div class="top-right">[명성 변동 그래프 영역]</div>
+        <div class="bottom-left">[장비 상세 정보 영역]</div>
+        <div class="bottom-right">[장비 변경 이력 영역]</div>
+        </div>
+    `;
 
-      const eqLayer = document.getElementById('equipment-layer');
+            const eqLayer = document.getElementById("equipment-layer");
       equipmentList.forEach(eq => {
         const slotKey = normalizeSlot(eq.slotName || eq.slotId);
         const [x, y] = SLOT_POSITION[slotKey] || [0, 0];
+
+        const container = document.createElement("div");
+        container.style.position = "absolute";
+        container.style.left = `${x * SCALE}px`;
+        container.style.top = `${y * SCALE}px`;
+        container.style.width = `${iconSize}px`;
+        container.style.height = `${iconSize}px`;
+
         const img = document.createElement("img");
         img.src = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
-        img.alt = eq.itemName;
-        img.title = eq.itemName;
-        img.className = `equipment-icon`;
-        img.style.left = `${x}px`;
-        img.style.top = `${y}px`;
-        eqLayer.appendChild(img);
-      });
-    }
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.position = "absolute";
+        img.style.left = "0";
+        img.style.top = "0";
+        img.style.zIndex = "2";
+        container.appendChild(img);
 
-    function goBack() {
-      history.replaceState({}, '', '/');
-      document.getElementById("detail-view").style.display = "none";
-      document.getElementById("main-view").style.display = "flex";
-    }
-
-    document.querySelector('button').addEventListener('click', async function() {
-      const serverSel = document.querySelector('select').value;
-      const explorerName = document.querySelector('input').value.trim();
-      const resultsDiv = document.getElementById('results');
-      resultsDiv.innerHTML = "";
-
-      if (!explorerName) {
-        alert("Please enter a name!");
-        return;
-      }
-      if (serverSel === "All Servers") {
-        resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Please select a server.</div>`;
-        return;
-      }
-
-      const serverId = serverToApiValue(serverSel);
-
-      try {
-        const res = await fetch(`${API_ROOT}/search`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({server: serverId, name: explorerName})
-        });
-        if (!res.ok) throw new Error("Not found");
-        const data = await res.json();
-        const profile = data.profile;
-
-        resultsDiv.innerHTML = showCard(profile, explorerName);
-
-        const cardElem = document.querySelector('.card');
-        cardElem.addEventListener('click', async () => {
-          const urlParams = new URLSearchParams({ server: serverId, name: explorerName });
-          history.pushState({}, '', `?${urlParams.toString()}`);
-
-          const eqRes = await fetch(`${API_ROOT}/equipment`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({server: serverId, name: explorerName})
-          });
-          if (!eqRes.ok) throw new Error("Equipment error");
-          const eqData = await eqRes.json();
-          renderCharacterDetail(profile, eqData.equipment.equipment);
-        });
-      } catch (e) {
-        resultsDiv.innerHTML =
-          `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
-      }
-    });
-
-    window.addEventListener('DOMContentLoaded', async () => {
-      const params = new URLSearchParams(window.location.search);
-      const server = params.get('server');
-      const name = params.get('name');
-      if (server && name) {
-        try {
-          const res = await fetch(`${API_ROOT}/search`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({server, name})
-          });
-          if (!res.ok) throw new Error("Not found");
-          const data = await res.json();
-          const profile = data.profile;
-
-          const eqRes = await fetch(`${API_ROOT}/equipment`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({server, name})
-          });
-          if (!eqRes.ok) throw new Error("Equipment error");
-          const eqData = await eqRes.json();
-          renderCharacterDetail(profile, eqData.equipment.equipment);
-        } catch (e) {
-          document.getElementById("detail-view").style.display = "block";
-          document.getElementById("main-view").style.display = "none";
-          document.getElementById("detail-view").innerHTML =
-            `<div style="color:#f66; padding:20px; font-weight:bold;">Character not found or failed to load.</div>`;
+        const tuneLevel = eq.tune?.level || 0;
+        if (tuneLevel >= 1 && tuneLevel <= 3) {
+          const tuneImg = document.createElement("img");
+          tuneImg.src = `assets/equipments/etc/tune${tuneLevel}.png`;
+          tuneImg.style.position = "absolute";
+          tuneImg.style.width = `${tuneSize[0]}px`;
+          tuneImg.style.height = `${tuneSize[1]}px`;
+          tuneImg.style.left = `${iconSize - tuneSize[0]}px`;
+          tuneImg.style.top = `${iconSize - tuneSize[1]}px`;
+          tuneImg.style.zIndex = "3";
+          container.appendChild(tuneImg);
         }
-      }
-    });
-  </script>
+
+        eqLayer.appendChild(container);
+      });
+
+
+        }
+
+
+        function goBack() {
+            history.replaceState({}, '', '/');
+            document.getElementById("detail-view").style.display = "none";
+            document.getElementById("main-view").style.display = "flex";
+        }
+
+        document.querySelector('button').addEventListener('click', async function () {
+            const serverSel = document.querySelector('select').value;
+            const explorerName = document.querySelector('input').value.trim();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = "";
+
+            if (!explorerName) {
+                alert("Please enter a name!");
+                return;
+            }
+            if (serverSel === "All Servers") {
+                resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Please select a server.</div>`;
+                return;
+            }
+
+            const serverId = serverToApiValue(serverSel);
+
+            try {
+                const res = await fetch(`${API_ROOT}/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ server: serverId, name: explorerName })
+                });
+                if (!res.ok) throw new Error("Not found");
+                const data = await res.json();
+                const profile = data.profile;
+
+                resultsDiv.innerHTML = showCard(profile, explorerName);
+
+                const cardElem = document.querySelector('.card');
+                cardElem.addEventListener('click', async () => {
+                    const urlParams = new URLSearchParams({ server: serverId, name: explorerName });
+                    history.pushState({}, '', `?${urlParams.toString()}`);
+
+                    const eqRes = await fetch(`${API_ROOT}/equipment`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ server: serverId, name: explorerName })
+                    });
+                    if (!eqRes.ok) throw new Error("Equipment error");
+                    const eqData = await eqRes.json();
+                    renderCharacterDetail(profile, eqData.equipment.equipment);
+                });
+            } catch (e) {
+                resultsDiv.innerHTML =
+                    `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const server = params.get('server');
+            const name = params.get('name');
+            if (server && name) {
+                try {
+                    const res = await fetch(`${API_ROOT}/search`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ server, name })
+                    });
+                    if (!res.ok) throw new Error("Not found");
+                    const data = await res.json();
+                    const profile = data.profile;
+
+                    const eqRes = await fetch(`${API_ROOT}/equipment`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ server, name })
+                    });
+                    if (!eqRes.ok) throw new Error("Equipment error");
+                    const eqData = await eqRes.json();
+                    renderCharacterDetail(profile, eqData.equipment.equipment);
+                } catch (e) {
+                    document.getElementById("detail-view").style.display = "block";
+                    document.getElementById("main-view").style.display = "none";
+                    document.getElementById("detail-view").innerHTML =
+                        `<div style="color:#f66; padding:20px; font-weight:bold;">Character not found or failed to load.</div>`;
+                }
+            }
+        });
+    </script>
 </body>
+
 </html>

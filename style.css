@@ -134,3 +134,8 @@ button:hover {
   font-size: 20px;
   cursor: pointer;
 }
+.character-canvas {
+  position: relative;
+  width: 246px;
+  height: 177px;
+}
