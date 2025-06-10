@@ -145,6 +145,7 @@
             position: absolute;
             /* 크기 JS에서 지정 */
         }
+
         .tune-icon {
             position: absolute;
             z-index: 3;
@@ -210,12 +211,7 @@
         function showCard(profile, explorerName) {
             const spritePath = `assets/characters/${profile.jobName}.png`;
             return `
-        <div class="card" style="
-            cursor:pointer;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            text-align: center;
-        ">
+        <div class="card" style="cursor:pointer;display: flex; flex-direction: column;align-items: center; justify-content: center;text-align: center;">
         <img src="${spritePath}" alt="${profile.jobName}" style="width:200px;height:230px;object-fit:contain;margin-bottom:12px;border-radius:10px;background:#191919;box-shadow:0 1px 4px #0004;">
         <div style="color:#7db88a;font-size:0.8em;font-weight:600;margin-bottom:2px;">${explorerName ?? '-'}</div>
         <div class="card-title" style="color:#b6aa8f;font-size:1.8em;font-weight:800;margin-bottom:5px;line-height:1.1;">${profile.characterName ?? '-'}</div>
@@ -229,6 +225,70 @@
         }
 
         const SCALE = 2.0;
+
+        async function drawCharacterText(ctx, profile) {
+            const font = new FontFace("GulimIndex", "url(font/gulim_index_2.ttf)");
+            await font.load();
+            document.fonts.add(font);
+
+            ctx.font = `${12 * SCALE}px GulimIndex`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "top";
+
+            const centerX = ctx.canvas.width / 2;
+            const firstline = 122 * SCALE;
+            const linespacing = 14 * SCALE;
+
+            function drawTextWithOutline(text, y, color) {
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = "black";
+                ctx.strokeText(text, centerX, y);
+                ctx.fillStyle = color;
+                ctx.fillText(text, centerX, y);
+            }
+
+            drawTextWithOutline(profile.explorerName ?? profile.adventureName ?? '-', firstline, "#7db88a");
+            drawTextWithOutline(`Lv.${profile.level} ${profile.characterName}`, firstline + linespacing, "#b6aa8f");
+            drawTextWithOutline(`[${profile.jobGrowName}]`, firstline + linespacing * 2, "#A0844B");
+
+            // Fame 구성 (아이콘 + 텍스트를 한 덩어리로 중앙 정렬)
+            const fameText = profile.fame?.toString() ?? '-';
+            const fameY = firstline + linespacing * 3;
+            const iconW = 15 * SCALE;
+            const iconH = 13 * SCALE;
+            const padding = 3 * SCALE;
+
+            const fameIcon = new Image();
+            fameIcon.src = "assets/image/fame.png";
+            fameIcon.onload = () => {
+                const textMetrics = ctx.measureText(fameText);
+                const textWidth = textMetrics.width;
+                const textHeight = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;
+
+                const totalWidth = iconW + padding + textWidth;
+                const startX = (ctx.canvas.width - totalWidth) / 2;
+                const textX = startX + iconW + padding;
+
+                // ✅ 중심 맞춤 보정
+                const textCenterY = fameY + textHeight / 2;
+                const iconY = textCenterY - iconH / 2;
+
+                ctx.drawImage(fameIcon, startX, iconY, iconW, iconH);
+
+                // 텍스트는 왼쪽 정렬로 정확히 아이콘 오른쪽에 위치
+                ctx.textAlign = "left";
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = "black";
+                ctx.strokeText(fameText, textX, fameY);
+                ctx.fillStyle = "#3ba042";
+                ctx.fillText(fameText, textX, fameY);
+
+                ctx.textAlign = "center"; // 복원
+            };
+
+
+        }
+
 
         function renderCharacterDetail(profile, equipmentList) {
             document.getElementById("main-view").style.display = "none";
@@ -260,51 +320,61 @@
     `;
 
             const eqLayer = document.getElementById("equipment-layer");
-      equipmentList.forEach(eq => {
-        const slotKey = normalizeSlot(eq.slotName || eq.slotId);
-        const [x, y] = SLOT_POSITION[slotKey] || [0, 0];
+            equipmentList.forEach(eq => {
+                const slotKey = normalizeSlot(eq.slotName || eq.slotId);
+                const [x, y] = SLOT_POSITION[slotKey] || [0, 0];
 
-        const container = document.createElement("div");
-        container.style.position = "absolute";
-        container.style.left = `${x * SCALE}px`;
-        container.style.top = `${y * SCALE}px`;
-        
-        container.style.width = `${iconSize}px`;
-        container.style.height = `${iconSize}px`;
-        if (slotKey === "SecondaryWeapon") {
-            container.style.transform = "scale(0.5)";
-            container.style.transformOrigin = "top left";
+                const container = document.createElement("div");
+                container.style.position = "absolute";
+                container.style.left = `${x * SCALE}px`;
+                container.style.top = `${y * SCALE}px`;
+                container.style.width = `${iconSize}px`;
+                container.style.height = `${iconSize}px`;
+                if (slotKey === "SecondaryWeapon") {
+                    container.style.transform = "scale(0.5)";
+                    container.style.transformOrigin = "top left";
+                }
+
+                const img = document.createElement("img");
+                img.src = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
+                img.style.width = "100%";
+                img.style.height = "100%";
+                img.style.position = "absolute";
+                img.style.left = "0";
+                img.style.top = "0";
+                img.style.zIndex = "2";
+                container.appendChild(img);
+
+                const tuneLevel = eq.tune?.level || 0;
+                if (tuneLevel >= 1 && tuneLevel <= 3) {
+                    const tuneImg = document.createElement("img");
+                    tuneImg.src = `assets/equipments/etc/tune${tuneLevel}.png`;
+                    tuneImg.style.position = "absolute";
+                    tuneImg.style.width = `${tuneSize[0]}px`;
+                    tuneImg.style.height = `${tuneSize[1]}px`;
+                    tuneImg.style.left = `${iconSize - tuneSize[0]}px`;
+                    tuneImg.style.top = `${iconSize - tuneSize[1]}px`;
+                    tuneImg.style.zIndex = "3";
+                    container.appendChild(tuneImg);
+                }
+
+                eqLayer.appendChild(container);
+            });
+
+            // 텍스트 캔버스 추가
+            const textCanvas = document.createElement("canvas");
+            textCanvas.width = canvasWidth;
+            textCanvas.height = canvasHeight;
+            textCanvas.style.position = "absolute";
+            textCanvas.style.left = "0";
+            textCanvas.style.top = "0";
+            textCanvas.style.zIndex = "4";
+
+            const ctx = textCanvas.getContext("2d");
+            document.querySelector(".character-canvas").appendChild(textCanvas);
+
+            drawCharacterText(ctx, profile);
         }
-
-        const img = document.createElement("img");
-        img.src = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
-        img.style.width = "100%";
-        img.style.height = "100%";
-        img.style.position = "absolute";
-        img.style.left = "0";
-        img.style.top = "0";
-        img.style.zIndex = "2";
-        container.appendChild(img);
-
-        const tuneLevel = eq.tune?.level || 0;
-        if (tuneLevel >= 1 && tuneLevel <= 3) {
-          const tuneImg = document.createElement("img");
-          tuneImg.src = `assets/equipments/etc/tune${tuneLevel}.png`;
-          tuneImg.style.position = "absolute";
-          tuneImg.style.width = `${tuneSize[0]}px`;
-          tuneImg.style.height = `${tuneSize[1]}px`;
-          tuneImg.style.left = `${iconSize - tuneSize[0]}px`;
-          tuneImg.style.top = `${iconSize - tuneSize[1]}px`;
-          tuneImg.style.zIndex = "3";
-          container.appendChild(tuneImg);
-        }
-
-        eqLayer.appendChild(container);
-      });
-
-
-        }
-
 
         function goBack() {
             history.replaceState({}, '', '/');
@@ -393,6 +463,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>
