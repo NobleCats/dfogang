@@ -46,36 +46,40 @@ def search():
     return jsonify({"characterId": character_id, "profile": profile})
 
 def extract_slot_map(equipment_list):
-    """ 슬롯별로 장비와 융합석 정보를 map으로 정리 """
-    slot_map = {}
-    for eq in equipment_list:
-        slot = eq.get("slotName") or eq.get("slotId")
-        slot_map[slot] = {
-            "itemId": eq.get("itemId"),
-            "isUpgradeInfo": "No"
-        }
-        if eq.get("upgradeInfo"):
-            slot_map[slot + "_fusion"] = {
-                "itemId": eq["upgradeInfo"].get("itemId"),
-                "isUpgradeInfo": "Yes"
-            }
-    return slot_map
+    result = {}
+    for item in equipment_list:
+        slot = item.get("slotName") or item.get("slotId")
+        if not slot:
+            continue
+        # 하나의 슬롯에 장비 + 융합석을 각각 분리해서 기록
+        result[f"{slot}_gear"] = item.get("itemId")
+        upgrade_info = item.get("upgradeInfo", {})
+        if upgrade_info:
+            result[f"{slot}_fusion"] = upgrade_info.get("itemId")
+    return result
+
 
 def compare_equipment_changes(old_eq, new_eq):
-    """ 변경된 슬롯 정보만 추출 """
-    if not old_eq or not old_eq.get("equipment"): return []
+    """ 장비 및 융합석의 변경 슬롯을 각각 감지 """
+    if not old_eq or not old_eq.get("equipment"):
+        return []
 
     old_map = extract_slot_map(old_eq["equipment"])
     new_map = extract_slot_map(new_eq["equipment"])
 
     changes = []
-    all_slots = set(old_map.keys()) | set(new_map.keys())
-    for slot in all_slots:
-        before = old_map.get(slot)
-        after = new_map.get(slot)
+    all_keys = set(old_map.keys()) | set(new_map.keys())
+    for key in all_keys:
+        before = old_map.get(key)
+        after = new_map.get(key)
         if before != after:
-            changes.append((slot, before, after))
+            # key는 "slot_fusion" 혹은 "slot_gear" 형태
+            base_slot, suffix = key.rsplit("_", 1)
+            is_upgrade = "Yes" if suffix == "fusion" else "No"
+            changes.append((base_slot, is_upgrade, before, after))
     return changes
+
+
 @app.route("/equipment", methods=["POST"])
 def equipment():
     data = request.json
@@ -96,14 +100,17 @@ def equipment():
     fame_path = os.path.join(char_dir, "fame.json")
 
     new_eq = get_equipment(server, character_id)
+
+    # ✅ 새 장비 정보: 슬롯별로 gear / fusion 분리 저장
     new_items = {}
     for item in new_eq.get("equipment", []):
         slot = item.get("slotName") or item.get("slotId")
-        new_items[slot] = {
-            "itemId": item.get("itemId"),
-            "upgradeId": item.get("upgradeInfo", {}).get("itemId")
-        }
+        new_items[f"{slot}_gear"] = item.get("itemId")
+        upgrade = item.get("upgradeInfo", {})
+        if upgrade:
+            new_items[f"{slot}_fusion"] = upgrade.get("itemId")
 
+    # ✅ 기존 장비 정보 읽기
     old_items = {}
     is_first_time = not os.path.exists(eq_path)
     if not is_first_time:
@@ -111,50 +118,56 @@ def equipment():
             old_data = json.load(f)
             for item in old_data.get("equipment", []):
                 slot = item.get("slotName") or item.get("slotId")
-                old_items[slot] = {
-                    "itemId": item.get("itemId"),
-                    "upgradeId": item.get("upgradeInfo", {}).get("itemId")
-                }
+                old_items[f"{slot}_gear"] = item.get("itemId")
+                upgrade = item.get("upgradeInfo", {})
+                if upgrade:
+                    old_items[f"{slot}_fusion"] = upgrade.get("itemId")
 
-    changed_slots = []
-    for slot in new_items:
-        new_info = new_items[slot]
-        old_info = old_items.get(slot)
-        if old_info != new_info:
-            changed_slots.append(slot)
+    # ✅ 변경 감지
+    changed_keys = []
+    for key in new_items:
+        if old_items.get(key) != new_items.get(key):
+            changed_keys.append(key)
 
-    # ✅ 최초 조회 시에는 기록하지 않고 장비만 저장
-    if changed_slots and not is_first_time:
+    # ✅ 기록: 최초 조회가 아닌 경우만
+    if changed_keys and not is_first_time:
         history = []
         if os.path.exists(hist_path):
             with open(hist_path, "r", encoding="utf-8") as f:
                 history = json.load(f)
+
+        def parse_change_key(k):
+            return (k.rsplit("_", 1)[0], "Yes" if k.endswith("_fusion") else "No")
+
         entry = {
             "date": datetime.date.today().isoformat(),
             "before": [
                 {
-                    "slotName": s,
-                    "isUpgradeInfo": "Yes" if old_items.get(s, {}).get("upgradeId") else "No",
-                    "itemId": old_items.get(s, {}).get("upgradeId") or old_items.get(s, {}).get("itemId")
+                    "slotName": parse_change_key(k)[0],
+                    "isUpgradeInfo": parse_change_key(k)[1],
+                    "itemId": old_items.get(k)
                 }
-                for s in changed_slots
+                for k in changed_keys
             ],
             "after": [
                 {
-                    "slotName": s,
-                    "isUpgradeInfo": "Yes" if new_items.get(s, {}).get("upgradeId") else "No",
-                    "itemId": new_items.get(s, {}).get("upgradeId") or new_items.get(s, {}).get("itemId")
+                    "slotName": parse_change_key(k)[0],
+                    "isUpgradeInfo": parse_change_key(k)[1],
+                    "itemId": new_items.get(k)
                 }
-                for s in changed_slots
+                for k in changed_keys
             ]
         }
+
         history.append(entry)
         with open(hist_path, "w", encoding="utf-8") as f:
             json.dump(history[-30:], f, ensure_ascii=False, indent=2)
 
+    # ✅ 최신 장비 저장
     with open(eq_path, "w", encoding="utf-8") as f:
         json.dump(new_eq, f, ensure_ascii=False, indent=2)
 
+    # ✅ 명성 로그 저장
     fame_value = new_eq.get("fame")
     if fame_value is not None:
         fame_log = []
@@ -170,6 +183,7 @@ def equipment():
                     json.dump(fame_log, f, ensure_ascii=False, indent=2)
 
     return jsonify({ "equipment": new_eq })
+
 
 
 @app.route("/fame-history", methods=["POST"])
