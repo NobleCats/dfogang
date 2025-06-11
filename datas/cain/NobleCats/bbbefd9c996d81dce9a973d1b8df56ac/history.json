@@ -1,0 +1,19 @@
+[
+  {
+    "date": "2025-06-11",
+    "before": [
+      {
+        "slotName": "Weapon",
+        "isUpgradeInfo": "No",
+        "itemId": null
+      }
+    ],
+    "after": [
+      {
+        "slotName": "Weapon",
+        "isUpgradeInfo": "No",
+        "itemId": "3b360ac71476d3b58740db3168d3782e"
+      }
+    ]
+  }
+]

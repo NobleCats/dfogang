@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_file
 import requests
 import datetime
+from collections import defaultdict
 import os
 import json
 from flask_cors import CORS
@@ -33,6 +34,60 @@ def get_equipment(server, character_id):
     r.raise_for_status()
     return r.json()
 
+def history_cleaner(history):
+    """같은 날짜 내에서 원복된 변경사항은 제거하는 함수"""
+    grouped = defaultdict(list)
+
+    # 날짜별로 그룹핑
+    for entry in history:
+        grouped[entry["date"]].append(entry)
+
+    cleaned_history = []
+
+    for date, entries in grouped.items():
+        temp = []
+
+        for entry in entries:
+            temp.append({
+                "before": entry["before"],
+                "after": entry["after"]
+            })
+
+        # 슬롯별 변경 추적
+        slot_state = {}
+
+        for change in temp:
+            for b in change["before"]:
+                key = (b["slotName"], b["isUpgradeInfo"])
+                slot_state[key] = b["itemId"]
+
+            for a in change["after"]:
+                key = (a["slotName"], a["isUpgradeInfo"])
+                slot_state[key] = a["itemId"]
+
+        # 같은 날 원래 상태로 돌아온 경우 제거
+        filtered = []
+        for change in temp:
+            undone = True
+            for b, a in zip(change["before"], change["after"]):
+                key = (b["slotName"], b["isUpgradeInfo"])
+                # 마지막 상태가 최초 상태와 다르면 유지
+                if slot_state.get(key) != b["itemId"]:
+                    undone = False
+                    break
+            if not undone:
+                filtered.append(change)
+
+        # 날짜별 결과를 다시 합침
+        for f in filtered:
+            cleaned_history.append({
+                "date": date,
+                "before": f["before"],
+                "after": f["after"]
+            })
+
+    # 최신 30개만 유지
+    return cleaned_history[-30:]
 
 @app.route("/search", methods=["POST"])
 def search():
@@ -160,6 +215,7 @@ def equipment():
         }
 
         history.append(entry)
+        history = history_cleaner(history)
         with open(hist_path, "w", encoding="utf-8") as f:
             json.dump(history[-30:], f, ensure_ascii=False, indent=2)
 
@@ -174,14 +230,26 @@ def equipment():
         if os.path.exists(fame_path):
             with open(fame_path, "r", encoding="utf-8") as f:
                 fame_log = json.load(f)
+
         today = datetime.date.today().isoformat()
-        if not fame_log or fame_log[-1]["fame"] != fame_value:
-            if not any(entry["date"] == today for entry in fame_log):
-                fame_log.append({ "date": today, "fame": fame_value })
-                fame_log = fame_log[-30:]
+        yesterday = (datetime.date.today() - datetime.timedelta(days=1)).isoformat()
+
+        # 어제 값 찾기
+        yesterday_entry = next((entry for entry in reversed(fame_log) if entry["date"] == yesterday), None)
+
+        # 오늘과 어제가 같은 값이면 오늘 기록 제거 (또는 기록 안함)
+        if fame_log and fame_log[-1]["date"] == today:
+            # 오늘 이미 기록이 있다면, 명성이 달라졌는지 비교
+            if fame_log[-1]["fame"] != fame_value:
+                fame_log[-1]["fame"] = fame_value  # 업데이트
                 with open(fame_path, "w", encoding="utf-8") as f:
                     json.dump(fame_log, f, ensure_ascii=False, indent=2)
-
+        else:
+            # 오늘 기록이 없다면 새로 추가
+            fame_log.append({ "date": today, "fame": fame_value })
+            fame_log = fame_log[-30:]
+            with open(fame_path, "w", encoding="utf-8") as f:
+                json.dump(fame_log, f, ensure_ascii=False, indent=2)
     return jsonify({ "equipment": new_eq })
 
 

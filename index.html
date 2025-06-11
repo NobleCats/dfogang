@@ -656,6 +656,121 @@
                 container.appendChild(wrapper);
             });
         }
+
+        const fameCache = {};
+        async function getItemFame(itemId) {
+            if (!itemId) return null;
+            if (fameCache[itemId]) return fameCache[itemId];
+            try {
+                const res = await fetch(`https://api.dfoneople.com/df/items/${itemId}?apikey=sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ`);
+                if (!res.ok) throw new Error("Item API error");
+                const data = await res.json();
+                const fame = data.fame || null;
+                fameCache[itemId] = fame;
+                return fame;
+            } catch (e) {
+                console.warn("Failed to fetch fame for", itemId);
+                return null;
+            }
+        }
+        function getEquipmentIcon(itemId) {
+            if (!itemId) return "assets/equipments/etc/null.png";
+            return `https://img-api.neople.co.kr/df/items/${itemId}`;
+        }
+
+
+        async function renderHistoryPanel(profile) {
+            const { serverId, adventureName, characterId } = profile;
+            const historyPanel = document.getElementById("history-section");
+            historyPanel.innerHTML = ""; // 초기화
+
+            const historyPath = `/data/${serverId}/${adventureName}/${characterId}/history.json`;
+            let history = [];
+            try {
+                const res = await fetch(historyPath);
+                if (!res.ok) throw new Error("Failed to fetch history.json");
+                history = await res.json();
+            } catch (e) {
+                console.error("Failed to load history:", e);
+                historyPanel.innerHTML = "<div style='color:#888;text-align:center;'>No history data available</div>";
+                return;
+            }
+
+            const iconSize = 28 * SCALE;
+            const historyItemHeight = 69 * SCALE;
+            const spacing = 12;
+
+            for (const entry of history.reverse()) {
+                const row = document.createElement("div");
+                row.style.position = "relative";
+                row.style.width = `${426 * SCALE}px`;
+                row.style.height = `${historyItemHeight}px`;
+                row.style.marginBottom = `${spacing}px`;
+                row.style.background = `url('assets/image/history.png') no-repeat center/contain`;
+                row.style.borderRadius = "8px";
+                row.style.boxShadow = "0 2px 6px rgba(0,0,0,0.4)";
+                row.style.display = "flex";
+                row.style.alignItems = "center";
+                row.style.justifyContent = "space-between";
+                row.style.padding = `0 ${16 * SCALE}px`;
+
+                // 날짜 텍스트
+                const dateLabel = document.createElement("div");
+                dateLabel.innerText = entry.date;
+                dateLabel.style.position = "absolute";
+                dateLabel.style.top = `${6 * SCALE}px`;
+                dateLabel.style.left = "50%";
+                dateLabel.style.transform = "translateX(-50%)";
+                dateLabel.style.fontSize = `${10 * SCALE}px`;
+                dateLabel.style.color = "#ccc";
+                dateLabel.style.fontWeight = "bold";
+                row.appendChild(dateLabel);
+
+                for (let i = 0; i < entry.before.length; i++) {
+                    const b = entry.before[i];
+                    const a = entry.after[i];
+
+                    const iconLeft = await getEquipmentIcon(b.itemId);
+                    const iconRight = await getEquipmentIcon(a.itemId);
+                    const fameBefore = await getItemFame(b.itemId);
+                    const fameAfter = await getItemFame(a.itemId);
+
+                    const leftImg = document.createElement("img");
+                    leftImg.src = iconLeft;
+                    leftImg.style.width = `${iconSize}px`;
+                    leftImg.style.height = `${iconSize}px`;
+                    row.appendChild(leftImg);
+
+                    const rightWrapper = document.createElement("div");
+                    rightWrapper.style.position = "relative";
+
+                    const rightImg = document.createElement("img");
+                    rightImg.src = iconRight;
+                    rightImg.style.width = `${iconSize}px`;
+                    rightImg.style.height = `${iconSize}px`;
+                    rightWrapper.appendChild(rightImg);
+
+                    // ⬆️ or ⬇️ 아이콘
+                    if (fameBefore != null && fameAfter != null && fameBefore !== fameAfter) {
+                        const changeImg = document.createElement("img");
+                        changeImg.src = fameAfter > fameBefore ? "assets/image/up.png" : "assets/image/down.png";
+                        changeImg.style.position = "absolute";
+                        changeImg.style.left = "0";
+                        changeImg.style.bottom = "0";
+                        changeImg.style.width = `${28 * SCALE}px`;
+                        changeImg.style.height = `${13 * SCALE}px`;
+                        rightWrapper.appendChild(changeImg);
+                    }
+
+                    row.appendChild(rightWrapper);
+                }
+
+                historyPanel.appendChild(row);
+            }
+        }
+
+
+
         async function renderCharacterDetail(profile, equipmentList) {
             document.getElementById("main-view").style.display = "none";
             const detailView = document.getElementById("detail-view");
@@ -894,6 +1009,7 @@
                 canvas.addEventListener("mouseleave", () => {
                     renderFameChart(records);
                 });
+                renderHistoryPanel(profile, equipmentList);
             }
         }
 
@@ -978,10 +1094,12 @@
 `;
 
                     detailView.appendChild(historySection);
+                    await renderHistoryPanel(profile);
 
                     // ✅ 개별 구성 요소 렌더링
-                    renderCharacterDetail(profile, eqData.equipment.equipment); // 좌측 구성
-                    renderSetItems(eqData.equipment.setItemInfo);               // 우측 세트 정보
+                    await renderCharacterDetail(profile, eqData.equipment.equipment); // 좌측 구성
+                    await renderSetItems(eqData.equipment.setItemInfo);               // 우측 세트 정보
+                    await renderHistoryPanel(profile, eqData.equipment.equipment);
                 });
             } catch (e) {
                 resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
