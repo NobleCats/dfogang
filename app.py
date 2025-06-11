@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, Response
 import requests
 import datetime
 from collections import defaultdict
@@ -276,6 +276,18 @@ def fame_history():
 
     return jsonify({ "records": fame_history })
 
+@app.route('/item-fame/<item_id>')
+def get_item_fame(item_id):
+    try:
+        url = f"https://api.dfoneople.com/df/items/{item_id}?apikey={API_KEY}"
+        res = requests.get(url)
+        res.raise_for_status()
+        data = res.json()
+        fame = data.get("fame", None)
+        return jsonify({"fame": fame})
+    except Exception as e:
+        print(f"[ERROR] Failed to fetch fame for {item_id}: {e}")
+        return jsonify({"fame": None, "error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

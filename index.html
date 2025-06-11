@@ -662,7 +662,7 @@
             if (!itemId) return null;
             if (fameCache[itemId]) return fameCache[itemId];
             try {
-                const res = await fetch(`https://api.dfoneople.com/df/items/${itemId}?apikey=sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ`);
+                const res = await fetch(`http://localhost:5000/item-fame/${itemId}`);
                 if (!res.ok) throw new Error("Item API error");
                 const data = await res.json();
                 const fame = data.fame || null;
@@ -673,10 +673,6 @@
                 return null;
             }
         }
-        function getEquipmentIcon(itemId) {
-            if (!itemId) return "assets/equipments/etc/null.png";
-            return `https://img-api.neople.co.kr/df/items/${itemId}`;
-        }
 
 
         async function renderHistoryPanel(profile) {
@@ -684,7 +680,9 @@
             const historyPanel = document.getElementById("history-section");
             historyPanel.innerHTML = ""; // 초기화
 
-            const historyPath = `/data/${serverId}/${adventureName}/${characterId}/history.json`;
+            const historyPath = `/datas/${serverId}/${adventureName}/${characterId}/history.json`;
+            console.log("📁 Trying to fetch:", historyPath); // ✅ 경로 확인 로그
+
             let history = [];
             try {
                 const res = await fetch(historyPath);
@@ -730,25 +728,27 @@
                     const b = entry.before[i];
                     const a = entry.after[i];
 
-                    const iconLeft = await getEquipmentIcon(b.itemId);
-                    const iconRight = await getEquipmentIcon(a.itemId);
                     const fameBefore = await getItemFame(b.itemId);
                     const fameAfter = await getItemFame(a.itemId);
 
-                    const leftImg = document.createElement("img");
-                    leftImg.src = iconLeft;
-                    leftImg.style.width = `${iconSize}px`;
-                    leftImg.style.height = `${iconSize}px`;
-                    row.appendChild(leftImg);
+                    if(b.itemId != null) {
+                        const leftImg = document.createElement("img");
+                        leftImg.src = `https://img-api.dfoneople.com/df/items/${b.itemId}`;
+                        leftImg.style.width = `${iconSize}px`;
+                        leftImg.style.height = `${iconSize}px`;
+                        row.appendChild(leftImg);
+                    }
 
                     const rightWrapper = document.createElement("div");
                     rightWrapper.style.position = "relative";
 
-                    const rightImg = document.createElement("img");
-                    rightImg.src = iconRight;
-                    rightImg.style.width = `${iconSize}px`;
-                    rightImg.style.height = `${iconSize}px`;
-                    rightWrapper.appendChild(rightImg);
+                    if(a.itemId != null) {
+                        const rightImg = document.createElement("img");
+                        rightImg.src = `https://img-api.dfoneople.com/df/items/${a.itemId}`;
+                        rightImg.style.width = `${iconSize}px`;
+                        rightImg.style.height = `${iconSize}px`;
+                        rightWrapper.appendChild(rightImg);
+                    }
 
                     // ⬆️ or ⬇️ 아이콘
                     if (fameBefore != null && fameAfter != null && fameBefore !== fameAfter) {
@@ -1009,7 +1009,6 @@
                 canvas.addEventListener("mouseleave", () => {
                     renderFameChart(records);
                 });
-                renderHistoryPanel(profile, equipmentList);
             }
         }
 
@@ -1099,7 +1098,6 @@
                     // ✅ 개별 구성 요소 렌더링
                     await renderCharacterDetail(profile, eqData.equipment.equipment); // 좌측 구성
                     await renderSetItems(eqData.equipment.setItemInfo);               // 우측 세트 정보
-                    await renderHistoryPanel(profile, eqData.equipment.equipment);
                 });
             } catch (e) {
                 resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
@@ -1160,8 +1158,9 @@
 
                     detailView.appendChild(historySection);
 
-                    renderCharacterDetail(profile, eqData.equipment.equipment);
-                    renderSetItems(eqData.equipment.setItemInfo);
+                    await renderHistoryPanel(profile);
+                    await renderCharacterDetail(profile, eqData.equipment.equipment);
+                    await renderSetItems(eqData.equipment.setItemInfo);
                 } catch (e) {
                     document.getElementById("detail-view").style.display = "block";
                     document.getElementById("main-view").style.display = "none";
