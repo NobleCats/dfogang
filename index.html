@@ -162,6 +162,29 @@
             font-family: 'Noto Sans KR', sans-serif;
             color: #ccc;
         }
+
+        /* Chrome, Edge, Safari */
+        #history-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #history-panel::-webkit-scrollbar-track {
+            background: none !important;
+        }
+
+        #history-panel::-webkit-scrollbar-thumb {
+            background-color: #555;
+            border-radius: 6px;
+            border: 2px solid transparent;
+            /* ensures spacing inside */
+            background-clip: padding-box;
+        }
+
+        /* Firefox */
+        #history-panel {
+            scrollbar-width: thin;
+            scrollbar-color: #555 transparent;
+        }
     </style>
 </head>
 
@@ -808,18 +831,18 @@
 
 
 
-            async function renderCharacterDetail(profile, equipmentList) {
-                document.getElementById("main-view").style.display = "none";
-                const detailView = document.getElementById("detail-view");
-                detailView.style.display = "block";
+        async function renderCharacterDetail(profile, equipmentList) {
+            document.getElementById("main-view").style.display = "none";
+            const detailView = document.getElementById("detail-view");
+            detailView.style.display = "block";
 
-                const canvasWidth = 246 * SCALE;
-                const canvasHeight = 177 * SCALE;
-                const spriteHeight = 250 * SCALE * 0.75;
-                const iconSize = 28 * SCALE;
-                const tuneSize = [8 * SCALE, 10 * SCALE];
+            const canvasWidth = 246 * SCALE;
+            const canvasHeight = 177 * SCALE;
+            const spriteHeight = 250 * SCALE * 0.75;
+            const iconSize = 28 * SCALE;
+            const tuneSize = [8 * SCALE, 10 * SCALE];
 
-                detailView.innerHTML = `
+            detailView.innerHTML = `
     <button onclick="goBack()" style="margin:10px;padding:6px 12px;font-weight:bold;">← Back</button>
     <div style="display: flex; justify-content: center; gap: 32px;">
         <!-- 왼쪽 캐릭터 영역 -->
@@ -840,331 +863,343 @@
         </div>
 
         <!-- 오른쪽 히스토리 패널 -->
+        <!-- 히스토리 패널 -->
         <div id="history-panel"
-            style="width:${canvasWidth}px; background:#222; border-radius:8px; padding:16px; color:#ccc; font-family:'Noto Sans KR', sans-serif; box-shadow:0 0 6px rgba(0,0,0,0.5);">
-            [Gear History Area]
+            style="
+                width:${canvasWidth}px;
+                height:769px;
+                overflow-y: auto;
+                overflow-x: hidden; /* ← 가로 스크롤 제거 */
+                background:#222;
+                border-radius:8px;
+                padding:16px;
+                color:#ccc;
+                font-family:'Noto Sans KR', sans-serif;
+                box-shadow:0 0 6px rgba(0,0,0,0.5);
+            ">
         </div>
+
     </div>
     `;
 
-                const eqLayer = document.getElementById("equipment-layer");
+            const eqLayer = document.getElementById("equipment-layer");
 
-                equipmentList.forEach(eq => {
-                    const slotKey = normalizeSlot(eq.slotName || eq.slotId);
-                    const [x, y] = SLOT_POSITION[slotKey] || [0, 0];
+            equipmentList.forEach(eq => {
+                const slotKey = normalizeSlot(eq.slotName || eq.slotId);
+                const [x, y] = SLOT_POSITION[slotKey] || [0, 0];
 
-                    const container = document.createElement("div");
-                    container.style.position = "absolute";
-                    container.style.left = `${x * SCALE}px`;
-                    container.style.top = `${y * SCALE}px`;
-                    container.style.width = `${iconSize}px`;
-                    container.style.height = `${iconSize}px`;
-                    if (slotKey === "SecondaryWeapon") {
-                        container.style.transform = "scale(0.5)";
-                        container.style.transformOrigin = "top left";
-                    }
-
-                    const img = document.createElement("img");
-                    img.src = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
-                    img.style.width = "100%";
-                    img.style.height = "100%";
-                    img.style.position = "absolute";
-                    img.style.left = "0";
-                    img.style.top = "0";
-                    img.style.zIndex = "2";
-                    container.appendChild(img);
-
-                    // ✅ 융합석 아이콘 추가
-                    if (eq.upgradeInfo) {
-                        const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
-                        const baseRarity = eq.itemRarity;
-
-                        if (setItemName) {
-                            // ✅ 세트 융합석 처리
-                            const keywordMatch = SET_CATEGORIES.find(k => setItemName.includes(k));
-                            const fusionKeyword = keywordMatch || "Unknown";
-
-                            const fusionIcon = document.createElement("img");
-                            fusionIcon.src = `assets/sets/${fusionRarity}/${fusionKeyword}.png`;
-                            fusionIcon.alt = "Fusion";
-                            fusionIcon.style.position = "absolute";
-
-                            const fusionW = 27 * SCALE * 0.75;
-                            const fusionH = 12 * SCALE * 0.75;
-                            fusionIcon.style.width = `${fusionW}px`;
-                            fusionIcon.style.height = `${fusionH}px`;
-                            fusionIcon.style.right = "0";
-                            fusionIcon.style.top = "0";
-                            fusionIcon.style.zIndex = "4";
-                            container.appendChild(fusionIcon);
-
-                        } else if (/Elegance|Desire|Betrayal/.test(itemName)) {
-                            // ✅ Dist 융합석 처리
-                            const fusionIcon = document.createElement("img");
-                            fusionIcon.src = `assets/sets/${fusionRarity}/Dist.png`;
-                            fusionIcon.alt = "Fusion";
-                            fusionIcon.style.position = "absolute";
-
-                            const fusionW = 27 * SCALE * 0.75;
-                            const fusionH = 12 * SCALE * 0.75;
-                            fusionIcon.style.width = `${fusionW}px`;
-                            fusionIcon.style.height = `${fusionH}px`;
-                            fusionIcon.style.right = "0";
-                            fusionIcon.style.top = "0";
-                            fusionIcon.style.zIndex = "4";
-                            container.appendChild(fusionIcon);
-
-                        } else {
-                            // ✅ 일반 융합석 처리: Base + Core
-                            const fusionWrapper = document.createElement("div");
-                            fusionWrapper.style.position = "absolute";
-                            fusionWrapper.style.right = "0";
-                            fusionWrapper.style.top = "0";
-                            fusionWrapper.style.width = `${28 * SCALE * 0.75}px`;
-                            fusionWrapper.style.height = `${13 * SCALE * 0.75}px`;
-                            fusionWrapper.style.zIndex = "4";
-
-                            const baseImg = document.createElement("img");
-                            baseImg.src = `assets/fusions/${baseRarity}/Base.png`;
-                            baseImg.style.width = "100%";
-                            baseImg.style.height = "100%";
-                            baseImg.style.position = "absolute";
-                            baseImg.style.left = "0";
-                            baseImg.style.top = "0";
-
-                            const coreImg = document.createElement("img");
-                            coreImg.src = `assets/fusions/${fusionRarity}/Core.png`;
-                            coreImg.style.width = "100%";
-                            coreImg.style.height = "100%";
-                            coreImg.style.position = "absolute";
-                            coreImg.style.left = "0";
-                            coreImg.style.top = "0";
-
-                            fusionWrapper.appendChild(baseImg);
-                            fusionWrapper.appendChild(coreImg);
-                            container.appendChild(fusionWrapper);
-                        }
-                    }
-
-
-
-                    // ✅ 조율 아이콘
-                    const tuneLevel = eq.tune?.level || 0;
-                    if (tuneLevel >= 1 && tuneLevel <= 3) {
-                        const tuneImg = document.createElement("img");
-                        tuneImg.src = `assets/equipments/etc/tune${tuneLevel}.png`;
-                        tuneImg.style.position = "absolute";
-                        tuneImg.style.width = `${tuneSize[0]}px`;
-                        tuneImg.style.height = `${tuneSize[1]}px`;
-                        tuneImg.style.left = `${iconSize - tuneSize[0] - 1}px`;
-                        tuneImg.style.top = `${iconSize - tuneSize[1]}px`;
-                        tuneImg.style.zIndex = "3";
-                        container.appendChild(tuneImg);
-                    }
-
-                    eqLayer.appendChild(container);
-                });
-
-                // 강화 수치 캔버스
-                const reinforceCanvas = document.createElement("canvas");
-                reinforceCanvas.width = canvasWidth;
-                reinforceCanvas.height = canvasHeight;
-                reinforceCanvas.style.position = "absolute";
-                reinforceCanvas.style.left = "0";
-                reinforceCanvas.style.top = "0";
-                reinforceCanvas.style.zIndex = "5";
-
-                document.querySelector(".character-canvas").appendChild(reinforceCanvas);
-
-                const rctx = reinforceCanvas.getContext("2d");
-                rctx.font = `${9 * SCALE}px gulim, sans-serif`;
-                rctx.textBaseline = "top";
-                rctx.textAlign = "left";
-
-                function drawReinforceText(x, y, text, color, scaleFactor = 1) {
-                    const fontSize = Math.floor(9 * SCALE * scaleFactor);
-                    rctx.font = `${fontSize}px gulim, sans-serif`;
-                    rctx.lineWidth = 4 * scaleFactor;
-                    rctx.strokeStyle = "black";
-                    rctx.strokeText(text, x, y);
-                    rctx.fillStyle = color;
-                    rctx.fillText(text, x, y);
+                const container = document.createElement("div");
+                container.style.position = "absolute";
+                container.style.left = `${x * SCALE}px`;
+                container.style.top = `${y * SCALE}px`;
+                container.style.width = `${iconSize}px`;
+                container.style.height = `${iconSize}px`;
+                if (slotKey === "SecondaryWeapon") {
+                    container.style.transform = "scale(0.5)";
+                    container.style.transformOrigin = "top left";
                 }
 
-                equipmentList.forEach(eq => {
-                    const slotKey = normalizeSlot(eq.slotName || eq.slotId);
-                    const [baseX, baseY] = SLOT_POSITION[slotKey] || [0, 0];
-                    const reinforce = eq.reinforce || 0;
-                    const isAmp = eq.amplificationName != null;
-                    const reinforceColor = isAmp ? "#FF00FF" : "#68D5ED";
+                const img = document.createElement("img");
+                img.src = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
+                img.style.width = "100%";
+                img.style.height = "100%";
+                img.style.position = "absolute";
+                img.style.left = "0";
+                img.style.top = "0";
+                img.style.zIndex = "2";
+                container.appendChild(img);
 
-                    if (slotKey !== "Title" && (reinforce > 0 || isAmp)) {
-                        const scaleFactor = (slotKey === "SecondaryWeapon") ? 0.75 : 1;
-                        const x = baseX * SCALE;
-                        const y = baseY * SCALE;
-                        drawReinforceText(x, y, `+${reinforce}`, reinforceColor, scaleFactor);
+                // ✅ 융합석 아이콘 추가
+                if (eq.upgradeInfo) {
+                    const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
+                    const baseRarity = eq.itemRarity;
+
+                    if (setItemName) {
+                        // ✅ 세트 융합석 처리
+                        const keywordMatch = SET_CATEGORIES.find(k => setItemName.includes(k));
+                        const fusionKeyword = keywordMatch || "Unknown";
+
+                        const fusionIcon = document.createElement("img");
+                        fusionIcon.src = `assets/sets/${fusionRarity}/${fusionKeyword}.png`;
+                        fusionIcon.alt = "Fusion";
+                        fusionIcon.style.position = "absolute";
+
+                        const fusionW = 27 * SCALE * 0.75;
+                        const fusionH = 12 * SCALE * 0.75;
+                        fusionIcon.style.width = `${fusionW}px`;
+                        fusionIcon.style.height = `${fusionH}px`;
+                        fusionIcon.style.right = "0";
+                        fusionIcon.style.top = "0";
+                        fusionIcon.style.zIndex = "4";
+                        container.appendChild(fusionIcon);
+
+                    } else if (/Elegance|Desire|Betrayal/.test(itemName)) {
+                        // ✅ Dist 융합석 처리
+                        const fusionIcon = document.createElement("img");
+                        fusionIcon.src = `assets/sets/${fusionRarity}/Dist.png`;
+                        fusionIcon.alt = "Fusion";
+                        fusionIcon.style.position = "absolute";
+
+                        const fusionW = 27 * SCALE * 0.75;
+                        const fusionH = 12 * SCALE * 0.75;
+                        fusionIcon.style.width = `${fusionW}px`;
+                        fusionIcon.style.height = `${fusionH}px`;
+                        fusionIcon.style.right = "0";
+                        fusionIcon.style.top = "0";
+                        fusionIcon.style.zIndex = "4";
+                        container.appendChild(fusionIcon);
+
+                    } else {
+                        // ✅ 일반 융합석 처리: Base + Core
+                        const fusionWrapper = document.createElement("div");
+                        fusionWrapper.style.position = "absolute";
+                        fusionWrapper.style.right = "0";
+                        fusionWrapper.style.top = "0";
+                        fusionWrapper.style.width = `${28 * SCALE * 0.75}px`;
+                        fusionWrapper.style.height = `${13 * SCALE * 0.75}px`;
+                        fusionWrapper.style.zIndex = "4";
+
+                        const baseImg = document.createElement("img");
+                        baseImg.src = `assets/fusions/${baseRarity}/Base.png`;
+                        baseImg.style.width = "100%";
+                        baseImg.style.height = "100%";
+                        baseImg.style.position = "absolute";
+                        baseImg.style.left = "0";
+                        baseImg.style.top = "0";
+
+                        const coreImg = document.createElement("img");
+                        coreImg.src = `assets/fusions/${fusionRarity}/Core.png`;
+                        coreImg.style.width = "100%";
+                        coreImg.style.height = "100%";
+                        coreImg.style.position = "absolute";
+                        coreImg.style.left = "0";
+                        coreImg.style.top = "0";
+
+                        fusionWrapper.appendChild(baseImg);
+                        fusionWrapper.appendChild(coreImg);
+                        container.appendChild(fusionWrapper);
                     }
+                }
+
+
+
+                // ✅ 조율 아이콘
+                const tuneLevel = eq.tune?.level || 0;
+                if (tuneLevel >= 1 && tuneLevel <= 3) {
+                    const tuneImg = document.createElement("img");
+                    tuneImg.src = `assets/equipments/etc/tune${tuneLevel}.png`;
+                    tuneImg.style.position = "absolute";
+                    tuneImg.style.width = `${tuneSize[0]}px`;
+                    tuneImg.style.height = `${tuneSize[1]}px`;
+                    tuneImg.style.left = `${iconSize - tuneSize[0] - 1}px`;
+                    tuneImg.style.top = `${iconSize - tuneSize[1]}px`;
+                    tuneImg.style.zIndex = "3";
+                    container.appendChild(tuneImg);
+                }
+
+                eqLayer.appendChild(container);
+            });
+
+            // 강화 수치 캔버스
+            const reinforceCanvas = document.createElement("canvas");
+            reinforceCanvas.width = canvasWidth;
+            reinforceCanvas.height = canvasHeight;
+            reinforceCanvas.style.position = "absolute";
+            reinforceCanvas.style.left = "0";
+            reinforceCanvas.style.top = "0";
+            reinforceCanvas.style.zIndex = "5";
+
+            document.querySelector(".character-canvas").appendChild(reinforceCanvas);
+
+            const rctx = reinforceCanvas.getContext("2d");
+            rctx.font = `${9 * SCALE}px gulim, sans-serif`;
+            rctx.textBaseline = "top";
+            rctx.textAlign = "left";
+
+            function drawReinforceText(x, y, text, color, scaleFactor = 1) {
+                const fontSize = Math.floor(9 * SCALE * scaleFactor);
+                rctx.font = `${fontSize}px gulim, sans-serif`;
+                rctx.lineWidth = 4 * scaleFactor;
+                rctx.strokeStyle = "black";
+                rctx.strokeText(text, x, y);
+                rctx.fillStyle = color;
+                rctx.fillText(text, x, y);
+            }
+
+            equipmentList.forEach(eq => {
+                const slotKey = normalizeSlot(eq.slotName || eq.slotId);
+                const [baseX, baseY] = SLOT_POSITION[slotKey] || [0, 0];
+                const reinforce = eq.reinforce || 0;
+                const isAmp = eq.amplificationName != null;
+                const reinforceColor = isAmp ? "#FF00FF" : "#68D5ED";
+
+                if (slotKey !== "Title" && (reinforce > 0 || isAmp)) {
+                    const scaleFactor = (slotKey === "SecondaryWeapon") ? 0.75 : 1;
+                    const x = baseX * SCALE;
+                    const y = baseY * SCALE;
+                    drawReinforceText(x, y, `+${reinforce}`, reinforceColor, scaleFactor);
+                }
+            });
+
+            const textCanvas = document.createElement("canvas");
+            textCanvas.width = canvasWidth;
+            textCanvas.height = canvasHeight;
+            textCanvas.style.position = "absolute";
+            textCanvas.style.left = "0";
+            textCanvas.style.top = "0";
+            textCanvas.style.zIndex = "4";
+
+            const ctx = textCanvas.getContext("2d");
+            document.querySelector(".character-canvas").appendChild(textCanvas);
+
+            drawCharacterText(ctx, profile);
+
+            const fameRes = await fetch(`${API_ROOT}/fame-history`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ server: profile.serverId, characterName: profile.characterName })
+            });
+            if (fameRes.ok) {
+                const fameData = await fameRes.json();
+                const records = fameData.records;
+
+                await document.fonts.load('10px "Noto Sans KR"');
+                renderFameChart(records);
+
+                const canvas = document.getElementById("fame-chart");
+                canvas.addEventListener("mousemove", (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    const mx = e.clientX - rect.left;
+                    const my = e.clientY - rect.top;
+                    renderFameChart(records, mx, my);
                 });
+                canvas.addEventListener("mouseleave", () => {
+                    renderFameChart(records);
+                });
+            }
+            await renderHistoryPanel(profile);
+        }
 
-                const textCanvas = document.createElement("canvas");
-                textCanvas.width = canvasWidth;
-                textCanvas.height = canvasHeight;
-                textCanvas.style.position = "absolute";
-                textCanvas.style.left = "0";
-                textCanvas.style.top = "0";
-                textCanvas.style.zIndex = "4";
 
-                const ctx = textCanvas.getContext("2d");
-                document.querySelector(".character-canvas").appendChild(textCanvas);
+        function goBack() {
+            history.replaceState({}, '', '/');
+            document.getElementById("detail-view").style.display = "none";
+            document.getElementById("main-view").style.display = "flex";
+        }
 
-                drawCharacterText(ctx, profile);
+        document.querySelector('button').addEventListener('click', async function () {
+            const serverSel = document.querySelector('select').value;
+            const explorerName = document.querySelector('input').value.trim();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = "";
 
-                const fameRes = await fetch(`${API_ROOT}/fame-history`, {
+            if (!explorerName) {
+                alert("Please enter a name!");
+                return;
+            }
+
+            if (serverSel === "All Servers") {
+                resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Please select a server.</div>`;
+                return;
+            }
+
+            const serverId = serverToApiValue(serverSel);
+
+            try {
+                const res = await fetch(`${API_ROOT}/search`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ server: profile.serverId, characterName: profile.characterName })
+                    body: JSON.stringify({ server: serverId, name: explorerName })
                 });
-                if (fameRes.ok) {
-                    const fameData = await fameRes.json();
-                    const records = fameData.records;
+                if (!res.ok) throw new Error("Not found");
+                const data = await res.json();
+                const profile = data.profile;
 
-                    await document.fonts.load('10px "Noto Sans KR"');
-                    renderFameChart(records);
+                resultsDiv.innerHTML = showCard(profile, explorerName);
 
-                    const canvas = document.getElementById("fame-chart");
-                    canvas.addEventListener("mousemove", (e) => {
-                        const rect = canvas.getBoundingClientRect();
-                        const mx = e.clientX - rect.left;
-                        const my = e.clientY - rect.top;
-                        renderFameChart(records, mx, my);
+                const cardElem = document.querySelector('.card');
+                cardElem.addEventListener('click', async () => {
+                    const urlParams = new URLSearchParams({ server: serverId, name: explorerName });
+                    history.pushState({}, '', `?${urlParams.toString()}`);
+
+                    const eqRes = await fetch(`${API_ROOT}/equipment`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ server: serverId, name: explorerName })
                     });
-                    canvas.addEventListener("mouseleave", () => {
-                        renderFameChart(records);
-                    });
-                }
-                await renderHistoryPanel(profile);
+                    if (!eqRes.ok) throw new Error("Equipment error");
+                    const eqData = await eqRes.json();
+
+                    // ✅ 전체 레이아웃을 우측 히스토리 영역 포함 구조로 구성
+                    document.getElementById("main-view").style.display = "none";
+                    const detailView = document.getElementById("detail-view");
+                    detailView.style.display = "flex";
+                    detailView.style.flexDirection = "row";
+                    detailView.style.alignItems = "flex-start";
+                    detailView.style.gap = "24px";
+
+                    // 왼쪽 캐릭터 영역 초기화
+                    const charWrapper = document.createElement("div");
+                    charWrapper.id = "character-section";
+                    detailView.innerHTML = "";
+                    detailView.appendChild(charWrapper);
+
+                    // ✅ 개별 구성 요소 렌더링
+                    await renderCharacterDetail(profile, eqData.equipment.equipment); // 좌측 구성
+                    await renderSetItems(eqData.equipment.setItemInfo);               // 우측 세트 정보
+                });
+            } catch (e) {
+                resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
             }
+        });
 
+        window.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const server = params.get('server');
+            const name = params.get('name');
 
-            function goBack() {
-                history.replaceState({}, '', '/');
-                document.getElementById("detail-view").style.display = "none";
-                document.getElementById("main-view").style.display = "flex";
-            }
-
-            document.querySelector('button').addEventListener('click', async function () {
-                const serverSel = document.querySelector('select').value;
-                const explorerName = document.querySelector('input').value.trim();
-                const resultsDiv = document.getElementById('results');
-                resultsDiv.innerHTML = "";
-
-                if (!explorerName) {
-                    alert("Please enter a name!");
-                    return;
-                }
-
-                if (serverSel === "All Servers") {
-                    resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Please select a server.</div>`;
-                    return;
-                }
-
-                const serverId = serverToApiValue(serverSel);
-
+            if (server && name) {
                 try {
                     const res = await fetch(`${API_ROOT}/search`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ server: serverId, name: explorerName })
+                        body: JSON.stringify({ server, name })
                     });
                     if (!res.ok) throw new Error("Not found");
                     const data = await res.json();
                     const profile = data.profile;
 
-                    resultsDiv.innerHTML = showCard(profile, explorerName);
-
-                    const cardElem = document.querySelector('.card');
-                    cardElem.addEventListener('click', async () => {
-                        const urlParams = new URLSearchParams({ server: serverId, name: explorerName });
-                        history.pushState({}, '', `?${urlParams.toString()}`);
-
-                        const eqRes = await fetch(`${API_ROOT}/equipment`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ server: serverId, name: explorerName })
-                        });
-                        if (!eqRes.ok) throw new Error("Equipment error");
-                        const eqData = await eqRes.json();
-
-                        // ✅ 전체 레이아웃을 우측 히스토리 영역 포함 구조로 구성
-                        document.getElementById("main-view").style.display = "none";
-                        const detailView = document.getElementById("detail-view");
-                        detailView.style.display = "flex";
-                        detailView.style.flexDirection = "row";
-                        detailView.style.alignItems = "flex-start";
-                        detailView.style.gap = "24px";
-
-                        // 왼쪽 캐릭터 영역 초기화
-                        const charWrapper = document.createElement("div");
-                        charWrapper.id = "character-section";
-                        detailView.innerHTML = "";
-                        detailView.appendChild(charWrapper);
-
-                        // ✅ 개별 구성 요소 렌더링
-                        await renderCharacterDetail(profile, eqData.equipment.equipment); // 좌측 구성
-                        await renderSetItems(eqData.equipment.setItemInfo);               // 우측 세트 정보
+                    const eqRes = await fetch(`${API_ROOT}/equipment`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ server, name })
                     });
+                    if (!eqRes.ok) throw new Error("Equipment error");
+                    const eqData = await eqRes.json();
+
+                    // 동일한 우측 히스토리 포함 레이아웃 구성
+                    document.getElementById("main-view").style.display = "none";
+                    const detailView = document.getElementById("detail-view");
+                    detailView.style.display = "flex";
+                    detailView.style.flexDirection = "row";
+                    detailView.style.alignItems = "flex-start";
+                    detailView.style.gap = "24px";
+
+                    const charWrapper = document.createElement("div");
+                    charWrapper.id = "character-section";
+                    detailView.innerHTML = "";
+                    detailView.appendChild(charWrapper);
+
+                    await renderCharacterDetail(profile, eqData.equipment.equipment);
+                    await renderSetItems(eqData.equipment.setItemInfo);
                 } catch (e) {
-                    resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
+                    document.getElementById("detail-view").style.display = "block";
+                    document.getElementById("main-view").style.display = "none";
+                    document.getElementById("detail-view").innerHTML =
+                        `<div style="color:#f66; padding:20px; font-weight:bold;">Character not found or failed to load.</div>`;
                 }
-            });
-
-            window.addEventListener('DOMContentLoaded', async () => {
-                const params = new URLSearchParams(window.location.search);
-                const server = params.get('server');
-                const name = params.get('name');
-
-                if (server && name) {
-                    try {
-                        const res = await fetch(`${API_ROOT}/search`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ server, name })
-                        });
-                        if (!res.ok) throw new Error("Not found");
-                        const data = await res.json();
-                        const profile = data.profile;
-
-                        const eqRes = await fetch(`${API_ROOT}/equipment`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ server, name })
-                        });
-                        if (!eqRes.ok) throw new Error("Equipment error");
-                        const eqData = await eqRes.json();
-
-                        // 동일한 우측 히스토리 포함 레이아웃 구성
-                        document.getElementById("main-view").style.display = "none";
-                        const detailView = document.getElementById("detail-view");
-                        detailView.style.display = "flex";
-                        detailView.style.flexDirection = "row";
-                        detailView.style.alignItems = "flex-start";
-                        detailView.style.gap = "24px";
-
-                        const charWrapper = document.createElement("div");
-                        charWrapper.id = "character-section";
-                        detailView.innerHTML = "";
-                        detailView.appendChild(charWrapper);
-
-                        await renderCharacterDetail(profile, eqData.equipment.equipment);
-                        await renderSetItems(eqData.equipment.setItemInfo);
-                    } catch (e) {
-                        document.getElementById("detail-view").style.display = "block";
-                        document.getElementById("main-view").style.display = "none";
-                        document.getElementById("detail-view").innerHTML =
-                            `<div style="color:#f66; padding:20px; font-weight:bold;">Character not found or failed to load.</div>`;
-                    }
-                }
-            });
+            }
+        });
 
     </script>
 

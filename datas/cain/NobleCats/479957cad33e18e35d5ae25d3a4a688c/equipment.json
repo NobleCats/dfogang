@@ -297,21 +297,18 @@
       "fusionOption": {
         "options": [
           {
-            "buff": 2610,
-            "explain": "Overall Damage +6%",
-            "explainDetail": "Overall Damage +6%",
-            "buffExplain": "Buff Power 2,610",
-            "buffExplainDetail": "Buff Power 2,610"
+            "buff": 2870,
+            "explain": "Overall Damage +7%\nSkill cooldown -4% (Awakening skills excluded)\nPhysical/Magical damage reduction +3%",
+            "explainDetail": "Overall Damage +7%\nSkill cooldown -4% (Awakening skills excluded)\nPhysical/Magical damage reduction +3%",
+            "buffExplain": "Buff Power 2,870",
+            "buffExplainDetail": "Buff Power 2,870"
           }
         ]
       },
       "upgradeInfo": {
-        "itemId": "2a2e3869966aa812639990123a254ba8",
-        "itemName": "Gold: Unforgettable Ideal",
-        "itemRarity": "Unique",
-        "setItemId": "5952975fb5a964d20c047d0f034c021b",
-        "setItemName": "Hideout's Endless Gold Set",
-        "setPoint": 25
+        "itemId": "6a9e4c9aad69d02a4f58457dd5102a72",
+        "itemName": "Elegance: Leisurely Past",
+        "itemRarity": "Unique"
       },
       "tune": {
         "level": 0,
@@ -738,8 +735,8 @@
         "itemRarity": "Legendary"
       },
       "tune": {
-        "level": 1,
-        "setPoint": 225
+        "level": 3,
+        "setPoint": 245
       }
     },
     {
@@ -925,7 +922,7 @@
           }
         ],
         "setPoint": {
-          "current": 2555,
+          "current": 2550,
           "min": 2550,
           "max": 2550
         }
@@ -1002,13 +999,6 @@
           "slotId": "JACKET",
           "slotName": "Top",
           "itemRarity": "Epic",
-          "fusionStone": true
-        },
-        {
-          "itemNo": "2a2e3869966aa812639990123a254ba8",
-          "slotId": "PANTS",
-          "slotName": "Bottom",
-          "itemRarity": "Unique",
           "fusionStone": true
         },
         {
