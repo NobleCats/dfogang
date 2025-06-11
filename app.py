@@ -56,28 +56,32 @@ def search():
 def equipment():
     data = request.json
     server = data.get("server")
-    name = data.get("name")
+    name = data.get("name")  # characterName
+
     character_id = get_character_id(server, name)
     if not character_id:
         return jsonify({"error": "Character not found"}), 404
 
-    # 경로: datas/server/name/character_id/
-    char_dir = os.path.join(DATA_DIR, server, name, character_id)
+    profile = get_profile(server, character_id)
+    adventure_name = profile.get("adventureName")
+
+    # ✅ 변경된 경로
+    char_dir = os.path.join(DATA_DIR, server, adventure_name, character_id)
     os.makedirs(char_dir, exist_ok=True)
     eq_path = os.path.join(char_dir, "equipment.json")
     hist_path = os.path.join(char_dir, "history.json")
+    fame_path = os.path.join(char_dir, "fame.json")
 
     new_eq = get_equipment(server, character_id)
-    # 이전 equipment.json 로드
+
+    # ✅ 기존과 동일한 장비 비교 및 기록
     old_eq = None
     if os.path.exists(eq_path):
         with open(eq_path, "r", encoding="utf-8") as f:
             old_eq = json.load(f)
 
-    # 변화 감지 (여기선 단순 비교, 실제론 슬롯별 비교 권장)
     changed = (old_eq != new_eq)
     if changed:
-        # history 기록 append
         history = []
         if os.path.exists(hist_path):
             with open(hist_path, "r", encoding="utf-8") as f:
@@ -88,13 +92,49 @@ def equipment():
             "old": old_eq,
             "new": new_eq
         })
-        # 30일 이내 기록만 유지 등 추가 로직 구현 가능
         with open(hist_path, "w", encoding="utf-8") as f:
             json.dump(history[-30:], f, ensure_ascii=False, indent=2)
         with open(eq_path, "w", encoding="utf-8") as f:
             json.dump(new_eq, f, ensure_ascii=False, indent=2)
 
+    # ✅ Fame 기록 추가
+    fame_history = []
+    today = __import__('datetime').datetime.utcnow().date().isoformat()
+    fame_value = new_eq.get("fame", None)
+    if fame_value is not None:
+        if os.path.exists(fame_path):
+            with open(fame_path, "r", encoding="utf-8") as f:
+                fame_history = json.load(f)
+        if not any(record["date"] == today for record in fame_history):
+            fame_history.append({ "date": today, "fame": fame_value })
+        fame_history = fame_history[-30:]
+        with open(fame_path, "w", encoding="utf-8") as f:
+            json.dump(fame_history, f, ensure_ascii=False, indent=2)
+
     return jsonify({"changed": changed, "equipment": new_eq})
+
+@app.route("/fame-history", methods=["POST"])
+def fame_history():
+    data = request.json
+    server = data.get("server")
+    character_name = data.get("characterName")
+
+    character_id = get_character_id(server, character_name)
+    if not character_id:
+        return jsonify({ "records": [] })
+
+    profile = get_profile(server, character_id)
+    adventure_name = profile.get("adventureName")
+
+    fame_path = os.path.join(DATA_DIR, server, adventure_name, character_id, "fame.json")
+    if not os.path.exists(fame_path):
+        return jsonify({ "records": [] })
+
+    with open(fame_path, "r", encoding="utf-8") as f:
+        fame_history = json.load(f)
+
+    return jsonify({ "records": fame_history })
+
 
 if __name__ == "__main__":
     app.run(debug=True)
