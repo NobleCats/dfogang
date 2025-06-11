@@ -10,14 +10,6 @@ CORS(app)
 API_KEY = os.environ.get('DFO_API_KEY', 'sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ')
 
 DATA_DIR = "datas"
-ICON_BASE_FOLDER = "assets\equipments"
-WEAPON_PREFIXES = [
-    "One in a Hundred",
-    "One of a Kind",
-    "Legendary Lore",
-    "Heroic Saga",
-    "Primeval Star"
-]
 
 
 def get_character_id(server, name):
@@ -113,7 +105,8 @@ def equipment():
         }
 
     old_items = {}
-    if os.path.exists(eq_path):
+    is_first_time = not os.path.exists(eq_path)
+    if not is_first_time:
         with open(eq_path, "r", encoding="utf-8") as f:
             old_data = json.load(f)
             for item in old_data.get("equipment", []):
@@ -130,7 +123,8 @@ def equipment():
         if old_info != new_info:
             changed_slots.append(slot)
 
-    if changed_slots:
+    # ✅ 최초 조회 시에는 기록하지 않고 장비만 저장
+    if changed_slots and not is_first_time:
         history = []
         if os.path.exists(hist_path):
             with open(hist_path, "r", encoding="utf-8") as f:
