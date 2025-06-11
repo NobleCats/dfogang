@@ -44,13 +44,55 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 30px;
+            justify-content: center;
+            height: calc(100vh - 60px);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 40px;
         }
 
         .search-box {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            background-color: #2a2a2a;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+
+        select,
+        input {
+            border: none;
+            outline: none;
+            padding: 12px;
+            font-size: 14px;
+            background-color: #2a2a2a;
+            color: #fff;
+        }
+
+        select {
+            border-right: 1px solid #444;
+        }
+
+        input {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        button {
+            color: #fff;
+            background-color: #1976d2;
+            border: none;
+            padding: 0 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2196f3;
         }
 
         #detail-view {
@@ -185,17 +227,49 @@
             scrollbar-width: thin;
             scrollbar-color: #555 transparent;
         }
+
+        #results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 48px;
+            justify-items: center;
+            margin-top: 20px;
+        }
+
+        .grid-results {
+            display: grid;
+            width: 80%;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 48px;
+            justify-content: center;
+        }
+
+        .card {
+            width: 240px;
+            padding-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #main-view {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 24px;
+        }
     </style>
 </head>
 
 <body>
     <div class="navbar">
-        <img src="assets/image/ch49gang.png" alt="Logo" />
-        <div class="nav-buttons">
-            <a href="#">Gear Viewer</a>
-            <a href="#">Fame Tracker</a>
-            <a href="#">Rankings</a>
-        </div>
+        <a href="https://discord.gg/PXs3H3j42s" target="_blank" style="display: flex; align-items: center;">
+            <img src="assets/image/ch49gang.png" alt="Logo" style="height: 28px; margin-right: 8px;" />
+        </a>
+        <a href="/" style="color: white; font-weight: bold; font-size: 18px; text-decoration: none;">DFO History</a>
     </div>
 
     <div class="main" id="main-view">
@@ -209,7 +283,15 @@
             <input type="text" placeholder="Character, or Explorer Name" />
             <button>SEARCH</button>
         </div>
-        <div id="results"></div>
+        <div id="results" style="
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            margin-top: 24px;
+            ">
+        </div>
+
     </div>
 
     <div id="detail-view" style="display:none;"></div>
@@ -250,34 +332,55 @@
 
         function showCard(profile, explorerName) {
             const spritePath = `assets/characters/${profile.jobName}.png`;
+
+            // explorerName과 adventureName이 같으면 하이라이트 처리
+            const highlightStyle = (profile.adventureName === explorerName)
+                ? 'color:#fff;background:#3ba042;padding:2px 6px;border-radius:6px;font-weight:600;font-size:0.8em;'
+                : 'color:#7db88a;font-size:0.8em;font-weight:400;';
+
             return `
-                <div class="card" style="cursor:pointer;display: flex; flex-direction: column;align-items: center; justify-content: center;text-align: center; position: relative;">
-                
-                <!-- Server ID & Fame (Top-Right, no background) -->
-                <div style="position: absolute; top: 10px; right: 10px; display: flex; flex-direction: column; align-items: flex-end;margin-right:10px;margin-top:5px">
-                    <div style="font-size: 0.75em; font-weight: 500; color:#d2d2d2;">
-                    ${serverToRealValue(profile.serverId) ?? '-'}
+                <div class="card" style="
+                    cursor:pointer;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    position: relative;
+                    width: 240px;
+                    max-width: 220px;
+                    margin: auto;
+                    background: #111;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+                    ">
+
+                    <!-- Server & Fame (top-right) -->
+                    <div style="position: absolute; top: 10px; right: 10px; display: flex; flex-direction: column; align-items: flex-end;">
+                        <div style="font-size: 0.75em; font-weight: 500; color:#d2d2d2;">
+                            ${serverToRealValue(profile.serverId) ?? '-'}
+                        </div>
+                        <div style="display:flex;align-items:center;margin-top:4px;">
+                            <img src="assets/image/fame.png" alt="Fame" style="width:15px;height:13px;margin-right:4px;">
+                            <span style="color:#3ba042;font-size:0.8em;letter-spacing:1px;">${profile.fame ?? '-'}</span>
+                        </div>
                     </div>
-                    <div style="display:flex;align-items:center;justify-content:flex-end;margin-top:4px;">
-                    <img src="assets/image/fame.png" alt="Fame" style="width:15px;height:13px;vertical-align:middle;margin-right:4px;margin-top:3px">
-                    <span style="color:#3ba042;font-size:0.8em;letter-spacing:1px;">${profile.fame ?? '-'}</span>
-                    </div>
-                </div>
 
-                <!-- Character Sprite -->
-                <img src="${spritePath}" alt="${profile.jobName}" style="width:200px;height:230px;object-fit:contain;margin-bottom:12px;border-radius:10px;">
+                    <!-- Character Sprite -->
+                    <img src="${spritePath}" alt="${profile.jobName}" style="width:200px;height:230px;object-fit:contain;margin-bottom:12px;border-radius:10px;">
 
-                <!-- Explorer Name -->
-                <div style="color:#7db88a;font-size:0.8em;font-weight:400;">${profile.adventureName ?? '-'}</div>
+                    <!-- Adventure Name (highlight if matched) -->
+                    <div style="${highlightStyle}">${profile.adventureName ?? '-'}</div>
 
-                <!-- Character Name -->
-                <div class="card-title" style="color:#eee;font-size:1.8em;font-weight:600;line-height:1.1;">${profile.characterName ?? '-'}</div>
+                    <!-- Character Name -->
+                    <div class="card-title" style="color:#eee;font-size:1.8em;font-weight:600;line-height:1.1;margin-top:6px;">${profile.characterName ?? '-'}</div>
 
-                <!-- Job Grow Name -->
-                <div style="color:#A0844B;font-size:0.8em;margin-bottom:12px;letter-spacing:0.2px;">[${profile.jobGrowName ?? '-'}]</div>
+                    <!-- Job Grow Name -->
+                    <div style="color:#A0844B;font-size:0.8em;margin-top:2px;letter-spacing:0.2px;">[${profile.jobGrowName ?? '-'}]</div>
                 </div>
             `;
         }
+
 
 
 
@@ -1087,6 +1190,68 @@
             document.getElementById("main-view").style.display = "flex";
         }
 
+        async function loadCharacter(serverId, explorerName) {
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.classList.add("grid-results");
+            resultsDiv.innerHTML = "";
+
+            try {
+                const res = await fetch(`${API_ROOT}/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ server: serverId, name: explorerName })
+                });
+                if (!res.ok) throw new Error("Not found");
+
+                const data = await res.json();
+                const results = data.results ?? (data.profile ? [data.profile] : []);
+
+                if (!results || results.length === 0) {
+                    resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">No matching characters found.</div>`;
+                    return;
+                }
+
+                resultsDiv.innerHTML = results.map(profile => showCard(profile, explorerName)).join("");
+
+                document.querySelectorAll(".card").forEach((cardElem, idx) => {
+                    cardElem.addEventListener("click", async () => {
+                        const profile = results[idx];
+                        const charName = profile.characterName;
+
+                        const urlParams = new URLSearchParams({ server: serverId, name: charName });
+                        history.pushState({}, '', `?${urlParams.toString()}`);
+
+                        const eqRes = await fetch(`${API_ROOT}/equipment`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ server: serverId, name: charName })
+                        });
+                        if (!eqRes.ok) throw new Error("Equipment error");
+                        const eqData = await eqRes.json();
+
+                        document.getElementById("main-view").style.display = "none";
+                        const detailView = document.getElementById("detail-view");
+                        detailView.style.display = "flex";
+                        detailView.style.flexDirection = "row";
+                        detailView.style.alignItems = "flex-start";
+                        detailView.style.gap = "24px";
+
+                        const charWrapper = document.createElement("div");
+                        charWrapper.id = "character-section";
+                        detailView.innerHTML = "";
+                        detailView.appendChild(charWrapper);
+
+                        await renderCharacterDetail(profile, eqData.equipment.equipment);
+                        await renderSetItems(eqData.equipment.setItemInfo);
+                        await renderHistoryPanel(profile);
+                    });
+                });
+            } catch (e) {
+                resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
+            }
+        }
+
+
         document.querySelector('button').addEventListener('click', async function () {
             const serverSel = document.querySelector('select').value;
             const explorerName = document.querySelector('input').value.trim();
@@ -1104,53 +1269,7 @@
             }
 
             const serverId = serverToApiValue(serverSel);
-
-            try {
-                const res = await fetch(`${API_ROOT}/search`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ server: serverId, name: explorerName })
-                });
-                if (!res.ok) throw new Error("Not found");
-                const data = await res.json();
-                const profile = data.profile;
-
-                resultsDiv.innerHTML = showCard(profile, explorerName);
-
-                const cardElem = document.querySelector('.card');
-                cardElem.addEventListener('click', async () => {
-                    const urlParams = new URLSearchParams({ server: serverId, name: explorerName });
-                    history.pushState({}, '', `?${urlParams.toString()}`);
-
-                    const eqRes = await fetch(`${API_ROOT}/equipment`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ server: serverId, name: explorerName })
-                    });
-                    if (!eqRes.ok) throw new Error("Equipment error");
-                    const eqData = await eqRes.json();
-
-                    // ✅ 전체 레이아웃을 우측 히스토리 영역 포함 구조로 구성
-                    document.getElementById("main-view").style.display = "none";
-                    const detailView = document.getElementById("detail-view");
-                    detailView.style.display = "flex";
-                    detailView.style.flexDirection = "row";
-                    detailView.style.alignItems = "flex-start";
-                    detailView.style.gap = "24px";
-
-                    // 왼쪽 캐릭터 영역 초기화
-                    const charWrapper = document.createElement("div");
-                    charWrapper.id = "character-section";
-                    detailView.innerHTML = "";
-                    detailView.appendChild(charWrapper);
-
-                    // ✅ 개별 구성 요소 렌더링
-                    await renderCharacterDetail(profile, eqData.equipment.equipment); // 좌측 구성
-                    await renderSetItems(eqData.equipment.setItemInfo);               // 우측 세트 정보
-                });
-            } catch (e) {
-                resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
-            }
+            await loadCharacter(serverId, explorerName);
         });
 
         window.addEventListener('DOMContentLoaded', async () => {
@@ -1159,47 +1278,10 @@
             const name = params.get('name');
 
             if (server && name) {
-                try {
-                    const res = await fetch(`${API_ROOT}/search`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ server, name })
-                    });
-                    if (!res.ok) throw new Error("Not found");
-                    const data = await res.json();
-                    const profile = data.profile;
-
-                    const eqRes = await fetch(`${API_ROOT}/equipment`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ server, name })
-                    });
-                    if (!eqRes.ok) throw new Error("Equipment error");
-                    const eqData = await eqRes.json();
-
-                    // 동일한 우측 히스토리 포함 레이아웃 구성
-                    document.getElementById("main-view").style.display = "none";
-                    const detailView = document.getElementById("detail-view");
-                    detailView.style.display = "flex";
-                    detailView.style.flexDirection = "row";
-                    detailView.style.alignItems = "flex-start";
-                    detailView.style.gap = "24px";
-
-                    const charWrapper = document.createElement("div");
-                    charWrapper.id = "character-section";
-                    detailView.innerHTML = "";
-                    detailView.appendChild(charWrapper);
-
-                    await renderCharacterDetail(profile, eqData.equipment.equipment);
-                    await renderSetItems(eqData.equipment.setItemInfo);
-                } catch (e) {
-                    document.getElementById("detail-view").style.display = "block";
-                    document.getElementById("main-view").style.display = "none";
-                    document.getElementById("detail-view").innerHTML =
-                        `<div style="color:#f66; padding:20px; font-weight:bold;">Character not found or failed to load.</div>`;
-                }
+                await loadCharacter(server, name);
             }
         });
+
 
     </script>
 

@@ -13,14 +13,12 @@ API_KEY = os.environ.get('DFO_API_KEY', 'sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ')
 DATA_DIR = "datas"
 
 
-def get_character_id(server, name):
-    url = f"https://api.dfoneople.com/df/servers/{server}/characters?characterName={name}&apikey={API_KEY}"
+def search_characters(server, name):
+    url = f"https://api.dfoneople.com/df/servers/{server}/characters?characterName={name}&limit=50&wordType=full&apikey={API_KEY}"
     r = requests.get(url)
     r.raise_for_status()
-    rows = r.json()['rows']
-    if not rows:
-        return None
-    return rows[0]['characterId']
+    return r.json().get('rows', [])
+
 
 def get_profile(server, character_id):
     url = f"https://api.dfoneople.com/df/servers/{server}/characters/{character_id}?apikey={API_KEY}"
@@ -94,11 +92,12 @@ def search():
     data = request.json
     server = data.get("server")
     name = data.get("name")
-    character_id = get_character_id(server, name)
-    if not character_id:
-        return jsonify({"error": "Character not found"}), 404
-    profile = get_profile(server, character_id)
-    return jsonify({"characterId": character_id, "profile": profile})
+
+    characters = search_characters(server, name)
+    if not characters:
+        return jsonify({"error": "No characters found"}), 404
+
+    return jsonify({"results": characters})
 
 def extract_slot_map(equipment_list):
     result = {}
