@@ -156,6 +156,12 @@
             position: absolute;
             z-index: 3;
         }
+
+        .history-date-label {
+            font-size: 16px !important;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #ccc;
+        }
     </style>
 </head>
 
@@ -657,51 +663,56 @@
             });
         }
 
-        const fameCache = {};
         async function getItemFame(itemId) {
-            if (!itemId) return null;
-            if (fameCache[itemId]) return fameCache[itemId];
+            if (!itemId) return 0;
+
             try {
-                const res = await fetch(`http://localhost:5000/item-fame/${itemId}`);
-                if (!res.ok) throw new Error("Item API error");
+                const res = await fetch(`${API_ROOT}/item-fame/${itemId}`);
+                if (!res.ok) throw new Error("Failed to fetch fame");
                 const data = await res.json();
-                const fame = data.fame || null;
-                fameCache[itemId] = fame;
-                return fame;
+                return data.fame ?? null;
             } catch (e) {
-                console.warn("Failed to fetch fame for", itemId);
+                console.error("Fame fetch error:", e);
                 return null;
             }
         }
-
+        function formatDateToUS(dateStr) {
+            const [year, month, day] = dateStr.split("-");
+            return `${month}/${day}/${year}`;
+        }
 
         async function renderHistoryPanel(profile) {
             const { serverId, adventureName, characterId } = profile;
-            const historyPanel = document.getElementById("history-section");
-            historyPanel.innerHTML = ""; // 초기화
+            const historyPanel = document.getElementById("history-panel");
 
             const historyPath = `/datas/${serverId}/${adventureName}/${characterId}/history.json`;
             console.log("📁 Trying to fetch:", historyPath); // ✅ 경로 확인 로그
+
 
             let history = [];
             try {
                 const res = await fetch(historyPath);
                 if (!res.ok) throw new Error("Failed to fetch history.json");
                 history = await res.json();
+
+                // 🧹 아무 기록도 없으면 아무 것도 그리지 않고 종료
+                if (!Array.isArray(history) || history.length === 0) return;
+
             } catch (e) {
                 console.error("Failed to load history:", e);
-                historyPanel.innerHTML = "<div style='color:#888;text-align:center;'>No history data available</div>";
                 return;
             }
 
-            const iconSize = 28 * SCALE;
-            const historyItemHeight = 69 * SCALE;
+            historyPanel.innerHTML = ""; // 초기화
+
+            const iconSize = 28 * SCALE * 0.75;
+            const historyItemHeight = 80;
             const spacing = 12;
 
             for (const entry of history.reverse()) {
                 const row = document.createElement("div");
                 row.style.position = "relative";
-                row.style.width = `${426 * SCALE}px`;
+                row.style.width = `${492}px`;
                 row.style.height = `${historyItemHeight}px`;
                 row.style.marginBottom = `${spacing}px`;
                 row.style.background = `url('assets/image/history.png') no-repeat center/contain`;
@@ -710,16 +721,16 @@
                 row.style.display = "flex";
                 row.style.alignItems = "center";
                 row.style.justifyContent = "space-between";
-                row.style.padding = `0 ${16 * SCALE}px`;
 
                 // 날짜 텍스트
                 const dateLabel = document.createElement("div");
-                dateLabel.innerText = entry.date;
+                dateLabel.className = "history-date-label";
+                dateLabel.innerText = formatDateToUS(entry.date);
                 dateLabel.style.position = "absolute";
-                dateLabel.style.top = `${6 * SCALE}px`;
+                dateLabel.style.top = `${6}px`;
                 dateLabel.style.left = "50%";
                 dateLabel.style.transform = "translateX(-50%)";
-                dateLabel.style.fontSize = `${10 * SCALE}px`;
+                dateLabel.style.fontSize = `${10}px`;
                 dateLabel.style.color = "#ccc";
                 dateLabel.style.fontWeight = "bold";
                 row.appendChild(dateLabel);
@@ -731,24 +742,44 @@
                     const fameBefore = await getItemFame(b.itemId);
                     const fameAfter = await getItemFame(a.itemId);
 
-                    if(b.itemId != null) {
-                        const leftImg = document.createElement("img");
+                    const leftSlot = document.createElement("div");
+                    leftSlot.style.width = `${iconSize}px`;
+                    leftSlot.style.height = `${iconSize}px`;
+                    leftSlot.style.paddingLeft = '20px';
+
+                    const leftImg = document.createElement("img");
+                    if (b.itemId != null) {
                         leftImg.src = `https://img-api.dfoneople.com/df/items/${b.itemId}`;
-                        leftImg.style.width = `${iconSize}px`;
-                        leftImg.style.height = `${iconSize}px`;
-                        row.appendChild(leftImg);
+                    }
+                    else {
+                        const normalizedSlot = a.slotName.replace(/[\s\/]/g, ""); // 공백과 슬래시 제거
+                        leftImg.src = `assets/equipments/null/${normalizedSlot}.png`;
                     }
 
-                    const rightWrapper = document.createElement("div");
-                    rightWrapper.style.position = "relative";
+                    leftImg.style.width = "100%";
+                    leftImg.style.height = "100%";
+                    leftSlot.appendChild(leftImg);
 
-                    if(a.itemId != null) {
-                        const rightImg = document.createElement("img");
+                    row.appendChild(leftSlot);
+
+                    const rightSlot = document.createElement("div");
+                    rightSlot.style.width = `${iconSize}px`;
+                    rightSlot.style.height = `${iconSize}px`;
+                    rightSlot.style.position = "relative";
+                    rightSlot.style.paddingRight = '20px';
+
+                    const rightImg = document.createElement("img");
+                    if (a.itemId != null) {
                         rightImg.src = `https://img-api.dfoneople.com/df/items/${a.itemId}`;
-                        rightImg.style.width = `${iconSize}px`;
-                        rightImg.style.height = `${iconSize}px`;
-                        rightWrapper.appendChild(rightImg);
                     }
+                    else {
+                        const normalizedSlot = a.slotName.replace(/[\s\/]/g, ""); // 공백과 슬래시 제거
+                        rightImg.src = `assets/equipments/null/${normalizedSlot}.png`;
+                    }
+                    rightImg.style.width = "100%";
+                    rightImg.style.height = "100%";
+                    rightSlot.appendChild(rightImg);
+
 
                     // ⬆️ or ⬇️ 아이콘
                     if (fameBefore != null && fameAfter != null && fameBefore !== fameAfter) {
@@ -757,12 +788,12 @@
                         changeImg.style.position = "absolute";
                         changeImg.style.left = "0";
                         changeImg.style.bottom = "0";
-                        changeImg.style.width = `${28 * SCALE}px`;
-                        changeImg.style.height = `${13 * SCALE}px`;
-                        rightWrapper.appendChild(changeImg);
+                        changeImg.style.width = `${28 * SCALE * 0.75}px`;
+                        changeImg.style.height = `${13 * SCALE * 0.75}px`;
+                        rightSlot.appendChild(changeImg);
                     }
 
-                    row.appendChild(rightWrapper);
+                    row.appendChild(rightSlot);
                 }
 
                 historyPanel.appendChild(row);
@@ -807,11 +838,6 @@
             style="width:${canvasWidth}px; background:#222; border-radius:8px; padding:16px; color:#ccc; font-family:'Noto Sans KR', sans-serif; box-shadow:0 0 6px rgba(0,0,0,0.5);">
             [Gear History Area]
         </div>
-    </div>
-
-    <div class="character-detail">
-        <div class="bottom-left"></div>
-        <div class="bottom-right"></div>
     </div>
     `;
 
@@ -1010,6 +1036,7 @@
                     renderFameChart(records);
                 });
             }
+            await renderHistoryPanel(profile);
         }
 
 
@@ -1076,25 +1103,6 @@
                     detailView.innerHTML = "";
                     detailView.appendChild(charWrapper);
 
-                    // 오른쪽 히스토리 영역 추가
-                    const historySection = document.createElement("div");
-                    historySection.id = "history-section";
-                    historySection.style.width = `${246 * SCALE}px`;
-                    historySection.style.height = `${(246 + 177) * SCALE}px`;
-                    historySection.style.backgroundColor = "#222";  // ✅ 시각화용 임시 배경
-                    historySection.style.border = "1px solid #444";
-                    historySection.style.borderRadius = "8px";
-                    historySection.style.boxSizing = "border-box";
-                    historySection.style.padding = "12px";
-                    historySection.innerHTML = `
-    <div style="color:#888; text-align:center; font-weight:bold;">
-        [장비 변경 이력 영역]
-    </div>
-`;
-
-                    detailView.appendChild(historySection);
-                    await renderHistoryPanel(profile);
-
                     // ✅ 개별 구성 요소 렌더링
                     await renderCharacterDetail(profile, eqData.equipment.equipment); // 좌측 구성
                     await renderSetItems(eqData.equipment.setItemInfo);               // 우측 세트 정보
@@ -1141,24 +1149,6 @@
                     detailView.innerHTML = "";
                     detailView.appendChild(charWrapper);
 
-                    const historySection = document.createElement("div");
-                    historySection.id = "history-section";
-                    historySection.style.width = `${246 * SCALE}px`;
-                    historySection.style.height = `${(246 + 177) * SCALE}px`;
-                    historySection.style.backgroundColor = "#222";  // ✅ 시각화용 임시 배경
-                    historySection.style.border = "1px solid #444";
-                    historySection.style.borderRadius = "8px";
-                    historySection.style.boxSizing = "border-box";
-                    historySection.style.padding = "12px";
-                    historySection.innerHTML = `
-    <div style="color:#888; text-align:center; font-weight:bold;">
-        [장비 변경 이력 영역]
-    </div>
-`;
-
-                    detailView.appendChild(historySection);
-
-                    await renderHistoryPanel(profile);
                     await renderCharacterDetail(profile, eqData.equipment.equipment);
                     await renderSetItems(eqData.equipment.setItemInfo);
                 } catch (e) {
