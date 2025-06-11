@@ -351,11 +351,19 @@
 
             const rawFameMin = Math.min(...fames);
             const rawFameMax = Math.max(...fames);
-            const famePadding = (rawFameMax - rawFameMin || 1) * 0.15; // 여유
 
-            const fameMin = rawFameMin - famePadding;
-            const fameMax = rawFameMax + famePadding;
+            let fameMin, fameMax;
+            if (rawFameMin === rawFameMax) {
+                // ✅ 한 점일 경우 강제로 여유 범위 부여
+                fameMin = rawFameMin - 200;
+                fameMax = rawFameMax + 200;
+            } else {
+                const famePadding = (rawFameMax - rawFameMin) * 0.15;
+                fameMin = rawFameMin - famePadding;
+                fameMax = rawFameMax + famePadding;
+            }
             const fameRange = fameMax - fameMin;
+
 
 
             const chartWidth = canvas.width - paddingX * 2;
@@ -513,8 +521,8 @@
                     ctx.fillText(line, boxX + padding, boxY + padding + i * lineHeight);
                 });
             }
-
         }
+
         const SET_CATEGORIES = [
             "Dragon", "Magic", "Alpha", "Shadow", "Ethereal", "Valkyrie",
             "Nature", "Fairy", "Energy", "Serendipity", "Cleansing", "Gold"
@@ -528,12 +536,34 @@
             }
             return "assets/sets/Unknown.png"; // fallback 아이콘
         }
+        function getFusionIconPath(upgradeInfo) {
+            if (!upgradeInfo) return null;
+
+            const rarity = upgradeInfo.itemRarity;
+            const itemName = upgradeInfo.itemName;
+            const setName = upgradeInfo.setItemName;
+
+            const distKeywords = ["Elegance", "Desire", "Betrayal"];
+            for (const word of distKeywords) {
+                if (itemName.includes(word)) {
+                    return `assets/sets/${rarity}/Dist.png`;
+                }
+            }
+
+            for (const keyword of SET_CATEGORIES) {
+                if (setName.includes(keyword)) {
+                    return `assets/sets/${rarity}/${keyword}.png`;
+                }
+            }
+
+            return `assets/sets/${rarity}/Unknown.png`;
+        }
 
         function renderSetItems(setItems) {
             const container = document.getElementById("set-info-container");
             container.innerHTML = "";
 
-            // ✅ 고정 너비 적용
+            // ✅ 고정 스타일
             container.style.width = "492px";
             container.style.margin = "0 auto";
             container.style.marginTop = "28px";
@@ -569,8 +599,7 @@
                 name.style.fontWeight = "700";
                 name.style.marginTop = "12px";
                 name.style.marginBottom = "2px";
-                name.style.color = "#eee"; // ✅ 무조건 밝은 회색
-
+                name.style.color = "#eee";
 
                 // ✅ 아이콘 + 등급
                 const bottomRow = document.createElement("div");
@@ -580,10 +609,8 @@
                 // ✅ 세트 포인트
                 const setPoint = document.createElement("div");
                 setPoint.textContent = `(${item.active?.setPoint?.current ?? 0})`;
-
                 setPoint.style.fontSize = "16px";
                 setPoint.style.color = "#aaa";
-                setPoint.style.margin = "2px 0";
                 setPoint.style.marginTop = "0px";
                 setPoint.style.marginBottom = "8px";
                 setPoint.style.lineHeight = "1";
@@ -592,6 +619,7 @@
                 icon.src = iconPath;
                 icon.alt = item.setItemName;
                 icon.style.display = "block"; // 원본 크기 유지
+                icon.style.marginRight = "8px";
 
                 const rarity = document.createElement("span");
                 rarity.textContent = item.setItemRarityName;
@@ -605,10 +633,21 @@
                     rarity.style.webkitBackgroundClip = "text";
                     rarity.style.webkitTextFillColor = "transparent";
                 } else {
-                    rarity.style.color = rarityColors[item.setItemRarityName] || "#aaa";
+                    let rarityColor = "#aaa"; // 기본값
+                    for (const key in rarityColors) {
+                        if (item.setItemRarityName.includes(key)) {
+                            rarityColor = rarityColors[key];
+                            break;
+                        }
+                    }
+                    rarity.style.color = rarityColor;
                 }
 
-                bottomRow.appendChild(icon);
+                const iconWrapper = document.createElement("div");
+                iconWrapper.style.position = "relative";
+                iconWrapper.appendChild(icon);
+
+                bottomRow.appendChild(iconWrapper);
                 bottomRow.appendChild(rarity);
 
                 wrapper.appendChild(name);
@@ -617,16 +656,6 @@
                 container.appendChild(wrapper);
             });
         }
-
-
-
-
-
-
-
-
-
-
         async function renderCharacterDetail(profile, equipmentList) {
             document.getElementById("main-view").style.display = "none";
             const detailView = document.getElementById("detail-view");
@@ -639,44 +668,40 @@
             const tuneSize = [8 * SCALE, 10 * SCALE];
 
             detailView.innerHTML = `
-            <button onclick="goBack()" style="margin:10px;padding:6px 12px;font-weight:bold;">← Back</button>
-
-            <!-- 캐릭터 + 그래프: 세로로 배치 -->
-            <div class="character-center-wrapper" style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 20px;">
-                <div class="character-canvas" style="width:${canvasWidth}px;height:${canvasHeight}px;position:relative;">
-                    <img class="background" src="assets/image/background.png" alt="Background" style="width:100%;height:100%;position:absolute;z-index:0;border-radius:8px;">
-                    <img class="character-sprite" src="assets/characters/${profile.jobName}.png"
-                        style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-                            height:${spriteHeight}px;z-index:1;" />
-                    <div class="equipment-layer" id="equipment-layer" style="position:absolute;width:100%;height:100%;z-index:2;"></div>
-                </div>
-
-                <!-- ✅ 세트 장비 정보 영역 추가 -->
-                <div id="set-info-container"
-                    style="
-                        margin-top: 28px;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        padding: 4px 8px;
-                        min-height: 20px;    /* ✅ 최소 높이 지정 */
-                    ">
-                </div>
-
-                <!-- 그래프: 높이 절반으로 -->
-                <canvas id="fame-chart" width="${canvasWidth}" height="${canvasHeight * 0.75}"></canvas>
+    <button onclick="goBack()" style="margin:10px;padding:6px 12px;font-weight:bold;">← Back</button>
+    <div style="display: flex; justify-content: center; gap: 32px;">
+        <!-- 왼쪽 캐릭터 영역 -->
+        <div class="character-center-wrapper" style="display: flex; flex-direction: column; align-items: center;">
+            <div class="character-canvas" style="width:${canvasWidth}px;height:${canvasHeight}px;position:relative;">
+                <img class="background" src="assets/image/background.png" alt="Background" style="width:100%;height:100%;position:absolute;z-index:0;border-radius:8px;">
+                <img class="character-sprite" src="assets/characters/${profile.jobName}.png"
+                    style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+                        height:${spriteHeight}px;z-index:1;" />
+                <div class="equipment-layer" id="equipment-layer" style="position:absolute;width:100%;height:100%;z-index:2;"></div>
             </div>
 
-            <!-- 아래 정보 -->
-            <div class="character-detail">
-                <div class="bottom-left">[장비 상세 정보 영역]</div>
-                <div class="bottom-right">[장비 변경 이력 영역]</div>
+            <div id="set-info-container"
+                style="margin-top: 28px; display: flex; flex-direction: column; align-items: center; padding: 4px 8px; min-height: 20px;">
             </div>
-        `;
 
+            <canvas id="fame-chart" width="${canvasWidth}" height="${canvasHeight * 0.75}"></canvas>
+        </div>
 
+        <!-- 오른쪽 히스토리 패널 -->
+        <div id="history-panel"
+            style="width:${canvasWidth}px; background:#222; border-radius:8px; padding:16px; color:#ccc; font-family:'Noto Sans KR', sans-serif; box-shadow:0 0 6px rgba(0,0,0,0.5);">
+            [장비 변경 이력 영역]
+        </div>
+    </div>
+
+    <div class="character-detail">
+        <div class="bottom-left"></div>
+        <div class="bottom-right"></div>
+    </div>
+    `;
 
             const eqLayer = document.getElementById("equipment-layer");
+
             equipmentList.forEach(eq => {
                 const slotKey = normalizeSlot(eq.slotName || eq.slotId);
                 const [x, y] = SLOT_POSITION[slotKey] || [0, 0];
@@ -702,6 +727,81 @@
                 img.style.zIndex = "2";
                 container.appendChild(img);
 
+                // ✅ 융합석 아이콘 추가
+                if (eq.upgradeInfo) {
+                    const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
+                    const baseRarity = eq.itemRarity;
+
+                    if (setItemName) {
+                        // ✅ 세트 융합석 처리
+                        const keywordMatch = SET_CATEGORIES.find(k => setItemName.includes(k));
+                        const fusionKeyword = keywordMatch || "Unknown";
+
+                        const fusionIcon = document.createElement("img");
+                        fusionIcon.src = `assets/sets/${fusionRarity}/${fusionKeyword}.png`;
+                        fusionIcon.alt = "Fusion";
+                        fusionIcon.style.position = "absolute";
+
+                        const fusionW = 27 * SCALE * 0.75;
+                        const fusionH = 12 * SCALE * 0.75;
+                        fusionIcon.style.width = `${fusionW}px`;
+                        fusionIcon.style.height = `${fusionH}px`;
+                        fusionIcon.style.right = "0";
+                        fusionIcon.style.top = "0";
+                        fusionIcon.style.zIndex = "4";
+                        container.appendChild(fusionIcon);
+
+                    } else if (/Elegance|Desire|Betrayal/.test(itemName)) {
+                        // ✅ Dist 융합석 처리
+                        const fusionIcon = document.createElement("img");
+                        fusionIcon.src = `assets/sets/${fusionRarity}/Dist.png`;
+                        fusionIcon.alt = "Fusion";
+                        fusionIcon.style.position = "absolute";
+
+                        const fusionW = 27 * SCALE * 0.75;
+                        const fusionH = 12 * SCALE * 0.75;
+                        fusionIcon.style.width = `${fusionW}px`;
+                        fusionIcon.style.height = `${fusionH}px`;
+                        fusionIcon.style.right = "0";
+                        fusionIcon.style.top = "0";
+                        fusionIcon.style.zIndex = "4";
+                        container.appendChild(fusionIcon);
+
+                    } else {
+                        // ✅ 일반 융합석 처리: Base + Core
+                        const fusionWrapper = document.createElement("div");
+                        fusionWrapper.style.position = "absolute";
+                        fusionWrapper.style.right = "0";
+                        fusionWrapper.style.top = "0";
+                        fusionWrapper.style.width = `${28 * SCALE * 0.75}px`;
+                        fusionWrapper.style.height = `${13 * SCALE * 0.75}px`;
+                        fusionWrapper.style.zIndex = "4";
+
+                        const baseImg = document.createElement("img");
+                        baseImg.src = `assets/fusions/${baseRarity}/Base.png`;
+                        baseImg.style.width = "100%";
+                        baseImg.style.height = "100%";
+                        baseImg.style.position = "absolute";
+                        baseImg.style.left = "0";
+                        baseImg.style.top = "0";
+
+                        const coreImg = document.createElement("img");
+                        coreImg.src = `assets/fusions/${fusionRarity}/Core.png`;
+                        coreImg.style.width = "100%";
+                        coreImg.style.height = "100%";
+                        coreImg.style.position = "absolute";
+                        coreImg.style.left = "0";
+                        coreImg.style.top = "0";
+
+                        fusionWrapper.appendChild(baseImg);
+                        fusionWrapper.appendChild(coreImg);
+                        container.appendChild(fusionWrapper);
+                    }
+                }
+
+
+
+                // ✅ 조율 아이콘
                 const tuneLevel = eq.tune?.level || 0;
                 if (tuneLevel >= 1 && tuneLevel <= 3) {
                     const tuneImg = document.createElement("img");
@@ -709,7 +809,7 @@
                     tuneImg.style.position = "absolute";
                     tuneImg.style.width = `${tuneSize[0]}px`;
                     tuneImg.style.height = `${tuneSize[1]}px`;
-                    tuneImg.style.left = `${iconSize - tuneSize[0]}px`;
+                    tuneImg.style.left = `${iconSize - tuneSize[0] - 1}px`;
                     tuneImg.style.top = `${iconSize - tuneSize[1]}px`;
                     tuneImg.style.zIndex = "3";
                     container.appendChild(tuneImg);
@@ -717,7 +817,8 @@
 
                 eqLayer.appendChild(container);
             });
-            // 강화 수치 캔버스 생성
+
+            // 강화 수치 캔버스
             const reinforceCanvas = document.createElement("canvas");
             reinforceCanvas.width = canvasWidth;
             reinforceCanvas.height = canvasHeight;
@@ -733,7 +834,6 @@
             rctx.textBaseline = "top";
             rctx.textAlign = "left";
 
-            // 강화 수치 그리는 함수
             function drawReinforceText(x, y, text, color, scaleFactor = 1) {
                 const fontSize = Math.floor(9 * SCALE * scaleFactor);
                 rctx.font = `${fontSize}px gulim, sans-serif`;
@@ -744,8 +844,6 @@
                 rctx.fillText(text, x, y);
             }
 
-
-            // 강화 수치 렌더링
             equipmentList.forEach(eq => {
                 const slotKey = normalizeSlot(eq.slotName || eq.slotId);
                 const [baseX, baseY] = SLOT_POSITION[slotKey] || [0, 0];
@@ -756,12 +854,11 @@
                 if (slotKey !== "Title" && (reinforce > 0 || isAmp)) {
                     const scaleFactor = (slotKey === "SecondaryWeapon") ? 0.75 : 1;
                     const x = baseX * SCALE;
-                    const y = baseY * SCALE;  // ← 아래로 내리는거 제거
+                    const y = baseY * SCALE;
                     drawReinforceText(x, y, `+${reinforce}`, reinforceColor, scaleFactor);
                 }
             });
 
-            // 텍스트 캔버스 추가
             const textCanvas = document.createElement("canvas");
             textCanvas.width = canvasWidth;
             textCanvas.height = canvasHeight;
@@ -784,22 +881,18 @@
                 const fameData = await fameRes.json();
                 const records = fameData.records;
 
-                // 📌 폰트가 로드된 이후에 첫 렌더링
                 await document.fonts.load('10px "Noto Sans KR"');
                 renderFameChart(records);
 
-                // 📌 여기! 이벤트 리스너는 렌더링 이후에
                 const canvas = document.getElementById("fame-chart");
-
                 canvas.addEventListener("mousemove", (e) => {
                     const rect = canvas.getBoundingClientRect();
                     const mx = e.clientX - rect.left;
                     const my = e.clientY - rect.top;
                     renderFameChart(records, mx, my);
                 });
-
                 canvas.addEventListener("mouseleave", () => {
-                    renderFameChart(records); // 툴팁 제거
+                    renderFameChart(records);
                 });
             }
         }
@@ -816,10 +909,12 @@
             const explorerName = document.querySelector('input').value.trim();
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = "";
+
             if (!explorerName) {
                 alert("Please enter a name!");
                 return;
             }
+
             if (serverSel === "All Servers") {
                 resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Please select a server.</div>`;
                 return;
@@ -851,20 +946,53 @@
                     });
                     if (!eqRes.ok) throw new Error("Equipment error");
                     const eqData = await eqRes.json();
-                    renderCharacterDetail(profile, eqData.equipment.equipment);
-                    renderSetItems(eqData.equipment.setItemInfo);
+
+                    // ✅ 전체 레이아웃을 우측 히스토리 영역 포함 구조로 구성
+                    document.getElementById("main-view").style.display = "none";
+                    const detailView = document.getElementById("detail-view");
+                    detailView.style.display = "flex";
+                    detailView.style.flexDirection = "row";
+                    detailView.style.alignItems = "flex-start";
+                    detailView.style.gap = "24px";
+
+                    // 왼쪽 캐릭터 영역 초기화
+                    const charWrapper = document.createElement("div");
+                    charWrapper.id = "character-section";
+                    detailView.innerHTML = "";
+                    detailView.appendChild(charWrapper);
+
+                    // 오른쪽 히스토리 영역 추가
+                    const historySection = document.createElement("div");
+                    historySection.id = "history-section";
+                    historySection.style.width = `${246 * SCALE}px`;
+                    historySection.style.height = `${(246 + 177) * SCALE}px`;
+                    historySection.style.backgroundColor = "#222";  // ✅ 시각화용 임시 배경
+                    historySection.style.border = "1px solid #444";
+                    historySection.style.borderRadius = "8px";
+                    historySection.style.boxSizing = "border-box";
+                    historySection.style.padding = "12px";
+                    historySection.innerHTML = `
+    <div style="color:#888; text-align:center; font-weight:bold;">
+        [장비 변경 이력 영역]
+    </div>
+`;
+
+                    detailView.appendChild(historySection);
+
+                    // ✅ 개별 구성 요소 렌더링
+                    renderCharacterDetail(profile, eqData.equipment.equipment); // 좌측 구성
+                    renderSetItems(eqData.equipment.setItemInfo);               // 우측 세트 정보
                 });
             } catch (e) {
-                resultsDiv.innerHTML =
-                    `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
+                resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
             }
-
         });
 
         window.addEventListener('DOMContentLoaded', async () => {
             const params = new URLSearchParams(window.location.search);
             const server = params.get('server');
             const name = params.get('name');
+
             if (server && name) {
                 try {
                     const res = await fetch(`${API_ROOT}/search`, {
@@ -883,6 +1011,37 @@
                     });
                     if (!eqRes.ok) throw new Error("Equipment error");
                     const eqData = await eqRes.json();
+
+                    // 동일한 우측 히스토리 포함 레이아웃 구성
+                    document.getElementById("main-view").style.display = "none";
+                    const detailView = document.getElementById("detail-view");
+                    detailView.style.display = "flex";
+                    detailView.style.flexDirection = "row";
+                    detailView.style.alignItems = "flex-start";
+                    detailView.style.gap = "24px";
+
+                    const charWrapper = document.createElement("div");
+                    charWrapper.id = "character-section";
+                    detailView.innerHTML = "";
+                    detailView.appendChild(charWrapper);
+
+                    const historySection = document.createElement("div");
+                    historySection.id = "history-section";
+                    historySection.style.width = `${246 * SCALE}px`;
+                    historySection.style.height = `${(246 + 177) * SCALE}px`;
+                    historySection.style.backgroundColor = "#222";  // ✅ 시각화용 임시 배경
+                    historySection.style.border = "1px solid #444";
+                    historySection.style.borderRadius = "8px";
+                    historySection.style.boxSizing = "border-box";
+                    historySection.style.padding = "12px";
+                    historySection.innerHTML = `
+    <div style="color:#888; text-align:center; font-weight:bold;">
+        [장비 변경 이력 영역]
+    </div>
+`;
+
+                    detailView.appendChild(historySection);
+
                     renderCharacterDetail(profile, eqData.equipment.equipment);
                     renderSetItems(eqData.equipment.setItemInfo);
                 } catch (e) {
@@ -893,6 +1052,7 @@
                 }
             }
         });
+
     </script>
 
 </body>
