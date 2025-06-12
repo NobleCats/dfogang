@@ -1,0 +1,836 @@
+{
+  "serverId": "cain",
+  "characterId": "0c6f75849b2202d0c7a354295c6ef083",
+  "characterName": "Smerge",
+  "level": 115,
+  "jobId": "08cf6465c8dfcdbf5a896b40a2811007",
+  "jobGrowId": "ec6a93f4d14bb36ccc541183291197a7",
+  "jobName": "Slayer (F)",
+  "jobGrowName": "Neo: Vagabond",
+  "fame": 30105,
+  "adventureName": "Saithis",
+  "guildId": "a5b0f9da840a4098bc265030e4081668",
+  "guildName": "TheOffice",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "c4c4d76cf24fc7d28fa58b3334b86702",
+      "itemName": "One of a Kind Lightsabre",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "70a6c2f691e02f5f30e0589467f9c73d",
+      "itemTypeDetail": "Lightsabre",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 12,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 13
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 8,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "141%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "384ccea94030a031691f6f991f4d11ed",
+      "itemName": "Aeterna Hunter",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "1555a1c6cb66354ec34dd8ca6923ceaa",
+      "itemName": "Starter Training Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nAll speed +10%",
+            "explainDetail": "Overall Damage +5%\nAll speed +10%"
+          },
+          {
+            "explain": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%",
+            "explainDetail": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "9fd27f5f63f58151f4ecc1d4305d3e46",
+        "itemName": "Earth: The Land of Life",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "a1c3f548c020a859f1d2f8c4769cad5e",
+      "itemName": "Starter Mindset Robe",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nPhysical/Magical Def. +10,000\nHP/MP +1% when attacking (Cooldown: 3 sec.)",
+            "explainDetail": "Overall Damage +5%\nPhysical/Magical Def. +10,000\nHP/MP +1% when attacking (Cooldown: 3 sec.)"
+          },
+          {
+            "explain": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)",
+            "explainDetail": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "9914a87582b0a4e6bf03f25b14f9e27f",
+        "itemName": "Icelands: Freezing Sensation",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "d3b8ae90bbe54d9f39bc7f9178ddc6f2",
+      "itemName": "Starter Training Bottom",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nMax HP +5%",
+            "explainDetail": "Overall Damage +5%\nMax HP +5%"
+          },
+          {
+            "explain": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%",
+            "explainDetail": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "1503f85101fd9550d608b7f21e50fba3",
+        "itemName": "Earth: When Death Falls",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "63a315062417a928a54f2bff1f570667",
+      "itemName": "Starter Records Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\n- Movement Speed +15%",
+            "explainDetail": "Overall Damage +5%\n- Movement Speed +15%"
+          },
+          {
+            "explain": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)",
+            "explainDetail": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "8d2f128a1c4edfd302cf6a6b0008bc5a",
+        "itemName": "Icelands: Footprints that Leave No Trace",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "82d4f92e9bc1df3a1aa2d4f768e4db06",
+      "itemName": "Starter Legend Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nPhysical/Magical Critical Chances +10%",
+            "explainDetail": "Overall Damage +5%\nPhysical/Magical Critical Chances +10%"
+          },
+          {
+            "explain": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%",
+            "explainDetail": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "bb00b92be8360710396b628718f4379c",
+        "itemName": "Earth: The Intersection of Life and Death",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "016c528d16f6da2a2336c7d64df93257",
+      "itemName": "Starter Effort",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 23
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 4000,
+            "explain": "Overall Damage +13%",
+            "explainDetail": "Overall Damage +13%",
+            "buffExplain": "Buff Power: 4,000",
+            "buffExplainDetail": "Buff Power: 4,000"
+          },
+          {
+            "explain": "Max MP +300",
+            "explainDetail": "Max MP +300"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "dc66d505973abbd096c838032f61b143",
+        "itemName": "Glory of the Pell Los Empire",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "5653acb07a778c5d9688ba641ccd34eb",
+      "itemName": "Starter Bell",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 23
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 938,
+            "buff": 1518,
+            "explain": "Max HP +1,200\nMax MP +1,890",
+            "explainDetail": "Max HP +1,200\nMax MP +1,890"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a4c543a924286682d5450db840c9c157",
+        "itemName": "Empyrean Allied Forces: Dogged Determination",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "14d33d5c8fa3bf1050548206397b2baa",
+      "itemName": "Starter Moment",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 6,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 23
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 4000,
+            "explain": "[Eyes on Me!]\n- Overall Damage +6.5%\n- Skill cooldown -10% (Awakening skills excluded)\n- Super Armor\n- Casts a spotlight.",
+            "explainDetail": "[Eyes on Me!]\n- Overall Damage +6.5%\n- Skill cooldown -10% (Awakening skills excluded)\n- Super Armor\n- Casts a spotlight.",
+            "buffExplain": "Buff Power: 4,000",
+            "buffExplainDetail": "Buff Power: 4,000"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          },
+          {
+            "explain": "MP +1,000 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "MP +1,000 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "737d5802fdb9a7cf4f3b4e4b97cd8643",
+        "itemName": "World Idol Ring",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "f59a57f541249e5ede7b449ae69760b4",
+      "itemName": "Pack Delta Hatchet",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "66c67e88b617c0a056d92c5d7ebd6887",
+      "setItemName": "Alpha of the Pack Hunt Set",
+      "reinforce": 0,
+      "itemGradeName": "Inferior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 55
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 55
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 55
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +10%",
+            "explainDetail": "Overall Damage +10%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Skill range +7%",
+            "explainDetail": "Skill range +7%"
+          },
+          {
+            "explain": "Max HP +5%",
+            "explainDetail": "Max HP +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e78a77b086d1337b2aeb575ea5bd6e0c",
+        "itemName": "Reaper's Trap",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "e8c0539884593ea1669dfe67a146b6b7",
+      "itemName": "Starter Unbreakable Spirit",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 3500,
+            "explain": "Overall Damage +11.5%",
+            "explainDetail": "Overall Damage +11.5%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Casts a barrier with 10% of Max HP for 5 sec. (Cooldown: 5 sec.)",
+            "explainDetail": "Casts a barrier with 10% of Max HP for 5 sec. (Cooldown: 5 sec.)"
+          },
+          {
+            "explain": "HP +300 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "HP +300 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2efc6fe6aac1216a6bb5d527009df5c5",
+        "itemName": "Peaceful Past",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "SUPPORT_WEAPON",
+      "slotName": "Secondary Weapon",
+      "itemId": "17e47c12b5f255318a0e41709344d343",
+      "itemName": "One in a Hundred Lightsabre",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "70a6c2f691e02f5f30e0589467f9c73d",
+      "itemTypeDetail": "Lightsabre",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "93%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "8996968423d40fae163fb34e8aafa0b8",
+      "itemName": "Starter Voice",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 2,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 150
+          },
+          {
+            "name": "Intelligence",
+            "value": 150
+          },
+          {
+            "name": "Vitality",
+            "value": 150
+          },
+          {
+            "name": "Spirit",
+            "value": 150
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +10%",
+            "explainDetail": "Overall Damage +10%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Movement Speed +20%",
+            "explainDetail": "Movement Speed +20%"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "bde87e188d998886743ceb1365b22f89",
+        "itemName": "Apocalypse Signals",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "66c67e88b617c0a056d92c5d7ebd6887",
+      "setItemName": "Pack Rally Set",
+      "setItemRarityName": "Rare I",
+      "active": {
+        "explain": "undefined",
+        "explainDetail": "undefined",
+        "status": [
+          {
+            "name": "Adventurer Fame",
+            "value": 200
+          },
+          {
+            "name": "Buff Power",
+            "value": 960
+          },
+          {
+            "name": "Overall Damage",
+            "value": "4%"
+          }
+        ],
+        "setPoint": {
+          "current": 815,
+          "min": 750,
+          "max": 830
+        }
+      },
+      "slotInfo": [
+        {
+          "itemNo": "1555a1c6cb66354ec34dd8ca6923ceaa",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "a1c3f548c020a859f1d2f8c4769cad5e",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "d3b8ae90bbe54d9f39bc7f9178ddc6f2",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "63a315062417a928a54f2bff1f570667",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "82d4f92e9bc1df3a1aa2d4f768e4db06",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "016c528d16f6da2a2336c7d64df93257",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "5653acb07a778c5d9688ba641ccd34eb",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "14d33d5c8fa3bf1050548206397b2baa",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "f59a57f541249e5ede7b449ae69760b4",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "e8c0539884593ea1669dfe67a146b6b7",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "8996968423d40fae163fb34e8aafa0b8",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Rare"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1074 @@
+{
+  "serverId": "cain",
+  "characterId": "af82f057ad2f22fbdd75fe6aa152d280",
+  "characterName": "Fanfarre",
+  "level": 115,
+  "jobId": "2ae47d662a9b18848c5e314966765bd7",
+  "jobGrowId": "ba2ae3598c3af10c26562e073bc92060",
+  "jobName": "Priest (F)",
+  "jobGrowName": "Neo: Crusader",
+  "fame": 40344,
+  "adventureName": "CanesVenatici",
+  "guildId": null,
+  "guildName": null,
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "003c26f3a8131e1534e6532c80294369",
+      "itemName": "First Earth",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "51bf2de0ffaf3c4d9552b2f9c60736ad",
+      "itemTypeDetail": "Cross",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 4,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 110
+          },
+          {
+            "name": "Intelligence",
+            "value": 110
+          },
+          {
+            "name": "Vitality",
+            "value": 110
+          },
+          {
+            "name": "Spirit",
+            "value": 110
+          },
+          {
+            "name": "Casting Spd.",
+            "value": "7%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 8,
+      "asrahanOption": {
+        "options": [
+          {
+            "name": "Solid Earth Starfield",
+            "step": 20,
+            "buff": 2185,
+            "explain": "Overall Damage +8%\nAtk. Increase +525%\n\n[Blessing of the Four Seasons]\nReceive a blessing from the four seasons to reinforce yourself. 50% of the Blessing effect also applied to all party members.\n- Can't stack with the same Blessing.\n\n* Blessing of Warm Spring\n - Overall Damage +1%\n* Blessing of Vibrant Summer\n  - HP/MP +10% for 10 sec. every 10 sec.\n* Blessing of Bountiful Autumn\n  - Physical/Magical damage reduction +10%\n* Blessing of Dazzling Winter\n  - All speed +10%",
+            "explainDetail": "Overall Damage +8%\nAtk. Increase +525%\n\n[Blessing of the Four Seasons]\nReceive a blessing from the four seasons to reinforce yourself. 50% of the Blessing effect also applied to all party members.\n- Can't stack with the same Blessing.\n\n* Blessing of Warm Spring\n - Overall Damage +1%\n* Blessing of Vibrant Summer\n  - HP/MP +10% for 10 sec. every 10 sec.\n* Blessing of Bountiful Autumn\n  - Physical/Magical damage reduction +10%\n* Blessing of Dazzling Winter\n  - All speed +10%"
+          },
+          {
+            "name": "Memory's Destination",
+            "step": 5,
+            "buff": 950,
+            "explain": "Overall Damage +5%",
+            "explainDetail": "Overall Damage +5%"
+          },
+          {
+            "name": "Mark of the Sublime",
+            "buff": 380,
+            "explain": "[Song of the Four Seasons]\nRecreates the Song of the Four Seasons upon entering a dungeon.\n- Overall Damage +5%\n- Ignite Ratio +3%\n- 100% of the Blessing of the Four Seasons effect applied to party members",
+            "explainDetail": "[Song of the Four Seasons]\nRecreates the Song of the Four Seasons upon entering a dungeon.\n- Overall Damage +5%\n- Ignite Ratio +3%\n- 100% of the Blessing of the Four Seasons effect applied to party members"
+          },
+          {
+            "name": "Traces to the First Memory",
+            "step": 5,
+            "buff": 1000,
+            "explain": "Overall Damage +5%",
+            "explainDetail": "Overall Damage +5%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "51386788f69d0d5c20e923d5b5db14e2",
+      "itemName": "Book of the Fourth Memory",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "amplificationName": null,
+      "refine": 0,
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "0c0f59987824003b488d10202b0b8f5e",
+                "name": "Valor Blessing",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "8b91df8df83061f9be5bd3df44e239de",
+      "itemName": "Noble Fairy Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 5,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nPoison Tolerance +15%",
+            "explainDetail": "Overall Damage +5%\nPoison Tolerance +15%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a7d08e0d5739c66f6066efd2db0e21bc",
+        "itemName": "Blaze: Shaken Reason of the Flame",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "1f4e201b452bffa53c1004319ca1b932",
+      "itemName": "Little Fairy Shoulder",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 5,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2ce86d9db11cd66b9c3ac4afe9bb6277",
+        "itemName": "Blaze: Surging Flames",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "9e8ce8392ceef4f781035abf33434891",
+      "itemName": "Little Fairy Bottom",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 5,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "3410bd679dec54237ad833168f9ef07e",
+        "itemName": "Blaze: Tangled Will",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "564276318086b4a01fa57496183f9a6f",
+      "itemName": "Little Fairy Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 5,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\n- Movement Speed +10%",
+            "explainDetail": "Overall Damage +5%\n- Movement Speed +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e8b5e1382198ca94ed4a1d9ed98e9b0a",
+        "itemName": "Blaze: The Last Steps Taken",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "f21fde675af71531e3f78c3e76ec0ab3",
+      "itemName": "Little Fairy Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 5,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "89b1ecb0b5f97887b4933e98407eee17",
+                "name": "Petite Diablo",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "f43852d9066791af541cb68b0d460d95",
+                "name": "Aura of Conviction",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "91572889ccbb1dd79cf32d798126e2b4",
+                "name": "Pious Passion",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "49823ebbdcab5fd2c627013eadfd8c94",
+                "name": "Celebrity",
+                "value": 2
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "7%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "7%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "80ee7934ebbffb9fcc0c5236975fad99",
+        "itemName": "Blaze: Endless Burning",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "8bd719c045b66505b0006d4f47e32f08",
+      "itemName": "Elder Fairy Necklace",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 5,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 4000,
+            "explain": "Overall Damage +13%",
+            "explainDetail": "Overall Damage +13%",
+            "buffExplain": "Buff Power: 4,000",
+            "buffExplainDetail": "Buff Power: 4,000"
+          },
+          {
+            "explain": "Max MP +300",
+            "explainDetail": "Max MP +300"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "dc66d505973abbd096c838032f61b143",
+        "itemName": "Glory of the Pell Los Empire",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "2afccb5d8f11b3d33935323e58efaf93",
+      "itemName": "Elder Fairy Bracelet",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 4,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "buff": 3266,
+            "explain": "Overall Damage +9.8%",
+            "explainDetail": "Overall Damage +9.8%",
+            "buffExplain": "Buff Power: 3,266",
+            "buffExplainDetail": "Buff Power: 3,266"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +15% for party members within 500 px",
+            "explainDetail": "Physical/Magical damage reduction +15% for party members within 500 px"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "219ce2d85b2be9cefbc075fe0a9a69ec",
+        "itemName": "Passage to the Unknown",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "745dde74bd578dc2a67f2d2be0648ef2",
+      "itemName": "Little Fairy Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 5,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "buff": 3766,
+            "explain": "[Eyes on Me!]\n- Overall Damage +5.8%\n- Skill cooldown -10% (Awakening skills excluded)\n- Super Armor\n- Casts a spotlight.",
+            "explainDetail": "[Eyes on Me!]\n- Overall Damage +5.8%\n- Skill cooldown -10% (Awakening skills excluded)\n- Super Armor\n- Casts a spotlight.",
+            "buffExplain": "Buff Power: 3,766",
+            "buffExplainDetail": "Buff Power: 3,766"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          },
+          {
+            "explain": "MP +1,000 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "MP +1,000 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "737d5802fdb9a7cf4f3b4e4b97cd8643",
+        "itemName": "World Idol Ring",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "3870583838c63212173f5475236133ab",
+      "itemName": "Elder Fairy Sub Equipment",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 5,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%",
+            "explainDetail": "Overall Damage +10.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Skill range +7%",
+            "explainDetail": "Skill range +7%"
+          },
+          {
+            "explain": "Max HP +5%",
+            "explainDetail": "Max HP +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e78a77b086d1337b2aeb575ea5bd6e0c",
+        "itemName": "Reaper's Trap",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "7a129e02e935f70fb0c5d1405c60b104",
+      "itemName": "Distinct - Cry of Revealed Ego",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%",
+            "explainDetail": "Overall Damage +10.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Casts a barrier with 10% of Max HP for 5 sec. (Cooldown: 5 sec.)",
+            "explainDetail": "Casts a barrier with 10% of Max HP for 5 sec. (Cooldown: 5 sec.)"
+          },
+          {
+            "explain": "HP +300 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "HP +300 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2efc6fe6aac1216a6bb5d527009df5c5",
+        "itemName": "Peaceful Past",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "8996968423d40fae163fb34e8aafa0b8",
+      "itemName": "Starter Voice",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 6,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 175
+          },
+          {
+            "name": "Intelligence",
+            "value": 175
+          },
+          {
+            "name": "Vitality",
+            "value": 175
+          },
+          {
+            "name": "Spirit",
+            "value": 175
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%",
+            "explainDetail": "Overall Damage +10.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "All Abnormal Status Tolerances +5%",
+            "explainDetail": "All Abnormal Status Tolerances +5%"
+          },
+          {
+            "explain": "Hit Rate +10%",
+            "explainDetail": "Hit Rate +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "47084e8499312e5aab6ba37dcdee0649",
+        "itemName": "Ender's Oath",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Little Fairy Set",
+      "setItemRarityName": "Unique IV",
+      "active": {
+        "explain": "Summons fairies to fight with you.\n\n[Flame Amber]\nCasts Fever Blossom every 2 sec. Damage 19,200%.\nHP +1% every 3 sec.\n\n[Auto-Attack On/Off] [Equipment-Activated Option]\nControls the attacks of the fairies.\n- Stop attacking <-> Resume attacking\n- Cooldown: 1 sec.Controls the attacks of the fairies.\n- Stop attacking <-> Resume attacking\n- Cooldown: 1 sec.",
+        "explainDetail": "Summons fairies to fight with you.\n\n[Flame Amber]\nCasts Fever Blossom every 2 sec. Damage 19,200%.\nHP +1% every 3 sec.\n\n[Auto-Attack On/Off] [Equipment-Activated Option]\nControls the attacks of the fairies.\n- Stop attacking <-> Resume attacking\n- Cooldown: 1 sec.Controls the attacks of the fairies.\n- Stop attacking <-> Resume attacking\n- Cooldown: 1 sec.",
+        "status": [
+          {
+            "name": "Adventurer Fame",
+            "value": 6500
+          },
+          {
+            "name": "Buff Power",
+            "value": 16800
+          },
+          {
+            "name": "Overall Damage",
+            "value": "97.6%"
+          }
+        ],
+        "setPoint": {
+          "current": 1465,
+          "min": 1455,
+          "max": 1540
+        }
+      },
+      "slotInfo": [
+        {
+          "itemNo": "8b91df8df83061f9be5bd3df44e239de",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "1f4e201b452bffa53c1004319ca1b932",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "9e8ce8392ceef4f781035abf33434891",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "564276318086b4a01fa57496183f9a6f",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "f21fde675af71531e3f78c3e76ec0ab3",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "8bd719c045b66505b0006d4f47e32f08",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "2afccb5d8f11b3d33935323e58efaf93",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "745dde74bd578dc2a67f2d2be0648ef2",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "3870583838c63212173f5475236133ab",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "7a129e02e935f70fb0c5d1405c60b104",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "8996968423d40fae163fb34e8aafa0b8",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Rare"
+        }
+      ]
+    }
+  ]
+}

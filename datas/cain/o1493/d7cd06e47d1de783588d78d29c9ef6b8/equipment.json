@@ -1,0 +1,913 @@
+{
+  "serverId": "cain",
+  "characterId": "d7cd06e47d1de783588d78d29c9ef6b8",
+  "characterName": "o149",
+  "level": 115,
+  "jobId": "08cf6465c8dfcdbf5a896b40a2811007",
+  "jobGrowId": "ec6a93f4d14bb36ccc541183291197a7",
+  "jobName": "Slayer (F)",
+  "jobGrowName": "Neo: Vagabond",
+  "fame": 40683,
+  "adventureName": "o1493",
+  "guildId": "e5d6e24a5d9bfad3d1894447191ddb56",
+  "guildName": "AngelFamily",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "11da50b03bcb721a0cb9a845567f6d3c",
+      "itemName": "Classic Piercing Gold Sword",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "6aef9546ba235eacb4224a29cb795de8",
+      "itemTypeDetail": "Katana",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 13,
+      "itemGradeName": "Inferior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 13
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 8,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "284%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "512845f8016f295355ac5987c77fc612",
+      "itemName": "Festival's Climax Platinum Title [45Lv]",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 4
+          },
+          {
+            "name": "Strength",
+            "value": 25
+          },
+          {
+            "name": "Intelligence",
+            "value": 25
+          },
+          {
+            "name": "Vitality",
+            "value": 25
+          },
+          {
+            "name": "Spirit",
+            "value": 25
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "37acdb957dd876382ae0dbf12111588a",
+      "itemName": "Pack Beta Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "66c67e88b617c0a056d92c5d7ebd6887",
+      "setItemName": "Alpha of the Pack Hunt Set",
+      "reinforce": 4,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 90
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 90
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 90
+          },
+          {
+            "name": "Strength",
+            "value": 60
+          },
+          {
+            "name": "Intelligence",
+            "value": 60
+          }
+        ]
+      },
+      "amplificationName": "Dimensional SPR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nPoison Tolerance +15%",
+            "explainDetail": "Overall Damage +5%\nPoison Tolerance +15%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a7d08e0d5739c66f6066efd2db0e21bc",
+        "itemName": "Blaze: Shaken Reason of the Flame",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "feb7c7c4ae13097b06a98da23bd55d04",
+      "itemName": "Nature's Warning Shoulder",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 5,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nPhysical/Magical Def. +10,000\nHP/MP +1% when attacking (Cooldown: 3 sec.)",
+            "explainDetail": "Overall Damage +5%\nPhysical/Magical Def. +10,000\nHP/MP +1% when attacking (Cooldown: 3 sec.)"
+          },
+          {
+            "explain": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)",
+            "explainDetail": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "9914a87582b0a4e6bf03f25b14f9e27f",
+        "itemName": "Icelands: Freezing Sensation",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "294472cc59fd902d5f7f3bee8273d5f8",
+      "itemName": "Immortal Valkyrie Dress",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "594e1462a896859ea2a7cfc9aecb8cdf",
+      "setItemName": "Ancient Battlefield Valkyrie Set",
+      "reinforce": 4,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 90
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 90
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 90
+          },
+          {
+            "name": "Strength",
+            "value": 60
+          },
+          {
+            "name": "Intelligence",
+            "value": 60
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "3410bd679dec54237ad833168f9ef07e",
+        "itemName": "Blaze: Tangled Will",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "564276318086b4a01fa57496183f9a6f",
+      "itemName": "Little Fairy Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 3,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\n- Movement Speed +10%",
+            "explainDetail": "Overall Damage +5%\n- Movement Speed +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e8b5e1382198ca94ed4a1d9ed98e9b0a",
+        "itemName": "Blaze: The Last Steps Taken",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "cd7690c66bbe41a48d544d21d48c5d2a",
+      "itemName": "Brilliant Gold Hideout's Plate Coil",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "5952975fb5a964d20c047d0f034c021b",
+      "setItemName": "Hideout's Endless Gold Set",
+      "reinforce": 4,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "80ee7934ebbffb9fcc0c5236975fad99",
+        "itemName": "Blaze: Endless Burning",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "086a0b279c4b78d8da88cb50fd21203c",
+      "itemName": "Nature's Wrath Necklace",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 3,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "buff": 3766,
+            "explain": "Overall Damage +10.8%",
+            "explainDetail": "Overall Damage +10.8%",
+            "buffExplain": "Buff Power: 3,766",
+            "buffExplainDetail": "Buff Power: 3,766"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "[Mirror Armor]\nApplies the following when attacked.\n- Recovers from 33% of incoming damage if attacking within 3 sec. (Cooldown: 3 sec.)\n- Counterattack to inflict damage.\n * Counterattack Damage: 15,000%",
+            "explainDetail": "[Mirror Armor]\nApplies the following when attacked.\n- Recovers from 33% of incoming damage if attacking within 3 sec. (Cooldown: 3 sec.)\n- Counterattack to inflict damage.\n * Counterattack Damage: 15,000%"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +10%",
+            "explainDetail": "Physical/Magical damage reduction +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "f3df6f3fa74a599a1e04b5c4d610036a",
+        "itemName": "Protection: Soul",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "4aaf973f590018b87524da17ec7da7ef",
+      "itemName": "Noble Fairy Bracelet",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 3,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 35
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional VIT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 3500,
+            "explain": "Overall Damage +10.5%\n\nSkill MP cost +100%",
+            "explainDetail": "Overall Damage +10.5%\n\nSkill MP cost +100%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "MP +2% every sec.",
+            "explainDetail": "MP +2% every sec."
+          },
+          {
+            "explain": "MP +500 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "MP +500 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "d6bcf7e51f44c544ee4923597428cff1",
+        "itemName": "Mana Overflow",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "f9951f6ce7b4d5a3f2dea6d613da8c5a",
+      "itemName": "Nature's Rampage Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 3,
+      "itemGradeName": "Weak",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "buff": 3766,
+            "explain": "[Heresy Eradication]\nDeclares enemies as Heretics.\nOverall Damage +12.3% when attacking Heretics",
+            "explainDetail": "[Heresy Eradication]\nDeclares enemies as Heretics.\nOverall Damage +12.3% when attacking Heretics",
+            "buffExplain": "Buff Power: 3,766",
+            "buffExplainDetail": "Buff Power: 3,766"
+          },
+          {
+            "explain": "Max HP +200",
+            "explainDetail": "Max HP +200"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Physical/Magical Def. +2,500",
+            "explainDetail": "Physical/Magical Def. +2,500"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "0b36802ca5017b033ad9b7943c2bd9b9",
+        "itemName": "Finger Pointed at Heretics",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "d6f75d69f4ccff01e46ce4cada7290ec",
+      "itemName": "Deep Shadow Sub Equipment - Edge",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "64e05f3e220b6e0b079e699b8dc8b48f",
+      "setItemName": "Death in the Shadows Set",
+      "reinforce": 3,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Critical Chance",
+            "value": "3.0%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3.0%"
+          },
+          {
+            "name": "All Elemental Damage",
+            "value": 12
+          },
+          {
+            "name": "Atk. Amp.",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "buff": 3266,
+            "explain": "Overall Damage +6.8%\nAtk. Increase +1,200%",
+            "explainDetail": "Overall Damage +6.8%\nAtk. Increase +1,200%",
+            "buffExplain": "Buff Power: 3,266",
+            "buffExplainDetail": "Buff Power: 3,266"
+          },
+          {
+            "explain": "Attacks cast Inevitable Blow. (Cooldown: 2 sec.)\n- Inflicts 1,200% of total Atk. Increase.",
+            "explainDetail": "Attacks cast Inevitable Blow. (Cooldown: 2 sec.)\n- Inflicts 1,200% of total Atk. Increase."
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Attacks Immobilize enemies for 5 sec. (Cooldown: 1.9 sec.)",
+            "explainDetail": "Attacks Immobilize enemies for 5 sec. (Cooldown: 1.9 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "007247f5e3d2e09205fa28cda394267e",
+        "itemName": "Unavoidable Strike",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "81a8b2c6a0df7999e4d1360ef7ad97b7",
+      "itemName": "Vanguard Valkyrie Heavenly Jewel",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "594e1462a896859ea2a7cfc9aecb8cdf",
+      "setItemName": "Ancient Battlefield Valkyrie Set",
+      "reinforce": 3,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "All speed +9.9%",
+            "explainDetail": "All speed +9.9%"
+          },
+          {
+            "explain": "Skill range +12%",
+            "explainDetail": "Skill range +12%"
+          },
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "explain": "All Elemental Damage +23",
+            "explainDetail": "All Elemental Damage +23"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "fd530dd0e1e58c637bde2d1a29682d32",
+        "itemName": "Eternal Fragment - Magic Stone",
+        "itemRarity": "Legendary"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SUPPORT_WEAPON",
+      "slotName": "Secondary Weapon",
+      "itemId": "61dba9f44d6c6d6bb8f127dc00ba559a",
+      "itemName": "Seon: Aspect-devoured Lightsabre",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "70a6c2f691e02f5f30e0589467f9c73d",
+      "itemTypeDetail": "Lightsabre",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Ordinary",
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 1291,
+            "explain": "Overall Damage +5%\nHit Rate +5%",
+            "explainDetail": "Overall Damage +5%\nHit Rate +5%"
+          },
+          {
+            "buff": 1291,
+            "explain": "Overall Damage +5%\nEvasion +5%",
+            "explainDetail": "Overall Damage +5%\nEvasion +5%"
+          },
+          {
+            "damage": 762.7,
+            "buff": 775,
+            "explain": "When attacking, increase Damage Value by +7627 for 60 seconds.",
+            "explainDetail": "When attacking, increase Damage Value by +7627 for 60 seconds (Max 1 stack)."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "8360af52ecc0329fec7ac090a41cee39",
+        "itemName": "Last Fiery Breath: Lightsabre",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1937.6,
+        "buff": 7278,
+        "explain": "Overall Damage +10%\nAll skill levels +1 (Awakening skills excluded)\n\nLight Resistance +10\nHP +460.2 per min.",
+        "explainDetail": "Overall Damage +10%\nAll skill levels +1 (Awakening skills excluded)\n\nLight Resistance +10\nHP +460.2 per min."
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "545086702967693f1827746242ecf8a0",
+      "itemName": "Faint Magic Domain Earrings",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "79d71d7797e1dc1e2840db93ed59d37a",
+      "setItemName": "Magic Domain Set",
+      "reinforce": 4,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          },
+          {
+            "name": "Strength",
+            "value": 50
+          },
+          {
+            "name": "Intelligence",
+            "value": 50
+          },
+          {
+            "name": "Vitality",
+            "value": 50
+          },
+          {
+            "name": "Spirit",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%",
+            "explainDetail": "Overall Damage +10.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Physical/Magical Critical Chances +5.5%",
+            "explainDetail": "Physical/Magical Critical Chances +5.5%"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Physical/Magical damage reduction +16.5%",
+            "explainDetail": "Physical/Magical damage reduction +16.5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "456d0bdbb2bf752535a6347d0a2e9be2",
+        "itemName": "Haven of Destruction",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    }
+  ],
+  "setItemInfo": null
+}

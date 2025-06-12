@@ -1,0 +1,902 @@
+{
+  "serverId": "cain",
+  "characterId": "f4d97eed25f9939f98c0d6c212b29425",
+  "characterName": "CecumBlood",
+  "level": 115,
+  "jobId": "40132cbc8b2b5eedfe035e35c322472e",
+  "jobGrowId": "0f12d512a825d52e75d87120f39ba4cb",
+  "jobName": "Slayer (M)",
+  "jobGrowName": "Neo: Berserker",
+  "fame": 40702,
+  "adventureName": "Caecum",
+  "guildId": "8b918124e322333e64b8f8ffac160807",
+  "guildName": "Beta",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "2bbdabd1b873978a5b6aad0d55f4c37f",
+      "itemName": "First Flash",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "3ed76dd19aebf34b9e9fbbd09efc72e5",
+      "itemTypeDetail": "Zanbato",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Primeval",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 3,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 1,
+      "asrahanOption": {
+        "options": [
+          {
+            "name": "Shimmering Metal Starfield",
+            "step": 20,
+            "buff": 2185,
+            "explain": "Overall Damage +9%\nAtk. Increase +525%\n\n[Thunder Acceleration]\nAll speed +25% with the power of thunder\n\n[Overcharge]\nAttacks discharge lightning from the overcharged power of thunder. (Cooldown: 3 sec.)\n- Lightning-discharge damage 3,053%",
+            "explainDetail": "Overall Damage +9%\nAtk. Increase +525%\n\n[Thunder Acceleration]\nAll speed +25% with the power of thunder\n\n[Overcharge]\nAttacks discharge lightning from the overcharged power of thunder. (Cooldown: 3 sec.)\n- Lightning-discharge damage 3,053%"
+          },
+          {
+            "name": "Memory's Destination",
+            "step": 5,
+            "buff": 950,
+            "explain": "Overall Damage +5%",
+            "explainDetail": "Overall Damage +5%"
+          },
+          {
+            "name": "Mark of the Sublime",
+            "buff": 380,
+            "explain": "[Lightning Dance]\nRecreates the dance of lightning upon entering a dungeon.\n- Overall Damage +5%\n- All speed +30%\n- Lightning-discharge cooldown -2 sec.",
+            "explainDetail": "[Lightning Dance]\nRecreates the dance of lightning upon entering a dungeon.\n- Overall Damage +5%\n- All speed +30%\n- Lightning-discharge cooldown -2 sec."
+          },
+          {
+            "name": "Traces to the First Memory",
+            "step": 6,
+            "buff": 2000,
+            "explain": "Overall Damage +10%\n\n[Energy of Mu]\nIf an enemy exists on the map, attacks it with one of 3 patterns containing the Energy of Mu. (Cooldown: 10 sec.)\n- Releases the Energy of Mu. Release damage 30,000%\n- Casts Shackles of Memory. Shackle damage 3,333% per cast.\n- Casts Dream Collapse. Collapse damage 1,875% per cast.",
+            "explainDetail": "Overall Damage +10%\n\n[Energy of Mu]\nIf an enemy exists on the map, attacks it with one of 3 patterns containing the Energy of Mu. (Cooldown: 10 sec.)\n- Releases the Energy of Mu. Release damage 30,000%\n- Casts Shackles of Memory. Shackle damage 3,333% per cast.\n- Casts Dream Collapse. Collapse damage 1,875% per cast."
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "8271a4390cea0b3e94ec2a2e8da4126f",
+      "itemName": "DFO Newbie Title",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "a472fcd5b0bd087358257ebd1ffab223",
+      "itemName": "Tough Luck Jacket",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "7052c186828d7cd32fd8fc6be5c5f806",
+        "itemName": "Rising Winds: The Calm Before the Storm",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "7de95c4ca99eca6805bb18ded82565ec",
+      "itemName": "Steadfast Luck Amice",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "5c226869bec0ef70b26a9b8205f08992",
+        "itemName": "Rising Winds: Fickle Flow",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "acc64a7aa6c0dd52ef8d4ae57c0b4c97",
+      "itemName": "Tough Luck Pants",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "31191350e09989ab35d363953b2c6123",
+        "itemName": "Rising Winds: Windswept Traces",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "761ec6e544ada5384a939be5da656066",
+      "itemName": "Distinct - Benevolent Moon Hunter's Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          },
+          {
+            "name": "Vitality",
+            "value": 40
+          },
+          {
+            "name": "Spirit",
+            "value": 40
+          },
+          {
+            "name": "Physical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 10
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "b8f062e48e9d0539c1540aff86c21167",
+        "itemName": "Rising Winds: Weight of the Given Hope",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "82d4f92e9bc1df3a1aa2d4f768e4db06",
+      "itemName": "Starter Legend Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "bb8428f55fdc613a6f53eabb23450313",
+        "itemName": "Rising Winds: Uncontrollable Gust",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "016c528d16f6da2a2336c7d64df93257",
+      "itemName": "Starter Effort",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 28
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 4000,
+            "explain": "Overall Damage +13%",
+            "explainDetail": "Overall Damage +13%",
+            "buffExplain": "Buff Power: 4,000",
+            "buffExplainDetail": "Buff Power: 4,000"
+          },
+          {
+            "explain": "Max MP +300",
+            "explainDetail": "Max MP +300"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "dc66d505973abbd096c838032f61b143",
+        "itemName": "Glory of the Pell Los Empire",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "6c21517c02d2ac0b7e065e70b14f7fa8",
+      "itemName": "Sturdy Luck Bracelet",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 28
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 3500,
+            "explain": "Overall Damage +10.5%",
+            "explainDetail": "Overall Damage +10.5%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Skill range +23%",
+            "explainDetail": "Skill range +23%"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "36545151ce71868e8205db60d050e66d",
+        "itemName": "Skill Pearl Extension",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "3493dfc4b38bdaea389a3ce4c863429a",
+      "itemName": "Tough Luck Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 28
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3500,
+            "explain": "Overall Damage +5%\nAll Elemental Damage +35\n\n[Chill of Fury]\nCreates an ice dragon that attacks enemies.\n- Ice Dragon Damage: 600%",
+            "explainDetail": "Overall Damage +5%\nAll Elemental Damage +35\n\n[Chill of Fury]\nCreates an ice dragon that attacks enemies.\n- Ice Dragon Damage: 600%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Attacks Freeze enemies for 5 sec. (Cooldown: 2 sec.)",
+            "explainDetail": "Attacks Freeze enemies for 5 sec. (Cooldown: 2 sec.)"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "4088b8ebbf029bca20a45a01d9c71e4d",
+        "itemName": "Fury Buried in Frost",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "8790003c27e9155b2ee79d4ddd1a845b",
+      "itemName": "Sturdy Luck Mask",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 110
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 3500,
+            "explain": "Overall Damage +11.5%",
+            "explainDetail": "Overall Damage +11.5%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Skill range +7%",
+            "explainDetail": "Skill range +7%"
+          },
+          {
+            "explain": "Max HP +5%",
+            "explainDetail": "Max HP +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e78a77b086d1337b2aeb575ea5bd6e0c",
+        "itemName": "Reaper's Trap",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "7a129e02e935f70fb0c5d1405c60b104",
+      "itemName": "Distinct - Cry of Revealed Ego",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 3500,
+            "explain": "Overall Damage +10.5%\n\n[Immortality Spell]\nCasts Immortality Spell on death for 1 sec. (Cooldown: 120 sec.)\n- HP +1%\n- Negates other HP healing effects and damage.",
+            "explainDetail": "Overall Damage +10.5%\n\n[Immortality Spell]\nCasts Immortality Spell on death for 1 sec. (Cooldown: 120 sec.)\n- HP +1%\n- Negates other HP healing effects and damage.",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Max HP +1,000",
+            "explainDetail": "Max HP +1,000"
+          },
+          {
+            "explain": "Max MP +1,000",
+            "explainDetail": "Max MP +1,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "001d48b33aa6e1e8c598a32f88625024",
+        "itemName": "Heavenly Protection",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "bf7337dfaa5a2ee2e9b2a9123fe9f344",
+      "itemName": "Sturdy Luck Earrings",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          },
+          {
+            "name": "Strength",
+            "value": 50
+          },
+          {
+            "name": "Intelligence",
+            "value": 50
+          },
+          {
+            "name": "Vitality",
+            "value": 50
+          },
+          {
+            "name": "Spirit",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +10%",
+            "explainDetail": "Overall Damage +10%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Skill range +7%",
+            "explainDetail": "Skill range +7%"
+          },
+          {
+            "explain": "Physical/Magical Def. +10,000",
+            "explainDetail": "Physical/Magical Def. +10,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "c3aa136dad2cce1403db5b4583e461e1",
+        "itemName": "Past Mistakes",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Brilliant Serendipity Set",
+      "setItemRarityName": "Unique III",
+      "active": {
+        "explain": "A lucky butterfly creates a chance of resetting skill cooldown, giving you more opportunities to use skills.\n\n[First Fortune]\n- Overall Damage +3%\n\n[Divine Blessing]\nAttacks create a 1% chance of [Divine Blessing]. (Casting Attempt Cooldown: 1 sec.)\n- Resets a skill with the longest remaining cooldown. (33 sec. or less. Awakening skills excluded)undefined",
+        "explainDetail": "A lucky butterfly creates a chance of resetting skill cooldown, giving you more opportunities to use skills.\n\n[First Fortune]\n- Overall Damage +3%\n\n[Divine Blessing]\nAttacks create a 1% chance of [Divine Blessing]. (Casting Attempt Cooldown: 1 sec.)\n- Resets a skill with the longest remaining cooldown. (33 sec. or less. Awakening skills excluded)undefined",
+        "status": [
+          {
+            "name": "Adventurer Fame",
+            "value": 5500
+          },
+          {
+            "name": "Buff Power",
+            "value": 14400
+          },
+          {
+            "name": "Overall Damage",
+            "value": "82.8%"
+          }
+        ],
+        "setPoint": {
+          "current": 1415,
+          "min": 1370,
+          "max": 1455
+        }
+      },
+      "slotInfo": [
+        {
+          "itemNo": "a472fcd5b0bd087358257ebd1ffab223",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "7de95c4ca99eca6805bb18ded82565ec",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "acc64a7aa6c0dd52ef8d4ae57c0b4c97",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "761ec6e544ada5384a939be5da656066",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "82d4f92e9bc1df3a1aa2d4f768e4db06",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "016c528d16f6da2a2336c7d64df93257",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "6c21517c02d2ac0b7e065e70b14f7fa8",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "3493dfc4b38bdaea389a3ce4c863429a",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "8790003c27e9155b2ee79d4ddd1a845b",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "7a129e02e935f70fb0c5d1405c60b104",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "bf7337dfaa5a2ee2e9b2a9123fe9f344",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Legendary"
+        }
+      ]
+    }
+  ]
+}

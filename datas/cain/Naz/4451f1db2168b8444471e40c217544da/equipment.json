@@ -1,0 +1,867 @@
+{
+  "serverId": "cain",
+  "characterId": "4451f1db2168b8444471e40c217544da",
+  "characterName": "DualGhast",
+  "level": 115,
+  "jobId": "40132cbc8b2b5eedfe035e35c322472e",
+  "jobGrowId": "5dff544828c42d8fc109f2f747d50c7f",
+  "jobName": "Slayer (M)",
+  "jobGrowName": "Neo: Ghostblade",
+  "fame": 40549,
+  "adventureName": "Naz",
+  "guildId": "6123216098d8db561e6b46ae3e968ef9",
+  "guildName": "Kinetic",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "71b08e18ab9f73fe8e0cca15c5b2c84a",
+      "itemName": "Yang Ull's Twig: Strong",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "f2ad60ace0d81be69055ec3afb68885f",
+      "itemTypeDetail": "Bludgeon",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 12,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 13
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 8,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "189.5%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "6b6a5620ca82a1bc659ce78492c00f19",
+      "itemName": "The King of Fighters '98 UM",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "df1a5cb68e29f913c6c6b3cf2cda1355",
+      "itemName": "Pack Omega Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "66c67e88b617c0a056d92c5d7ebd6887",
+      "setItemName": "Alpha of the Pack Hunt Set",
+      "reinforce": 7,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "7052c186828d7cd32fd8fc6be5c5f806",
+        "itemName": "Rising Winds: The Calm Before the Storm",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "17837084f0b30198f856b195a4670c0d",
+      "itemName": "Pack Omega Helmet",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "66c67e88b617c0a056d92c5d7ebd6887",
+      "setItemName": "Alpha of the Pack Hunt Set",
+      "reinforce": 4,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "5c226869bec0ef70b26a9b8205f08992",
+        "itemName": "Rising Winds: Fickle Flow",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "d3b8ae90bbe54d9f39bc7f9178ddc6f2",
+      "itemName": "Starter Training Bottom",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 4,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "31191350e09989ab35d363953b2c6123",
+        "itemName": "Rising Winds: Windswept Traces",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "63a315062417a928a54f2bff1f570667",
+      "itemName": "Starter Records Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 4,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          },
+          {
+            "name": "Vitality",
+            "value": 40
+          },
+          {
+            "name": "Spirit",
+            "value": 40
+          },
+          {
+            "name": "Physical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 10
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\n- Movement Speed +15%",
+            "explainDetail": "Overall Damage +5%\n- Movement Speed +15%"
+          },
+          {
+            "explain": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)",
+            "explainDetail": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "8d2f128a1c4edfd302cf6a6b0008bc5a",
+        "itemName": "Icelands: Footprints that Leave No Trace",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "b5a9283288c365e2dfd03ee0acf45a0b",
+      "itemName": "Distinct - Maleficence Slayer's Fury Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 4,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "bb8428f55fdc613a6f53eabb23450313",
+        "itemName": "Rising Winds: Uncontrollable Gust",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "016c528d16f6da2a2336c7d64df93257",
+      "itemName": "Starter Effort",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 4,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3600,
+            "explain": "Overall Damage +5.3%\nAll Elemental Damage +35\n\n[Chill of Resentment]\nCreates an ice dragon that attacks enemies.\n- Ice Dragon Damage: 600%",
+            "explainDetail": "Overall Damage +5.3%\nAll Elemental Damage +35\n\n[Chill of Resentment]\nCreates an ice dragon that attacks enemies.\n- Ice Dragon Damage: 600%",
+            "buffExplain": "Buff Power: 3,600",
+            "buffExplainDetail": "Buff Power: 3,600"
+          },
+          {
+            "explain": "Attacks Freeze enemies for 5 sec. (Cooldown: 2 sec.)",
+            "explainDetail": "Attacks Freeze enemies for 5 sec. (Cooldown: 2 sec.)"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "5974b6a06e0ef38273a01f04ba6daf25",
+        "itemName": "Resentment Trapped in the Cold",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 3,
+        "setPoint": 95
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "13fa5e41f2a8f22087c12f96d463c192",
+      "itemName": "Distinct - Profane One's Interest Bracelet",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 7,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "buff": 3266,
+            "explain": "Overall Damage +9.8%",
+            "explainDetail": "Overall Damage +9.8%",
+            "buffExplain": "Buff Power: 3,266",
+            "buffExplainDetail": "Buff Power: 3,266"
+          },
+          {
+            "explain": "Skill range +23%",
+            "explainDetail": "Skill range +23%"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "36545151ce71868e8205db60d050e66d",
+        "itemName": "Skill Pearl Extension",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "86bbc318e8c1dacd06dcb923ac7fedff",
+      "itemName": "Pack Alpha Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Primeval",
+      "setItemId": "66c67e88b617c0a056d92c5d7ebd6887",
+      "setItemName": "Alpha of the Pack Hunt Set",
+      "reinforce": 4,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 4000,
+            "explain": "Overall Damage +11.5%\n\n[Memories Shed on the Styx]\nSkills with 1 sec. or longer cooldown create a 1% chance of resetting 1 skill's cooldown. (Buffers excluded)",
+            "explainDetail": "Overall Damage +11.5%\n\n[Memories Shed on the Styx]\nSkills with 1 sec. or longer cooldown create a 1% chance of resetting 1 skill's cooldown. (Buffers excluded)",
+            "buffExplain": "Buff Power: 4,000",
+            "buffExplainDetail": "Buff Power: 4,000"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          },
+          {
+            "explain": "Max MP +300",
+            "explainDetail": "Max MP +300"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "f093d16b9f25ad1409c4491eb91f3b03",
+        "itemName": "Amnesia Stone",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 265
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "bd5356543d465a607818eafda84dc794",
+      "itemName": "Starter Preparation",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 7,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 110
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 3500,
+            "explain": "Overall Damage +11.5%",
+            "explainDetail": "Overall Damage +11.5%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Skill range +7%",
+            "explainDetail": "Skill range +7%"
+          },
+          {
+            "explain": "Max HP +5%",
+            "explainDetail": "Max HP +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e78a77b086d1337b2aeb575ea5bd6e0c",
+        "itemName": "Reaper's Trap",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 3,
+        "setPoint": 95
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "7a129e02e935f70fb0c5d1405c60b104",
+      "itemName": "Distinct - Cry of Revealed Ego",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 7,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 3500,
+            "explain": "Overall Damage +11.5%",
+            "explainDetail": "Overall Damage +11.5%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Casts a barrier with 10% of Max HP for 5 sec. (Cooldown: 5 sec.)",
+            "explainDetail": "Casts a barrier with 10% of Max HP for 5 sec. (Cooldown: 5 sec.)"
+          },
+          {
+            "explain": "HP +300 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "HP +300 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2efc6fe6aac1216a6bb5d527009df5c5",
+        "itemName": "Peaceful Past",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "d9263d3292fa2ce641d1d07cea891c0a",
+      "itemName": "Distinct - Painful Echoes Requiem",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          },
+          {
+            "name": "Strength",
+            "value": 50
+          },
+          {
+            "name": "Intelligence",
+            "value": 50
+          },
+          {
+            "name": "Vitality",
+            "value": 50
+          },
+          {
+            "name": "Spirit",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "buff": 3266,
+            "explain": "Overall Damage +10.8%",
+            "explainDetail": "Overall Damage +10.8%",
+            "buffExplain": "Buff Power: 3,266",
+            "buffExplainDetail": "Buff Power: 3,266"
+          },
+          {
+            "explain": "Movement Speed +20%",
+            "explainDetail": "Movement Speed +20%"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "bde87e188d998886743ceb1365b22f89",
+        "itemName": "Apocalypse Signals",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "66c67e88b617c0a056d92c5d7ebd6887",
+      "setItemName": "Pack Omega Set",
+      "setItemRarityName": "Unique III",
+      "active": {
+        "explain": "You're stronger with your companions.\n\n[Party Play Effects]\n[Power of the Pack]\nCasts an aura that grants the following to party members. (Max Stacks: 1)\n- All speed +10%\n\n[Thrill of the Hunt] [Equipment-Activated Option]\nHowls to intimidate enemies.\n- Damage: 3,825%\n- Causes Rupture on hit for 30 sec.\n- Cooldown: 30 sec.\n(Damage on Ruptured enemies +5/7/8% per 1/2/3 stacks)\n\n(Buffers excluded from the [Power of the Pack]/[Thrill of the Hunt]  effects)\n\n[Solo Play Only]\n- Overall Damage +10.6%\n- [Power of the Pack] effect applied\n- [Thrill of the Hunt] effect not applied\n\n(Buffers excluded from the [Power of the Pack] effect)Howls to intimidate enemies.\n- Damage: 3,825%\n- Causes Rupture on hit for 30 sec.\n- Cooldown: 30 sec.",
+        "explainDetail": "You're stronger with your companions.\n\n[Party Play Effects]\n[Power of the Pack]\nCasts an aura that grants the following to party members. (Max Stacks: 1)\n- All speed +10%\n\n[Thrill of the Hunt] [Equipment-Activated Option]\nHowls to intimidate enemies.\n- Damage: 3,825%\n- Causes Rupture on hit for 30 sec.\n- Cooldown: 30 sec.\n(Damage on Ruptured enemies +5/7/8% per 1/2/3 stacks)\n\n(Buffers excluded from the [Power of the Pack]/[Thrill of the Hunt]  effects)\n\n[Solo Play Only]\n- Overall Damage +10.6%\n- [Power of the Pack] effect applied\n- [Thrill of the Hunt] effect not applied\n\n(Buffers excluded from the [Power of the Pack] effect)Howls to intimidate enemies.\n- Damage: 3,825%\n- Causes Rupture on hit for 30 sec.\n- Cooldown: 30 sec.",
+        "status": [
+          {
+            "name": "Adventurer Fame",
+            "value": 5500
+          },
+          {
+            "name": "Buff Power",
+            "value": 14400
+          },
+          {
+            "name": "Overall Damage",
+            "value": "68.3%"
+          }
+        ],
+        "setPoint": {
+          "current": 1375,
+          "min": 1370,
+          "max": 1455
+        }
+      },
+      "slotInfo": [
+        {
+          "itemNo": "df1a5cb68e29f913c6c6b3cf2cda1355",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "17837084f0b30198f856b195a4670c0d",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "d3b8ae90bbe54d9f39bc7f9178ddc6f2",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "63a315062417a928a54f2bff1f570667",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "b5a9283288c365e2dfd03ee0acf45a0b",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "016c528d16f6da2a2336c7d64df93257",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "13fa5e41f2a8f22087c12f96d463c192",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "86bbc318e8c1dacd06dcb923ac7fedff",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Primeval"
+        },
+        {
+          "itemNo": "bd5356543d465a607818eafda84dc794",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "7a129e02e935f70fb0c5d1405c60b104",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "d9263d3292fa2ce641d1d07cea891c0a",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Unique"
+        }
+      ]
+    }
+  ]
+}
