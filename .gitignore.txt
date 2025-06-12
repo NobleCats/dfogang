@@ -1,2 +1,0 @@
-DFO_API_KEY
-FirstRun.py
