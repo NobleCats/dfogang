@@ -165,6 +165,7 @@ def search_explorer():
                         "jobGrowName": equip_data.get("jobGrowName", ""),
                         "adventureName": equip_data.get("adventureName", ""),
                         "fame": equip_data.get("fame", 0),
+                        "level": equip_data.get("level", 0),
                         "serverId": serverId
                     })
             except Exception as e:

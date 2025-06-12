@@ -1,0 +1,937 @@
+{
+  "serverId": "cain",
+  "characterId": "8b19bcd56788c4603d4aba1e127e8634",
+  "characterName": "MythicalEyes",
+  "level": 115,
+  "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+  "jobGrowId": "5dff544828c42d8fc109f2f747d50c7f",
+  "jobName": "Mage (F)",
+  "jobGrowName": "Neo: Enchantress",
+  "fame": 33764,
+  "adventureName": "Seaurchin",
+  "guildId": "1d9b19b8d98923b2dcb05aae3c2cabb6",
+  "guildName": "PTT",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "bad953424db743ecaee397773ce3bf0b",
+      "itemName": "One of a Kind Broomstick",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "85d52ead3b577b3eb6d5bcbd668ca1c6",
+      "itemTypeDetail": "Broomstick",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 1,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 13
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 7,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "141%"
+          },
+          {
+            "name": "Buff Power",
+            "value": 24101
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "e19965e8b29af91c847f1114bb383fb5",
+      "itemName": "One of a Kind",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "2474182e934e797144b2a07e79d60cab",
+      "itemName": "Apprentice Fox Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "8786cef035801936ebf53f898915a971",
+      "setItemName": "Ethereal Orb Arts Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1272.8,
+            "buff": 2066,
+            "explain": "Attack Speed +15%\nCasting Speed +20%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.",
+            "explainDetail": "Attack Speed +15%\nCasting Speed +20%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase."
+          },
+          {
+            "explain": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5",
+            "explainDetail": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a88471db98af7ae015b9075fffb8981f",
+        "itemName": "Thunder: Dark Clouds over the Land",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "a1c3f548c020a859f1d2f8c4769cad5e",
+      "itemName": "Starter Mindset Robe",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1272.8,
+            "buff": 2066,
+            "explain": "Physical/Magical damage reduction +6%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.",
+            "explainDetail": "Physical/Magical damage reduction +6%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase."
+          },
+          {
+            "explain": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5",
+            "explainDetail": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "296d494ab107be578a49be14df3f0414",
+        "itemName": "Thunder: Electrifying Sensation",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "4d088b188198aabc19ac40e76430a811",
+      "itemName": "Distinct - Clear Sea Stalwart Gaiters",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1272.8,
+            "buff": 2066,
+            "explain": "Max HP/MP +1,500\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.",
+            "explainDetail": "Max HP/MP +1,500\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase."
+          },
+          {
+            "explain": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5",
+            "explainDetail": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "791bcfbb194f10889a932f352176d52e",
+        "itemName": "Thunder: Following Pulses",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "aa7c1a35d8aa472c857a08028315a845",
+      "itemName": "Novice Fox Silver Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "8786cef035801936ebf53f898915a971",
+      "setItemName": "Ethereal Orb Arts Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1272.8,
+            "buff": 2066,
+            "explain": "Movement Speed +12%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.",
+            "explainDetail": "Movement Speed +12%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase."
+          },
+          {
+            "explain": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5",
+            "explainDetail": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "43efaf74f5075adc1e45744342a35e2e",
+        "itemName": "Thunder: Reaching for the Clouds",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "82d4f92e9bc1df3a1aa2d4f768e4db06",
+      "itemName": "Starter Legend Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1272.8,
+            "buff": 2066,
+            "explain": "Physical/Magical Critical Chances +10%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.",
+            "explainDetail": "Physical/Magical Critical Chances +10%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase."
+          },
+          {
+            "explain": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5",
+            "explainDetail": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "b1d1b065215bd1affd3b5d69160ed3c2",
+        "itemName": "Thunder: Scars in the Sky",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "016c528d16f6da2a2336c7d64df93257",
+      "itemName": "Starter Effort",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3500,
+            "explain": "Overall Damage +11%",
+            "explainDetail": "Overall Damage +11%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "[Soul Drain]\nAbsorbs souls every 15 sec.\n- MP +15%",
+            "explainDetail": "[Soul Drain]\nAbsorbs souls every 15 sec.\n- MP +15%"
+          },
+          {
+            "explain": "Max MP +5%",
+            "explainDetail": "Max MP +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "c7dab0484a26567396ad678e9f0e03a6",
+        "itemName": "Soul Tracing Device",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "5653acb07a778c5d9688ba641ccd34eb",
+      "itemName": "Starter Bell",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +9%",
+            "explainDetail": "Overall Damage +9%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Skill range +23%",
+            "explainDetail": "Skill range +23%"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "36545151ce71868e8205db60d050e66d",
+        "itemName": "Skill Pearl Extension",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "2f6968e4066957e25f8dc262072ae472",
+      "itemName": "Master Fox Charm Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Primeval",
+      "setItemId": "8786cef035801936ebf53f898915a971",
+      "setItemName": "Ethereal Orb Arts Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3600,
+            "explain": "[Eyes on Me!]\n- Overall Damage +5.3%\n- Skill cooldown -10% (Awakening skills excluded)\n- Super Armor\n- Casts a spotlight.",
+            "explainDetail": "[Eyes on Me!]\n- Overall Damage +5.3%\n- Skill cooldown -10% (Awakening skills excluded)\n- Super Armor\n- Casts a spotlight.",
+            "buffExplain": "Buff Power: 3,600",
+            "buffExplainDetail": "Buff Power: 3,600"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          },
+          {
+            "explain": "MP +1,000 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "MP +1,000 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "737d5802fdb9a7cf4f3b4e4b97cd8643",
+        "itemName": "World Idol Ring",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 265
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "bd5356543d465a607818eafda84dc794",
+      "itemName": "Starter Preparation",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%",
+            "explainDetail": "Overall Damage +10.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Physical/Magical Critical Chances +5%",
+            "explainDetail": "Physical/Magical Critical Chances +5%"
+          },
+          {
+            "explain": "Evasion +20%",
+            "explainDetail": "Evasion +20%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "02ef726902571be42f2ac8f677232f40",
+        "itemName": "Invisible Stone",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "7a129e02e935f70fb0c5d1405c60b104",
+      "itemName": "Distinct - Cry of Revealed Ego",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +9.3%\n\n[Immortality Spell]\nCasts Immortality Spell on death for 1 sec. (Cooldown: 120 sec.)\n- HP +1%\n- Negates other HP healing effects and damage.",
+            "explainDetail": "Overall Damage +9.3%\n\n[Immortality Spell]\nCasts Immortality Spell on death for 1 sec. (Cooldown: 120 sec.)\n- HP +1%\n- Negates other HP healing effects and damage.",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Max HP +1,000",
+            "explainDetail": "Max HP +1,000"
+          },
+          {
+            "explain": "Max MP +1,000",
+            "explainDetail": "Max MP +1,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "001d48b33aa6e1e8c598a32f88625024",
+        "itemName": "Heavenly Protection",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "d9263d3292fa2ce641d1d07cea891c0a",
+      "itemName": "Distinct - Painful Echoes Requiem",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 175
+          },
+          {
+            "name": "Intelligence",
+            "value": 175
+          },
+          {
+            "name": "Vitality",
+            "value": 175
+          },
+          {
+            "name": "Spirit",
+            "value": 175
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%\n\nSuper Armor",
+            "explainDetail": "Overall Damage +10.3%\n\nSuper Armor",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Movement Speed +5%",
+            "explainDetail": "Movement Speed +5%"
+          },
+          {
+            "explain": "Attacks Bleed, Poison, Burn, or Shock enemies for 5 sec. (Cooldown: 1 sec.)",
+            "explainDetail": "Attacks Bleed, Poison, Burn, or Shock enemies for 5 sec. (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "99d486602d68f136cd71228a60a54e84",
+        "itemName": "Whispers of Sweet Scent",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "8786cef035801936ebf53f898915a971",
+      "setItemName": "Subtle Ethereal Orb Arts Set",
+      "setItemRarityName": "Unique I",
+      "active": {
+        "explain": "Borrows the power of the fox orbs and strengthens you instantly.\n Activates [Ethereal Orb].\n- Orb Gauge +5 when attacking (Cooldown: 1 sec.)\n- Max Orb Charges: 1\n- Orbs can't be charged during the Ethereal Orb buff.\n- Orb Gauge +100 upon entering dungeons\n\n[Ethereal Orb] [Equipment-Activated Option]\n- When activated, fully consumes the Orb Gauge and casts a buff.\n- Overall Damage +10% per orb consumed\n- Buff Duration: 30 sec.\n- Cooldown: 30 sec.Casts the Ethereal Orb buff. Consumes all orbs with a full gauge when used. (Cooldown: 30 sec.)",
+        "explainDetail": "Borrows the power of the fox orbs and strengthens you instantly.\nActivates [Ethereal Orb].\n- Orb Gauge +5 when attacking (Cooldown: 1 sec.)\n- Max Orb Charges: 1\n- Orbs can't be charged during the Ethereal Orb buff.\n- Orb Gauge +100 upon entering dungeons\n\n[Ethereal Orb] [Equipment-Activated Option]\n- When activated, fully consumes the Orb Gauge and casts a buff.\n- Overall Damage +10% per orb consumed\n- Buff Duration: 30 sec.\n- Cooldown: 30 sec.Casts the Ethereal Orb buff. Consumes all orbs with a full gauge when used. (Cooldown: 30 sec.)",
+        "status": [
+          {
+            "name": "Adventurer Fame",
+            "value": 3500
+          },
+          {
+            "name": "Buff Power",
+            "value": 9600
+          },
+          {
+            "name": "Overall Damage",
+            "value": "43%"
+          }
+        ],
+        "setPoint": {
+          "current": 1215,
+          "min": 1200,
+          "max": 1285
+        }
+      },
+      "slotInfo": [
+        {
+          "itemNo": "2474182e934e797144b2a07e79d60cab",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "a1c3f548c020a859f1d2f8c4769cad5e",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "4d088b188198aabc19ac40e76430a811",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "aa7c1a35d8aa472c857a08028315a845",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "82d4f92e9bc1df3a1aa2d4f768e4db06",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "016c528d16f6da2a2336c7d64df93257",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "5653acb07a778c5d9688ba641ccd34eb",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "2f6968e4066957e25f8dc262072ae472",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Primeval"
+        },
+        {
+          "itemNo": "bd5356543d465a607818eafda84dc794",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "7a129e02e935f70fb0c5d1405c60b104",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "d9263d3292fa2ce641d1d07cea891c0a",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Unique"
+        }
+      ]
+    }
+  ]
+}
