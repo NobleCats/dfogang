@@ -19,6 +19,15 @@ def search_characters(server, name):
     r.raise_for_status()
     return r.json().get('rows', [])
 
+def get_character_id(server, name):
+    url = f"https://api.dfoneople.com/df/servers/{server}/characters?characterName={name}&limit=1&wordType=full&apikey={API_KEY}"
+    r = requests.get(url)
+    r.raise_for_status()
+    rows = r.json().get("rows", [])
+    if rows:
+        return rows[0]["characterId"]
+    return None
+
 
 def get_profile(server, character_id):
     url = f"https://api.dfoneople.com/df/servers/{server}/characters/{character_id}?apikey={API_KEY}"
@@ -96,8 +105,20 @@ def search():
     characters = search_characters(server, name)
     if not characters:
         return jsonify({"error": "No characters found"}), 404
+    
+    # ✅ adventureName 붙이기
+    enriched = []
+    for char in characters:
+        char_id = char.get("characterId")
+        try:
+            profile = get_profile(server, char_id)
+            char["adventureName"] = profile.get("adventureName", "-")
+        except Exception as e:
+            print(f"[!] Failed to get profile for {char_id}: {e}")
+            char["adventureName"] = "-"
+        enriched.append(char)
 
-    return jsonify({"results": characters})
+    return jsonify({"results": enriched})
 
 def extract_slot_map(equipment_list):
     result = {}
@@ -249,7 +270,10 @@ def equipment():
             fame_log = fame_log[-30:]
             with open(fame_path, "w", encoding="utf-8") as f:
                 json.dump(fame_log, f, ensure_ascii=False, indent=2)
-    return jsonify({ "equipment": new_eq })
+    return jsonify({
+    "equipment": new_eq,
+    "explorerName": adventure_name  # ✅ 추가
+    })
 
 
 
