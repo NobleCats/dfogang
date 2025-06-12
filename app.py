@@ -241,6 +241,7 @@ def equipment():
         }
 
         history.append(entry)
+        history = history_cleaner(history)
         with open(hist_path, "w", encoding="utf-8") as f:
             json.dump(history[-30:], f, ensure_ascii=False, indent=2)
 
@@ -317,9 +318,6 @@ def get_item_fame(item_id):
         print(f"[ERROR] Failed to fetch fame for {item_id}: {e}")
         return jsonify({"fame": None, "error": str(e)}), 500
 
-if __name__ == "__main__":
-    app.run(debug=True)
-
 @app.route("/history", methods=["POST"])
 def get_history():
     data = request.json
@@ -346,3 +344,61 @@ def get_history():
             return jsonify([])
 
     return jsonify(history)
+
+def history_cleaner(history):
+    """같은 날짜 내에서 원복된 변경사항은 제거하는 함수"""
+    grouped = defaultdict(list)
+
+    # 날짜별로 그룹핑
+    for entry in history:
+        grouped[entry["date"]].append(entry)
+
+    cleaned_history = []
+
+    for date, entries in grouped.items():
+        temp = []
+
+        for entry in entries:
+            temp.append({
+                "before": entry["before"],
+                "after": entry["after"]
+            })
+
+        # 슬롯별 변경 추적
+        slot_state = {}
+
+        for change in temp:
+            for b in change["before"]:
+                key = (b["slotName"], b["isUpgradeInfo"])
+                slot_state[key] = b["itemId"]
+
+            for a in change["after"]:
+                key = (a["slotName"], a["isUpgradeInfo"])
+                slot_state[key] = a["itemId"]
+
+        # 같은 날 원래 상태로 돌아온 경우 제거
+        filtered = []
+        for change in temp:
+            undone = True
+            for b, a in zip(change["before"], change["after"]):
+                key = (b["slotName"], b["isUpgradeInfo"])
+                # 마지막 상태가 최초 상태와 다르면 유지
+                if slot_state.get(key) != b["itemId"]:
+                    undone = False
+                    break
+            if not undone:
+                filtered.append(change)
+
+        # 날짜별 결과를 다시 합침
+        for f in filtered:
+            cleaned_history.append({
+                "date": date,
+                "before": f["before"],
+                "after": f["after"]
+            })
+
+    # 최신 30개만 유지
+    return cleaned_history[-30:]
+
+if __name__ == "__main__":
+    app.run(debug=True)
