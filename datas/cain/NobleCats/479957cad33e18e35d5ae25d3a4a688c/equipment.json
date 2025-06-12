@@ -7,7 +7,7 @@
   "jobGrowId": "ec6a93f4d14bb36ccc541183291197a7",
   "jobName": "Slayer (F)",
   "jobGrowName": "Neo: Vagabond",
-  "fame": 74151,
+  "fame": 74351,
   "adventureName": "NobleCats",
   "guildId": "41c5d83a1534f6cebab6f9d399372ca4",
   "guildName": "ch49gang",
@@ -297,18 +297,18 @@
       "fusionOption": {
         "options": [
           {
-            "buff": 2870,
-            "explain": "Overall Damage +7%\nSkill cooldown -4% (Awakening skills excluded)\nPhysical/Magical damage reduction +3%",
-            "explainDetail": "Overall Damage +7%\nSkill cooldown -4% (Awakening skills excluded)\nPhysical/Magical damage reduction +3%",
-            "buffExplain": "Buff Power 2,870",
-            "buffExplainDetail": "Buff Power 2,870"
+            "buff": 3260,
+            "explain": "Overall Damage +10%\nSkill cooldown -4% (Awakening skills excluded)\nPhysical/Magical damage reduction +3%\nDamage-Type Abnormal Status Tolerance +4%",
+            "explainDetail": "Overall Damage +10%\nSkill cooldown -4% (Awakening skills excluded)\nPhysical/Magical damage reduction +3%\nDamage-Type Abnormal Status Tolerance +4%",
+            "buffExplain": "Buff Power 3,260",
+            "buffExplainDetail": "Buff Power 3,260"
           }
         ]
       },
       "upgradeInfo": {
-        "itemId": "6a9e4c9aad69d02a4f58457dd5102a72",
-        "itemName": "Elegance: Leisurely Past",
-        "itemRarity": "Unique"
+        "itemId": "9e5ad946a5388cccbfc10159d3f6f3fe",
+        "itemName": "Elegance: Obsession Born of Distrust",
+        "itemRarity": "Epic"
       },
       "tune": {
         "level": 0,

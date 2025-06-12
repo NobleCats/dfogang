@@ -126,9 +126,6 @@ def search_explorer():
 
 
 
-
-
-
 def extract_slot_map(equipment_list):
     result = {}
     for item in equipment_list:
@@ -244,7 +241,6 @@ def equipment():
         }
 
         history.append(entry)
-        history = history_cleaner(history)
         with open(hist_path, "w", encoding="utf-8") as f:
             json.dump(history[-30:], f, ensure_ascii=False, indent=2)
 
@@ -323,3 +319,30 @@ def get_item_fame(item_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route("/history", methods=["POST"])
+def get_history():
+    data = request.json
+    server = data.get("server")
+    name = data.get("characterName")
+
+    character_id = get_character_id(server, name)
+    if not character_id:
+        return jsonify([])
+
+    profile = get_profile(server, character_id)
+    adventure_name = profile.get("adventureName")
+    char_dir = os.path.join(DATA_DIR, server, adventure_name, character_id)
+    hist_path = os.path.join(char_dir, "history.json")
+
+    if not os.path.exists(hist_path):
+        return jsonify([])
+
+    with open(hist_path, "r", encoding="utf-8") as f:
+        try:
+            history = json.load(f)
+        except Exception as e:
+            print(f"[ERROR] Failed to read history.json: {e}")
+            return jsonify([])
+
+    return jsonify(history)
