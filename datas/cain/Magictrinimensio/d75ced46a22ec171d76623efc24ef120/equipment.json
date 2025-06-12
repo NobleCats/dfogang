@@ -1,0 +1,912 @@
+{
+  "serverId": "cain",
+  "characterId": "d75ced46a22ec171d76623efc24ef120",
+  "characterName": "Magicduro",
+  "level": 115,
+  "jobId": "40132cbc8b2b5eedfe035e35c322472e",
+  "jobGrowId": "0f12d512a825d52e75d87120f39ba4cb",
+  "jobName": "Slayer (M)",
+  "jobGrowName": "Neo: Berserker",
+  "fame": 34521,
+  "adventureName": "Magictrinimensio",
+  "guildId": "ff4a363307b66bfd6f76eb27211932b5",
+  "guildName": "Loligataripop",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "50736fa545cd884d5e924260236328ce",
+      "itemName": "Invisible Sword - Master",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "0a2e3e77be421c5e618a0888ffb13c3f",
+      "itemTypeDetail": "Short Sword",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 12,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 13
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 8,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "223.4%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "384ccea94030a031691f6f991f4d11ed",
+      "itemName": "Aeterna Hunter",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "enchant": {
+        "status": [
+          {
+            "name": "HP MAX",
+            "value": 105
+          },
+          {
+            "name": "MP MAX",
+            "value": 105
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "79bb500503f1a1c4946cc55a3ce72d80",
+      "itemName": "Cleansing Purity Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "6d277650859c5450f3ebc759abe9ed6d",
+      "setItemName": "Cleansing Darkness Set",
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nPoison Tolerance +15%",
+            "explainDetail": "Overall Damage +5%\nPoison Tolerance +15%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a7d08e0d5739c66f6066efd2db0e21bc",
+        "itemName": "Blaze: Shaken Reason of the Flame",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "a1c3f548c020a859f1d2f8c4769cad5e",
+      "itemName": "Starter Mindset Robe",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2ce86d9db11cd66b9c3ac4afe9bb6277",
+        "itemName": "Blaze: Surging Flames",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "a5c3ecb684e2e8a0f5d2537f2d468391",
+      "itemName": "Cleansing Darkness Bottom",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "6d277650859c5450f3ebc759abe9ed6d",
+      "setItemName": "Cleansing Darkness Set",
+      "reinforce": 0,
+      "itemGradeName": "Inferior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "3410bd679dec54237ad833168f9ef07e",
+        "itemName": "Blaze: Tangled Will",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "25732e25619eb60b0a6e06aaa799f98e",
+      "itemName": "Cleansing Purity Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "6d277650859c5450f3ebc759abe9ed6d",
+      "setItemName": "Cleansing Darkness Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          },
+          {
+            "name": "Vitality",
+            "value": 40
+          },
+          {
+            "name": "Spirit",
+            "value": 40
+          },
+          {
+            "name": "Physical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 10
+          },
+          {
+            "name": "Overall Damage",
+            "value": "2%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\n- Movement Speed +10%",
+            "explainDetail": "Overall Damage +5%\n- Movement Speed +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e8b5e1382198ca94ed4a1d9ed98e9b0a",
+        "itemName": "Blaze: The Last Steps Taken",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "eec146cbad2205bb3dd050c39e3c49b6",
+      "itemName": "Cleansing Purity Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "6d277650859c5450f3ebc759abe9ed6d",
+      "setItemName": "Cleansing Darkness Set",
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "80ee7934ebbffb9fcc0c5236975fad99",
+        "itemName": "Blaze: Endless Burning",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "016c528d16f6da2a2336c7d64df93257",
+      "itemName": "Starter Effort",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3600,
+            "explain": "Overall Damage +10.3%\n\n[Sensory Satisfaction]\nOverall Damage +1% for every new Reinforcement/Amplification level from +10 of fused equipment (Max Stacks: 2)",
+            "explainDetail": "Overall Damage +10.3%\n\n[Sensory Satisfaction]\nOverall Damage +1% for every new Reinforcement/Amplification level from +10 of fused equipment (Max Stacks: 2)",
+            "buffExplain": "Buff Power: 3,600",
+            "buffExplainDetail": "Buff Power: 3,600"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Attack Speed +6%\nCasting Speed +9%",
+            "explainDetail": "Attack Speed +6%\nCasting Speed +9%"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "MP +1,500 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "MP +1,500 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "457198007b0372d3b0c19fc447d0714c",
+        "itemName": "Fragrant Joy",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 1,
+        "setPoint": 75
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "4058654de34318a83d61139a2e917636",
+      "itemName": "Cleansing Burn Bracelet",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "6d277650859c5450f3ebc759abe9ed6d",
+      "setItemName": "Cleansing Darkness Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +9.3%\n\nSkill MP cost +100%",
+            "explainDetail": "Overall Damage +9.3%\n\nSkill MP cost +100%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "MP +2.1% every sec.",
+            "explainDetail": "MP +2.1% every sec."
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "MP +1,100 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "MP +1,100 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "d6bcf7e51f44c544ee4923597428cff1",
+        "itemName": "Mana Overflow",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "f97fc1abe6ba06db6cb69ed5ad0e1048",
+      "itemName": "Distinct - Profane One's Seduction Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 4000,
+            "explain": "[Heresy Eradication]\nDeclares enemies as Heretics.\nOverall Damage +13% when attacking Heretics",
+            "explainDetail": "[Heresy Eradication]\nDeclares enemies as Heretics.\nOverall Damage +13% when attacking Heretics",
+            "buffExplain": "Buff Power: 4,000",
+            "buffExplainDetail": "Buff Power: 4,000"
+          },
+          {
+            "explain": "Max HP +200",
+            "explainDetail": "Max HP +200"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "0b36802ca5017b033ad9b7943c2bd9b9",
+        "itemName": "Finger Pointed at Heretics",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "dd98a734a14611826a91826b3877c85e",
+      "itemName": "Cleansing Burn Sub Equipment",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "6d277650859c5450f3ebc759abe9ed6d",
+      "setItemName": "Cleansing Darkness Set",
+      "reinforce": 1,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 110
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%\n\n[Explosive Promise - Burn/Shock]\nApplying Burn or Shock detonates damage of the same Abnormal Status.\n- Not applicable to converted options.",
+            "explainDetail": "Overall Damage +10.3%\n\n[Explosive Promise - Burn/Shock]\nApplying Burn or Shock detonates damage of the same Abnormal Status.\n- Not applicable to converted options.",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 2
+            },
+            "explain": "Physical/Magical Def. +4,000",
+            "explainDetail": "Physical/Magical Def. +4,000"
+          },
+          {
+            "explain": "Movement Speed +4%",
+            "explainDetail": "Movement Speed +4%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "cd4564bc57dff4674e1bd7a1b7c88254",
+        "itemName": "Electric Flame",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "08d1f1a8d3f39162f2c61b12814c3d4d",
+      "itemName": "Cleansing Burn Magic Stone",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "6d277650859c5450f3ebc759abe9ed6d",
+      "setItemName": "Cleansing Darkness Set",
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "buff": 3266,
+            "explain": "Overall Damage +10.8%",
+            "explainDetail": "Overall Damage +10.8%",
+            "buffExplain": "Buff Power: 3,266",
+            "buffExplainDetail": "Buff Power: 3,266"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Casts a barrier with 11%  of Max HP for 5 sec. (Cooldown: 5 sec.)",
+            "explainDetail": "Casts a barrier with 11%  of Max HP for 5 sec. (Cooldown: 5 sec.)"
+          },
+          {
+            "explain": "HP +300 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "HP +300 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2efc6fe6aac1216a6bb5d527009df5c5",
+        "itemName": "Peaceful Past",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "d9263d3292fa2ce641d1d07cea891c0a",
+      "itemName": "Distinct - Painful Echoes Requiem",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 3,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          },
+          {
+            "name": "Strength",
+            "value": 50
+          },
+          {
+            "name": "Intelligence",
+            "value": 50
+          },
+          {
+            "name": "Vitality",
+            "value": 50
+          },
+          {
+            "name": "Spirit",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%",
+            "explainDetail": "Overall Damage +10.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "All Abnormal Status Tolerances +5.5%",
+            "explainDetail": "All Abnormal Status Tolerances +5.5%"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Hit Rate +11%",
+            "explainDetail": "Hit Rate +11%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "47084e8499312e5aab6ba37dcdee0649",
+        "itemName": "Ender's Oath",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "6d277650859c5450f3ebc759abe9ed6d",
+      "setItemName": "Cleansing Darkness Set",
+      "setItemRarityName": "Unique III",
+      "active": {
+        "explain": "[Cleansing]\n- Skill cooldown -30% (Awakening skills excluded)\n- HP/MP +0.5% per sec.undefined",
+        "explainDetail": "[Cleansing]\n- Skill cooldown -30% (Awakening skills excluded)\n- HP/MP +0.5% per sec.undefined",
+        "status": [
+          {
+            "name": "Adventurer Fame",
+            "value": 5500
+          },
+          {
+            "name": "Buff Power",
+            "value": 14400
+          },
+          {
+            "name": "Overall Damage",
+            "value": "61.9%"
+          },
+          {
+            "name": "Skill Cooldown Reduction",
+            "value": "-30%"
+          }
+        ],
+        "setPoint": {
+          "current": 1425,
+          "min": 1370,
+          "max": 1455
+        }
+      },
+      "slotInfo": [
+        {
+          "itemNo": "79bb500503f1a1c4946cc55a3ce72d80",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "a1c3f548c020a859f1d2f8c4769cad5e",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "a5c3ecb684e2e8a0f5d2537f2d468391",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "25732e25619eb60b0a6e06aaa799f98e",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "eec146cbad2205bb3dd050c39e3c49b6",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "016c528d16f6da2a2336c7d64df93257",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "4058654de34318a83d61139a2e917636",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "f97fc1abe6ba06db6cb69ed5ad0e1048",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "dd98a734a14611826a91826b3877c85e",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "08d1f1a8d3f39162f2c61b12814c3d4d",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "d9263d3292fa2ce641d1d07cea891c0a",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Unique"
+        }
+      ]
+    }
+  ]
+}
