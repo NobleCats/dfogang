@@ -1,0 +1,738 @@
+{
+  "serverId": "cain",
+  "characterId": "4d5dcbc0536e153e4cdc70c56cc5337b",
+  "characterName": "LittleAuraa",
+  "level": 115,
+  "jobId": "40132cbc8b2b5eedfe035e35c322472e",
+  "jobGrowId": "ec6a93f4d14bb36ccc541183291197a7",
+  "jobName": "Slayer (M)",
+  "jobGrowName": "Neo: Asura",
+  "fame": 33434,
+  "adventureName": "sbcamp",
+  "guildId": "dfdbf65277bafab9f2feff4cfe70a008",
+  "guildName": "CVS_Pharmacy",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "95ed3cfc93c4ccaeffa278d4bbad4ad4",
+      "itemName": "One of a Kind Katana",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "6aef9546ba235eacb4224a29cb795de8",
+      "itemTypeDetail": "Katana",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Fire Dmg.",
+            "value": 15
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 8,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "141%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "f6846c58dd0a502be49a152d67549fe3",
+      "itemName": "Arad Pass Season 3 Platinum [80Lv]",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 4
+          },
+          {
+            "name": "Strength",
+            "value": 25
+          },
+          {
+            "name": "Intelligence",
+            "value": 25
+          },
+          {
+            "name": "Vitality",
+            "value": 25
+          },
+          {
+            "name": "Spirit",
+            "value": 25
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "ec840f0c6d8b334ff4b036bf1acd5dfd",
+      "itemName": "Light Shadow Clad Death Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "64e05f3e220b6e0b079e699b8dc8b48f",
+      "setItemName": "Death in the Shadows Set",
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Independent Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nPoison Tolerance +15%",
+            "explainDetail": "Overall Damage +5%\nPoison Tolerance +15%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a7d08e0d5739c66f6066efd2db0e21bc",
+        "itemName": "Blaze: Shaken Reason of the Flame",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "17837084f0b30198f856b195a4670c0d",
+      "itemName": "Pack Omega Helmet",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "66c67e88b617c0a056d92c5d7ebd6887",
+      "setItemName": "Alpha of the Pack Hunt Set",
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 20
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 20
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 20
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2ce86d9db11cd66b9c3ac4afe9bb6277",
+        "itemName": "Blaze: Surging Flames",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "acc64a7aa6c0dd52ef8d4ae57c0b4c97",
+      "itemName": "Tough Luck Pants",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Independent Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "3410bd679dec54237ad833168f9ef07e",
+        "itemName": "Blaze: Tangled Will",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "80d7a1315171d1e52f34579039202972",
+      "itemName": "Pack Omega Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "66c67e88b617c0a056d92c5d7ebd6887",
+      "setItemName": "Alpha of the Pack Hunt Set",
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\n- Movement Speed +10%",
+            "explainDetail": "Overall Damage +5%\n- Movement Speed +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e8b5e1382198ca94ed4a1d9ed98e9b0a",
+        "itemName": "Blaze: The Last Steps Taken",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "777548ca3c1d9bdf6088e54d619e6495",
+      "itemName": "Wyrm's Earth Splitting Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "a5cafe51e9d4c2edfd57f2166e8b2b58",
+      "setItemName": "Dragon Arena Uprising Set",
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 35
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "80ee7934ebbffb9fcc0c5236975fad99",
+        "itemName": "Blaze: Endless Burning",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "016c528d16f6da2a2336c7d64df93257",
+      "itemName": "Starter Effort",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Fire Dmg.",
+            "value": 35
+          },
+          {
+            "name": "Light Dmg.",
+            "value": 35
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3600,
+            "explain": "Overall Damage +11.8%",
+            "explainDetail": "Overall Damage +11.8%",
+            "buffExplain": "Buff Power: 3,600",
+            "buffExplainDetail": "Buff Power: 3,600"
+          },
+          {
+            "explain": "Max MP +300",
+            "explainDetail": "Max MP +300"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Physical/Magical Def. +2,500",
+            "explainDetail": "Physical/Magical Def. +2,500"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "dc66d505973abbd096c838032f61b143",
+        "itemName": "Glory of the Pell Los Empire",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "8e7df1dc1e8c1e8d907cade2a8e03954",
+      "itemName": "Valhalla Goddess Valkyrie Guard Bracelet",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Primeval",
+      "setItemId": "594e1462a896859ea2a7cfc9aecb8cdf",
+      "setItemName": "Ancient Battlefield Valkyrie Set",
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Fire Dmg.",
+            "value": 35
+          },
+          {
+            "name": "Light Dmg.",
+            "value": 35
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +9%",
+            "explainDetail": "Overall Damage +9%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Attacks create a 5% chance of summoning a Recorded Sacred Beast for 30 sec. (Cooldown: 30 sec.)\n- Inflicts 600% of total Atk. Increase.",
+            "explainDetail": "Attacks create a 5% chance of summoning a Recorded Sacred Beast for 30 sec. (Cooldown: 30 sec.)\n- Inflicts 600% of total Atk. Increase."
+          },
+          {
+            "explain": "Skill MP cost -30%",
+            "explainDetail": "Skill MP cost -30%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "39df3a1f3de6fcf303cf188e9142681d",
+        "itemName": "Ruler's Authority",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 265
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "416746fb233acf3a4c89777227246990",
+      "itemName": "Nature's Wrath Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Fire Dmg.",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3500,
+            "explain": "Overall Damage +5%\nAll Elemental Damage +35\n\n[Chill of Fury]\nCreates an ice dragon that attacks enemies.\n- Ice Dragon Damage: 600%",
+            "explainDetail": "Overall Damage +5%\nAll Elemental Damage +35\n\n[Chill of Fury]\nCreates an ice dragon that attacks enemies.\n- Ice Dragon Damage: 600%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Attacks Freeze enemies for 5 sec. (Cooldown: 2 sec.)",
+            "explainDetail": "Attacks Freeze enemies for 5 sec. (Cooldown: 2 sec.)"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "4088b8ebbf029bca20a45a01d9c71e4d",
+        "itemName": "Fury Buried in Frost",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "5033feb6c53d2db1522b953d6909b3ea",
+      "itemName": "Vanguard Valkyrie Combat Helmet",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "594e1462a896859ea2a7cfc9aecb8cdf",
+      "setItemName": "Ancient Battlefield Valkyrie Set",
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Critical Chance",
+            "value": "3.0%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3.0%"
+          },
+          {
+            "name": "All Elemental Damage",
+            "value": 12
+          },
+          {
+            "name": "Atk. Amp.",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Lv. 85 Skill Atk. +30%\nLv. 85 skill cooldown recovery +100% (Buffers excluded)",
+            "explainDetail": "Lv. 85 Skill Atk. +30%\nLv. 85 skill cooldown recovery +100% (Buffers excluded)",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          },
+          {
+            "explain": "Movement Speed +4%",
+            "explainDetail": "Movement Speed +4%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "c338a18660a30435b25398af6be4e3f0",
+        "itemName": "Chaotic Whirlpool",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "e8c0539884593ea1669dfe67a146b6b7",
+      "itemName": "Starter Unbreakable Spirit",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +10%\n\nFire, Water, Light, and Shadow attack attributes",
+            "explainDetail": "Overall Damage +10%\n\nFire, Water, Light, and Shadow attack attributes",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          },
+          {
+            "explain": "Movement Speed +4%",
+            "explainDetail": "Movement Speed +4%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "dc9fc659680927dfc9e492053413c6e7",
+        "itemName": "Second Coming of Glory",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "8996968423d40fae163fb34e8aafa0b8",
+      "itemName": "Starter Voice",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 125
+          },
+          {
+            "name": "Intelligence",
+            "value": 125
+          },
+          {
+            "name": "Vitality",
+            "value": 125
+          },
+          {
+            "name": "Spirit",
+            "value": 125
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +10%",
+            "explainDetail": "Overall Damage +10%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Physical/Magical Critical Chances +5%",
+            "explainDetail": "Physical/Magical Critical Chances +5%"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +15%",
+            "explainDetail": "Physical/Magical damage reduction +15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "456d0bdbb2bf752535a6347d0a2e9be2",
+        "itemName": "Haven of Destruction",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    }
+  ],
+  "setItemInfo": null
+}

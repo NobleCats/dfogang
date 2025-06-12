@@ -138,7 +138,7 @@ def search():
 def search_explorer():
     data = request.get_json()
     servers = ["cain", "siroco"]
-    explorer_name = data.get("name", "").strip()
+    explorer_name = data.get("name")
 
     result = []
 
@@ -161,7 +161,9 @@ def search_explorer():
                     result.append({
                         "characterId": char_dir.name,
                         "characterName": equip_data.get("characterName", ""),
+                        "jobName": equip_data.get("jobName", ""),
                         "jobGrowName": equip_data.get("jobGrowName", ""),
+                        "adventureName": equip_data.get("adventureName", ""),
                         "fame": equip_data.get("fame", 0),
                         "serverId": serverId
                     })

@@ -1,0 +1,635 @@
+{
+  "serverId": "cain",
+  "characterId": "4a48421deb1c5af0e84e747b48bd07f7",
+  "characterName": "BrooklynHeka",
+  "level": 115,
+  "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+  "jobGrowId": "5dff544828c42d8fc109f2f747d50c7f",
+  "jobName": "Mage (F)",
+  "jobGrowName": "Neo: Enchantress",
+  "fame": 33377,
+  "adventureName": "Casiopea",
+  "guildId": null,
+  "guildName": null,
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "5ad608ad4b3644af24d6d2ac63cfb8c0",
+      "itemName": "Heroic Saga - Broomstick",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "85d52ead3b577b3eb6d5bcbd668ca1c6",
+      "itemTypeDetail": "Broomstick",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 7,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 8,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "281%"
+          },
+          {
+            "name": "Buff Power",
+            "value": 36591
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "288b70c99b2f372b7e5cc519d29dc692",
+      "itemName": "Festival's Climax",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "ec840f0c6d8b334ff4b036bf1acd5dfd",
+      "itemName": "Light Shadow Clad Death Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "64e05f3e220b6e0b079e699b8dc8b48f",
+      "setItemName": "Death in the Shadows Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nAttack/Movement Speed +16%\nCasting Speed +24%",
+            "explainDetail": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nAttack/Movement Speed +16%\nCasting Speed +24%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "66fdc321b924446f9fa9f285b62c183f",
+        "itemName": "Lightning: Thunderous Dragon Mind",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "0dd90dbae464cc9691789b776d753aca",
+      "itemName": "Deep Shadow Casting Face",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "64e05f3e220b6e0b079e699b8dc8b48f",
+      "setItemName": "Death in the Shadows Set",
+      "reinforce": 7,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "d3b8ae90bbe54d9f39bc7f9178ddc6f2",
+      "itemName": "Starter Training Bottom",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 7,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nMax HP +1,200\nMax MP +1,892",
+            "explainDetail": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nMax HP +1,200\nMax MP +1,892"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "528c4eb5d3308bb2dc1040f61b24bd0f",
+        "itemName": "Lightning: Bolt-charged Dragon Horns",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "761ec6e544ada5384a939be5da656066",
+      "itemName": "Distinct - Benevolent Moon Hunter's Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "82d4f92e9bc1df3a1aa2d4f768e4db06",
+      "itemName": "Starter Legend Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "65f74d7106c3f6579ee0b28bae7b0c7c",
+      "itemName": "Distinct - Flawless Death's Memory Necklace",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 7,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 80
+          },
+          {
+            "name": "Intelligence",
+            "value": 80
+          },
+          {
+            "name": "Vitality",
+            "value": 80
+          },
+          {
+            "name": "Spirit",
+            "value": 80
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 938,
+            "buff": 1518,
+            "explain": "Attacks cast Horizontal Cube on enemies. (Cooldown: 3 sec.)\n- Casts 1, 3, or 5 times with an equal chance of success.\n- Inflicts 400% of total Atk. Increase.",
+            "explainDetail": "Attacks cast Horizontal Cube on enemies. (Cooldown: 3 sec.)\n- Casts 1, 3, or 5 times with an equal chance of success.\n- Inflicts 400% of total Atk. Increase."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "bfad72072c66ac7f8ed94bc3bd57fa1a",
+        "itemName": "Gold Dragon: Resplendent Dragon Scales",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "5653acb07a778c5d9688ba641ccd34eb",
+      "itemName": "Starter Bell",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 80
+          },
+          {
+            "name": "Intelligence",
+            "value": 80
+          },
+          {
+            "name": "Vitality",
+            "value": 80
+          },
+          {
+            "name": "Spirit",
+            "value": 80
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "14d33d5c8fa3bf1050548206397b2baa",
+      "itemName": "Starter Moment",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 7,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 80
+          },
+          {
+            "name": "Intelligence",
+            "value": 80
+          },
+          {
+            "name": "Vitality",
+            "value": 80
+          },
+          {
+            "name": "Spirit",
+            "value": 80
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 938,
+            "buff": 1518,
+            "explain": "Attacks cast Tesseract Boom on enemies. (Cooldown: 3 sec.)\n- Casts 1, 3, or 5 times with an equal chance of success.\n- Inflicts 400% of total Atk. Increase.",
+            "explainDetail": "Attacks cast Tesseract Boom on enemies. (Cooldown: 3 sec.)\n- Casts 1, 3, or 5 times with an equal chance of success.\n- Inflicts 400% of total Atk. Increase."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "f310e0536df97277a0a3d627e427d848",
+        "itemName": "Gold Dragon: Infinite Ward of Light",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "c4e6b5aaf608bafcd365429c7c6d64a1",
+      "itemName": "Light Shadow Sub Equipment - Edge",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "64e05f3e220b6e0b079e699b8dc8b48f",
+      "setItemName": "Death in the Shadows Set",
+      "reinforce": 7,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 80
+          },
+          {
+            "name": "Intelligence",
+            "value": 80
+          },
+          {
+            "name": "Vitality",
+            "value": 80
+          },
+          {
+            "name": "Spirit",
+            "value": 80
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "74e3d4cd44445e280c0aa6e5dfefe845",
+      "itemName": "Light Shadow Magic Stone - Blast",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "64e05f3e220b6e0b079e699b8dc8b48f",
+      "setItemName": "Death in the Shadows Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "9cea2922a9bc8011b3029a7b7c163155",
+      "itemName": "Distinct - Silent Echoes Requiem",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 150
+          },
+          {
+            "name": "Intelligence",
+            "value": 150
+          },
+          {
+            "name": "Vitality",
+            "value": 150
+          },
+          {
+            "name": "Spirit",
+            "value": 150
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 215
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "64e05f3e220b6e0b079e699b8dc8b48f",
+      "setItemName": "Hidden in the Shadows Set",
+      "setItemRarityName": "Unique I",
+      "active": {
+        "explain": "Reverses the causal relationship with shadows, realizing an action that shouldn't be possible.\n\n[What's Hidden in the Shadows] [Equipment-Activated Option]\n- Aborts character actions. (Awakening skills excluded)\n- Cooldown: 5 sec.- Aborts your character's actions (except for Awakening skills).\n- Cooldown: 5 sec.",
+        "explainDetail": "Reverses the causal relationship with shadows, realizing an action that shouldn't be possible.\n\n[What's Hidden in the Shadows] [Equipment-Activated Option]\n- Aborts character actions. (Awakening skills excluded)\n- Cooldown: 5 sec.- Aborts your character's actions (except for Awakening skills).\n- Cooldown: 5 sec.",
+        "status": [
+          {
+            "name": "Adventurer Fame",
+            "value": 3500
+          },
+          {
+            "name": "Buff Power",
+            "value": 9600
+          },
+          {
+            "name": "Overall Damage",
+            "value": "48.5%"
+          }
+        ],
+        "setPoint": {
+          "current": 1265,
+          "min": 1200,
+          "max": 1285
+        }
+      },
+      "slotInfo": [
+        {
+          "itemNo": "ec840f0c6d8b334ff4b036bf1acd5dfd",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "0dd90dbae464cc9691789b776d753aca",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "d3b8ae90bbe54d9f39bc7f9178ddc6f2",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "761ec6e544ada5384a939be5da656066",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "82d4f92e9bc1df3a1aa2d4f768e4db06",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "65f74d7106c3f6579ee0b28bae7b0c7c",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "5653acb07a778c5d9688ba641ccd34eb",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "14d33d5c8fa3bf1050548206397b2baa",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "c4e6b5aaf608bafcd365429c7c6d64a1",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "74e3d4cd44445e280c0aa6e5dfefe845",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "9cea2922a9bc8011b3029a7b7c163155",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Epic"
+        }
+      ]
+    }
+  ]
+}

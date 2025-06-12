@@ -1,0 +1,748 @@
+{
+  "serverId": "cain",
+  "characterId": "864edd2d2df7bf3382ff728a4ce406ed",
+  "characterName": "AvatarKorra",
+  "level": 115,
+  "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+  "jobGrowId": "ba2ae3598c3af10c26562e073bc92060",
+  "jobName": "Mage (F)",
+  "jobGrowName": "Neo: Elementalist",
+  "fame": 33222,
+  "adventureName": "TheCircus",
+  "guildId": "7d9bf1320bcb4ef25b6d7d46f903800b",
+  "guildName": "TeamAvatar",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "81634e494f788d21ed9c31b2bd02186e",
+      "itemName": "Sealed Knowledge",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "87d3bdd7666cb1b1c4dead6919d93528",
+      "itemTypeDetail": "Staff",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": null,
+      "setItemName": null,
+      "skin": {
+        "itemId": "641bb5ea8b0fbd88522db990b11e1acd",
+        "itemName": "Renee's First Staff",
+        "itemRarity": "Legendary"
+      },
+      "reinforce": 11,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "188.5%"
+          },
+          {
+            "name": "Buff Power",
+            "value": 32151
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "7db270d812be1b65d84be00cdb3f7aa3",
+      "itemName": "Phantom City",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 4
+          },
+          {
+            "name": "Strength",
+            "value": 25
+          },
+          {
+            "name": "Intelligence",
+            "value": 25
+          },
+          {
+            "name": "Vitality",
+            "value": 25
+          },
+          {
+            "name": "Spirit",
+            "value": 25
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "1555a1c6cb66354ec34dd8ca6923ceaa",
+      "itemName": "Starter Training Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 50
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 50
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 50
+          },
+          {
+            "name": "Strength",
+            "value": 20
+          },
+          {
+            "name": "Intelligence",
+            "value": 20
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nAttack/Movement Speed +16%\nCasting Speed +24%",
+            "explainDetail": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nAttack/Movement Speed +16%\nCasting Speed +24%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "66fdc321b924446f9fa9f285b62c183f",
+        "itemName": "Lightning: Thunderous Dragon Mind",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "a0973cf1911df8b9c9d413b3e78cf5c7",
+      "itemName": "Distinct - Growing Displeasure Shoulder",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 35
+          },
+          {
+            "name": "Intelligence",
+            "value": 35
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "2a8bdbee0d9f5dd035651315f7044a1e",
+      "itemName": "Nature's Wrath Bottom",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 0,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "status": [
+          {
+            "name": "Magical Atk.",
+            "value": 50
+          },
+          {
+            "name": "Intelligence",
+            "value": 20
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks Freeze all enemies for 3 sec. (Cooldown: 15 sec.)\n\nMax MP +315\nPhysical/Magical Def. +1,400\nHP +230.1 per min.",
+            "explainDetail": "Attacks Freeze all enemies for 3 sec. (Cooldown: 15 sec.)\n\nMax MP +315\nPhysical/Magical Def. +1,400\nHP +230.1 per min."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "b6eed5ecf4bfedcfc1692d4e0b6f8fd6",
+        "itemName": "Icebloom: Vicious Cold",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "0f26724e0009b7e72e5f703fb2ebae7a",
+      "itemName": "Distinct - Resolute Moon Hunter's Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 35
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional SPR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Casts Super Armor.\n\nMovement Speed +8%\n\nPhysical/Magical damage reduction +10%",
+            "explainDetail": "Casts Super Armor.\n\nMovement Speed +8%\n\nPhysical/Magical damage reduction +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "ead7437dd1e0f956ce79d27eb5de3a2d",
+        "itemName": "Wrath: Aimless Desire",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "6294f3369885b5c628ade064d42d846e",
+      "itemName": "Nature's Warning Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 35
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "e5d3724b1ae271f3c243ba2ff197df10",
+      "itemName": "Nature's Warning Necklace",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 23
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3500,
+            "explain": "Overall Damage +11%",
+            "explainDetail": "Overall Damage +11%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "[Soul Drain]\nAbsorbs souls every 15 sec.\n- MP +15%",
+            "explainDetail": "[Soul Drain]\nAbsorbs souls every 15 sec.\n- MP +15%"
+          },
+          {
+            "explain": "Max MP +5%",
+            "explainDetail": "Max MP +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "c7dab0484a26567396ad678e9f0e03a6",
+        "itemName": "Soul Tracing Device",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "5653acb07a778c5d9688ba641ccd34eb",
+      "itemName": "Starter Bell",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 19
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +9%",
+            "explainDetail": "Overall Damage +9%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Attacks create a 5% chance of summoning a Recorded Sacred Beast for 30 sec. (Cooldown: 30 sec.)\n- Inflicts 600% of total Atk. Increase.",
+            "explainDetail": "Attacks create a 5% chance of summoning a Recorded Sacred Beast for 30 sec. (Cooldown: 30 sec.)\n- Inflicts 600% of total Atk. Increase."
+          },
+          {
+            "explain": "Skill MP cost -30%",
+            "explainDetail": "Skill MP cost -30%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "39df3a1f3de6fcf303cf188e9142681d",
+        "itemName": "Ruler's Authority",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "14d33d5c8fa3bf1050548206397b2baa",
+      "itemName": "Starter Moment",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 23
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3500,
+            "explain": "Overall Damage +4%\nLv. 50/85/100 Skill Atk. +11%\nLv. 50/85/100 skill cooldown recovery +15% (Buffers excluded)",
+            "explainDetail": "Overall Damage +4%\nLv. 50/85/100 Skill Atk. +11%\nLv. 50/85/100 skill cooldown recovery +15% (Buffers excluded)",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Max HP +200",
+            "explainDetail": "Max HP +200"
+          },
+          {
+            "explain": "Max MP +300",
+            "explainDetail": "Max MP +300"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "8632d81226112c1688435672df2e01aa",
+        "itemName": "Hatching Evil Spirit Seed",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "ba6e43f7b8bcefc9d67fef38831e823a",
+      "itemName": "Nature's Warning Sub Equipment",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 55
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 55
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 55
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +9%\n\n[One in a Thousand]\nSkills creates a 5% chance of Skill Atk. +20%.",
+            "explainDetail": "Overall Damage +9%\n\n[One in a Thousand]\nSkills creates a 5% chance of Skill Atk. +20%.",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          },
+          {
+            "explain": "HP +300 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "HP +300 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "7d8e3e779e7482ee36943307da1d5f1c",
+        "itemName": "Balance on the Horizon",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "9c91e8010e7a6b7f3e45754db058eb2c",
+      "itemName": "Distinct - Cry of Merged Ego",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 20
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "8996968423d40fae163fb34e8aafa0b8",
+      "itemName": "Starter Voice",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 125
+          },
+          {
+            "name": "Intelligence",
+            "value": 125
+          },
+          {
+            "name": "Vitality",
+            "value": 125
+          },
+          {
+            "name": "Spirit",
+            "value": 125
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1001,
+            "buff": 2286,
+            "explain": "Overall Damage +3%\n\nAttacks cast Waves of Verbalization. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.\n\nAttacks Freeze for 5 sec. (Cooldown: 2 sec.)",
+            "explainDetail": "Overall Damage +3%\n\nAttacks cast Waves of Verbalization. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.\n\nAttacks Freeze for 5 sec. (Cooldown: 2 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "3816a272e452e0e6c1e6221a9f7bec90",
+        "itemName": "Distrust: Lost Words",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Nature's Warning Set",
+      "setItemRarityName": "Unique I",
+      "active": {
+        "explain": "Inflicts great damage on enemies with the overwhelming power of nature.\n\n[Overwhelming Nature - Warning]\nAttacks cause Natural Combustion to attack enemies. (Cooldown: 5 sec.)\n- Natural Combustion damage 8,640%undefined",
+        "explainDetail": "Inflicts great damage on enemies with the overwhelming power of nature.\n\n[Overwhelming Nature - Warning]\nAttacks cause Natural Combustion to attack enemies. (Cooldown: 5 sec.)\n- Natural Combustion damage 8,640%undefined",
+        "status": [
+          {
+            "name": "Adventurer Fame",
+            "value": 3500
+          },
+          {
+            "name": "Buff Power",
+            "value": 9600
+          },
+          {
+            "name": "Overall Damage",
+            "value": "48.5%"
+          }
+        ],
+        "setPoint": {
+          "current": 1265,
+          "min": 1200,
+          "max": 1285
+        }
+      },
+      "slotInfo": [
+        {
+          "itemNo": "1555a1c6cb66354ec34dd8ca6923ceaa",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "a0973cf1911df8b9c9d413b3e78cf5c7",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "2a8bdbee0d9f5dd035651315f7044a1e",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "0f26724e0009b7e72e5f703fb2ebae7a",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "6294f3369885b5c628ade064d42d846e",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "e5d3724b1ae271f3c243ba2ff197df10",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "5653acb07a778c5d9688ba641ccd34eb",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "14d33d5c8fa3bf1050548206397b2baa",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "ba6e43f7b8bcefc9d67fef38831e823a",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "9c91e8010e7a6b7f3e45754db058eb2c",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "8996968423d40fae163fb34e8aafa0b8",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Rare"
+        }
+      ]
+    }
+  ]
+}

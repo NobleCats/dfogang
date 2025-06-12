@@ -1,0 +1,1112 @@
+{
+  "serverId": "cain",
+  "characterId": "3955fe66b22f48a006f02ea8dd8589d8",
+  "characterName": "Protype",
+  "level": 115,
+  "jobId": "8b680595b273a488997441eee3f7176f",
+  "jobGrowId": "53632e641719388657407af4f9c063ac",
+  "jobName": "Gunner (F)",
+  "jobGrowName": "Neo: Launcher",
+  "fame": 33489,
+  "adventureName": "Erpan",
+  "guildId": "f30dcac9e2cfaaf75169e25699895b5c",
+  "guildName": "Ahri",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "e3fb6226e7b286f9c7311628169268b5",
+      "itemName": "Fire: Hand Cannon of Burning Torment",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "4dbfa99a92b92cf3d77501eb321bcb1d",
+      "itemTypeDetail": "Hand Cannon",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "skin": {
+        "itemId": "ef32b7d49671c0fb86e30e631c94141e",
+        "itemName": "Laserholic",
+        "itemRarity": "Epic"
+      },
+      "reinforce": 12,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Fire Dmg.",
+            "value": 15
+          },
+          {
+            "name": "Water Dmg.",
+            "value": 15
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 8,
+      "asrahanOption": {
+        "options": [
+          {
+            "name": "Burning Flame Starfield",
+            "step": 18,
+            "buff": 1786,
+            "explain": "Overall Damage 9%\nAtk. Increase +490%\n\n[Flame Blast]\nAttacks cast Flame Blast. (Cooldown: 2 sec.)\n- Flame Blast damage 5,502%\n\n[Echoing Flames]\n3rd Flame Blast additionally casts an upgraded Flame Blast.",
+            "explainDetail": "Overall Damage 9%\nAtk. Increase +490%\n\n[Flame Blast]\nAttacks cast Flame Blast. (Cooldown: 2 sec.)\n- Flame Blast damage 5,502%\n\n[Echoing Flames]\n3rd Flame Blast additionally casts an upgraded Flame Blast."
+          },
+          {
+            "name": "Memory's Destination",
+            "step": 3,
+            "buff": 570,
+            "explain": "Overall Damage +3%",
+            "explainDetail": "Overall Damage +3%"
+          },
+          {
+            "name": "Traces to the First Memory",
+            "step": 2,
+            "buff": 400,
+            "explain": "Overall Damage +2%",
+            "explainDetail": "Overall Damage +2%"
+          }
+        ]
+      },
+      "engraveName": true
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "288b70c99b2f372b7e5cc519d29dc692",
+      "itemName": "Festival's Climax",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 4
+          },
+          {
+            "name": "Strength",
+            "value": 25
+          },
+          {
+            "name": "Intelligence",
+            "value": 25
+          },
+          {
+            "name": "Vitality",
+            "value": 25
+          },
+          {
+            "name": "Spirit",
+            "value": 25
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "55191d2668ca69f3fc32cb91c062dc3c",
+      "itemName": "Seon: Forest Witch Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "7922743b8f68002262b8c863c5cba00e",
+      "setItemName": "Mist Walker Set",
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 80
+          },
+          {
+            "name": "Strength",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nAll speed +10%",
+            "explainDetail": "Overall Damage +5%\nAll speed +10%"
+          },
+          {
+            "explain": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%",
+            "explainDetail": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "9fd27f5f63f58151f4ecc1d4305d3e46",
+        "itemName": "Earth: The Land of Life",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2085.6,
+        "buff": 8229,
+        "options": [
+          {
+            "explain": "Atk. Increase +1430.2%",
+            "explainDetail": "Atk. Increase +1430.2%"
+          },
+          {
+            "explain": "If 40% or more HP, Overall Damage +3%\nOverall Damage +4% if your highest Bleeding/Poison/Burn/Shock damage is below 20%",
+            "explainDetail": "If 40% or more HP, Overall Damage +3%\nOverall Damage +4% if your highest Bleeding/Poison/Burn/Shock damage is below 20%",
+            "buffExplain": "Buffer skill cooldown -5% (Awakening skills excluded)"
+          },
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Atk. Increase +1489.8%\nMax HP +300",
+            "explainDetail": "Atk. Increase +1489.8%\nMax HP +300"
+          }
+        ]
+      },
+      "mistGear": true
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "188dc5a253fe63729c223c5124787815",
+      "itemName": "Seon: Deep Diver Air Pack",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nMax MP +5%",
+            "explainDetail": "Overall Damage +5%\nMax MP +5%"
+          },
+          {
+            "explain": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%",
+            "explainDetail": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "c6618d147d50bcc9dc46d8d39148b672",
+        "itemName": "Earth: Blooming Season",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 1489.7,
+        "buff": 8026,
+        "options": [
+          {
+            "explain": "Atk. Increase +1668.5%\nAll speed +20%",
+            "explainDetail": "Atk. Increase +1668.5%\nAll speed +20%"
+          },
+          {
+            "explain": "Atk. Increase +1430.2%",
+            "explainDetail": "Atk. Increase +1430.2%"
+          },
+          {
+            "explain": "Overall Damage +6%\nCasts a barrier with 30% of Max HP for 20 sec. if losing at least 10% of HP on hit. (Cooldown: 15 sec.)",
+            "explainDetail": "Overall Damage +6%\nCasts a barrier with 30% of Max HP for 20 sec. if losing at least 10% of HP on hit. (Cooldown: 15 sec.)"
+          },
+          {
+            "explain": "Fire Damage +40",
+            "explainDetail": "Fire Damage +40",
+            "transfer": true
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "d1d2e941ca909e22198a47eb7a5f9a8c",
+      "itemName": "Seon: Deep Diver Pants",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Inferior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 80
+          },
+          {
+            "name": "Strength",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nMax HP +5%",
+            "explainDetail": "Overall Damage +5%\nMax HP +5%"
+          },
+          {
+            "explain": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%",
+            "explainDetail": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "1503f85101fd9550d608b7f21e50fba3",
+        "itemName": "Earth: When Death Falls",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2085.6,
+        "buff": 8127,
+        "options": [
+          {
+            "explain": "Lv. 75 Skill Atk. +20%",
+            "explainDetail": "Lv. 75 Skill Atk. +20%"
+          },
+          {
+            "explain": "Lv. 75 skill cooldown -20%",
+            "explainDetail": "Lv. 75 skill cooldown -20%"
+          },
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Atk. Increase +1430.2%",
+            "explainDetail": "Atk. Increase +1430.2%",
+            "transfer": true
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "9cb6ad0a327d5f8279fab931a7320764",
+      "itemName": "Seon: Boundless Dimensions",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          },
+          {
+            "name": "Vitality",
+            "value": 40
+          },
+          {
+            "name": "Spirit",
+            "value": 40
+          },
+          {
+            "name": "Physical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 10
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nEvasion +8%",
+            "explainDetail": "Overall Damage +5%\nEvasion +8%"
+          },
+          {
+            "explain": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%",
+            "explainDetail": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "41d294fe13183cf3e89cb689db3f2b70",
+        "itemName": "Earth: Crumbling Steps",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2686.8,
+        "buff": 7756,
+        "explain": "Overall Damage +19.8%\nAll Elemental Damage +10\n\nPhysical/Magical Critical Chances +5%\nAttack Speed +8%\nCasting Speed +12%\nAll Elemental Resistance +8",
+        "explainDetail": "Overall Damage +19.8%\nAll Elemental Damage +10\n\nPhysical/Magical Critical Chances +5%\nAttack Speed +8%\nCasting Speed +12%\nAll Elemental Resistance +8"
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "30e32a433e33175858c61354a69e657e",
+      "itemName": "Seon: Forest Witch Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Weak",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 30
+          },
+          {
+            "name": "Intelligence",
+            "value": 30
+          },
+          {
+            "name": "Vitality",
+            "value": 30
+          },
+          {
+            "name": "Spirit",
+            "value": 30
+          },
+          {
+            "name": "Physical Atk.",
+            "value": 6
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 6
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 6
+          },
+          {
+            "name": "Overall Damage",
+            "value": "2%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nPhysical/Magical Critical Chances +10%",
+            "explainDetail": "Overall Damage +5%\nPhysical/Magical Critical Chances +10%"
+          },
+          {
+            "explain": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%",
+            "explainDetail": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "bb00b92be8360710396b628718f4379c",
+        "itemName": "Earth: The Intersection of Life and Death",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2026,
+        "buff": 8046,
+        "options": [
+          {
+            "explain": "Overall Damage +5%\nLv. 60 skill cooldown recovery +15%",
+            "explainDetail": "Overall Damage +5%\nLv. 60 skill cooldown recovery +15%"
+          },
+          {
+            "explain": "Skill cooldown -15% (Awakening skills excluded)",
+            "explainDetail": "Skill cooldown -15% (Awakening skills excluded)",
+            "buffExplain": "Buffer skill cooldown -5% (Awakening skills excluded)"
+          },
+          {
+            "explain": "Overall Damage +5%\nLv. 95 skill cooldown recovery +15%",
+            "explainDetail": "Overall Damage +5%\nLv. 95 skill cooldown recovery +15%"
+          },
+          {
+            "explain": "Atk. Increase +1787.7%",
+            "explainDetail": "Atk. Increase +1787.7%",
+            "buffExplain": "Buffer Overall Damage +5%"
+          }
+        ]
+      },
+      "refinedMistGear": true
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "fe7497917b4b61bb7d5a482f40bdfcac",
+      "itemName": "Seon: Blue Beryl Necklace",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "7922743b8f68002262b8c863c5cba00e",
+      "setItemName": "Mist Walker Set",
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Fire Dmg.",
+            "value": 35
+          },
+          {
+            "name": "Light Dmg.",
+            "value": 35
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3600,
+            "explain": "Overall Damage +11.8%",
+            "explainDetail": "Overall Damage +11.8%",
+            "buffExplain": "Buff Power: 3,600",
+            "buffExplainDetail": "Buff Power: 3,600"
+          },
+          {
+            "explain": "Max MP +300",
+            "explainDetail": "Max MP +300"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "dc66d505973abbd096c838032f61b143",
+        "itemName": "Glory of the Pell Los Empire",
+        "itemRarity": "Primeval"
+      },
+      "customOption": {
+        "damage": 2204.8,
+        "buff": 8045,
+        "options": [
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Overall Damage +2%\nLv. 40 skill cooldown recovery +30%\nCauses an unremovable Burn to you.",
+            "explainDetail": "Overall Damage +2%\nLv. 40 skill cooldown recovery +30%\nCauses an unremovable Burn to you."
+          },
+          {
+            "explain": "Overall Damage +2%\nLv. 75 skill cooldown recovery +30%\nCauses an unremovable Burn to you.",
+            "explainDetail": "Overall Damage +2%\nLv. 75 skill cooldown recovery +30%\nCauses an unremovable Burn to you."
+          },
+          {
+            "explain": "Overall Damage +4%\nConsumable effect duration +10%\nAll Abnormal Status Tolerances +1.5%\nSleep Tolerance -1.5%",
+            "explainDetail": "Overall Damage +4%\nConsumable effect duration +10%\nAll Abnormal Status Tolerances +1.5%\nSleep Tolerance -1.5%"
+          }
+        ]
+      },
+      "mistGear": true
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "2d23c36cc778bb07ac13ac1cd36ff4d0",
+      "itemName": "Seon: Deep Diver Watch",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Fire Dmg.",
+            "value": 35
+          },
+          {
+            "name": "Light Dmg.",
+            "value": 35
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "buff": 3266,
+            "explain": "Overall Damage +9.8%",
+            "explainDetail": "Overall Damage +9.8%",
+            "buffExplain": "Buff Power: 3,266",
+            "buffExplainDetail": "Buff Power: 3,266"
+          },
+          {
+            "explain": "Skill range +23%",
+            "explainDetail": "Skill range +23%"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "36545151ce71868e8205db60d050e66d",
+        "itemName": "Skill Pearl Extension",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2145.2,
+        "buff": 8087,
+        "options": [
+          {
+            "explain": "Overall Damage +6%\nAll speed +10%",
+            "explainDetail": "Overall Damage +6%\nAll speed +10%"
+          },
+          {
+            "explain": "Clear Cube Fragment Skill Atk. +10%\nPhysical/Magical Critical Chances +20%",
+            "explainDetail": "Clear Cube Fragment Skill Atk. +10%\nPhysical/Magical Critical Chances +20%"
+          },
+          {
+            "explain": "Overall Damage +5%",
+            "explainDetail": "Overall Damage +5%"
+          },
+          {
+            "explain": "Overall Damage +8%\nAttack/Movement Speed +20%\nCasting Speed +30%",
+            "explainDetail": "Overall Damage +8%\nAttack/Movement Speed +20%\nCasting Speed +30%",
+            "transfer": true
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "4820b645a3210a9b4bdef2386526f033",
+      "itemName": "Seon: Forest Witch Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Fire Dmg.",
+            "value": 35
+          },
+          {
+            "name": "Light Dmg.",
+            "value": 35
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3600,
+            "explain": "Overall Damage +10.3%\n\n[Sensory Satisfaction]\nOverall Damage +1% for every new Reinforcement/Amplification level from +10 of fused equipment (Max Stacks: 2)",
+            "explainDetail": "Overall Damage +10.3%\n\n[Sensory Satisfaction]\nOverall Damage +1% for every new Reinforcement/Amplification level from +10 of fused equipment (Max Stacks: 2)",
+            "buffExplain": "Buff Power: 3,600",
+            "buffExplainDetail": "Buff Power: 3,600"
+          },
+          {
+            "explain": "Movement Speed +5%",
+            "explainDetail": "Movement Speed +5%"
+          },
+          {
+            "explain": "HP +1,000 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "HP +1,000 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "057f55ed81a4ffc2e3c39f3fa58ebee4",
+        "itemName": "Whispers of Memories",
+        "itemRarity": "Primeval"
+      },
+      "customOption": {
+        "damage": 2145.2,
+        "buff": 8086,
+        "options": [
+          {
+            "explain": "Overall Damage +5%\nLv. 75 skill cooldown recovery +15%",
+            "explainDetail": "Overall Damage +5%\nLv. 75 skill cooldown recovery +15%"
+          },
+          {
+            "explain": "Skill cooldown recovery +30% (Awakening skills excluded)\nFreeze Tolerance +40%",
+            "explainDetail": "Skill cooldown recovery +30% (Awakening skills excluded)\nFreeze Tolerance +40%"
+          },
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Atk. Increase +1132.2%\nIgnite Ratio +3%",
+            "explainDetail": "Atk. Increase +1132.2%\nIgnite Ratio +3%",
+            "transfer": true
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "7cea1da34c52ee6242ce640c2e3cfa54",
+      "itemName": "Seon: Forest Witch Basket",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "7922743b8f68002262b8c863c5cba00e",
+      "setItemName": "Mist Walker Set",
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 110
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "buff": 3266,
+            "explain": "Overall Damage +10.8%",
+            "explainDetail": "Overall Damage +10.8%",
+            "buffExplain": "Buff Power: 3,266",
+            "buffExplainDetail": "Buff Power: 3,266"
+          },
+          {
+            "explain": "Skill range +7%",
+            "explainDetail": "Skill range +7%"
+          },
+          {
+            "explain": "Max HP +5%",
+            "explainDetail": "Max HP +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e78a77b086d1337b2aeb575ea5bd6e0c",
+        "itemName": "Reaper's Trap",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 1430,
+        "buff": 8128,
+        "options": [
+          {
+            "explain": "Overall Damage +5%\nBleeding Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBleeding Tolerance +1%"
+          },
+          {
+            "explain": "Overall Damage +5%\nPoison Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nPoison Tolerance +1%"
+          },
+          {
+            "explain": "Overall Damage +5%\nShock Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nShock Tolerance +1%"
+          },
+          {
+            "explain": "Overall Damage +5%\nPhysical/Magical Def. +5,000",
+            "explainDetail": "Overall Damage +5%\nPhysical/Magical Def. +5,000"
+          }
+        ]
+      },
+      "mistGear": true
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "20da86b88623de46cf13fe2a6cc1bb79",
+      "itemName": "Seon: Deep Diver Mask",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": "Dimensional STR",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%",
+            "explainDetail": "Overall Damage +10.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "MP +20% of MP cost",
+            "explainDetail": "MP +20% of MP cost"
+          },
+          {
+            "explain": "MP +500 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "MP +500 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "9f711ba4d22c59a2e84e702278e0de75",
+        "itemName": "Feast of Knowledge",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 1370.5,
+        "buff": 8047,
+        "options": [
+          {
+            "explain": "Overall Damage +8%",
+            "explainDetail": "Overall Damage +8%",
+            "transfer": true
+          },
+          {
+            "explain": "Overall Damage +5%\nBleeding Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBleeding Tolerance +1%"
+          },
+          {
+            "explain": "Overall Damage +5%\nCasts a barrier with 20% of Max HP for 20 sec. if losing at least 10% of HP on hit. (Cooldown: 15 sec.)",
+            "explainDetail": "Overall Damage +5%\nCasts a barrier with 20% of Max HP for 20 sec. if losing at least 10% of HP on hit. (Cooldown: 15 sec.)"
+          },
+          {
+            "explain": "Overall Damage +5%\nPhysical/Magical Def. +5,000",
+            "explainDetail": "Overall Damage +5%\nPhysical/Magical Def. +5,000"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "2773918b7b1826c464705992d889a3d6",
+      "itemName": "Seon: Blue Pirate Earrings",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          },
+          {
+            "name": "Strength",
+            "value": 50
+          },
+          {
+            "name": "Intelligence",
+            "value": 50
+          },
+          {
+            "name": "Vitality",
+            "value": 50
+          },
+          {
+            "name": "Spirit",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%",
+            "explainDetail": "Overall Damage +10.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Movement Speed +20%",
+            "explainDetail": "Movement Speed +20%"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "bde87e188d998886743ceb1365b22f89",
+        "itemName": "Apocalypse Signals",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 1549.2,
+        "buff": 8107,
+        "options": [
+          {
+            "explain": "Overall Damage +5%\nBleeding Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBleeding Tolerance +1%"
+          },
+          {
+            "explain": "Overall Damage +6%",
+            "explainDetail": "Overall Damage +6%"
+          },
+          {
+            "explain": "Overall Damage +6%",
+            "explainDetail": "Overall Damage +6%",
+            "transfer": true
+          },
+          {
+            "explain": "Overall Damage +5%\nBurn Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBurn Tolerance +1%"
+          }
+        ]
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "7922743b8f68002262b8c863c5cba00e",
+      "setItemName": "Mist Walker Set",
+      "slotInfo": [
+        {
+          "itemNo": "55191d2668ca69f3fc32cb91c062dc3c",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "188dc5a253fe63729c223c5124787815",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "d1d2e941ca909e22198a47eb7a5f9a8c",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "30e32a433e33175858c61354a69e657e",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "fe7497917b4b61bb7d5a482f40bdfcac",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "2d23c36cc778bb07ac13ac1cd36ff4d0",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "4820b645a3210a9b4bdef2386526f033",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "7cea1da34c52ee6242ce640c2e3cfa54",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "20da86b88623de46cf13fe2a6cc1bb79",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "2773918b7b1826c464705992d889a3d6",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Epic"
+        }
+      ],
+      "active": {
+        "setEquipCount": 4
+      }
+    }
+  ]
+}

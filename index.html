@@ -426,20 +426,20 @@
         function serverToApiValue(s) {
             if (s.toLowerCase() === "sirocco") return "siroco";
             else if (s.toLowerCase() === "cain") return "cain";
-            return s;
+            return "explorer";
         }
 
         function serverToRealValue(s) {
             if (s.toLowerCase() === "siroco") return "Siroco";
             else if (s.toLowerCase() === "cain") return "Cain";
-            return s;
+            return "ExplorerName";
         }
 
-        function showCard(profile, explorerName) {
+        function showCard(profile, name) {
             const spritePath = `assets/characters/${profile.jobName}.png`;
 
             // explorerName과 adventureName이 같으면 하이라이트 처리
-            const highlightStyle = (profile.adventureName === explorerName)
+            const highlightStyle = (profile.adventureName === name)
                 ? 'color:#fff;background:#3ba042;padding:2px 6px;border-radius:6px;font-weight:600;font-size:0.8em;'
                 : 'color:#7db88a;font-size:0.8em;font-weight:400;';
 
@@ -486,34 +486,23 @@
 
 
         document.querySelector('button').addEventListener('click', async function () {
-            const serverSel = document.querySelector('select').value;
-            const explorerName = document.querySelector('input').value.trim();
+            const serverId = document.querySelector('select').value;
+            const name = document.querySelector('input').value.trim();
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = "";
 
-            if (!explorerName) {
+            if (!name) {
                 alert("Please enter a name!");
                 return;
             }
 
-            if (serverSel === "Explorer Name") {
-                resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Please select a server.</div>`;
-                return;
-            }
-
-            const serverId = serverToApiValue(serverSel);
-
             // ✅ 로딩 스피너 표시
             document.getElementById('loading-spinner').style.display = 'block';
 
-            // 주소 변경
-            history.pushState({}, '', `?search=&${serverId}&${encodeURIComponent(explorerName)}`);
+            history.pushState({}, '', `?search=&${serverId}&${encodeURIComponent(name)}`);
 
-            // 검색 실행
-            await loadCharacter(serverId, explorerName);
-
-            // ✅ 로딩 스피너 숨기기
-            document.getElementById('loading-spinner').style.display = 'none';
+            // ✅ loadCharacter는 동일하게 호출
+            await loadCharacter(serverId, name);
         });
 
 
@@ -828,6 +817,11 @@
             const container = document.getElementById("set-info-container");
             container.innerHTML = "";
 
+            if (!Array.isArray(setItems) || setItems.length === 0) {
+                // 아무것도 없으면 표시하지 않음
+                return;
+            }
+
             // ✅ 고정 스타일
             container.style.width = "492px";
             container.style.margin = "0 auto";
@@ -842,6 +836,7 @@
             container.style.boxSizing = "border-box";
 
             const rarityColors = {
+                "None": "#FFFFFF",
                 "Rare": "#B36BFF",
                 "Unique": "#FF00FF",
                 "Legendary": "#FF7800",
@@ -953,8 +948,6 @@
                 if (!res.ok) throw new Error("Failed to fetch history.json");
                 history = await res.json();
 
-                // 🧹 아무 기록도 없으면 아무 것도 그리지 않고 종료
-                if (!Array.isArray(history) || history.length === 0) return;
 
             } catch (e) {
                 console.error("Failed to load history:", e);
@@ -1320,19 +1313,31 @@
             document.getElementById("main-view").style.display = "flex";
         }
 
-        async function loadCharacter(serverId, explorerName) {
+        async function loadCharacter(serverId, name) {
             document.getElementById("loading-spinner").style.display = "block";
             const resultsDiv = document.getElementById("results");
             resultsDiv.classList.add("grid-results");
             resultsDiv.innerHTML = "";
+            serverId = serverToApiValue(serverId);
 
             try {
-                const res = await fetch(`${API_ROOT}/search`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ server: serverId, name: explorerName })
-                });
-                if (!res.ok) throw new Error("Not found");
+                let res
+                if (serverId != "explorer") {
+                    res = await fetch(`${API_ROOT}/search`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ server: serverId, name: name })
+                    });
+                    if (!res.ok) throw new Error("Not found");
+                }
+                else if (serverId == "explorer") {
+                    res = await fetch(`${API_ROOT}/search_explorer`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name: name })
+                    });
+                    if (!res.ok) throw new Error("Not found");
+                }
 
                 const data = await res.json();
                 const results = data.results ?? (data.profile ? [data.profile] : []);
@@ -1342,11 +1347,12 @@
                     return;
                 }
 
-                resultsDiv.innerHTML = results.map(profile => showCard(profile, explorerName)).join("");
+                resultsDiv.innerHTML = results.map(profile => showCard(profile, name)).join("");
 
                 document.querySelectorAll(".card").forEach((cardElem, idx) => {
                     cardElem.addEventListener("click", async () => {
                         const profile = results[idx];
+                        serverId = profile.serverId;
                         await showCharacterDetail(profile, serverId, true); // pushState ON
                     });
                 });

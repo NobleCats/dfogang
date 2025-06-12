@@ -1,0 +1,1226 @@
+{
+  "serverId": "cain",
+  "characterId": "5747fbbdca6505fc21285c2d801a4117",
+  "characterName": "ShayPatrick",
+  "level": 115,
+  "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+  "jobGrowId": "5dff544828c42d8fc109f2f747d50c7f",
+  "jobName": "Mage (F)",
+  "jobGrowName": "Neo: Enchantress",
+  "fame": 33129,
+  "adventureName": "FreedomPals",
+  "guildId": "18bd4cea8cc7e6fcf966f2f755aab05f",
+  "guildName": "GTR",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "50ef00b9cdb73c059642004645854be1",
+      "itemName": "Earth: Broomstick of Warm Springtime",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "85d52ead3b577b3eb6d5bcbd668ca1c6",
+      "itemTypeDetail": "Broomstick",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "skin": {
+        "itemId": "5b335509b71d69b8cfe75b96dc8500b4",
+        "itemName": "Shining Intelligence",
+        "itemRarity": "Epic"
+      },
+      "reinforce": 1,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Water Dmg.",
+            "value": 15
+          },
+          {
+            "name": "Shadow Dmg.",
+            "value": 15
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 8,
+      "asrahanOption": {
+        "options": [
+          {
+            "name": "Solid Earth Starfield",
+            "step": 14,
+            "buff": 1349,
+            "explain": "Overall Damage +6%\nAtk. Increase +385%\n\n[Blessing of the Four Seasons]\nReceive a blessing from the four seasons to reinforce yourself. 50% of the Blessing effect also applied to all party members.\n- Can't stack with the same Blessing.\n\n* Blessing of Warm Spring\n - Overall Damage +1%\n* Blessing of Vibrant Summer\n  - HP/MP +10% for 10 sec. every 10 sec.\n* Blessing of Bountiful Autumn\n  - Physical/Magical damage reduction +10%",
+            "explainDetail": "Overall Damage +6%\nAtk. Increase +385%\n\n[Blessing of the Four Seasons]\nReceive a blessing from the four seasons to reinforce yourself. 50% of the Blessing effect also applied to all party members.\n- Can't stack with the same Blessing.\n\n* Blessing of Warm Spring\n - Overall Damage +1%\n* Blessing of Vibrant Summer\n  - HP/MP +10% for 10 sec. every 10 sec.\n* Blessing of Bountiful Autumn\n  - Physical/Magical damage reduction +10%"
+          },
+          {
+            "name": "Memory's Destination",
+            "step": 3,
+            "buff": 570,
+            "explain": "Overall Damage +3%",
+            "explainDetail": "Overall Damage +3%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "31fbeb6dd48193be852c8863ca666049",
+      "itemName": "Ninja Kai Platinum Title [75Lv]",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "enchant": {
+        "status": [
+          {
+            "name": "Shadow Dmg.",
+            "value": 6
+          },
+          {
+            "name": "Strength",
+            "value": 25
+          },
+          {
+            "name": "Intelligence",
+            "value": 25
+          },
+          {
+            "name": "Vitality",
+            "value": 25
+          },
+          {
+            "name": "Spirit",
+            "value": 25
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "480641e69e1b8fd8c8d2b5880e4af27b",
+      "itemName": "Seon: Forest Witch Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "7922743b8f68002262b8c863c5cba00e",
+      "setItemName": "Mist Walker Set",
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1272.8,
+            "buff": 2066,
+            "explain": "Attack Speed +15%\nCasting Speed +20%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.",
+            "explainDetail": "Attack Speed +15%\nCasting Speed +20%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase."
+          },
+          {
+            "explain": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5",
+            "explainDetail": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a88471db98af7ae015b9075fffb8981f",
+        "itemName": "Thunder: Dark Clouds over the Land",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2264.4,
+        "buff": 8249,
+        "options": [
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Physical/Magical Critical Chances +7%\nAll Abnormal Status Tolerances -10%",
+            "explainDetail": "Physical/Magical Critical Chances +7%\nAll Abnormal Status Tolerances -10%",
+            "buffExplain": "Buffer Overall Damage +5%"
+          },
+          {
+            "explain": "If 40% or more HP, Overall Damage +3%\nOverall Damage +4% if your highest Bleeding/Poison/Burn/Shock damage is below 20%",
+            "explainDetail": "If 40% or more HP, Overall Damage +3%\nOverall Damage +4% if your highest Bleeding/Poison/Burn/Shock damage is below 20%",
+            "buffExplain": "Buffer skill cooldown -5% (Awakening skills excluded)"
+          },
+          {
+            "explain": "Atk. Increase +1430.2%",
+            "explainDetail": "Atk. Increase +1430.2%"
+          }
+        ]
+      },
+      "mistGear": true
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "60aaa6492cd00233bd3ac77536da048b",
+      "itemName": "Seon: Uncontrollable Old Rule",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "1dac2d05e6efb8bb8d7e278f1324036b",
+      "setItemName": "Sublime Savior's Path Set",
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1272.8,
+            "buff": 2066,
+            "explain": "Physical/Magical damage reduction +6%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.",
+            "explainDetail": "Physical/Magical damage reduction +6%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase."
+          },
+          {
+            "explain": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5",
+            "explainDetail": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "296d494ab107be578a49be14df3f0414",
+        "itemName": "Thunder: Electrifying Sensation",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1603.4,
+        "buff": 7950,
+        "explain": "Skill cooldown recovery +30% (Awakening skills excluded)\n\nPhysical/Magical Critical Chances +5%\nHit Rate +10%",
+        "explainDetail": "Skill cooldown recovery +30% (Awakening skills excluded)\n\nPhysical/Magical Critical Chances +5%\nHit Rate +10%",
+        "buffExplain": "Buffer Overall Damage +10%\nBuffer skill cooldown recovery +20% (Awakening skills excluded)"
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "9f6039cf6db8ea0aff36b19a4c475d5f",
+      "itemName": "Seon: Tireless Journey Bottom",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "1dac2d05e6efb8bb8d7e278f1324036b",
+      "setItemName": "Sublime Savior's Path Set",
+      "reinforce": 8,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1272.8,
+            "buff": 2066,
+            "explain": "Max HP/MP +1,500\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.",
+            "explainDetail": "Max HP/MP +1,500\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase."
+          },
+          {
+            "explain": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5",
+            "explainDetail": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "791bcfbb194f10889a932f352176d52e",
+        "itemName": "Thunder: Following Pulses",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1928.4,
+        "buff": 7872,
+        "explain": "Overall Damage +7%\nSkill range +27%\n\nMovement Speed +18%\nMax HP +600",
+        "explainDetail": "Overall Damage +7%\nSkill range +27%\n\nMovement Speed +18%\nMax HP +600"
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "d017f061a2150ef746806666d2fdcf00",
+      "itemName": "Seon: Stepping Courage",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "1dac2d05e6efb8bb8d7e278f1324036b",
+      "setItemName": "Sublime Savior's Path Set",
+      "reinforce": 8,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1272.8,
+            "buff": 2066,
+            "explain": "Movement Speed +12%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.",
+            "explainDetail": "Movement Speed +12%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase."
+          },
+          {
+            "explain": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5",
+            "explainDetail": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "43efaf74f5075adc1e45744342a35e2e",
+        "itemName": "Thunder: Reaching for the Clouds",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2578.6,
+        "buff": 7756,
+        "explain": "Atk. Increase +1311.0%\nOverall Damage +9%\nLv. 1 - 25 skill levels +2\n\nMovement Speed +8%\nHit Rate +10%",
+        "explainDetail": "Atk. Increase +1311.0%\nOverall Damage +9%\nLv. 1 - 25 skill levels +2\n\nMovement Speed +8%\nHit Rate +10%",
+        "buffExplain": "Buffer Overall Damage +5%"
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "d6b6377b4a7fc20be74739066becc418",
+      "itemName": "Seon: Forest Witch Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 8,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1272.8,
+            "buff": 2066,
+            "explain": "Physical/Magical Critical Chances +10%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase.",
+            "explainDetail": "Physical/Magical Critical Chances +10%\nAttacks cast Heavy Thunder Attack on a single enemy. (Cooldown: 3 sec.)\n- Inflicts 1,500% of total Atk. Increase."
+          },
+          {
+            "explain": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5",
+            "explainDetail": "[Raging Lightning Cloud]\nAttacks summon a Raging Lightning Cloud that attacks up to 4 enemies and applies effects, depending on the number of equipped Thunder equipment (2/3/5).\n- Raging Lightning Cloud Summon Cooldown: 7.5 sec./5 sec./3 sec.\n- Inflicts 1,500%of total Atk. Increase, Neutralize Gauge -5"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "b1d1b065215bd1affd3b5d69160ed3c2",
+        "itemName": "Thunder: Scars in the Sky",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2085.6,
+        "buff": 8189,
+        "options": [
+          {
+            "explain": "Atk. Increase +1787.7%",
+            "explainDetail": "Atk. Increase +1787.7%",
+            "buffExplain": "Buffer Overall Damage +5%"
+          },
+          {
+            "explain": "Skill cooldown -15% (Awakening skills excluded)",
+            "explainDetail": "Skill cooldown -15% (Awakening skills excluded)",
+            "buffExplain": "Buffer skill cooldown -5% (Awakening skills excluded)"
+          },
+          {
+            "explain": "Overall Damage +10% in Solo mode\nBleeding Tolerance +40%",
+            "explainDetail": "Overall Damage +10% in Solo mode\nBleeding Tolerance +40%"
+          },
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          }
+        ]
+      },
+      "refinedMistGear": true
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "8d834e29b1c622848535248197360333",
+      "itemName": "Seon: Forest Witch Necklace",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 8,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 4000,
+            "explain": "Overall Damage +11.5%",
+            "explainDetail": "Overall Damage +11.5%",
+            "buffExplain": "Buff Power: 4,000",
+            "buffExplainDetail": "Buff Power: 4,000"
+          },
+          {
+            "explain": "[Mirror Armor]\nApplies the following when attacked.\n- Recovers from 30% of incoming damage if attacking within 3 sec. (Cooldown: 3 sec.)\n- Counterattack to inflict damage.\n * Counterattack Damage: 15,000%",
+            "explainDetail": "[Mirror Armor]\nApplies the following when attacked.\n- Recovers from 30% of incoming damage if attacking within 3 sec. (Cooldown: 3 sec.)\n- Counterattack to inflict damage.\n * Counterattack Damage: 15,000%"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +10%",
+            "explainDetail": "Physical/Magical damage reduction +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "f3df6f3fa74a599a1e04b5c4d610036a",
+        "itemName": "Protection: Soul",
+        "itemRarity": "Primeval"
+      },
+      "customOption": {
+        "damage": 2264.4,
+        "buff": 8270,
+        "options": [
+          {
+            "explain": "Physical/Magical Critical Chances +7%\nAll Abnormal Status Tolerances -10%",
+            "explainDetail": "Physical/Magical Critical Chances +7%\nAll Abnormal Status Tolerances -10%",
+            "buffExplain": "Buffer Overall Damage +5%"
+          },
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Movement Speed +40%",
+            "explainDetail": "Movement Speed +40%",
+            "buffExplain": "Buffer Overall Damage +4%",
+            "transfer": true
+          },
+          {
+            "explain": "All speed +10%\nPoison Tolerance +40%",
+            "explainDetail": "All speed +10%\nPoison Tolerance +40%",
+            "buffExplain": "Buffer Overall Damage +4%"
+          }
+        ]
+      },
+      "pureMistGear": true
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "2d23c36cc778bb07ac13ac1cd36ff4d0",
+      "itemName": "Seon: Deep Diver Watch",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 8,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +9%",
+            "explainDetail": "Overall Damage +9%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +15% for party members within 500 px",
+            "explainDetail": "Physical/Magical damage reduction +15% for party members within 500 px"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "219ce2d85b2be9cefbc075fe0a9a69ec",
+        "itemName": "Passage to the Unknown",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2324,
+        "buff": 8148,
+        "options": [
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Overall Damage +5%",
+            "explainDetail": "Overall Damage +5%"
+          },
+          {
+            "explain": "Overall Damage +6%\nAll speed +10%",
+            "explainDetail": "Overall Damage +6%\nAll speed +10%",
+            "transfer": true
+          },
+          {
+            "explain": "Overall Damage +8%\nAttack/Movement Speed +20%\nCasting Speed +30%",
+            "explainDetail": "Overall Damage +8%\nAttack/Movement Speed +20%\nCasting Speed +30%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "4820b645a3210a9b4bdef2386526f033",
+      "itemName": "Seon: Forest Witch Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 8,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 3
+            },
+            "buff": 4000,
+            "explain": "[Eyes on Me!]\n- Overall Damage +6.5%\n- Skill cooldown -10% (Awakening skills excluded)\n- Super Armor\n- Casts a spotlight.",
+            "explainDetail": "[Eyes on Me!]\n- Overall Damage +6.5%\n- Skill cooldown -10% (Awakening skills excluded)\n- Super Armor\n- Casts a spotlight.",
+            "buffExplain": "Buff Power: 4,000",
+            "buffExplainDetail": "Buff Power: 4,000"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          },
+          {
+            "explain": "MP +1,000 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "MP +1,000 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "737d5802fdb9a7cf4f3b4e4b97cd8643",
+        "itemName": "World Idol Ring",
+        "itemRarity": "Primeval"
+      },
+      "customOption": {
+        "damage": 2264.4,
+        "buff": 8147,
+        "options": [
+          {
+            "explain": "Physical/Magical Critical Chances +7%\nAll Abnormal Status Tolerances -10%",
+            "explainDetail": "Physical/Magical Critical Chances +7%\nAll Abnormal Status Tolerances -10%",
+            "buffExplain": "Buffer Overall Damage +5%",
+            "transfer": true
+          },
+          {
+            "explain": "Atk. Increase +1132.2%\nIgnite Ratio +3%",
+            "explainDetail": "Atk. Increase +1132.2%\nIgnite Ratio +3%"
+          },
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Skill cooldown recovery +30% (Awakening skills excluded)\nFreeze Tolerance +40%",
+            "explainDetail": "Skill cooldown recovery +30% (Awakening skills excluded)\nFreeze Tolerance +40%"
+          }
+        ]
+      },
+      "pureMistGear": true
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "83aa931bade43d574d7c336803263dbd",
+      "itemName": "Seon: Blue Pirate Protector",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +10%",
+            "explainDetail": "Overall Damage +10%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Skill range +7%",
+            "explainDetail": "Skill range +7%"
+          },
+          {
+            "explain": "Max HP +5%",
+            "explainDetail": "Max HP +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e78a77b086d1337b2aeb575ea5bd6e0c",
+        "itemName": "Reaper's Trap",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 1430,
+        "buff": 8148,
+        "options": [
+          {
+            "explain": "Overall Damage +5%\nBleeding Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBleeding Tolerance +1%",
+            "transfer": true
+          },
+          {
+            "explain": "Overall Damage +5%\nBurn Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBurn Tolerance +1%"
+          },
+          {
+            "explain": "Overall Damage +5%\nPoison Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nPoison Tolerance +1%"
+          },
+          {
+            "explain": "Overall Damage +5%\nShock Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nShock Tolerance +1%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "d7271525d5ade60ca0f07a32e24d2ce1",
+      "itemName": "Seon: Natural Melting Dew",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "e7a383bfd7e421984bd9d8ebd0a7e8a0",
+      "setItemName": "Blood-Stained Belief Set",
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +9%\n\n[Immortality Spell]\nCasts Immortality Spell on death for 1 sec. (Cooldown: 120 sec.)\n- HP +1%\n- Negates other HP healing effects and damage.",
+            "explainDetail": "Overall Damage +9%\n\n[Immortality Spell]\nCasts Immortality Spell on death for 1 sec. (Cooldown: 120 sec.)\n- HP +1%\n- Negates other HP healing effects and damage.",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Max HP +1,000",
+            "explainDetail": "Max HP +1,000"
+          },
+          {
+            "explain": "Max MP +1,000",
+            "explainDetail": "Max MP +1,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "001d48b33aa6e1e8c598a32f88625024",
+        "itemName": "Heavenly Protection",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2253.4,
+        "buff": 7872,
+        "explain": "Overall Damage +10%\n\n[Elemental Affinity - Shadow]\nThe higher your Shadow Resistance, the higher your Physical/Magical damage reduction\n- Adds Shadow Attribute to enemy attacks.\n\nHP +5% for 5 sec. when attacked (Cooldown: 7 sec.)\n\nMax HP +600\nShadow Resistance +35",
+        "explainDetail": "Overall Damage +10%\n\n[Elemental Affinity - Shadow]\nThe higher your Shadow Resistance, the higher your Physical/Magical damage reduction\n- Adds Shadow Attribute to enemy attacks.\n\nHP +5% for 5 sec. when attacked (Cooldown: 7 sec.)\n\nMax HP +600\nShadow Resistance +35",
+        "buffExplain": "Buffer Overall Damage +10%"
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "11acab3eef7981a1100f16ea2f4e6b96",
+      "itemName": "Seon: Temporal Point of View",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "1dac2d05e6efb8bb8d7e278f1324036b",
+      "setItemName": "Sublime Savior's Path Set",
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 175
+          },
+          {
+            "name": "Intelligence",
+            "value": 175
+          },
+          {
+            "name": "Vitality",
+            "value": 175
+          },
+          {
+            "name": "Spirit",
+            "value": 175
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +10%",
+            "explainDetail": "Overall Damage +10%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Physical/Magical Critical Chances +5%",
+            "explainDetail": "Physical/Magical Critical Chances +5%"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +15%",
+            "explainDetail": "Physical/Magical damage reduction +15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "456d0bdbb2bf752535a6347d0a2e9be2",
+        "itemName": "Haven of Destruction",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1820.2,
+        "buff": 6514,
+        "explain": "[White Magician]\nThis equipment's Enchanting effect +100%\n- Exclusion: Skill Level and Adventurer Fame bonus effects\n\nMP +1,500 when attacking (Cooldown: 1 sec.)\n\nPhysical/Magical damage reduction +10%\nHP +460.2 per min.\nMP +348 per min.",
+        "explainDetail": "[White Magician]\nThis equipment's Enchanting effect +100%\n- Exclusion: Skill Level and Adventurer Fame bonus effects\n\nMP +1,500 when attacking (Cooldown: 1 sec.)\n\nPhysical/Magical damage reduction +10%\nHP +460.2 per min.\nMP +348 per min."
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "7922743b8f68002262b8c863c5cba00e",
+      "setItemName": "Mist Walker Set",
+      "slotInfo": [
+        {
+          "itemNo": "480641e69e1b8fd8c8d2b5880e4af27b",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "d6b6377b4a7fc20be74739066becc418",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "8d834e29b1c622848535248197360333",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "2d23c36cc778bb07ac13ac1cd36ff4d0",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "4820b645a3210a9b4bdef2386526f033",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "83aa931bade43d574d7c336803263dbd",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Epic"
+        }
+      ],
+      "active": {
+        "setEquipCount": 4
+      }
+    }
+  ]
+}

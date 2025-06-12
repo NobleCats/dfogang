@@ -1,0 +1,1467 @@
+{
+  "serverId": "cain",
+  "characterId": "114a5e9b2c2d46c912bcdef7d585d6f7",
+  "characterName": "wowpowpow",
+  "level": 110,
+  "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+  "jobGrowId": "5dff544828c42d8fc109f2f747d50c7f",
+  "jobName": "Mage (F)",
+  "jobGrowName": "Neo: Enchantress",
+  "fame": 33665,
+  "adventureName": "MaguHouse",
+  "guildId": "1edd22adef4eb27a9aa9f8c7cb8a08d2",
+  "guildName": "plus16scarv",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "ee2e4c3beb271dcfc89f7e746b87397a",
+      "itemName": "Fire: Broomstick of Burning Torment",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "85d52ead3b577b3eb6d5bcbd668ca1c6",
+      "itemTypeDetail": "Broomstick",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 12,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Intelligence",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 8,
+      "asrahanOption": {
+        "options": [
+          {
+            "name": "Burning Flame Starfield",
+            "step": 14,
+            "buff": 1349,
+            "explain": "Overall Damage 7%\nAtk. Increase +385%\n\n[Flame Blast]\nAttacks cast Flame Blast. (Cooldown: 3 sec.)\n- Flame Blast damage 5,502%\n\n[Echoing Flames]\n3rd Flame Blast additionally casts an upgraded Flame Blast.",
+            "explainDetail": "Overall Damage 7%\nAtk. Increase +385%\n\n[Flame Blast]\nAttacks cast Flame Blast. (Cooldown: 3 sec.)\n- Flame Blast damage 5,502%\n\n[Echoing Flames]\n3rd Flame Blast additionally casts an upgraded Flame Blast."
+          },
+          {
+            "name": "Memory's Destination",
+            "step": 3,
+            "buff": 570,
+            "explain": "Overall Damage +3%",
+            "explainDetail": "Overall Damage +3%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "9a8c935946995c77df69d381b1f30e5e",
+      "itemName": "Cutie Beauty Bunny",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "enchant": {
+        "status": [
+          {
+            "name": "Shadow Dmg.",
+            "value": 6
+          },
+          {
+            "name": "Strength",
+            "value": 25
+          },
+          {
+            "name": "Intelligence",
+            "value": 25
+          },
+          {
+            "name": "Vitality",
+            "value": 25
+          },
+          {
+            "name": "Spirit",
+            "value": 25
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "bd39c46a8f85592ceb5819644e8f5a35",
+      "itemName": "Seon: Forest Witch Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Weak",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nPoison Tolerance +15%",
+            "explainDetail": "Overall Damage +5%\nPoison Tolerance +15%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a7d08e0d5739c66f6066efd2db0e21bc",
+        "itemName": "Blaze: Shaken Reason of the Flame",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2264.4,
+        "buff": 8249,
+        "options": [
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%",
+            "transfer": true
+          },
+          {
+            "explain": "Physical/Magical Critical Chances +7%\nAll Abnormal Status Tolerances -10%",
+            "explainDetail": "Physical/Magical Critical Chances +7%\nAll Abnormal Status Tolerances -10%",
+            "buffExplain": "Buffer Overall Damage +5%"
+          },
+          {
+            "explain": "Atk. Increase +1430.2%",
+            "explainDetail": "Atk. Increase +1430.2%"
+          },
+          {
+            "explain": "If 40% or more HP, Overall Damage +3%\nOverall Damage +4% if your highest Bleeding/Poison/Burn/Shock damage is below 20%",
+            "explainDetail": "If 40% or more HP, Overall Damage +3%\nOverall Damage +4% if your highest Bleeding/Poison/Burn/Shock damage is below 20%",
+            "buffExplain": "Buffer skill cooldown -5% (Awakening skills excluded)"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "339ebf8165d6f8e7ffeb63b98d00f1b3",
+      "itemName": "Seon: Forest Witch Cape",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "7922743b8f68002262b8c863c5cba00e",
+      "setItemName": "Mist Walker Set",
+      "reinforce": 10,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2ce86d9db11cd66b9c3ac4afe9bb6277",
+        "itemName": "Blaze: Surging Flames",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2204.8,
+        "buff": 8230,
+        "options": [
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Lv. 30 Skill Atk. +20%",
+            "explainDetail": "Lv. 30 Skill Atk. +20%",
+            "buffExplain": "Buffer Overall Damage +5%"
+          },
+          {
+            "explain": "Lv. 40 Skill Atk. +20%",
+            "explainDetail": "Lv. 40 Skill Atk. +20%",
+            "buffExplain": "Buffer Overall Damage +5%"
+          },
+          {
+            "explain": "Lv. 30 - 40 Skill Atk. +5%\nLv. 40 Active skill levels +1",
+            "explainDetail": "Lv. 30 - 40 Skill Atk. +5%\nLv. 40 Active skill levels +1",
+            "buffExplain": "Buffer skill cooldown -5% (Awakening skills excluded)"
+          }
+        ]
+      },
+      "mistGear": true
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "ea8f66eb140a6ad1f409e649ba139b29",
+      "itemName": "Seon: Forest Witch Bottom",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "3410bd679dec54237ad833168f9ef07e",
+        "itemName": "Blaze: Tangled Will",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2204.8,
+        "buff": 8189,
+        "options": [
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Lv. 35 Skill Atk. +20%",
+            "explainDetail": "Lv. 35 Skill Atk. +20%",
+            "buffExplain": "Buffer Overall Damage +5%",
+            "transfer": true
+          },
+          {
+            "explain": "Lv. 30 - 40 Skill Atk. +5%\nLv. 35 Active skill levels +1",
+            "explainDetail": "Lv. 30 - 40 Skill Atk. +5%\nLv. 35 Active skill levels +1",
+            "buffExplain": "Buffer skill cooldown -5% (Awakening skills excluded)"
+          },
+          {
+            "explain": "Lv. 35 skill cooldown -20%",
+            "explainDetail": "Lv. 35 skill cooldown -20%",
+            "buffExplain": "Buffer Overall Damage +5%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "d4588208c4e99f28146318245cb5cd73",
+      "itemName": "Seon: Forest Witch Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Inferior",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\n- Movement Speed +10%",
+            "explainDetail": "Overall Damage +5%\n- Movement Speed +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e8b5e1382198ca94ed4a1d9ed98e9b0a",
+        "itemName": "Blaze: The Last Steps Taken",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2085.6,
+        "buff": 8188,
+        "options": [
+          {
+            "explain": "Overall Damage +8%\n- Engraved Oath equipment must be equipped.\nAll speed +10%\nBurn Tolerance +40%",
+            "explainDetail": "Overall Damage +8%\n- Engraved Oath equipment must be equipped.\nAll speed +10%\nBurn Tolerance +40%",
+            "buffExplain": "Buffer Overall Damage +8%\nBuffer all speed +10%"
+          },
+          {
+            "explain": "Atk. Increase +1430.2%",
+            "explainDetail": "Atk. Increase +1430.2%"
+          },
+          {
+            "explain": "Attack Speed +16%\nCasting Speed +24%",
+            "explainDetail": "Attack Speed +16%\nCasting Speed +24%",
+            "buffExplain": "Buffer Overall Damage +5%",
+            "transfer": true
+          },
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "d6b6377b4a7fc20be74739066becc418",
+      "itemName": "Seon: Forest Witch Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 120
+          },
+          {
+            "name": "Intelligence",
+            "value": 120
+          },
+          {
+            "name": "Vitality",
+            "value": 120
+          },
+          {
+            "name": "Spirit",
+            "value": 120
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "7%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "7%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "80ee7934ebbffb9fcc0c5236975fad99",
+        "itemName": "Blaze: Endless Burning",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 2026,
+        "buff": 8087,
+        "options": [
+          {
+            "explain": "Skill cooldown -15% (Awakening skills excluded)",
+            "explainDetail": "Skill cooldown -15% (Awakening skills excluded)",
+            "buffExplain": "Buffer skill cooldown -5% (Awakening skills excluded)"
+          },
+          {
+            "explain": "Overall Damage +5%\nLv. 95 skill cooldown recovery +15%",
+            "explainDetail": "Overall Damage +5%\nLv. 95 skill cooldown recovery +15%"
+          },
+          {
+            "explain": "Overall Damage +5%\nLv. 60 skill cooldown recovery +15%",
+            "explainDetail": "Overall Damage +5%\nLv. 60 skill cooldown recovery +15%"
+          },
+          {
+            "explain": "Overall Damage +10% in Solo mode\nBleeding Tolerance +40%",
+            "explainDetail": "Overall Damage +10% in Solo mode\nBleeding Tolerance +40%",
+            "transfer": true
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "e084b251606bf96ece921c00914a7b87",
+      "itemName": "Seon: Forest Witch Necklace",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "7922743b8f68002262b8c863c5cba00e",
+      "setItemName": "Mist Walker Set",
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 2
+            },
+            "buff": 3766,
+            "explain": "Overall Damage +12.3%",
+            "explainDetail": "Overall Damage +12.3%",
+            "buffExplain": "Buff Power: 3,766",
+            "buffExplainDetail": "Buff Power: 3,766"
+          },
+          {
+            "explain": "Max MP +300",
+            "explainDetail": "Max MP +300"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "dc66d505973abbd096c838032f61b143",
+        "itemName": "Glory of the Pell Los Empire",
+        "itemRarity": "Primeval"
+      },
+      "customOption": {
+        "damage": 2085.6,
+        "buff": 8291,
+        "options": [
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "All speed +10%\nPoison Tolerance +40%",
+            "explainDetail": "All speed +10%\nPoison Tolerance +40%",
+            "buffExplain": "Buffer Overall Damage +4%"
+          },
+          {
+            "explain": "Movement Speed +40%",
+            "explainDetail": "Movement Speed +40%",
+            "buffExplain": "Buffer Overall Damage +4%"
+          },
+          {
+            "explain": "Abnormal Status duration +20%\nAttacks Bleed, Poison, Burn, or Shock enemies for 10 sec. (Cooldown: 2 sec.)",
+            "explainDetail": "Abnormal Status duration +20%\nAttacks Bleed, Poison, Burn, or Shock enemies for 10 sec. (Cooldown: 2 sec.)",
+            "buffExplain": "Buffer Overall Damage +4%"
+          }
+        ]
+      },
+      "mistGear": true
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "aa82998317fc8dd416570195c9fbefca",
+      "itemName": "Seon: Forest Witch Bracelet",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Weak",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +9.3%",
+            "explainDetail": "Overall Damage +9.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Skill range +23%",
+            "explainDetail": "Skill range +23%"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "36545151ce71868e8205db60d050e66d",
+        "itemName": "Skill Pearl Extension",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 238.4,
+        "buff": 8148,
+        "options": [
+          {
+            "explain": "Fire Damage +40\nMax HP +200",
+            "explainDetail": "Fire Damage +40\nMax HP +200",
+            "buffExplain": "Buffer Overall Damage +7%"
+          },
+          {
+            "explain": "Light Damage +40\nMax HP +200",
+            "explainDetail": "Light Damage +40\nMax HP +200",
+            "buffExplain": "Buffer Overall Damage +7%"
+          },
+          {
+            "explain": "Water Damage +40\nMax HP +200",
+            "explainDetail": "Water Damage +40\nMax HP +200",
+            "buffExplain": "Buffer Overall Damage +7%"
+          },
+          {
+            "explain": "Shadow Damage +40\nMax HP +200",
+            "explainDetail": "Shadow Damage +40\nMax HP +200",
+            "buffExplain": "Buffer Overall Damage +7%"
+          }
+        ]
+      },
+      "refinedMistGear": true
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "4820b645a3210a9b4bdef2386526f033",
+      "itemName": "Seon: Forest Witch Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Inferior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          },
+          {
+            "name": "Intelligence",
+            "value": 90
+          },
+          {
+            "name": "Vitality",
+            "value": 90
+          },
+          {
+            "name": "Spirit",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3600,
+            "explain": "Overall Damage +0.3%\nSkill cooldown -7% (Awakening skills excluded)\nAll Elemental Damage +7\n\n[Red Rabbit's Gift]\nSkills create a 7.77% chance of Skill Atk. +77%.",
+            "explainDetail": "Overall Damage +0.3%\nSkill cooldown -7% (Awakening skills excluded)\nAll Elemental Damage +7\n\n[Red Rabbit's Gift]\nSkills create a 7.77% chance of Skill Atk. +77%.",
+            "buffExplain": "Buff Power: 3,600",
+            "buffExplainDetail": "Buff Power: 3,600"
+          },
+          {
+            "explain": "Max HP +7%",
+            "explainDetail": "Max HP +7%"
+          },
+          {
+            "explain": "Max MP +7%",
+            "explainDetail": "Max MP +7%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "6f0897141d4326e66296d4815c0ecf69",
+        "itemName": "Red Rabbit",
+        "itemRarity": "Primeval"
+      },
+      "customOption": {
+        "damage": 2145.2,
+        "buff": 8045,
+        "options": [
+          {
+            "explain": "Attack Speed +20%\nCasting Speed +30%",
+            "explainDetail": "Attack Speed +20%\nCasting Speed +30%",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Overall Damage +5%\nLv. 75 skill cooldown recovery +15%",
+            "explainDetail": "Overall Damage +5%\nLv. 75 skill cooldown recovery +15%"
+          },
+          {
+            "explain": "Skill cooldown recovery +30% (Awakening skills excluded)\nFreeze Tolerance +40%",
+            "explainDetail": "Skill cooldown recovery +30% (Awakening skills excluded)\nFreeze Tolerance +40%",
+            "transfer": true
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "83aa931bade43d574d7c336803263dbd",
+      "itemName": "Seon: Blue Pirate Protector",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%",
+            "explainDetail": "Overall Damage +10.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Skill range +7%",
+            "explainDetail": "Skill range +7%"
+          },
+          {
+            "explain": "Max HP +5%",
+            "explainDetail": "Max HP +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e78a77b086d1337b2aeb575ea5bd6e0c",
+        "itemName": "Reaper's Trap",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 1728,
+        "buff": 8168,
+        "options": [
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Overall Damage +5%\nPoison Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nPoison Tolerance +1%",
+            "transfer": true
+          },
+          {
+            "explain": "Overall Damage +5%\nBurn Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBurn Tolerance +1%"
+          },
+          {
+            "explain": "Overall Damage +5%\nBleeding Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBleeding Tolerance +1%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "82e4c3a28098ffb2b99cf148e1f40329",
+      "itemName": "Seon: Forest Witch Spirit Stone",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 10,
+      "itemGradeName": "Weak",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%\n\nFire, Water, Light, and Shadow attack attributes",
+            "explainDetail": "Overall Damage +10.3%\n\nFire, Water, Light, and Shadow attack attributes",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          },
+          {
+            "explain": "Movement Speed +4%",
+            "explainDetail": "Movement Speed +4%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "dc9fc659680927dfc9e492053413c6e7",
+        "itemName": "Second Coming of Glory",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 1728,
+        "buff": 8066,
+        "options": [
+          {
+            "explain": "Overall Damage +5%\nBleeding Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBleeding Tolerance +1%"
+          },
+          {
+            "explain": "Overall Damage +5%\nBurn Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBurn Tolerance +1%"
+          },
+          {
+            "explain": "Lv. 70 skill cooldown recovery +15%",
+            "explainDetail": "Lv. 70 skill cooldown recovery +15%",
+            "buffExplain": "Buffer Overall Damage +5%",
+            "transfer": true
+          },
+          {
+            "explain": "Max equipment barrier +20%",
+            "explainDetail": "Max equipment barrier +20%",
+            "buffExplain": "Buffer Overall Damage +5%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "5c6f18a2e97d5ccd4c9e142111c82192",
+      "itemName": "Seon: Forest Witch Earrings",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "7922743b8f68002262b8c863c5cba00e",
+      "setItemName": "Mist Walker Set",
+      "reinforce": 10,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 175
+          },
+          {
+            "name": "Intelligence",
+            "value": 175
+          },
+          {
+            "name": "Vitality",
+            "value": 175
+          },
+          {
+            "name": "Spirit",
+            "value": 175
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%",
+            "explainDetail": "Overall Damage +10.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Movement Speed +20%",
+            "explainDetail": "Movement Speed +20%"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "bde87e188d998886743ceb1365b22f89",
+        "itemName": "Apocalypse Signals",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 1668.5,
+        "buff": 8148,
+        "options": [
+          {
+            "explain": "All Elemental Damage +25",
+            "explainDetail": "All Elemental Damage +25",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Overall Damage +6%",
+            "explainDetail": "Overall Damage +6%"
+          },
+          {
+            "explain": "All Elemental Damage +20",
+            "explainDetail": "All Elemental Damage +20",
+            "buffExplain": "Buffer Overall Damage +3%"
+          },
+          {
+            "explain": "Overall Damage +5%\nBleeding Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBleeding Tolerance +1%"
+          }
+        ]
+      },
+      "mistGear": true
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "7922743b8f68002262b8c863c5cba00e",
+      "setItemName": "Mist Walker Set",
+      "slotInfo": [
+        {
+          "itemNo": "bd39c46a8f85592ceb5819644e8f5a35",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "339ebf8165d6f8e7ffeb63b98d00f1b3",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "ea8f66eb140a6ad1f409e649ba139b29",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "d4588208c4e99f28146318245cb5cd73",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "d6b6377b4a7fc20be74739066becc418",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "e084b251606bf96ece921c00914a7b87",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "aa82998317fc8dd416570195c9fbefca",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "4820b645a3210a9b4bdef2386526f033",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "83aa931bade43d574d7c336803263dbd",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "82e4c3a28098ffb2b99cf148e1f40329",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "5c6f18a2e97d5ccd4c9e142111c82192",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Epic"
+        }
+      ],
+      "active": {
+        "setEquipCount": 4
+      }
+    }
+  ]
+}

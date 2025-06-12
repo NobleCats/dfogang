@@ -1,0 +1,852 @@
+{
+  "serverId": "cain",
+  "characterId": "9028f8f03dfb39f67c3daaad9f16108e",
+  "characterName": "hdhgfdf",
+  "level": 115,
+  "jobId": "40132cbc8b2b5eedfe035e35c322472e",
+  "jobGrowId": "53632e641719388657407af4f9c063ac",
+  "jobName": "Slayer (M)",
+  "jobGrowName": "Neo: Soul Bender",
+  "fame": 33383,
+  "adventureName": "rfghre",
+  "guildId": "7c5e7bf80a871a4342f4fad596f5c137",
+  "guildName": "MoonSaver",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "95ed3cfc93c4ccaeffa278d4bbad4ad4",
+      "itemName": "One of a Kind Katana",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "6aef9546ba235eacb4224a29cb795de8",
+      "itemTypeDetail": "Katana",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 12,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 13
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 8,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "141%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "812eccaeaef64203e6b9c9d1330e0e95",
+      "itemName": "Distinct - Iron Face's Sadness Armor",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nAll speed +10%",
+            "explainDetail": "Overall Damage +5%\nAll speed +10%"
+          },
+          {
+            "explain": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%",
+            "explainDetail": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "9fd27f5f63f58151f4ecc1d4305d3e46",
+        "itemName": "Earth: The Land of Life",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "98ebcd3e2e8c461fd00eac1313e292d9",
+      "itemName": "Novice Fox Shoulder Protectors",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "8786cef035801936ebf53f898915a971",
+      "setItemName": "Ethereal Orb Arts Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "5c226869bec0ef70b26a9b8205f08992",
+        "itemName": "Rising Winds: Fickle Flow",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "d3b8ae90bbe54d9f39bc7f9178ddc6f2",
+      "itemName": "Starter Training Bottom",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "31191350e09989ab35d363953b2c6123",
+        "itemName": "Rising Winds: Windswept Traces",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "0f26724e0009b7e72e5f703fb2ebae7a",
+      "itemName": "Distinct - Resolute Moon Hunter's Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          },
+          {
+            "name": "Vitality",
+            "value": 40
+          },
+          {
+            "name": "Spirit",
+            "value": 40
+          },
+          {
+            "name": "Physical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 10
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nEvasion +8%",
+            "explainDetail": "Overall Damage +5%\nEvasion +8%"
+          },
+          {
+            "explain": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%",
+            "explainDetail": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "41d294fe13183cf3e89cb689db3f2b70",
+        "itemName": "Earth: Crumbling Steps",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "82d4f92e9bc1df3a1aa2d4f768e4db06",
+      "itemName": "Starter Legend Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nPhysical/Magical Critical Chances +10%",
+            "explainDetail": "Overall Damage +5%\nPhysical/Magical Critical Chances +10%"
+          },
+          {
+            "explain": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%",
+            "explainDetail": "[Boundary of Life and Death]\nApplies the following effects with the Boundary of Life and Death, depending on the number of equipped Earth equipment (2/3/5).\n- All speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "bb00b92be8360710396b628718f4379c",
+        "itemName": "Earth: The Intersection of Life and Death",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "65f74d7106c3f6579ee0b28bae7b0c7c",
+      "itemName": "Distinct - Flawless Death's Memory Necklace",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 26
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3500,
+            "explain": "Overall Damage +10%\n\n[Sensory Satisfaction]\nOverall Damage +1% for every new Reinforcement/Amplification level from +10 of fused equipment (Max Stacks: 2)",
+            "explainDetail": "Overall Damage +10%\n\n[Sensory Satisfaction]\nOverall Damage +1% for every new Reinforcement/Amplification level from +10 of fused equipment (Max Stacks: 2)",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Attack Speed +5%\nCasting Speed +7.5%",
+            "explainDetail": "Attack Speed +5%\nCasting Speed +7.5%"
+          },
+          {
+            "explain": "MP +1,000 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "MP +1,000 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "457198007b0372d3b0c19fc447d0714c",
+        "itemName": "Fragrant Joy",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "5653acb07a778c5d9688ba641ccd34eb",
+      "itemName": "Starter Bell",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Shadow Dmg.",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +9.3%",
+            "explainDetail": "Overall Damage +9.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Attacks create a 5% chance of summoning a Recorded Sacred Beast for 30 sec. (Cooldown: 30 sec.)\n- Inflicts 600% of total Atk. Increase.",
+            "explainDetail": "Attacks create a 5% chance of summoning a Recorded Sacred Beast for 30 sec. (Cooldown: 30 sec.)\n- Inflicts 600% of total Atk. Increase."
+          },
+          {
+            "explain": "Skill MP cost -30%",
+            "explainDetail": "Skill MP cost -30%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "39df3a1f3de6fcf303cf188e9142681d",
+        "itemName": "Ruler's Authority",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "629b878535f3cb459210dac169a01e21",
+      "itemName": "Novice Fox Charm Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "8786cef035801936ebf53f898915a971",
+      "setItemName": "Ethereal Orb Arts Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 26
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3500,
+            "explain": "[Heresy Eradication]\nDeclares enemies as Heretics.\nOverall Damage +11.5% when attacking Heretics",
+            "explainDetail": "[Heresy Eradication]\nDeclares enemies as Heretics.\nOverall Damage +11.5% when attacking Heretics",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Max HP +200",
+            "explainDetail": "Max HP +200"
+          },
+          {
+            "explain": "Physical/Magical Def. +2,000",
+            "explainDetail": "Physical/Magical Def. +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "0b36802ca5017b033ad9b7943c2bd9b9",
+        "itemName": "Finger Pointed at Heretics",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "73a8a5d5c74d44fea44fc0a0262a34eb",
+      "itemName": "Adept Fox Breath Amulet Sub Equipment",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "8786cef035801936ebf53f898915a971",
+      "setItemName": "Ethereal Orb Arts Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 110
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +10%",
+            "explainDetail": "Overall Damage +10%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Skill range +7%",
+            "explainDetail": "Skill range +7%"
+          },
+          {
+            "explain": "Max HP +5%",
+            "explainDetail": "Max HP +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e78a77b086d1337b2aeb575ea5bd6e0c",
+        "itemName": "Reaper's Trap",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "e038098bc397dad299472d6316ddf1fa",
+      "itemName": "Novice Fox Orb Magic Stone",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "8786cef035801936ebf53f898915a971",
+      "setItemName": "Ethereal Orb Arts Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +10%",
+            "explainDetail": "Overall Damage +10%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Casts a barrier with 10% of Max HP for 5 sec. (Cooldown: 5 sec.)",
+            "explainDetail": "Casts a barrier with 10% of Max HP for 5 sec. (Cooldown: 5 sec.)"
+          },
+          {
+            "explain": "HP +300 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "HP +300 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2efc6fe6aac1216a6bb5d527009df5c5",
+        "itemName": "Peaceful Past",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "8996968423d40fae163fb34e8aafa0b8",
+      "itemName": "Starter Voice",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          },
+          {
+            "name": "Strength",
+            "value": 50
+          },
+          {
+            "name": "Intelligence",
+            "value": 50
+          },
+          {
+            "name": "Vitality",
+            "value": 50
+          },
+          {
+            "name": "Spirit",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +10%",
+            "explainDetail": "Overall Damage +10%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Skill range +7%",
+            "explainDetail": "Skill range +7%"
+          },
+          {
+            "explain": "Physical/Magical Def. +10,000",
+            "explainDetail": "Physical/Magical Def. +10,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "c3aa136dad2cce1403db5b4583e461e1",
+        "itemName": "Past Mistakes",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 65
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "8786cef035801936ebf53f898915a971",
+      "setItemName": "Subtle Ethereal Orb Arts Set",
+      "setItemRarityName": "Unique II",
+      "active": {
+        "explain": "Borrows the power of the fox orbs and strengthens you instantly.\n Activates [Ethereal Orb].\n- Orb Gauge +5 when attacking (Cooldown: 1 sec.)\n- Max Orb Charges: 1\n- Orbs can't be charged during the Ethereal Orb buff.\n- Orb Gauge +100 upon entering dungeons\n\n[Ethereal Orb] [Equipment-Activated Option]\n- When activated, fully consumes the Orb Gauge and casts a buff.\n- Overall Damage +10% per orb consumed\n- Buff Duration: 30 sec.\n- Cooldown: 30 sec.Casts the Ethereal Orb buff. Consumes all orbs with a full gauge when used. (Cooldown: 30 sec.)",
+        "explainDetail": "Borrows the power of the fox orbs and strengthens you instantly.\nActivates [Ethereal Orb].\n- Orb Gauge +5 when attacking (Cooldown: 1 sec.)\n- Max Orb Charges: 1\n- Orbs can't be charged during the Ethereal Orb buff.\n- Orb Gauge +100 upon entering dungeons\n\n[Ethereal Orb] [Equipment-Activated Option]\n- When activated, fully consumes the Orb Gauge and casts a buff.\n- Overall Damage +10% per orb consumed\n- Buff Duration: 30 sec.\n- Cooldown: 30 sec.Casts the Ethereal Orb buff. Consumes all orbs with a full gauge when used. (Cooldown: 30 sec.)",
+        "status": [
+          {
+            "name": "Adventurer Fame",
+            "value": 4500
+          },
+          {
+            "name": "Buff Power",
+            "value": 12000
+          },
+          {
+            "name": "Overall Damage",
+            "value": "62.1%"
+          }
+        ],
+        "setPoint": {
+          "current": 1315,
+          "min": 1285,
+          "max": 1370
+        }
+      },
+      "slotInfo": [
+        {
+          "itemNo": "812eccaeaef64203e6b9c9d1330e0e95",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "98ebcd3e2e8c461fd00eac1313e292d9",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "d3b8ae90bbe54d9f39bc7f9178ddc6f2",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "0f26724e0009b7e72e5f703fb2ebae7a",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Legendary"
+        },
+        {
+          "itemNo": "82d4f92e9bc1df3a1aa2d4f768e4db06",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "65f74d7106c3f6579ee0b28bae7b0c7c",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "5653acb07a778c5d9688ba641ccd34eb",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Rare"
+        },
+        {
+          "itemNo": "629b878535f3cb459210dac169a01e21",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "73a8a5d5c74d44fea44fc0a0262a34eb",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "e038098bc397dad299472d6316ddf1fa",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Unique"
+        },
+        {
+          "itemNo": "8996968423d40fae163fb34e8aafa0b8",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Rare"
+        }
+      ]
+    }
+  ]
+}
