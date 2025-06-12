@@ -382,7 +382,7 @@
                 <select>
                     <option>Cain</option>
                     <option>Sirocco</option>
-                    <option>All Servers</option>
+                    <option>ExplorerName</option>
                 </select>
                 <input type="text" placeholder="Character, or Explorer Name" />
                 <button>SEARCH</button>
@@ -496,7 +496,7 @@
                 return;
             }
 
-            if (serverSel === "All Servers") {
+            if (serverSel === "Explorer Name") {
                 resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Please select a server.</div>`;
                 return;
             }
@@ -1062,9 +1062,6 @@
                 }
             }
         }
-
-
-
 
         async function renderCharacterDetail(profile, equipmentList) {
             const detailView = document.getElementById("detail-view");
