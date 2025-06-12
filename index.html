@@ -5,7 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DFO History</title>
-    <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <style>
         body {
@@ -16,9 +15,15 @@
         }
 
         .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            z-index: 100;
+            background-color: #1f1f1f;
             display: flex;
             align-items: center;
-            background-color: #1f1f1f;
             padding: 10px 20px;
             border-bottom: 1px solid #333;
         }
@@ -41,26 +46,34 @@
         }
 
         .main {
+            margin-top: 400px;
+            /* navbar 높이만큼 offset */
+            min-height: calc(100vh - 60px);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: calc(100vh - 60px);
-            text-align: center;
         }
 
         .logo {
-            font-size: 40px;
-            font-weight: bold;
-            margin-bottom: 40px;
+            flex-grow: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: top;
+            height: 100px;
         }
 
         .search-box {
             display: flex;
+            top: 45%;
+            /* 👈 검색창을 로고 아래로 내림 */
             background-color: #2a2a2a;
             border-radius: 6px;
             overflow: hidden;
             border: 1px solid #444;
+            z-index: 10;
+            text-align: center;
+            margin-top: 20px;
         }
 
         select,
@@ -229,18 +242,37 @@
         }
 
         #results {
+            margin-top: 40px;
+            /* search-area의 높이 + 여유 */
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 48px;
-            justify-items: center;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 20px 60px;
         }
 
-        .grid-results {
+
+        #results.grid-results {
             display: grid;
-            width: 80%;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 48px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            justify-content: center;
+        }
+
+        #results-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        #results.grid-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
             justify-content: center;
         }
 
@@ -253,13 +285,28 @@
             justify-content: center;
         }
 
-        #main-view {
+        .search-area {
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
-            min-height: 100vh;
-            padding: 24px;
+            align-items: center;
+            margin-top: 80px;
+            margin-bottom: 100px;
+        }
+
+        .logo {
+            font-size: 40px;
+            font-weight: bold;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+            /* ✅ logo → searchbox 간격 */
+        }
+
+        .search-box {
+            display: flex;
+            background-color: #2a2a2a;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #444;
         }
     </style>
 </head>
@@ -269,29 +316,26 @@
         <a href="https://discord.gg/PXs3H3j42s" target="_blank" style="display: flex; align-items: center;">
             <img src="assets/image/ch49gang.png" alt="Logo" style="height: 28px; margin-right: 8px;" />
         </a>
-        <a href="/" style="color: white; font-weight: bold; font-size: 18px; text-decoration: none;">DFO History</a>
+        <a href="https://dfo.js.org/"
+            style="color: white; font-weight: bold; font-size: 18px; text-decoration: none;">DFO History</a>
     </div>
 
     <div class="main" id="main-view">
-        <div class="logo">DFO History</div>
-        <div class="search-box">
-            <select>
-                <option>Cain</option>
-                <option>Sirocco</option>
-                <option>All Servers</option>
-            </select>
-            <input type="text" placeholder="Character, or Explorer Name" />
-            <button>SEARCH</button>
+        <div class="search-area">
+            <div class="logo">DFO History</div>
+            <div class="search-box">
+                <select>
+                    <option>Cain</option>
+                    <option>Sirocco</option>
+                    <option>All Servers</option>
+                </select>
+                <input type="text" placeholder="Character, or Explorer Name" />
+                <button>SEARCH</button>
+            </div>
         </div>
-        <div id="results" style="
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-            justify-content: center;
-            margin-top: 24px;
-            ">
+        <div id="results-wrapper">
+            <div id="results" class="grid-results"></div>
         </div>
-
     </div>
 
     <div id="detail-view" style="display:none;"></div>
@@ -935,9 +979,6 @@
 
 
         async function renderCharacterDetail(profile, equipmentList) {
-            document.getElementById("main-view").style.display = "none";
-            const detailView = document.getElementById("detail-view");
-            detailView.style.display = "block";
 
             const canvasWidth = 246 * SCALE;
             const canvasHeight = 177 * SCALE;
@@ -1228,13 +1269,6 @@
                         });
                         if (!eqRes.ok) throw new Error("Equipment error");
                         const eqData = await eqRes.json();
-
-                        document.getElementById("main-view").style.display = "none";
-                        const detailView = document.getElementById("detail-view");
-                        detailView.style.display = "flex";
-                        detailView.style.flexDirection = "row";
-                        detailView.style.alignItems = "flex-start";
-                        detailView.style.gap = "24px";
 
                         const charWrapper = document.createElement("div");
                         charWrapper.id = "character-section";
