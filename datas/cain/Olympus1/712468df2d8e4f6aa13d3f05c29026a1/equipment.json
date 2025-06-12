@@ -1,0 +1,703 @@
+{
+  "serverId": "cain",
+  "characterId": "712468df2d8e4f6aa13d3f05c29026a1",
+  "characterName": "budiny",
+  "level": 115,
+  "jobId": "40132cbc8b2b5eedfe035e35c322472e",
+  "jobGrowId": "ec6a93f4d14bb36ccc541183291197a7",
+  "jobName": "Slayer (M)",
+  "jobGrowName": "Neo: Asura",
+  "fame": 32097,
+  "adventureName": "Olympus1",
+  "guildId": "e5d6e24a5d9bfad3d1894447191ddb56",
+  "guildName": "AngelFamily",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "a78ef0d8acbecad609a0377919d84e92",
+      "itemName": "Legendary Lore - Short Sword",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "0a2e3e77be421c5e618a0888ffb13c3f",
+      "itemTypeDetail": "Short Sword",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 12,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 13
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 8,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "209%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "1e6091d7cbf59eadf0e282daccbbcb66",
+      "itemName": "Dressed to the Nines",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "ad6ce9f4b057478932e8b14a8553c212",
+      "itemName": "Elder Fairy Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Independent Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nAttack/Movement Speed +16%\nCasting Speed +24%",
+            "explainDetail": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nAttack/Movement Speed +16%\nCasting Speed +24%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "66fdc321b924446f9fa9f285b62c183f",
+        "itemName": "Lightning: Thunderous Dragon Mind",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "0eb479336e65f3d7e3f7a747db7e0c97",
+      "itemName": "Veteran Valkyrie Shoulder Guard",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "594e1462a896859ea2a7cfc9aecb8cdf",
+      "setItemName": "Ancient Battlefield Valkyrie Set",
+      "reinforce": 0,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2ce86d9db11cd66b9c3ac4afe9bb6277",
+        "itemName": "Blaze: Surging Flames",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "6b2887dfe52b8daa6e27c8470c5b505a",
+      "itemName": "Steadfast Luck Pants",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Independent Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks Immobilize enemies for 5 sec. (Cooldown: 10 sec.)\n\nAttack Speed +8%\nCasting Speed +12%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Attacks Immobilize enemies for 5 sec. (Cooldown: 10 sec.)\n\nAttack Speed +8%\nCasting Speed +12%\nSlow/Curse/Immobility Tolerance +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a13d3693d5fd2328d1a71f5d0951291a",
+        "itemName": "Predation: Unbeating Heart",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "931075eac9eea67874e4a610daee7853",
+      "itemName": "Noble Fairy Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 0,
+      "itemGradeName": "Weak",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 40
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          },
+          {
+            "name": "Vitality",
+            "value": 40
+          },
+          {
+            "name": "Spirit",
+            "value": 40
+          },
+          {
+            "name": "Physical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 10
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 10
+          },
+          {
+            "name": "Overall Damage",
+            "value": "2%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\n- Movement Speed +10%",
+            "explainDetail": "Overall Damage +5%\n- Movement Speed +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e8b5e1382198ca94ed4a1d9ed98e9b0a",
+        "itemName": "Blaze: The Last Steps Taken",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "777548ca3c1d9bdf6088e54d619e6495",
+      "itemName": "Wyrm's Earth Splitting Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "a5cafe51e9d4c2edfd57f2166e8b2b58",
+      "setItemName": "Dragon Arena Uprising Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 1291,
+            "explain": "All Elemental Damage +25\n\nAttacks Bleed/Burn enemies for 20 sec. (Cooldown: 5 sec.)\n\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "All Elemental Damage +25\n\nAttacks Bleed/Burn enemies for 20 sec. (Cooldown: 5 sec.)\n\nSlow/Curse/Immobility Tolerance +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2f80afaae10ccd9ac6adfd6efba36a2a",
+        "itemName": "Predation: Tightening Noose",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "a3dde67745933cacb09211270d6db21e",
+      "itemName": "Full Magic Domain Necklace",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "79d71d7797e1dc1e2840db93ed59d37a",
+      "setItemName": "Magic Domain Set",
+      "reinforce": 3,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3500,
+            "explain": "Overall Damage +10%",
+            "explainDetail": "Overall Damage +10%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "[Mirror Armor]\nApplies the following when attacked.\n- Recovers from 30% of incoming damage if attacking within 3 sec. (Cooldown: 3 sec.)\n- Counterattack to inflict damage.\n * Counterattack Damage: 15,000%",
+            "explainDetail": "[Mirror Armor]\nApplies the following when attacked.\n- Recovers from 30% of incoming damage if attacking within 3 sec. (Cooldown: 3 sec.)\n- Counterattack to inflict damage.\n * Counterattack Damage: 15,000%"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +10%",
+            "explainDetail": "Physical/Magical damage reduction +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "f3df6f3fa74a599a1e04b5c4d610036a",
+        "itemName": "Protection: Soul",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "2afccb5d8f11b3d33935323e58efaf93",
+      "itemName": "Elder Fairy Bracelet",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "4f8c3e0b29848e598827a6fb92a7f54d",
+      "setItemName": "Soul Fairy Set",
+      "reinforce": 7,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 938,
+            "buff": 1518,
+            "explain": "Max HP +1,200\nMax MP +1,890",
+            "explainDetail": "Max HP +1,200\nMax MP +1,890"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a4c543a924286682d5450db840c9c157",
+        "itemName": "Empyrean Allied Forces: Dogged Determination",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "7a2f4b42e7be3db8cdbc3eec588865ba",
+      "itemName": "Pack Beta Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "66c67e88b617c0a056d92c5d7ebd6887",
+      "setItemName": "Alpha of the Pack Hunt Set",
+      "reinforce": 0,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3500,
+            "explain": "Overall Damage +5%\nAll Elemental Damage +35\n\n[Chill of Fury]\nCreates an ice dragon that attacks enemies.\n- Ice Dragon Damage: 600%",
+            "explainDetail": "Overall Damage +5%\nAll Elemental Damage +35\n\n[Chill of Fury]\nCreates an ice dragon that attacks enemies.\n- Ice Dragon Damage: 600%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "Attacks Freeze enemies for 5 sec. (Cooldown: 2 sec.)",
+            "explainDetail": "Attacks Freeze enemies for 5 sec. (Cooldown: 2 sec.)"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "4088b8ebbf029bca20a45a01d9c71e4d",
+        "itemName": "Fury Buried in Frost",
+        "itemRarity": "Primeval"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "913aa3f2283d11e3e870f3c9d0d7c903",
+      "itemName": "Faint Magic Domain Sub Equipment",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "79d71d7797e1dc1e2840db93ed59d37a",
+      "setItemName": "Magic Domain Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 110
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 350,
+            "buff": 1178,
+            "explain": "Overall Damage +3%\nSkill range +5%\nLv. 1 - 40 skill range +15%",
+            "explainDetail": "Overall Damage +3%\nSkill range +5%\nLv. 1 - 40 skill range +15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "f508e81460de878f663785f41b0da5f1",
+        "itemName": "Abyssal Concentration: Undefined Presence",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "b03a11dc30e6de833d31f5b758bda34f",
+      "itemName": "Splendid Gold Hideout's Curse - Magic Stone",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": "5952975fb5a964d20c047d0f034c021b",
+      "setItemName": "Hideout's Endless Gold Set",
+      "reinforce": 0,
+      "itemGradeName": "Weak",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 350,
+            "buff": 1178,
+            "explain": "Overall Damage +3%\nSkill range +5%\nLv. 45/60/70 skill range +15%",
+            "explainDetail": "Overall Damage +3%\nSkill range +5%\nLv. 45/60/70 skill range +15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "7c6999fb75567b72b3f3322d8199e045",
+        "itemName": "Abyssal Concentration: Infinite Contraction",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 165
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "fa5583bd910c21114e263520ac32eb12",
+      "itemName": "Steadfast Luck Earrings",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          },
+          {
+            "name": "Strength",
+            "value": 50
+          },
+          {
+            "name": "Intelligence",
+            "value": 50
+          },
+          {
+            "name": "Vitality",
+            "value": 50
+          },
+          {
+            "name": "Spirit",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 350,
+            "buff": 1178,
+            "explain": "Overall Damage +3%\nSkill range +5%\nLv. 75/80 skill range +15%",
+            "explainDetail": "Overall Damage +3%\nSkill range +5%\nLv. 75/80 skill range +15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "51bdc3fd28f34ca566a9c821da7eecc7",
+        "itemName": "Abyssal Concentration: Amorphous Power",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    }
+  ],
+  "setItemInfo": null
+}

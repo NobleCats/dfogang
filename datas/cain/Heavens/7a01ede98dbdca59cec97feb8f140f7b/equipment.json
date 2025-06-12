@@ -1,0 +1,726 @@
+{
+  "serverId": "cain",
+  "characterId": "7a01ede98dbdca59cec97feb8f140f7b",
+  "characterName": "YummyForte",
+  "level": 115,
+  "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+  "jobGrowId": "0f12d512a825d52e75d87120f39ba4cb",
+  "jobName": "Mage (F)",
+  "jobGrowName": "Neo: Battle Mage",
+  "fame": 30843,
+  "adventureName": "Heavens",
+  "guildId": "0163821e9fdd9e67e820bcd8998cc636",
+  "guildName": "SnowHalation",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "68290999b2cdbe7c7b28c4ae0789e260",
+      "itemName": "Shepherd's First Lie",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "07c1f2c930d04920b22072deb5838626",
+      "itemTypeDetail": "Rod",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Legendary",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 12,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 13
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 8,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "212.1%"
+          },
+          {
+            "name": "Buff Power",
+            "value": 32151
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "1dc7a37c547649a0112c931ee74f8ae1",
+      "itemName": "Bearer of Destiny [Isys]",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "90b6f5e30cf9b8c366ba08366de179c9",
+      "itemName": "Faint Magic Domain Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "79d71d7797e1dc1e2840db93ed59d37a",
+      "setItemName": "Magic Domain Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Magical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "7052c186828d7cd32fd8fc6be5c5f806",
+        "itemName": "Rising Winds: The Calm Before the Storm",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "0ecb1ad348ae0788253b2aa9fefa61f7",
+      "itemName": "Seon: Manipulation",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "613f841cd50e44751c6b8f155f47f24a",
+      "setItemName": "Mana Made to Life Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Critical Chance",
+            "value": "6%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "6%"
+          },
+          {
+            "name": "Strength",
+            "value": 25
+          },
+          {
+            "name": "Intelligence",
+            "value": 25
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "5c226869bec0ef70b26a9b8205f08992",
+        "itemName": "Rising Winds: Fickle Flow",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1820.2,
+        "buff": 8066,
+        "explain": "Overall Damage +13%\n\nPhysical/Magical Critical Chances +5%\nSkill MP cost -7%",
+        "explainDetail": "Overall Damage +13%\n\nPhysical/Magical Critical Chances +5%\nSkill MP cost -7%"
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "c0bb79dae3e613b1773b6715df93a8d2",
+      "itemName": "Seon: Chaos Curtains",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "6411b34eeaf4f83d01e813943bb5154b",
+      "setItemName": "Forward Mover's Mind Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Magical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Intelligence",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "31191350e09989ab35d363953b2c6123",
+        "itemName": "Rising Winds: Windswept Traces",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2036.8,
+        "buff": 7910,
+        "explain": "Overall Damage +10%\n\nMax HP +600\nPhysical/Magical Def. +7,000",
+        "explainDetail": "Overall Damage +10%\n\nMax HP +600\nPhysical/Magical Def. +7,000"
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "761ec6e544ada5384a939be5da656066",
+      "itemName": "Distinct - Benevolent Moon Hunter's Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 25
+          },
+          {
+            "name": "Intelligence",
+            "value": 25
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "b8f062e48e9d0539c1540aff86c21167",
+        "itemName": "Rising Winds: Weight of the Given Hope",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "ed6978bf050b6e420e644e447de1dd45",
+      "itemName": "Seon: Rightful Duty",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 25
+          },
+          {
+            "name": "Intelligence",
+            "value": 25
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)",
+            "explainDetail": "Overall Damage +3%\nSkill cooldown -4% (Awakening skills excluded)"
+          },
+          {
+            "explain": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%",
+            "explainDetail": "[Condensed Rising Winds]\nThe Rising Winds around you condenses and applies the following effects, depending on the number of equipped Great Current equipment (2/3/5).\n- Movement Speed +6%/+9%/+15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "bb8428f55fdc613a6f53eabb23450313",
+        "itemName": "Rising Winds: Uncontrollable Gust",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1386.8,
+        "buff": 7910,
+        "explain": "Overall Damage +14%\nAll Elemental Damage +20\n\nHit Rate +10%\nSkill MP cost -7%",
+        "explainDetail": "Overall Damage +14%\nAll Elemental Damage +20\n\nHit Rate +10%\nSkill MP cost -7%"
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "65f74d7106c3f6579ee0b28bae7b0c7c",
+      "itemName": "Distinct - Flawless Death's Memory Necklace",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 28
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 938,
+            "buff": 1405,
+            "explain": "Ignite Ratio +1%\n\nAttacks generate shock waves. (Cooldown: 1 sec.)\n- Inflicts 240% of total Atk. Increase.",
+            "explainDetail": "Ignite Ratio +1%\n\nAttacks generate shock waves. (Cooldown: 1 sec.)\n- Inflicts 240% of total Atk. Increase."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "02b5eff09d3b59a6f7893fa8274788ba",
+        "itemName": "Green Dragon: Cruel Dragon's Claws",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "upgrade": false,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "90bf8cdbb409aa2d7f07b0f52bd1abdb",
+      "itemName": "Seon: Power Navigation Pack",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "6411b34eeaf4f83d01e813943bb5154b",
+      "setItemName": "Forward Mover's Mind Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 28
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 938,
+            "buff": 1518,
+            "explain": "Attacks cast Vertical Pillar on enemies. (Cooldown: 3 sec.)\n- Casts 1, 3, or 5 times with an equal chance of success.\n- Inflicts 400% of total Atk. Increase.",
+            "explainDetail": "Attacks cast Vertical Pillar on enemies. (Cooldown: 3 sec.)\n- Casts 1, 3, or 5 times with an equal chance of success.\n- Inflicts 400% of total Atk. Increase."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "ac3ef129b875810e359727aaea416ded",
+        "itemName": "Gold Dragon: Origin of Showy Power",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2036.8,
+        "buff": 7950,
+        "explain": "Atk. Increase +1549.3%\nOverall Damage +9%\nSkill cooldown -15% (Awakening skills excluded)\n\nCasts a [rechargeable barrier] with 65% of Max HP.\n\nMax HP restricted to 65%\n\nAttack Speed +8%\nCasting Speed +12%\nPhysical/Magical Def. +14,000\nAll Elemental Resistance +8",
+        "explainDetail": "Atk. Increase +1549.3%\nOverall Damage +9%\nSkill cooldown -15% (Awakening skills excluded)\n\nCasts a [rechargeable barrier] with 65% of Max HP.\n\nMax HP restricted to 65%\n\nAttack Speed +8%\nCasting Speed +12%\nPhysical/Magical Def. +14,000\nAll Elemental Resistance +8"
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "4820b645a3210a9b4bdef2386526f033",
+      "itemName": "Seon: Forest Witch Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Weak",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 28
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 938,
+            "buff": 1405,
+            "explain": "Ignite Ratio +1%\n\nAttacks generate shock waves. (Cooldown: 0.5 sec.)\n- Inflicts 120% of total Atk. Increase.\n\nAttacks Stun enemies for 3 sec. (Cooldown: 8 sec.)",
+            "explainDetail": "Ignite Ratio +1%\n\nAttacks generate shock waves. (Cooldown: 0.5 sec.)\n- Inflicts 120% of total Atk. Increase.\n\nAttacks Stun enemies for 3 sec. (Cooldown: 8 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "1290e0fd31acf31f3f4ef4914453ac95",
+        "itemName": "Green Dragon: Heavy Iron Will",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 1966.4,
+        "buff": 7984,
+        "options": [
+          {
+            "explain": "Atk. Increase +893.9%\nSleep duration +2 sec.",
+            "explainDetail": "Atk. Increase +893.9%\nSleep duration +2 sec."
+          },
+          {
+            "explain": "Overall Damage +5%\nLv. 75 skill cooldown recovery +15%",
+            "explainDetail": "Overall Damage +5%\nLv. 75 skill cooldown recovery +15%"
+          },
+          {
+            "explain": "Physical/Magical Def. +4,000\nFreeze Tolerance +20%",
+            "explainDetail": "Physical/Magical Def. +4,000\nFreeze Tolerance +20%"
+          },
+          {
+            "explain": "Skill cooldown recovery +30% (Awakening skills excluded)\nFreeze Tolerance +40%",
+            "explainDetail": "Skill cooldown recovery +30% (Awakening skills excluded)\nFreeze Tolerance +40%",
+            "transfer": true
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "e91ac864b01d04be4a0d858543161bd8",
+      "itemName": "Seon: Ent Spirit Holy Grail",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 3,
+      "itemGradeName": "Ordinary",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 55
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 55
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 55
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 350,
+            "buff": 1178,
+            "explain": "Overall Damage +3%\nSkill range +5%\nLv. 1 - 40 skill range +15%",
+            "explainDetail": "Overall Damage +3%\nSkill range +5%\nLv. 1 - 40 skill range +15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "f508e81460de878f663785f41b0da5f1",
+        "itemName": "Abyssal Concentration: Undefined Presence",
+        "itemRarity": "Epic"
+      },
+      "customOption": {
+        "damage": 1549.2,
+        "buff": 8107,
+        "options": [
+          {
+            "explain": "Overall Damage +5%\nBurn Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBurn Tolerance +1%",
+            "transfer": true
+          },
+          {
+            "explain": "Overall Damage +5%\nBleeding Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nBleeding Tolerance +1%"
+          },
+          {
+            "explain": "Overall Damage +5%\nShock Tolerance +1%",
+            "explainDetail": "Overall Damage +5%\nShock Tolerance +1%"
+          },
+          {
+            "explain": "Shadow Damage +20",
+            "explainDetail": "Shadow Damage +20"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "e038098bc397dad299472d6316ddf1fa",
+      "itemName": "Novice Fox Orb Magic Stone",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "8786cef035801936ebf53f898915a971",
+      "setItemName": "Ethereal Orb Arts Set",
+      "reinforce": 4,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +10%\n\nFire, Water, Light, and Shadow attack attributes",
+            "explainDetail": "Overall Damage +10%\n\nFire, Water, Light, and Shadow attack attributes",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          },
+          {
+            "explain": "Movement Speed +4%",
+            "explainDetail": "Movement Speed +4%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "dc9fc659680927dfc9e492053413c6e7",
+        "itemName": "Second Coming of Glory",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "974772d0993c6ab49c166eb20595fe41",
+      "itemName": "Nature's Warning Earrings",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 125
+          },
+          {
+            "name": "Intelligence",
+            "value": 125
+          },
+          {
+            "name": "Vitality",
+            "value": 125
+          },
+          {
+            "name": "Spirit",
+            "value": 125
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 350,
+            "buff": 1178,
+            "explain": "Overall Damage +3%\nSkill range +5%\nLv. 75/80 skill range +15%",
+            "explainDetail": "Overall Damage +3%\nSkill range +5%\nLv. 75/80 skill range +15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "51bdc3fd28f34ca566a9c821da7eecc7",
+        "itemName": "Abyssal Concentration: Amorphous Power",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "7922743b8f68002262b8c863c5cba00e",
+      "setItemName": "Mist Walker Set",
+      "slotInfo": [
+        {
+          "itemNo": "4820b645a3210a9b4bdef2386526f033",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "e91ac864b01d04be4a0d858543161bd8",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Epic"
+        }
+      ],
+      "active": {
+        "setEquipCount": 2
+      }
+    }
+  ]
+}

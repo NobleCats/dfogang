@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_file, Response
 import requests
 import datetime
 from collections import defaultdict
+from pathlib import Path
 import os
 import json
 from flask_cors import CORS
@@ -19,6 +20,19 @@ def search_characters(server, name):
     r.raise_for_status()
     return r.json().get('rows', [])
 
+def get_profile(server, character_id):
+    url = f"https://api.dfoneople.com/df/servers/{server}/characters/{character_id}?apikey={API_KEY}"
+    r = requests.get(url)
+    r.raise_for_status()
+    return r.json()
+
+
+def get_equipment(server, character_id):
+    url = f"https://api.dfoneople.com/df/servers/{server}/characters/{character_id}/equip/equipment?apikey={API_KEY}"
+    r = requests.get(url)
+    r.raise_for_status()
+    return r.json()
+
 def get_character_id(server, name):
     url = f"https://api.dfoneople.com/df/servers/{server}/characters?characterName={name}&limit=1&wordType=full&apikey={API_KEY}"
     r = requests.get(url)
@@ -27,19 +41,6 @@ def get_character_id(server, name):
     if rows:
         return rows[0]["characterId"]
     return None
-
-
-def get_profile(server, character_id):
-    url = f"https://api.dfoneople.com/df/servers/{server}/characters/{character_id}?apikey={API_KEY}"
-    r = requests.get(url)
-    r.raise_for_status()
-    return r.json()
-
-def get_equipment(server, character_id):
-    url = f"https://api.dfoneople.com/df/servers/{server}/characters/{character_id}/equip/equipment?apikey={API_KEY}"
-    r = requests.get(url)
-    r.raise_for_status()
-    return r.json()
 
 def history_cleaner(history):
     """같은 날짜 내에서 원복된 변경사항은 제거하는 함수"""
@@ -96,6 +97,19 @@ def history_cleaner(history):
     # 최신 30개만 유지
     return cleaned_history[-30:]
 
+@app.route("/profile", methods=["POST"])
+def profile():
+    data = request.json
+    server = data.get("server")
+    name = data.get("name")
+    characterId = get_character_id(server, name)
+
+    url = f"https://api.dfoneople.com/df/servers/{server}/characters/{characterId}?apikey={API_KEY}"
+    r = requests.get(url)
+    r.raise_for_status()
+    return r.json()
+
+
 @app.route("/search", methods=["POST"])
 def search():
     data = request.json
@@ -107,7 +121,7 @@ def search():
         return jsonify({"error": "No characters found"}), 404
     
     # ✅ adventureName 붙이기
-    enriched = []
+    result = []
     for char in characters:
         char_id = char.get("characterId")
         try:
@@ -116,9 +130,54 @@ def search():
         except Exception as e:
             print(f"[!] Failed to get profile for {char_id}: {e}")
             char["adventureName"] = "-"
-        enriched.append(char)
+        result.append(char)
 
-    return jsonify({"results": enriched})
+    return jsonify({"results": result})
+
+@app.route("/search_explorer", methods=["POST"])
+def search_explorer():
+    data = request.get_json()
+    servers = ["cain", "siroco"]
+    explorer_name = data.get("name", "").strip()
+
+    result = []
+
+    for serverId in servers:
+        base_path = Path(f"datas/{serverId}/{explorer_name}")
+        if not base_path.exists():
+            continue  # ❗없으면 그냥 넘어감
+
+        for char_dir in base_path.iterdir():
+            if not char_dir.is_dir():
+                continue
+
+            equipment_path = char_dir / "equipment.json"
+            if not equipment_path.exists():
+                continue
+
+            try:
+                with open(equipment_path, encoding="utf-8") as f:
+                    equip_data = json.load(f)
+                    result.append({
+                        "characterId": char_dir.name,
+                        "characterName": equip_data.get("characterName", ""),
+                        "jobGrowName": equip_data.get("jobGrowName", ""),
+                        "fame": equip_data.get("fame", 0),
+                        "serverId": serverId
+                    })
+            except Exception as e:
+                print(f"[❌] Error reading {equipment_path}: {e}")
+
+    if not result:
+        return jsonify({"error": "No explorer name found"}), 404
+
+    return jsonify({"results": result})
+
+
+
+
+
+
 
 def extract_slot_map(equipment_list):
     result = {}

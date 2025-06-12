@@ -1,0 +1,759 @@
+{
+  "serverId": "cain",
+  "characterId": "c4dec5ed35a0bacc981033c1048cb6a8",
+  "characterName": "Chistosita",
+  "level": 115,
+  "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+  "jobGrowId": "53632e641719388657407af4f9c063ac",
+  "jobName": "Archer",
+  "jobGrowName": "Neo: Traveler",
+  "fame": 30684,
+  "adventureName": "Mack55",
+  "guildId": null,
+  "guildName": null,
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "3b360ac71476d3b58740db3168d3782e",
+      "itemName": "Mist Explorer",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "c954d6f4ca2a9cbfe34ca3388f21687c",
+      "itemTypeDetail": "Longbow",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "amplificationName": "Dimensional SPR",
+      "refine": 0,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "256.4%"
+          },
+          {
+            "name": "Buff Power",
+            "value": 37991
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "7b1188e88e5a5c9ce93a4d4cb77a90e1",
+      "itemName": "Archer Welcome Party!",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "c9f031ec35dade0680f17109a0654338",
+      "itemName": "Seon: Reversible Leather Coat",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "613f841cd50e44751c6b8f155f47f24a",
+      "setItemName": "Mana Made to Life Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nAttack/Movement Speed +16%\nCasting Speed +24%",
+            "explainDetail": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nAttack/Movement Speed +16%\nCasting Speed +24%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "66fdc321b924446f9fa9f285b62c183f",
+        "itemName": "Lightning: Thunderous Dragon Mind",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2735.6,
+        "buff": 7814,
+        "explain": "Overall Damage +9%\n\n[Hero's Moxie]\nSuppresses death until all MP is used up. (Cooldown: 300 sec.)\n- Consumes MP instead of HP when attacked\n- MP -2% per sec.\n- All HP healing effects disabled\n\nMP +3,500 when attacking (Cooldown: 1 sec.)\n\nAttack Speed +5%\nCasting Speed +7.5%\nMax MP +945",
+        "explainDetail": "Overall Damage +9%\n\n[Hero's Moxie]\nSuppresses death until all MP is used up. (Cooldown: 300 sec.)\n- Consumes MP instead of HP when attacked\n- MP -2% per sec.\n- All HP healing effects disabled\n\nMP +3,500 when attacking (Cooldown: 1 sec.)\n\nAttack Speed +5%\nCasting Speed +7.5%\nMax MP +945"
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "2a5e38cdf5ef6a5b99bd2cd651bbd681",
+      "itemName": "Seon: Manipulation",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "613f841cd50e44751c6b8f155f47f24a",
+      "setItemName": "Mana Made to Life Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "explain": "Overall Damage +1%",
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks restore 16% of MP. (Cooldown: 15 sec.)\n\nAttacks Shock/Poison enemies for 20 sec. (Cooldown: 5 sec.)\n\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Attacks restore 16% of MP. (Cooldown: 15 sec.)\n\nAttacks Shock/Poison enemies for 20 sec. (Cooldown: 5 sec.)\n\nSlow/Curse/Immobility Tolerance +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "979289b832c330088715c635907a2cbc",
+        "itemName": "Predation: Merciless Invasion",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1820.2,
+        "buff": 8066,
+        "explain": "Overall Damage +13%\n\nPhysical/Magical Critical Chances +5%\nSkill MP cost -7%",
+        "explainDetail": "Overall Damage +13%\n\nPhysical/Magical Critical Chances +5%\nSkill MP cost -7%"
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "b177d50a9c557086cff87348c54952e1",
+      "itemName": "Nature's Warning Bottom",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 70
+          },
+          {
+            "name": "Strength",
+            "value": 40
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks Immobilize enemies for 5 sec. (Cooldown: 10 sec.)\n\nAttack Speed +8%\nCasting Speed +12%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Attacks Immobilize enemies for 5 sec. (Cooldown: 10 sec.)\n\nAttack Speed +8%\nCasting Speed +12%\nSlow/Curse/Immobility Tolerance +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a13d3693d5fd2328d1a71f5d0951291a",
+        "itemName": "Predation: Unbeating Heart",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "e279c639ec77793ac8100cceb28f9e95",
+      "itemName": "Seon: Passionate Knight Boots",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "613f841cd50e44751c6b8f155f47f24a",
+      "setItemName": "Mana Made to Life Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 90
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Casts Super Armor.\n\nMovement Speed +8%\n\nPhysical/Magical damage reduction +10%",
+            "explainDetail": "Casts Super Armor.\n\nMovement Speed +8%\n\nPhysical/Magical damage reduction +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "c84f5e423b08a15084ee72e40f82c953",
+        "itemName": "Wrath: Aimless Desire",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2215.6,
+        "buff": 7855,
+        "explain": "Overall Damage +22%\n- Suppressed Mana Bracelet equipment must be equipped.\n\nMP +2,500 when attacking (Cooldown: 1 sec.)\n\nPhysical/Magical Critical Chances +7%\nMax MP +945\nAll Abnormal Status Tolerances -10%",
+        "explainDetail": "Overall Damage +22%\n- Suppressed Mana Bracelet equipment must be equipped.\n\nMP +2,500 when attacking (Cooldown: 1 sec.)\n\nPhysical/Magical Critical Chances +7%\nMax MP +945\nAll Abnormal Status Tolerances -10%",
+        "buffExplain": "Buffer Overall Damage +5%"
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "d960663208b29a850f690afb606cf685",
+      "itemName": "Seon: Power Plant",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "613f841cd50e44751c6b8f155f47f24a",
+      "setItemName": "Mana Made to Life Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "explain": "Overall Damage +1%",
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 1291,
+            "explain": "All Elemental Damage +25\n\nAttacks Bleed/Burn enemies for 20 sec. (Cooldown: 5 sec.)\n\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "All Elemental Damage +25\n\nAttacks Bleed/Burn enemies for 20 sec. (Cooldown: 5 sec.)\n\nSlow/Curse/Immobility Tolerance +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2f80afaae10ccd9ac6adfd6efba36a2a",
+        "itemName": "Predation: Tightening Noose",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2578.6,
+        "buff": 7950,
+        "explain": "Overall Damage +8%\nSkill cooldown recovery +15% (Awakening skills excluded)\n\nHP/MP +2,000 when attacking (Cooldown: 1 sec.)\n\nAttack Speed +8%\nCasting Speed +12%\nSkill MP cost -7%",
+        "explainDetail": "Overall Damage +8%\nSkill cooldown recovery +15% (Awakening skills excluded)\n\nHP/MP +2,000 when attacking (Cooldown: 1 sec.)\n\nAttack Speed +8%\nCasting Speed +12%\nSkill MP cost -7%"
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "268f50e6da8deedf7afc115d925e623b",
+      "itemName": "Seon: Black Star",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "613f841cd50e44751c6b8f155f47f24a",
+      "setItemName": "Mana Made to Life Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Fire Dmg.",
+            "value": 35
+          },
+          {
+            "name": "Light Dmg.",
+            "value": 35
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 938,
+            "buff": 1518,
+            "explain": "Physical/Magical Def. +14,000",
+            "explainDetail": "Physical/Magical Def. +14,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "d9e73f6f2cd625f80f42cd30b18816b9",
+        "itemName": "Empyrean Allied Forces: A Prayer for Everyone",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1999,
+        "buff": 7895,
+        "explain": "All Elemental Damage +20\n\nIf 50% or lower HP, Overall Damage +11%\n\nAttack/Casting/Movement Speed +20%\nHit Rate +10%",
+        "explainDetail": "All Elemental Damage +20\n\nIf 50% or lower HP, Overall Damage +11%\n\nAttack/Casting/Movement Speed +20%\nHit Rate +10%",
+        "buffExplain": "Buffer Overall Damage +3%"
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "e6645a1c74688b624e3005e4f34666b8",
+      "itemName": "Seon: Suppressed Mana Bracelet",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "613f841cd50e44751c6b8f155f47f24a",
+      "setItemName": "Mana Made to Life Set",
+      "reinforce": 1,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "reinforceSkill": [
+          {
+            "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+            "jobName": "Mage (F)",
+            "skills": [
+              {
+                "skillId": "94cc12be75b0b60385b1915c13d682a5",
+                "name": "Puppeteer",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "jobId": "92d1c40f5e486e3aa4fae8db283d1fd3",
+            "jobName": "Priest (M)",
+            "skills": [
+              {
+                "skillId": "fc592c0520fe15106186180626b05c98",
+                "name": "Grace of Protection",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "jobId": "2ae47d662a9b18848c5e314966765bd7",
+            "jobName": "Priest (F)",
+            "skills": [
+              {
+                "skillId": "8bff5b1b84d6d03fd52facd4186000a0",
+                "name": "Revelation: Aria",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "jobId": "dbbdf2dd28072b26f22b77454d665f21",
+            "jobName": "Archer",
+            "skills": [
+              {
+                "skillId": "c73b76e719757e43ef41e8bebce615f1",
+                "name": "Sensation",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "status": [
+          {
+            "name": "Strength",
+            "value": 100
+          },
+          {
+            "name": "Intelligence",
+            "value": 100
+          },
+          {
+            "name": "Vitality",
+            "value": 100
+          },
+          {
+            "name": "Spirit",
+            "value": 100
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 938,
+            "buff": 1518,
+            "explain": "Max HP +1,200\nMax MP +1,890",
+            "explainDetail": "Max HP +1,200\nMax MP +1,890"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a4c543a924286682d5450db840c9c157",
+        "itemName": "Empyrean Allied Forces: Dogged Determination",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2253.4,
+        "buff": 7950,
+        "explain": "Atk. Increase +1549.3%\nOverall Damage +15%\n\n[Forbidden Magic Pact]\nForms a forbidden magic pact to lose blood and link magic to life.\n- Consumes MP instead of HP when casting skills or when attacked.\n- Restores MP by 100% of HP healing amounts.\n- Max HP restricted to 99%\n\nMax MP +4,196\nPhysical/Magical Def. +7,000\nMP +348 per min.",
+        "explainDetail": "Atk. Increase +1549.3%\nOverall Damage +15%\n\n[Forbidden Magic Pact]\nForms a forbidden magic pact to lose blood and link magic to life.\n- Consumes MP instead of HP when casting skills or when attacked.\n- Restores MP by 100% of HP healing amounts.\n- Max HP restricted to 99%\n\nMax MP +4,196\nPhysical/Magical Def. +7,000\nMP +348 per min."
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "c9c786e705cff07da06a0471cc10c360",
+      "itemName": "Seon: Golem's Centrum Ring",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "613f841cd50e44751c6b8f155f47f24a",
+      "setItemName": "Mana Made to Life Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 35
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 938,
+            "buff": 1518,
+            "explain": "Equipment's MP healing effects +10%",
+            "explainDetail": "Equipment's MP healing effects +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "6fd7911e7bb665ea44ed9c816243a1e0",
+        "itemName": "Black Dragon: Bridle of Endless Darkness",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2578.6,
+        "buff": 7834,
+        "explain": "Overall Damage +10%\n\nPhysical/Magical Def. +12,000\nHit Rate +10%\nEvasion +8%",
+        "explainDetail": "Overall Damage +10%\n\nPhysical/Magical Def. +12,000\nHit Rate +10%\nEvasion +8%"
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "ba6e43f7b8bcefc9d67fef38831e823a",
+      "itemName": "Nature's Warning Sub Equipment",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 110
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 350,
+            "buff": 1178,
+            "explain": "Overall Damage +3%\nSkill range +5%\nLv. 1 - 40 skill range +15%",
+            "explainDetail": "Overall Damage +3%\nSkill range +5%\nLv. 1 - 40 skill range +15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "f508e81460de878f663785f41b0da5f1",
+        "itemName": "Abyssal Concentration: Undefined Presence",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "20f7c56e9d32ae6df24e04ffefcf1d4f",
+      "itemName": "Nature's Warning Magic Stone",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 350,
+            "buff": 1953,
+            "explain": "Overall Damage +6%\nSkill range +5%\nLv. 45/60/70 skill range +15%",
+            "explainDetail": "Overall Damage +6%\nSkill range +5%\nLv. 45/60/70 skill range +15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "98ff1b6409ebcebaab144291149602c8",
+        "itemName": "Seon: Abyssal Concentration: Infinite Contraction",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "974772d0993c6ab49c166eb20595fe41",
+      "itemName": "Nature's Warning Earrings",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "34532e36a2075261a85e74a609832879",
+      "setItemName": "Overwhelming Nature Set",
+      "reinforce": 10,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          },
+          {
+            "name": "Strength",
+            "value": 50
+          },
+          {
+            "name": "Intelligence",
+            "value": 50
+          },
+          {
+            "name": "Vitality",
+            "value": 50
+          },
+          {
+            "name": "Spirit",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 350,
+            "buff": 1953,
+            "explain": "Overall Damage +6%\nSkill range +5%\nLv. 75/80 skill range +15%",
+            "explainDetail": "Overall Damage +6%\nSkill range +5%\nLv. 75/80 skill range +15%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "5b62e4afae3af2739895ce9f78d4c272",
+        "itemName": "Seon: Abyssal Concentration: Amorphous Power",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "613f841cd50e44751c6b8f155f47f24a",
+      "setItemName": "Mana Made to Life Set",
+      "slotInfo": [
+        {
+          "itemNo": "c9f031ec35dade0680f17109a0654338",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "2a5e38cdf5ef6a5b99bd2cd651bbd681",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "e279c639ec77793ac8100cceb28f9e95",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "d960663208b29a850f690afb606cf685",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "268f50e6da8deedf7afc115d925e623b",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "e6645a1c74688b624e3005e4f34666b8",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "c9c786e705cff07da06a0471cc10c360",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Epic"
+        }
+      ],
+      "active": {
+        "setEquipCount": 6
+      }
+    }
+  ]
+}

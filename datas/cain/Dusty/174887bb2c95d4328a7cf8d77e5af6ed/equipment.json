@@ -1,0 +1,921 @@
+{
+  "serverId": "cain",
+  "characterId": "174887bb2c95d4328a7cf8d77e5af6ed",
+  "characterName": "Witchdust",
+  "level": 115,
+  "jobId": "fc067d0781f1d01ef8f0b215440bac6d",
+  "jobGrowId": "ec6a93f4d14bb36ccc541183291197a7",
+  "jobName": "Mage (F)",
+  "jobGrowName": "Neo: Witch",
+  "fame": 31204,
+  "adventureName": "Dusty",
+  "guildId": "a7a6a591482e79d1a38d919552500410",
+  "guildName": "BlackPhantom",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "8c1a1a7249bd93f63f07c64795664d90",
+      "itemName": "Disharmony: Broomstick of Collapsed Boundaries",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "85d52ead3b577b3eb6d5bcbd668ca1c6",
+      "itemTypeDetail": "Broomstick",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "skin": {
+        "itemId": "949585bf369e4395eda6ab3e3fb12a7e",
+        "itemName": "Witch's Pumpkin Broom",
+        "itemRarity": "Epic"
+      },
+      "reinforce": 10,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 13
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 8,
+      "fixedOption": {
+        "damage": 2379.6,
+        "buff": 5784,
+        "explain": "Lollipop Crush creates more candy dolls.\n- Max candy creation count +5\n- Candy doll creation count per attacked target +2\n- Lollipop Crush's remaining cooldown -3% per created candy doll\n- Candy doll Atk. -20%\n\nUnexploded candy dolls are absorbed and created during the next Lollipop Crush. (Up to 15 dolls)\n- Each candy can be absorbed once.\n- Additional candy dolls don't count toward the max candy doll creation count.",
+        "explainDetail": "Lollipop Crush creates more candy dolls.\n- Max candy creation count +5\n- Candy doll creation count per attacked target +2\n- Lollipop Crush's remaining cooldown -3% per created candy doll\n- Candy doll Atk. -20%\n\nUnexploded candy dolls are absorbed and created during the next Lollipop Crush. (Up to 15 dolls)\n- Each candy can be absorbed once.\n- Additional candy dolls don't count toward the max candy doll creation count."
+      },
+      "asrahanOption": {
+        "options": [
+          {
+            "name": "Retrograde Memory Starfield",
+            "step": 12,
+            "buff": 1311,
+            "explain": "Overall Damage +7%\nAtk. Increase +315%\n\nPhysical/Magical Critical Chances +5%\nAll speed +15%",
+            "explainDetail": "Overall Damage +7%\nAtk. Increase +315%\n\nPhysical/Magical Critical Chances +5%\nAll speed +15%"
+          },
+          {
+            "name": "Memory's Destination",
+            "step": 2,
+            "buff": 380,
+            "explain": "Overall Damage +2%",
+            "explainDetail": "Overall Damage +2%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "63e4767df8b4eca7f0f6998928997206",
+      "itemName": "A Midsummer Night's Dream Platinum [80Lv]",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 1,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "enchant": {
+        "status": [
+          {
+            "name": "Water Dmg.",
+            "value": 4
+          },
+          {
+            "name": "Strength",
+            "value": 20
+          },
+          {
+            "name": "Intelligence",
+            "value": 20
+          },
+          {
+            "name": "Vitality",
+            "value": 20
+          },
+          {
+            "name": "Spirit",
+            "value": 20
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "187b3a8ba497f55732b90c6057979d8c",
+      "itemName": "Seon: Unknown Myofiber Top",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "24bf14adab296d342ab4f92c5842215d",
+      "setItemName": "Record of Unknown Life",
+      "reinforce": 7,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 90
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 90
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 90
+          },
+          {
+            "name": "Strength",
+            "value": 60
+          },
+          {
+            "name": "Intelligence",
+            "value": 60
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nAll speed +10%",
+            "explainDetail": "Overall Damage +5%\nAll speed +10%"
+          },
+          {
+            "explain": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)",
+            "explainDetail": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown:  30 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "b70df4b633c9e90ff82a6e64e2d7ea4a",
+        "itemName": "Icelands: Seeping Chill",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2470.2,
+        "buff": 8085,
+        "explain": "Overall Damage +10%",
+        "explainDetail": "Overall Damage +10%"
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "e559bdffd81b56faedd1a520a47adf26",
+      "itemName": "Seon: Unknown Jewel Shoulder",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "24bf14adab296d342ab4f92c5842215d",
+      "setItemName": "Record of Unknown Life",
+      "reinforce": 7,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nPhysical/Magical Def. +10,000\nHP/MP +1% when attacking (Cooldown: 3 sec.)",
+            "explainDetail": "Overall Damage +5%\nPhysical/Magical Def. +10,000\nHP/MP +1% when attacking (Cooldown: 3 sec.)"
+          },
+          {
+            "explain": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)",
+            "explainDetail": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "9914a87582b0a4e6bf03f25b14f9e27f",
+        "itemName": "Icelands: Freezing Sensation",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1820.2,
+        "buff": 8144,
+        "explain": "Overall Damage +11%\nAll Elemental Damage +18\nPhysical/Magical Critical Chances +5%",
+        "explainDetail": "Overall Damage +11%\nAll Elemental Damage +18\nPhysical/Magical Critical Chances +5%"
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "05ca776787ea9a5e32eebe40e7e37b10",
+      "itemName": "Seon: Unknown Metal Gaiters",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "24bf14adab296d342ab4f92c5842215d",
+      "setItemName": "Record of Unknown Life",
+      "reinforce": 7,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 90
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 90
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 90
+          },
+          {
+            "name": "Strength",
+            "value": 60
+          },
+          {
+            "name": "Intelligence",
+            "value": 60
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nMax HP/MP +500",
+            "explainDetail": "Overall Damage +5%\nMax HP/MP +500"
+          },
+          {
+            "explain": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)",
+            "explainDetail": "[Psychedelic Eyes]\nApplies the following effects through Psychedelic Eyes, depending on the number of equipped Icelands equipment (2/3/5).\n- Evasion +30%/+45%/+75%\n- [Psychedelic Eyes] removed when attacked (Reappearance Cooldown: 30 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "ca7d535079cc3b3c66fe19c792898429",
+        "itemName": "Icelands: Silent Throes",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1977.2,
+        "buff": 8165,
+        "explain": "Overall Damage +10%",
+        "explainDetail": "Overall Damage +10%"
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "12b3b4a32929a67606f84e3142f9f28a",
+      "itemName": "Seon: Unknown Joint Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "24bf14adab296d342ab4f92c5842215d",
+      "setItemName": "Record of Unknown Life",
+      "reinforce": 7,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Movement Spd.",
+            "value": "10%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\n- Movement Speed +10%",
+            "explainDetail": "Overall Damage +5%\n- Movement Speed +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "e8b5e1382198ca94ed4a1d9ed98e9b0a",
+        "itemName": "Blaze: The Last Steps Taken",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2361.8,
+        "buff": 7756,
+        "explain": "Overall Damage +17%\nAtk. Increase +1608.9%",
+        "explainDetail": "Overall Damage +17%\nAtk. Increase +1608.9%"
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "fabafb1cda0188955450a97ef99202b5",
+      "itemName": "Seon: Unknown Mechanical Device Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "24bf14adab296d342ab4f92c5842215d",
+      "setItemName": "Record of Unknown Life",
+      "reinforce": 6,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 30
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 30
+          },
+          {
+            "name": "Overall Damage",
+            "value": "1%"
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 2066,
+            "explain": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Overall Damage +5%\nSlow/Curse/Immobility Tolerance +10%"
+          },
+          {
+            "explain": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%",
+            "explainDetail": "[Inner Flame]\nInner Flame awakens and applies the following effects, depending on the number of equipped Blaze equipment (2/3/5).\n- Skill range +10%/15%/25%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "80ee7934ebbffb9fcc0c5236975fad99",
+        "itemName": "Blaze: Endless Burning",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1386.8,
+        "buff": 8124,
+        "explain": "Overall Damage +14%\nAll Elemental Damage +20",
+        "explainDetail": "Overall Damage +14%\nAll Elemental Damage +20"
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "8c73c3f544c193651e33408bd5a204e6",
+      "itemName": "Seon: Commander-in-Chief's Decisive Shot",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "c80de06402a0378fa871a91017461db6",
+      "setItemName": "Trace of the Veteran",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3500,
+            "explain": "Overall Damage +11%",
+            "explainDetail": "Overall Damage +11%",
+            "buffExplain": "Buff Power: 3,500",
+            "buffExplainDetail": "Buff Power: 3,500"
+          },
+          {
+            "explain": "[Soul Drain]\nAbsorbs souls every 15 sec.\n- MP +15%",
+            "explainDetail": "[Soul Drain]\nAbsorbs souls every 15 sec.\n- MP +15%"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Max MP +6%",
+            "explainDetail": "Max MP +6%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "c7dab0484a26567396ad678e9f0e03a6",
+        "itemName": "Soul Tracing Device",
+        "itemRarity": "Primeval"
+      },
+      "fixedOption": {
+        "damage": 2540.6,
+        "buff": 8188,
+        "explain": "Overall Damage +9%\nAll Elemental Damage +20",
+        "explainDetail": "Overall Damage +9%\nAll Elemental Damage +20"
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "a76a378f1e9c0659fe11e575f4814791",
+      "itemName": "Seon: Unknown Scale Armlet",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "24bf14adab296d342ab4f92c5842215d",
+      "setItemName": "Record of Unknown Life",
+      "reinforce": 5,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +9.3%",
+            "explainDetail": "Overall Damage +9.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Skill range +24%",
+            "explainDetail": "Skill range +24%"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Physical/Magical Def. +2,500",
+            "explainDetail": "Physical/Magical Def. +2,500"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "36545151ce71868e8205db60d050e66d",
+        "itemName": "Skill Pearl Extension",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2361.8,
+        "buff": 8070,
+        "explain": "Overall Damage +15%\nAll Elemental Damage +30\n\nPhysical/Magical Critical Chances +5%\nAll speed +10%",
+        "explainDetail": "Overall Damage +15%\nAll Elemental Damage +30\n\nPhysical/Magical Critical Chances +5%\nAll speed +10%"
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "243b6ffb0b5ae4ca3af2d60abf14d931",
+      "itemName": "Seon: Commander-in-Chief's Initial Intention",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "c80de06402a0378fa871a91017461db6",
+      "setItemName": "Trace of the Veteran",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 33
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3600,
+            "explain": "[Eyes on Me!]\n- Overall Damage +5.3%\n- Skill cooldown -10% (Awakening skills excluded)\n- Super Armor\n- Casts a spotlight.",
+            "explainDetail": "[Eyes on Me!]\n- Overall Damage +5.3%\n- Skill cooldown -10% (Awakening skills excluded)\n- Super Armor\n- Casts a spotlight.",
+            "buffExplain": "Buff Power: 3,600",
+            "buffExplainDetail": "Buff Power: 3,600"
+          },
+          {
+            "explain": "Physical/Magical damage reduction +5%",
+            "explainDetail": "Physical/Magical damage reduction +5%"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "MP +1,500 when attacking (Cooldown: 1 sec.)",
+            "explainDetail": "MP +1,500 when attacking (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "737d5802fdb9a7cf4f3b4e4b97cd8643",
+        "itemName": "World Idol Ring",
+        "itemRarity": "Primeval"
+      },
+      "fixedOption": {
+        "damage": 2253.4,
+        "buff": 8104,
+        "explain": "Overall Damage +11%\n\nPhysical/Magical Critical Chances +5%",
+        "explainDetail": "Overall Damage +11%\n\nPhysical/Magical Critical Chances +5%"
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "af7e0b07cf723ff9555e34e04ea8d6a0",
+      "itemName": "Seon: Commander-in-Chief's Tactical Map",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "c80de06402a0378fa871a91017461db6",
+      "setItemName": "Trace of the Veteran",
+      "reinforce": 4,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 110
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 110
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%",
+            "explainDetail": "Overall Damage +10.3%",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "engrave": {
+              "color": "silver",
+              "value": 1
+            },
+            "explain": "Physical/Magical Critical Chances +5.5%",
+            "explainDetail": "Physical/Magical Critical Chances +5.5%"
+          },
+          {
+            "explain": "Evasion +20%",
+            "explainDetail": "Evasion +20%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "02ef726902571be42f2ac8f677232f40",
+        "itemName": "Invisible Stone",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1820.2,
+        "buff": 8068,
+        "explain": "Overall Damage +12%",
+        "explainDetail": "Overall Damage +12%"
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "40a18fa38fa2c0efab97ea668b0ca271",
+      "itemName": "Seon: Commander-in-Chief's Map Reading Compass",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "c80de06402a0378fa871a91017461db6",
+      "setItemName": "Trace of the Veteran",
+      "reinforce": 3,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 30
+          }
+        ]
+      },
+      "amplificationName": "Dimensional INT",
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +9.3%\n\n[Immortality Spell]\nCasts Immortality Spell on death for 1 sec. (Cooldown: 120 sec.)\n- HP +1%\n- Negates other HP healing effects and damage.",
+            "explainDetail": "Overall Damage +9.3%\n\n[Immortality Spell]\nCasts Immortality Spell on death for 1 sec. (Cooldown: 120 sec.)\n- HP +1%\n- Negates other HP healing effects and damage.",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Max HP +1,000",
+            "explainDetail": "Max HP +1,000"
+          },
+          {
+            "explain": "Max MP +1,000",
+            "explainDetail": "Max MP +1,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "001d48b33aa6e1e8c598a32f88625024",
+        "itemName": "Heavenly Protection",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2036.8,
+        "buff": 8066,
+        "explain": "Overall Damage +15%",
+        "explainDetail": "Overall Damage +15%"
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "37be0666db9198e5a6386f1244be7ba6",
+      "itemName": "Seon: Commander-in-Chief's Keepsake of a Friend",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "c80de06402a0378fa871a91017461db6",
+      "setItemName": "Trace of the Veteran",
+      "reinforce": 9,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "All Elemental Damage",
+            "value": 11
+          },
+          {
+            "name": "Strength",
+            "value": 50
+          },
+          {
+            "name": "Intelligence",
+            "value": 50
+          },
+          {
+            "name": "Vitality",
+            "value": 50
+          },
+          {
+            "name": "Spirit",
+            "value": 50
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "engrave": {
+              "color": "gold",
+              "value": 1
+            },
+            "buff": 3100,
+            "explain": "Overall Damage +10.3%\n\nSuper Armor",
+            "explainDetail": "Overall Damage +10.3%\n\nSuper Armor",
+            "buffExplain": "Buff Power: 3,100",
+            "buffExplainDetail": "Buff Power: 3,100"
+          },
+          {
+            "explain": "Movement Speed +5%",
+            "explainDetail": "Movement Speed +5%"
+          },
+          {
+            "explain": "Attacks Bleed, Poison, Burn, or Shock enemies for 5 sec. (Cooldown: 1 sec.)",
+            "explainDetail": "Attacks Bleed, Poison, Burn, or Shock enemies for 5 sec. (Cooldown: 1 sec.)"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "99d486602d68f136cd71228a60a54e84",
+        "itemName": "Whispers of Sweet Scent",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2361.8,
+        "buff": 6514,
+        "explain": "Overall Damage +15%",
+        "explainDetail": "Overall Damage +15%",
+        "buffExplain": "[Buffer-Only Option]\nSTR +125\nINT +125\nVIT +125\nSPR +125"
+      }
+    }
+  ],
+  "setItemInfo": [
+    {
+      "setItemId": "24bf14adab296d342ab4f92c5842215d",
+      "setItemName": "Record of Unknown Life",
+      "slotInfo": [
+        {
+          "itemNo": "187b3a8ba497f55732b90c6057979d8c",
+          "slotId": "JACKET",
+          "slotName": "Top",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "e559bdffd81b56faedd1a520a47adf26",
+          "slotId": "SHOULDER",
+          "slotName": "Head/Shoulder",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "05ca776787ea9a5e32eebe40e7e37b10",
+          "slotId": "PANTS",
+          "slotName": "Bottom",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "12b3b4a32929a67606f84e3142f9f28a",
+          "slotId": "SHOES",
+          "slotName": "Shoes",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "fabafb1cda0188955450a97ef99202b5",
+          "slotId": "WAIST",
+          "slotName": "Belt",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "a76a378f1e9c0659fe11e575f4814791",
+          "slotId": "WRIST",
+          "slotName": "Bracelet",
+          "itemRarity": "Epic"
+        }
+      ],
+      "active": {
+        "setEquipCount": 6
+      }
+    },
+    {
+      "setItemId": "c80de06402a0378fa871a91017461db6",
+      "setItemName": "Trace of the Veteran",
+      "slotInfo": [
+        {
+          "itemNo": "8c73c3f544c193651e33408bd5a204e6",
+          "slotId": "AMULET",
+          "slotName": "Necklace",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "243b6ffb0b5ae4ca3af2d60abf14d931",
+          "slotId": "RING",
+          "slotName": "Ring",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "af7e0b07cf723ff9555e34e04ea8d6a0",
+          "slotId": "SUPPORT",
+          "slotName": "Sub Equipment",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "40a18fa38fa2c0efab97ea668b0ca271",
+          "slotId": "MAGIC_STON",
+          "slotName": "Magic Stone",
+          "itemRarity": "Epic"
+        },
+        {
+          "itemNo": "37be0666db9198e5a6386f1244be7ba6",
+          "slotId": "EARRING",
+          "slotName": "Earrings",
+          "itemRarity": "Epic"
+        }
+      ],
+      "active": {
+        "setEquipCount": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,694 @@
+{
+  "serverId": "cain",
+  "characterId": "45b36c58e57834662201b5b7405f2dce",
+  "characterName": "roxangell",
+  "level": 115,
+  "jobId": "40132cbc8b2b5eedfe035e35c322472e",
+  "jobGrowId": "5dff544828c42d8fc109f2f747d50c7f",
+  "jobName": "Slayer (M)",
+  "jobGrowName": "Neo: Ghostblade",
+  "fame": 30679,
+  "adventureName": "roxanita",
+  "guildId": "62f9f9558e3734225d3fef685a5611a6",
+  "guildName": "LosRenacidos",
+  "equipment": [
+    {
+      "slotId": "WEAPON",
+      "slotName": "Weapon",
+      "itemId": "0101edd00a357e4ee8a9b868e73cbaec",
+      "itemName": "Heroic Saga - Katana",
+      "itemTypeId": "2e533040e5452283a43c5e62e82359d8",
+      "itemType": "Weapon",
+      "itemTypeDetailId": "6aef9546ba235eacb4224a29cb795de8",
+      "itemTypeDetail": "Katana",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 12,
+      "itemGradeName": "Weak",
+      "enchant": {
+        "status": [
+          {
+            "name": "Water Dmg.",
+            "value": 13
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 8,
+      "tune": {
+        "level": 0,
+        "status": [
+          {
+            "name": "Overall Damage",
+            "value": "281%"
+          }
+        ]
+      }
+    },
+    {
+      "slotId": "TITLE",
+      "slotName": "Title",
+      "itemId": "ffe82321076019ebcd0eeb753ee6db2b",
+      "itemName": "Awakening",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "9b715664be4af253f54728d417d6253d",
+      "itemTypeDetail": "Title",
+      "itemAvailableLevel": 50,
+      "itemRarity": "Rare",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "amplificationName": null,
+      "refine": 0
+    },
+    {
+      "slotId": "JACKET",
+      "slotName": "Top",
+      "itemId": "ddecac79bab2f1cb184db2935385ab08",
+      "itemName": "Shiny Gold Hideout's Plate Armor",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "861b95cb37ac4158f11eac97fa44035f",
+      "itemTypeDetail": "Top",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "5952975fb5a964d20c047d0f034c021b",
+      "setItemName": "Hideout's Endless Gold Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 50
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 50
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 50
+          },
+          {
+            "name": "Strength",
+            "value": 20
+          },
+          {
+            "name": "Intelligence",
+            "value": 20
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nAttack/Movement Speed +16%\nCasting Speed +24%",
+            "explainDetail": "Attacks cast Lightning Explosion on enemies. (Cooldown: 4 sec.)\n- Inflicts 2,000% of total Atk. Increase.\n\nAttack/Movement Speed +16%\nCasting Speed +24%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "66fdc321b924446f9fa9f285b62c183f",
+        "itemName": "Lightning: Thunderous Dragon Mind",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOULDER",
+      "slotName": "Head/Shoulder",
+      "itemId": "0b9aeebbc270b783c51035b2ec84ca40",
+      "itemName": "Seon: Devoured Sacred Beast's Misguided Cape",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1750d0d0adc48fc6ba95590fd899e16d",
+      "itemTypeDetail": "Head/Shoulder",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 35
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 375.6,
+            "buff": 1063,
+            "explain": "Lv. 40/75 skills' cooldown recovery +22.5%",
+            "explainDetail": "Lv. 40/75 skills' cooldown recovery +22.5%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "869aafd0d3264b77a8306644948345c0",
+        "itemName": "Communion: Welcoming Sunlight",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2470.2,
+        "buff": 7794,
+        "explain": "Overall Damage +11%\n\nPhysical/Magical damage reduction +10%\nAll Elemental Resistance +8\nEvasion +8%",
+        "explainDetail": "Overall Damage +11%\n\nPhysical/Magical damage reduction +10%\nAll Elemental Resistance +8\nEvasion +8%"
+      }
+    },
+    {
+      "slotId": "PANTS",
+      "slotName": "Bottom",
+      "itemId": "acc64a7aa6c0dd52ef8d4ae57c0b4c97",
+      "itemName": "Tough Luck Pants",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "918b4464bd04ae47b9341c166c866c89",
+      "itemTypeDetail": "Bottom",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Independent Atk.",
+            "value": 50
+          },
+          {
+            "name": "Strength",
+            "value": 20
+          },
+          {
+            "name": "Intelligence",
+            "value": 20
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks Immobilize enemies for 5 sec. (Cooldown: 10 sec.)\n\nAttack Speed +8%\nCasting Speed +12%\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "Attacks Immobilize enemies for 5 sec. (Cooldown: 10 sec.)\n\nAttack Speed +8%\nCasting Speed +12%\nSlow/Curse/Immobility Tolerance +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "a13d3693d5fd2328d1a71f5d0951291a",
+        "itemName": "Predation: Unbeating Heart",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "SHOES",
+      "slotName": "Shoes",
+      "itemId": "b88ee21e2d5d8108f9d13d179b17a3e0",
+      "itemName": "Faint Magic Domain Shoes",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "1f37edff656d9fda69500837d9bc72d0",
+      "itemTypeDetail": "Shoes",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "79d71d7797e1dc1e2840db93ed59d37a",
+      "setItemName": "Magic Domain Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 35
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "3%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 703.4,
+            "buff": 1291,
+            "explain": "Attacks Freeze all enemies for 5 sec. (Cooldown: 15 sec.)\n\nMovement Speed +3%\nMax MP +315\nPhysical/Magical Def. +1,400\nMP +174 per min.",
+            "explainDetail": "Attacks Freeze all enemies for 5 sec. (Cooldown: 15 sec.)\n\nMovement Speed +3%\nMax MP +315\nPhysical/Magical Def. +1,400\nMP +174 per min."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "8b72b46b1fe707388e224d879d038aea",
+        "itemName": "Icebloom: Vast Permafrost",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "WAIST",
+      "slotName": "Belt",
+      "itemId": "def98db16419cd22f5c9b96dab8b354f",
+      "itemName": "Pack Beta Belt",
+      "itemTypeId": "5b334ee49bf5eba04d7a2f12be622867",
+      "itemType": "Armor",
+      "itemTypeDetailId": "7ced1808119fd4161dba7904d6fccda9",
+      "itemTypeDetail": "Waist",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Epic",
+      "setItemId": "66c67e88b617c0a056d92c5d7ebd6887",
+      "setItemName": "Alpha of the Pack Hunt Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 35
+          },
+          {
+            "name": "Intelligence",
+            "value": 35
+          },
+          {
+            "name": "Physical Critical Chance",
+            "value": "5%"
+          },
+          {
+            "name": "Magical Critical Chance",
+            "value": "5%"
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 1291,
+            "explain": "All Elemental Damage +25\n\nAttacks Bleed/Burn enemies for 20 sec. (Cooldown: 5 sec.)\n\nSlow/Curse/Immobility Tolerance +10%",
+            "explainDetail": "All Elemental Damage +25\n\nAttacks Bleed/Burn enemies for 20 sec. (Cooldown: 5 sec.)\n\nSlow/Curse/Immobility Tolerance +10%"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "2f80afaae10ccd9ac6adfd6efba36a2a",
+        "itemName": "Predation: Tightening Noose",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 215
+      }
+    },
+    {
+      "slotId": "AMULET",
+      "slotName": "Necklace",
+      "itemId": "207ac84806f922aa292cde9bb7af663c",
+      "itemName": "Seon: Noble Philosophy",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "fef9b57699a28a119e3f69d4cd3ea977",
+      "itemTypeDetail": "Necklace",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 55
+          },
+          {
+            "name": "Intelligence",
+            "value": 55
+          },
+          {
+            "name": "Vitality",
+            "value": 55
+          },
+          {
+            "name": "Spirit",
+            "value": 55
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 1083,
+            "buff": 2513,
+            "explain": "Overall Damage +3%\n\nAttacks randomly cast 3 Swords of Oblivion on enemies. (Cooldown: 3 sec.)\n- Inflicts 400% of total Atk. Increase.",
+            "explainDetail": "Overall Damage +3%\n\nAttacks randomly cast 3 Swords of Oblivion on enemies. (Cooldown: 3 sec.)\n- Inflicts 400% of total Atk. Increase."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "ae8294d01d86647049ab8f349decc5ce",
+        "itemName": "Distrust: Forgotten Favor",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1711.8,
+        "buff": 7950,
+        "explain": "Atk. Increase +1430.2%\nAll Elemental Damage +18\nEquipment-based object damage +30%\n\nAttacks incinerate all enemies. (Cooldown: 5 sec.)\n- Inflicts 140% of total Atk. Increase.\n\nAll Elemental Resistance +8",
+        "explainDetail": "Atk. Increase +1430.2%\nAll Elemental Damage +18\nEquipment-based object damage +30%\n\nAttacks incinerate all enemies. (Cooldown: 5 sec.)\n- Inflicts 140% of total Atk. Increase.\n\nAll Elemental Resistance +8"
+      }
+    },
+    {
+      "slotId": "WRIST",
+      "slotName": "Bracelet",
+      "itemId": "2cf075dea321c14819ec9dde4b01c9d9",
+      "itemName": "Wyrm's Bloody Fangs",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "03e2a2ee03768162051aa6bb21f3f9f5",
+      "itemTypeDetail": "Bracelet",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "a5cafe51e9d4c2edfd57f2166e8b2b58",
+      "setItemName": "Dragon Arena Uprising Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 55
+          },
+          {
+            "name": "Intelligence",
+            "value": 55
+          },
+          {
+            "name": "Vitality",
+            "value": 55
+          },
+          {
+            "name": "Spirit",
+            "value": 55
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 938,
+            "buff": 1518,
+            "explain": "Attacks cast Vertical Pillar on enemies. (Cooldown: 3 sec.)\n- Casts 1, 3, or 5 times with an equal chance of success.\n- Inflicts 400% of total Atk. Increase.",
+            "explainDetail": "Attacks cast Vertical Pillar on enemies. (Cooldown: 3 sec.)\n- Casts 1, 3, or 5 times with an equal chance of success.\n- Inflicts 400% of total Atk. Increase."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "ac3ef129b875810e359727aaea416ded",
+        "itemName": "Gold Dragon: Origin of Showy Power",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "RING",
+      "slotName": "Ring",
+      "itemId": "0ce81fa68ec4a9acfa440347b77ed70d",
+      "itemName": "Seon: Third Spade - Death",
+      "itemTypeId": "38f03f0d7b5adfb389219d40f652ab75",
+      "itemType": "Accessory",
+      "itemTypeDetailId": "358aaf117e8a05d30d889d885446cde4",
+      "itemTypeDetail": "Ring",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 55
+          },
+          {
+            "name": "Intelligence",
+            "value": 55
+          },
+          {
+            "name": "Vitality",
+            "value": 55
+          },
+          {
+            "name": "Spirit",
+            "value": 55
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "buff": 3000,
+            "explain": "Overall Damage +9%",
+            "explainDetail": "Overall Damage +9%",
+            "buffExplain": "Buff Power: 3,000",
+            "buffExplainDetail": "Buff Power: 3,000"
+          },
+          {
+            "explain": "Max HP +2,000",
+            "explainDetail": "Max HP +2,000"
+          },
+          {
+            "explain": "Max MP +2,000",
+            "explainDetail": "Max MP +2,000"
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "886bf88959efe662191583a2a927a043",
+        "itemName": "Chest of Protection",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1820.2,
+        "buff": 6514,
+        "explain": "Overall Damage +2%\n\n[White Magician]\nThis equipment's Enchanting effect +100%\n- Exclusion: Skill Level and Adventurer Fame bonus effects\n\nMax HP +200\nMax MP +315\nHP +460.2 per min.\nMP +348 per min.",
+        "explainDetail": "Overall Damage +2%\n\n[White Magician]\nThis equipment's Enchanting effect +100%\n- Exclusion: Skill Level and Adventurer Fame bonus effects\n\nMax HP +200\nMax MP +315\nHP +460.2 per min.\nMP +348 per min."
+      }
+    },
+    {
+      "slotId": "SUPPORT",
+      "slotName": "Sub Equipment",
+      "itemId": "e16ccf5d046202c02475a7548a0d104f",
+      "itemName": "Tough Luck Mask",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "8310cb00b4baf408f7b0d2a3bad13637",
+      "itemTypeDetail": "Sub Equipment",
+      "itemAvailableLevel": 115,
+      "itemRarity": "Unique",
+      "setItemId": "49fee60566e1998f70f65497100cd3f7",
+      "setItemName": "Serendipity Set",
+      "reinforce": 0,
+      "itemGradeName": "Exceptional",
+      "enchant": {
+        "status": [
+          {
+            "name": "Physical Atk.",
+            "value": 55
+          },
+          {
+            "name": "Magical Atk.",
+            "value": 55
+          },
+          {
+            "name": "Independent Atk.",
+            "value": 55
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 495,
+            "buff": 2286,
+            "explain": "Overall Damage +6%\n\nCasts a [rechargeable barrier] with 5% of Max HP.",
+            "explainDetail": "Overall Damage +6%\n\nCasts a [rechargeable barrier] with 5% of Max HP."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "c56417b55621e87e0f09f48d9b16d42f",
+        "itemName": "Elevation: Unyielding Reason",
+        "itemRarity": "Epic"
+      },
+      "tune": {
+        "level": 0,
+        "setPoint": 115
+      }
+    },
+    {
+      "slotId": "MAGIC_STON",
+      "slotName": "Magic Stone",
+      "itemId": "0abc2652d4ecdc67803f5853d884bf91",
+      "itemName": "Seon: Mysterious Gold Stele",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "623a32cdd4fed47385e340897a9ffb6e",
+      "itemTypeDetail": "Magic Stone",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": null,
+      "setItemName": null,
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 60
+          },
+          {
+            "name": "Intelligence",
+            "value": 60
+          },
+          {
+            "name": "Vitality",
+            "value": 60
+          },
+          {
+            "name": "Spirit",
+            "value": 60
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 856,
+            "buff": 1291,
+            "explain": "Attacks cast Land Wave. (Cooldown: 1 sec.)\n- Stuns them for 5 sec.\n- Inflicts 500% of total Atk. Increase.",
+            "explainDetail": "Attacks cast Land Wave. (Cooldown: 1 sec.)\n- Stuns them for 5 sec.\n- Inflicts 500% of total Atk. Increase."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "aa42951869076d2ff272f863c1dbde9d",
+        "itemName": "Superior: Magic Circle",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 1820.2,
+        "buff": 7678,
+        "explain": "Overall Damage +12%\n\n[Ghost Explosion]\nAttacks summon a ghost that tracks enemies and explodes with them. (Cooldown: 0.5 sec.)\n- A 30% chance of summoning 2 ghosts\n- Inflicts 200% of total Atk. Increase.\n\nPhysical/Magical Critical Chances +5%\nAttack Speed +8%\nCasting Speed +12%\nAll Abnormal Status Tolerances +16%",
+        "explainDetail": "Overall Damage +12%\n\n[Ghost Explosion]\nAttacks summon a ghost that tracks enemies and explodes with them. (Cooldown: 0.5 sec.)\n- A 30% chance of summoning 2 ghosts\n- Inflicts 200% of total Atk. Increase.\n\nPhysical/Magical Critical Chances +5%\nAttack Speed +8%\nCasting Speed +12%\nAll Abnormal Status Tolerances +16%"
+      }
+    },
+    {
+      "slotId": "EARRING",
+      "slotName": "Earrings",
+      "itemId": "b2d83a7c54d4da541d9a67feb8d4d1e4",
+      "itemName": "Seon: Explosive Type: Small Tactical Flare",
+      "itemTypeId": "0013a170b9896b4f00054280030cd383",
+      "itemType": "Additional Equipment",
+      "itemTypeDetailId": "a0bb82b8e8e4b60335d6cc991f3a1908",
+      "itemTypeDetail": "Earrings",
+      "itemAvailableLevel": 110,
+      "itemRarity": "Epic",
+      "setItemId": "6411b34eeaf4f83d01e813943bb5154b",
+      "setItemName": "Forward Mover's Mind Set",
+      "reinforce": 0,
+      "itemGradeName": "Superior",
+      "enchant": {
+        "status": [
+          {
+            "name": "Strength",
+            "value": 125
+          },
+          {
+            "name": "Intelligence",
+            "value": 125
+          },
+          {
+            "name": "Vitality",
+            "value": 125
+          },
+          {
+            "name": "Spirit",
+            "value": 125
+          }
+        ]
+      },
+      "amplificationName": null,
+      "refine": 0,
+      "fusionOption": {
+        "options": [
+          {
+            "damage": 350,
+            "buff": 2066,
+            "explain": "Overall Damage +6%\n\nCasts a [rechargeable barrier] with 3% of Max HP.",
+            "explainDetail": "Overall Damage +6%\n\nCasts a [rechargeable barrier] with 3% of Max HP."
+          }
+        ]
+      },
+      "upgradeInfo": {
+        "itemId": "ff21c9c2470296f3269fc9d22e328852",
+        "itemName": "Seon: Brilliance: Imparted Wisdom",
+        "itemRarity": "Epic"
+      },
+      "fixedOption": {
+        "damage": 2470.2,
+        "buff": 7910,
+        "explain": "Overall Damage +10%\n\nAttack Speed +30%\nCasting Speed +30%\nMovement Speed +53%\nMP +348 per min.",
+        "explainDetail": "Overall Damage +10%\n\nAttack Speed +30%\nCasting Speed +30%\nMovement Speed +53%\nMP +348 per min."
+      }
+    }
+  ],
+  "setItemInfo": null
+}

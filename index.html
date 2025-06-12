@@ -425,12 +425,14 @@
 
         function serverToApiValue(s) {
             if (s.toLowerCase() === "sirocco") return "siroco";
-            return s.toLowerCase();
+            else if (s.toLowerCase() === "cain") return "cain";
+            return s;
         }
 
         function serverToRealValue(s) {
             if (s.toLowerCase() === "siroco") return "Siroco";
-            return "Cain";
+            else if (s.toLowerCase() === "cain") return "Cain";
+            return s;
         }
 
         function showCard(profile, explorerName) {
@@ -505,8 +507,7 @@
             document.getElementById('loading-spinner').style.display = 'block';
 
             // 주소 변경
-            const urlParams = new URLSearchParams({ search: '', server: serverId, name: explorerName });
-            history.pushState({}, '', `?${urlParams.toString()}`);
+            history.pushState({}, '', `?search=&${serverId}&${encodeURIComponent(explorerName)}`);
 
             // 검색 실행
             await loadCharacter(serverId, explorerName);
@@ -946,7 +947,6 @@
             const historyPath = `/datas/${serverId}/${adventureName}/${characterId}/history.json`;
             console.log("📁 Trying to fetch:", historyPath); // ✅ 경로 확인 로그
 
-
             let history = [];
             try {
                 const res = await fetch(historyPath);
@@ -1324,6 +1324,7 @@
         }
 
         async function loadCharacter(serverId, explorerName) {
+            document.getElementById("loading-spinner").style.display = "block";
             const resultsDiv = document.getElementById("results");
             resultsDiv.classList.add("grid-results");
             resultsDiv.innerHTML = "";
@@ -1348,88 +1349,97 @@
 
                 document.querySelectorAll(".card").forEach((cardElem, idx) => {
                     cardElem.addEventListener("click", async () => {
-
-                        document.getElementById("loading-spinner").style.display = "block";
-
                         const profile = results[idx];
-                        const charName = profile.characterName;
-                        const explorerName = profile.adventureName;
-                        const urlParams = new URLSearchParams({ result: '', server: serverId, name: charName });
-                        history.pushState({}, '', `?${urlParams.toString()}`);
-
-                        const eqRes = await fetch(`${API_ROOT}/equipment`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ server: serverId, name: charName })
-                        });
-                        if (!eqRes.ok) throw new Error("Equipment error");
-                        const eqData = await eqRes.json();
-
-                        profile.adventureName = eqData.explorerName;  // ✅ adventureName 추가
-
-                        const detailView = document.getElementById("detail-view");  // ✅ 이 줄이 필요함
-                        const charWrapper = document.createElement("div");
-                        charWrapper.id = "character-section";
-                        detailView.innerHTML = "";
-                        detailView.appendChild(charWrapper);
-
-                        await renderCharacterDetail(profile, eqData.equipment.equipment);
-                        await renderSetItems(eqData.equipment.setItemInfo);
-                        await renderHistoryPanel(profile);
-
-                        document.getElementById("main-view").style.display = "none";
-                        document.getElementById("detail-view").style.display = "block";
-                        document.getElementById("loading-spinner").style.display = "none";
+                        await showCharacterDetail(profile, serverId, true); // pushState ON
                     });
                 });
             } catch (e) {
                 resultsDiv.innerHTML = `<div style="color:#f66; font-weight:bold;">Character info not found.</div>`;
             }
+
+            document.getElementById("loading-spinner").style.display = "none";
+        }
+
+        async function showCharacterDetail(profile, serverId, pushToHistory = true) {
+            document.getElementById("loading-spinner").style.display = "block";
+
+            const charName = profile.characterName;
+
+            if (pushToHistory) {
+                history.pushState({}, '', `?result=&${serverId}&${encodeURIComponent(charName)}`);
+            }
+
+            const eqRes = await fetch(`${API_ROOT}/equipment`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ server: serverId, name: charName })
+            });
+            if (!eqRes.ok) throw new Error("Equipment error");
+
+            const eqData = await eqRes.json();
+            profile.adventureName = eqData.explorerName;
+
+            const detailView = document.getElementById("detail-view");
+            const charWrapper = document.createElement("div");
+            charWrapper.id = "character-section";
+            detailView.innerHTML = "";
+            detailView.appendChild(charWrapper);
+
+            await renderCharacterDetail(profile, eqData.equipment.equipment);
+            await renderSetItems(eqData.equipment.setItemInfo);
+            await renderHistoryPanel(profile);
+
+            document.getElementById("main-view").style.display = "none";
+            document.getElementById("detail-view").style.display = "block";
+            document.getElementById("loading-spinner").style.display = "none";
         }
 
 
         window.addEventListener("DOMContentLoaded", async () => {
-            const params = new URLSearchParams(window.location.search);
+            const rawParts = window.location.href.split('?')[1]?.split('&') || [];
 
-            const server = params.get("server");
-            const name = params.get("name");
+            const searchIndex = rawParts.findIndex(p => p.startsWith('search'));
+            const resultIndex = rawParts.findIndex(p => p.startsWith('result'));
 
-            const isSearch = params.get("search") !== null;
-            const isResult = params.get("result") !== null;
+            const isSearch = searchIndex !== -1;
+            const isResult = resultIndex !== -1;
 
-            if (isSearch && server && name) {
-                await loadCharacter(server, name);
+            let server = null;
+            let name = null;
+
+            if (isSearch) {
+                server = rawParts[searchIndex + 1];
+                name = decodeURIComponent(rawParts[searchIndex + 2] || '');
+                if (server && name) {
+                    await loadCharacter(server, name);
+                }
             }
 
-            if (isResult && server && name) {
-                const results = await fetchCharacterList(server, name); // 서버에서 캐릭터들 받아오기
-                const selected = results.find(c => c.characterName === name);
+            if (isResult) {
+                const server = rawParts[resultIndex + 1];
+                const name = decodeURIComponent(rawParts[resultIndex + 2] || '');
 
-                if (!selected) return;
+                if (server && name) {
+                    document.getElementById("loading-spinner").style.display = "block";
 
-                const eqRes = await fetch(`${API_ROOT}/equipment`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ server, name })
-                });
+                    // 🧠 1. get_profile 먼저 호출
+                    const profileRes = await fetch(`${API_ROOT}/profile`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ server: server, name: name })
+                    });
 
-                const eqData = await eqRes.json();
-                selected.adventureName = eqData.explorerName;
+                    const profile = await profileRes.json();
 
-                const detailView = document.getElementById("detail-view");
-                const charWrapper = document.createElement("div");
-                charWrapper.id = "character-section";
-                detailView.innerHTML = "";
-                detailView.appendChild(charWrapper);
-
-                await renderCharacterDetail(selected, eqData.equipment.equipment);
-                await renderSetItems(eqData.equipment.setItemInfo);
-                await renderHistoryPanel(selected);
-
-                document.getElementById("main-view").style.display = "none";
-                document.getElementById("detail-view").style.display = "block";
+                    // 🧠 2. 공통 함수 호출
+                    await showCharacterDetail(profile, server, true);
+                }
             }
+
+
         });
+
+
 
 
 
