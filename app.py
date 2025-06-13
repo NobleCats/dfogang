@@ -13,7 +13,6 @@ API_KEY = os.environ.get('DFO_API_KEY', 'sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ')
 
 DATA_DIR = "datas"
 
-
 def search_characters(server, name):
     url = f"https://api.dfoneople.com/df/servers/{server}/characters?characterName={name}&limit=50&wordType=full&apikey={API_KEY}"
     r = requests.get(url)
@@ -290,6 +289,7 @@ def equipment():
     return jsonify({
     "equipment": new_eq,
     "explorerName": adventure_name  # ✅ 추가
+    "fame": fame# ✅ 추가
     })
 
 
