@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 API_KEY = "sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ"
 BASE_URL = "https://api.dfoneople.com/df"
-SERVER_ID = "cain"
+SERVER_ID = "siroco"
 SAVE_DIR = f"datas/{SERVER_ID}"
 
 START_FAME = 30000

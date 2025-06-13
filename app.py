@@ -249,33 +249,6 @@ def equipment():
     with open(eq_path, "w", encoding="utf-8") as f:
         json.dump(new_eq, f, ensure_ascii=False, indent=2)
 
-    # ✅ 명성 로그 저장
-    fame_value = new_eq.get("fame")
-    if fame_value is not None:
-        fame_log = []
-        if os.path.exists(fame_path):
-            with open(fame_path, "r", encoding="utf-8") as f:
-                fame_log = json.load(f)
-
-        today = datetime.date.today().isoformat()
-        yesterday = (datetime.date.today() - datetime.timedelta(days=1)).isoformat()
-
-        # 어제 값 찾기
-        yesterday_entry = next((entry for entry in reversed(fame_log) if entry["date"] == yesterday), None)
-
-        # 오늘과 어제가 같은 값이면 오늘 기록 제거 (또는 기록 안함)
-        if fame_log and fame_log[-1]["date"] == today:
-            # 오늘 이미 기록이 있다면, 명성이 달라졌는지 비교
-            if fame_log[-1]["fame"] != fame_value:
-                fame_log[-1]["fame"] = fame_value  # 업데이트
-                with open(fame_path, "w", encoding="utf-8") as f:
-                    json.dump(fame_log, f, ensure_ascii=False, indent=2)
-        else:
-            # 오늘 기록이 없다면 새로 추가
-            fame_log.append({ "date": today, "fame": fame_value })
-            fame_log = fame_log[-30:]
-            with open(fame_path, "w", encoding="utf-8") as f:
-                json.dump(fame_log, f, ensure_ascii=False, indent=2)
     return jsonify({
     "equipment": new_eq,
     "explorerName": adventure_name  # ✅ 추가
@@ -297,7 +270,7 @@ def fame_history():
     adventure_name = profile.get("adventureName")
 
     fame_path = os.path.join(DATA_DIR, server, adventure_name, character_id, "fame.json")
-    
+    print("💡 fame_path =", fame_path)
     # 현재 명성 불러오기
     current_fame = profile.get("fame")
     today_str = datetime.date.today().strftime("%Y-%m-%d")
@@ -311,10 +284,15 @@ def fame_history():
 
     # 마지막 기록과 현재 명성이 다를 경우에만 추가
     if not fame_history or fame_history[-1]["fame"] != current_fame:
+        print("📌 추가하려는 데이터:", today_str, current_fame)
+        print("💾 저장 직전 fame_history:", fame_history)
         fame_history.append({ "date": today_str, "fame": current_fame })
+        print("⚠️ 명성 기록 추가됨:", current_fame)
         os.makedirs(os.path.dirname(fame_path), exist_ok=True)
         with open(fame_path, "w", encoding="utf-8") as f:
             json.dump(fame_history, f, ensure_ascii=False, indent=2)
+    else:
+        print("✅ 명성 동일 - 기록 생략:", current_fame)
 
     return jsonify({ "records": fame_history })
 
