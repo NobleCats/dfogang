@@ -70,13 +70,33 @@ def search():
     result = []
     for char in characters:
         char_id = char.get("characterId")
-        try:
-            profile = get_profile(server, char_id)
-            char["adventureName"] = profile.get("adventureName", "-")
-        except Exception as e:
-            print(f"[!] Failed to get profile for {char_id}: {e}")
-            char["adventureName"] = "-"
-        result.append(char)
+        
+        profile = get_equipment(server, char_id)
+        set_info_list = profile.get("setItemInfo", [])
+        if set_info_list and isinstance(set_info_list[0], dict):
+            set_info = set_info_list[0]
+            set_name = set_info.get("setItemName", "")
+            set_rarity = set_info.get("setItemRarityName", "")
+            set_point = set_info.get("active", {}).get("setPoint", {}).get("current", 0)
+        else:
+            set_name = ""
+            set_rarity = ""
+            set_point = 0
+
+        result.append({
+            "characterId": char_id,
+            "characterName": profile.get("characterName", ""),
+            "jobName": profile.get("jobName", ""),
+            "jobGrowName": profile.get("jobGrowName", ""),
+            "adventureName": profile.get("adventureName", ""),
+            "fame": profile.get("fame", 0),
+            "level": profile.get("level", 0),
+            "setItemName": set_name,
+            "setItemRarityName": set_rarity,
+            "setPoint": set_point,
+            "serverId": server
+        })
+        #result.append(char)
 
     return jsonify({"results": result})
 
@@ -91,7 +111,7 @@ def search_explorer():
     for serverId in servers:
         base_path = Path(f"datas/{serverId}/{explorer_name}")
         if not base_path.exists():
-            continue  # ❗없으면 그냥 넘어감
+            continue
 
         for char_dir in base_path.iterdir():
             if not char_dir.is_dir():
@@ -104,6 +124,19 @@ def search_explorer():
             try:
                 with open(equipment_path, encoding="utf-8") as f:
                     equip_data = json.load(f)
+
+                    # ✅ setItemInfo 처리
+                    set_info_list = equip_data.get("setItemInfo", [])
+                    if set_info_list and isinstance(set_info_list[0], dict):
+                        set_info = set_info_list[0]
+                        set_name = set_info.get("setItemName", "")
+                        set_rarity = set_info.get("setItemRarityName", "")
+                        set_point = set_info.get("active", {}).get("setPoint", {}).get("current", 0)
+                    else:
+                        set_name = ""
+                        set_rarity = ""
+                        set_point = 0
+
                     result.append({
                         "characterId": char_dir.name,
                         "characterName": equip_data.get("characterName", ""),
@@ -112,8 +145,12 @@ def search_explorer():
                         "adventureName": equip_data.get("adventureName", ""),
                         "fame": equip_data.get("fame", 0),
                         "level": equip_data.get("level", 0),
+                        "setItemName": set_name,
+                        "setItemRarityName": set_rarity,
+                        "setPoint": set_point,
                         "serverId": serverId
                     })
+
             except Exception as e:
                 print(f"[❌] Error reading {equipment_path}: {e}")
 
@@ -121,6 +158,7 @@ def search_explorer():
         return jsonify({"error": "No explorer name found"}), 404
 
     return jsonify({"results": result})
+
 
 
 
