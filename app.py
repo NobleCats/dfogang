@@ -297,13 +297,27 @@ def fame_history():
     adventure_name = profile.get("adventureName")
 
     fame_path = os.path.join(DATA_DIR, server, adventure_name, character_id, "fame.json")
-    if not os.path.exists(fame_path):
-        return jsonify({ "records": [] })
+    
+    # 현재 명성 불러오기
+    current_fame = profile.get("fame")
+    today_str = datetime.date.today().strftime("%Y-%m-%d")
 
-    with open(fame_path, "r", encoding="utf-8") as f:
-        fame_history = json.load(f)
+    # 기록이 없다면 새로 만듦
+    if not os.path.exists(fame_path):
+        fame_history = []
+    else:
+        with open(fame_path, "r", encoding="utf-8") as f:
+            fame_history = json.load(f)
+
+    # 마지막 기록과 현재 명성이 다를 경우에만 추가
+    if not fame_history or fame_history[-1]["fame"] != current_fame:
+        fame_history.append({ "date": today_str, "fame": current_fame })
+        os.makedirs(os.path.dirname(fame_path), exist_ok=True)
+        with open(fame_path, "w", encoding="utf-8") as f:
+            json.dump(fame_history, f, ensure_ascii=False, indent=2)
 
     return jsonify({ "records": fame_history })
+
 
 @app.route('/item-fame/<item_id>')
 def get_item_fame(item_id):
