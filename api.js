@@ -1,6 +1,5 @@
 // ===================================
 //          api.js
-// (No changes in this file)
 // ===================================
 const API_ROOT = "https://api-dfohistory.duckdns.org";
 
