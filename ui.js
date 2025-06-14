@@ -86,7 +86,8 @@ export async function renderCharacterDetail(profile, equipmentData, fameHistory,
     `;
 
     renderCharacterCanvas(profile, equipmentData.equipment?.equipment);
-    renderSetItems(equipmentData.setItemInfo);
+    // [FIXED] setItemInfo에 접근하는 경로를 수정했습니다.
+    renderSetItems(equipmentData.equipment?.setItemInfo);
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
 }
@@ -161,7 +162,6 @@ function renderSetItems(setItemInfo) {
         return;
     }
     
-    // [FIXED] 원본의 컨테이너 스타일링 로직 복원
     container.style.width = "492px";
     container.style.marginTop = "28px";
     container.style.display = "flex";
