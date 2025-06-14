@@ -190,7 +190,8 @@ function renderSetItems(setItemInfo) {
     });
 }
 
-function renderFameChart(records) {
+// [MODIFIED] Renders the fame chart with tooltip functionality
+function renderFameChart(records, hoverX = null, hoverY = null) {
     const container = document.getElementById("fame-chart-container");
     const canvas = document.getElementById("fame-chart");
     if (!canvas || !container) return;
@@ -284,6 +285,7 @@ function renderFameChart(records) {
     points.forEach((pt, i) => i === 0 ? ctx.moveTo(pt.x, pt.y) : ctx.lineTo(pt.x, pt.y));
     ctx.stroke();
 
+    let hovered = null;
     points.forEach(pt => {
         ctx.beginPath();
         ctx.arc(pt.x, pt.y, 4, 0, 2 * Math.PI);
@@ -292,7 +294,49 @@ function renderFameChart(records) {
         ctx.shadowBlur = 6;
         ctx.fill();
         ctx.shadowBlur = 0;
+        if (hoverX !== null && Math.hypot(pt.x - hoverX, pt.y - hoverY) < 8) {
+            hovered = pt;
+        }
     });
+
+    if (hovered) {
+        const d = new Date(hovered.date);
+        const dateStr = d.toLocaleDateString("en-US", { year: "numeric", month: "2-digit", day: "2-digit" });
+        const fameStr = hovered.fame.toLocaleString();
+        const tooltipLines = [`${dateStr}`, `Fame: ${fameStr}`];
+        ctx.font = `bold 11px 'Noto Sans KR', sans-serif`;
+        ctx.textBaseline = "top";
+        ctx.textAlign = "left";
+        const padding = 6;
+        const lineHeight = 18;
+        const width = Math.max(...tooltipLines.map(t => ctx.measureText(t).width));
+        const height = tooltipLines.length * lineHeight;
+        let boxX = hovered.x + 10;
+        const boxY = hovered.y - height - 10;
+        if (boxX + width + padding * 2 > canvas.width) {
+            boxX = hovered.x - (width + padding * 2) - 10;
+        }
+        ctx.fillStyle = "rgba(0, 0, 0, 0.85)";
+        ctx.fillRect(boxX, boxY, width + padding * 2, height + padding);
+        ctx.strokeStyle = "var(--color-accent-blue)";
+        ctx.strokeRect(boxX, boxY, width + padding * 2, height + padding);
+        ctx.fillStyle = "#ffffff";
+        ctx.textAlign = "left";
+        tooltipLines.forEach((line, i) => {
+            ctx.fillText(line, boxX + padding, boxY + padding + i * lineHeight);
+        });
+    }
+
+    // [MODIFIED] Add event listeners for tooltip
+    canvas.onmousemove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        renderFameChart(records, mx, my);
+    };
+    canvas.onmouseleave = () => {
+        renderFameChart(records, null, null);
+    };
 }
 
 async function renderHistoryPanel(gearHistory) {
@@ -412,7 +456,7 @@ async function drawCharacterText(profile) {
         ctx.lineWidth = 3;
         ctx.strokeStyle = "black";
         ctx.strokeText(fameText, textX, fameY);
-        ctx.fillStyle = "#81C784"; // Fame Green
+        ctx.fillStyle = "var(--color-fame)";
         ctx.fillText(fameText, textX, fameY);
         ctx.textAlign = "center";
     };

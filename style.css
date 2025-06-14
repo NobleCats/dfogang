@@ -7,19 +7,19 @@
     --font-primary: 'Inter', 'Noto Sans KR', sans-serif;
     --font-display: 'Poppins', sans-serif;
 
-    /* [MODIFIED] Gemini-inspired Blue & Black theme */
-    --color-background: #131314;      /* Deep, near-black */
-    --color-surface: #1E1E1E;        /* Elevated surfaces like cards */
-    --color-surface-light: #2C2C2C;  /* Lighter surfaces, for hover states */
-    --color-border: #333333;          /* Subtle borders */
+    /* Gemini-inspired Blue & Black theme */
+    --color-background: #131314;
+    --color-surface: #1E1E1E;
+    --color-surface-light: #2C2C2C;
+    --color-border: #333333;
     
     --color-text-primary: #E2E8F0;
     --color-text-secondary: #A0AEC0;
     --color-text-tertiary: #718096;
 
-    --color-accent-blue: #4e8ff8;     /* Requested clean, accessible blue */
-    --color-accent-blue-hover: #63a1f9; /* Lighter shade for hover */
-    --color-fame: #81C784;            /* Green for fame, as it's a positive stat */
+    --color-accent-blue: #4e8ff8;
+    --color-accent-blue-hover: #63a1f9;
+    --color-fame: #81C784;
 
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
@@ -81,7 +81,7 @@ body {
  * =================================
  */
 .main {
-    margin-top: 60px; /* Navbar height */
+    margin-top: 60px;
     min-height: calc(100vh - 120px);
     display: flex;
     flex-direction: column;
@@ -212,7 +212,8 @@ button:hover {
     grid-template-areas:
         "profile history"
         "fame    history";
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 500px) minmax(0, 500px); /* Fixed width columns */
+    justify-content: center; /* Center the grid */
     gap: 24px;
     max-width: 1100px;
     margin: 40px auto;
@@ -243,6 +244,7 @@ button:hover {
     border-bottom: 1px solid var(--color-border);
 }
 
+/* History Panel Styles */
 #history-panel {
     max-height: 800px;
     overflow-y: auto;
@@ -252,8 +254,19 @@ button:hover {
 .history-date-header {
     text-align: center;
     color: var(--color-text-secondary);
-    margin: 20px 0 12px;
+    margin: 20px auto 12px;
     font-size: 14px;
+    font-weight: 500;
+    /* [NEW] Stylized date */
+    background-image: url('assets/image/history_date.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 200px; /* Adjust size as needed */
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .history-date-header:first-child {
     margin-top: 0;
@@ -296,8 +309,8 @@ button:hover {
     position: absolute;
     right: -4px;
     bottom: -4px;
-    width: 21px;
-    height: 10px;
+    width: 28px;
+    height: 14px;
 }
 
 .history-empty {
@@ -335,6 +348,22 @@ button:hover {
     overflow: hidden;
     position: relative;
 }
+
+/*
+ * =================================
+ * Responsive Design
+ * =================================
+ */
+@media (max-width: 1024px) {
+    .detail-grid {
+        grid-template-areas:
+            "profile"
+            "fame"
+            "history";
+        grid-template-columns: 1fr; /* Single column layout */
+    }
+}
+
 
 /*
  * =================================
