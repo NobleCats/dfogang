@@ -8,7 +8,7 @@
     --font-display: 'Poppins', sans-serif;
     --font-dfo: 'DNFForgedBlade', sans-serif; /* DFO Font */
 
-    /* [MODIFIED] Gemini-inspired Blue & Black theme */
+    /* Gemini-inspired Blue & Black theme */
     --color-background: #131314;
     --color-surface: #1E1E1E;
     --color-surface-light: #2C2C2C;
@@ -77,7 +77,7 @@ body {
 
 .navbar-title {
     color: var(--color-text-primary);
-    font-family: var(--font-dfo); /* DFO Font */
+    font-family: var(--font-dfo);
     font-weight: 700;
     font-size: 22px;
     text-decoration: none;
@@ -106,7 +106,7 @@ body {
 }
 
 .main-logo {
-    font-family: var(--font-dfo); /* DFO Font */
+    font-family: var(--font-dfo);
     font-size: 52px;
     font-weight: 700;
     color: var(--color-text-primary);
@@ -220,7 +220,7 @@ button:hover {
     grid-template-areas:
         "profile history"
         "fame    history";
-    grid-template-columns: 500px 1fr;
+    grid-template-columns: 500px 500px; /* Fixed width columns */
     justify-content: center;
     gap: 24px;
     max-width: 1100px;
@@ -243,9 +243,9 @@ button:hover {
 .detail-widget-history { grid-area: history; }
 
 .widget-title {
-    font-family: var(--font-display);
-    font-size: 20px;
-    font-weight: 600;
+    font-family: var(--font-dfo); /* DFO Font for titles */
+    font-size: 22px;
+    font-weight: 700;
     color: var(--color-text-primary);
     margin: 0 0 20px 0;
     padding-bottom: 12px;
@@ -317,9 +317,9 @@ button:hover {
     position: absolute;
     right: 0px; 
     bottom: 0px;
-    width: 21px; /* Adjusted size for better visibility */
-    height: 21px;
-    transform: translate(25%, 25%); /* Nudge to align corners */
+    width: 28px;
+    height: 14px;
+    transform: translate(15%, 15%); /* Nudge to align corners better */
 }
 
 .history-empty {
@@ -363,13 +363,16 @@ button:hover {
  * Responsive Design
  * =================================
  */
-@media (max-width: 1080px) {
+@media (max-width: 1100px) { /* Breakpoint for tablet size */
     .detail-grid {
         grid-template-areas:
             "profile"
             "history"
             "fame";
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Single column layout */
+    }
+    .detail-widget-history {
+        min-height: 400px; /* Give history a min-height on mobile */
     }
 }
 
