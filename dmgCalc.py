@@ -22,8 +22,45 @@ ELEMENT_KEYWORDS = {
     "all elemental": "All"
 }
 
+def should_ignore_set_cd(set_name):
+    return "paradise" in set_name.lower() or "gold" in set_name.lower()
+
+def is_cleansing_set(set_name):
+    return "cleansing" in set_name.lower()
+
+def is_ethereal_set(set_name):
+    return "ethereal" in set_name.lower()
+
+def is_dragon_set(set_name):
+    return "dragon" in set_name.lower()
+
 def parse_explain_detail(text, source="unknown"):
     global overall_dmg_mul, cd_reduction_mul, damage_value_sum, atk_amp_sum, cd_recovery_sum, elemental_dmg_sum
+
+    # 에테리얼 세트 예외 처리
+    if "세트효과" in source and is_ethereal_set(source):
+        max_orbs = 0
+        dmg_per_orb = 0
+
+        max_orb_match = re.search(r"max orb charges\D*(\d+)", text.lower())
+        if max_orb_match:
+            max_orbs = int(max_orb_match.group(1))
+
+        dmg_match = re.search(r"overall damage \+(\d+)% per orb", text.lower())
+        if dmg_match:
+            dmg_per_orb = float(dmg_match.group(1)) / 100
+
+        if max_orbs and dmg_per_orb:
+            overall_dmg_mul *= (1 + dmg_per_orb * max_orbs)
+        return
+
+    # 드래곤 세트 예외 처리
+    if "세트효과" in source and is_dragon_set(source):
+        dmg_match = re.search(r"overall damage \+(\d+)%", text.lower())
+        if dmg_match:
+            val = float(dmg_match.group(1)) / 100
+            overall_dmg_mul *= (1 + val)
+        return
 
     lines = text.lower().split("\n")
     for line in lines:
@@ -36,21 +73,25 @@ def parse_explain_detail(text, source="unknown"):
 
         match = re.search(r"(overall|skill|attack)[^\n]*\+([\d.]+)%", line)
         if match:
+            if "세트효과" in source and is_cleansing_set(source):
+                continue  # cleansing 세트의 Overall 제외
             val = float(match.group(2)) / 100
             overall_dmg_mul *= (1 + val)
             continue
 
         match = re.search(r"cooldown[^\n\-+]*[-–−+]([\d.]+)%", line)
         if match:
-            val = float(match.group(1)) / 100
-            cd_reduction_mul *= (1 - val)
+            if "세트효과" in source and is_cleansing_set(source):
+                cd_reduction_mul *= (1 - 0.55)  # cleansing 세트는 고정 55%
+            else:
+                val = float(match.group(1)) / 100
+                cd_reduction_mul *= (1 - val)
             continue
 
         match = re.search(r"damage value\s*\+([\d.]+)", line)
         if match:
             val = float(match.group(1))
             damage_value_sum += val
-            print(f"📅 Damage Value +{val:.1f} → total {damage_value_sum:.2f} ({source} / \"{line.strip()}\")")
             continue
 
         match = re.search(r"attack amplification\s*\+([\d.]+)", line)
@@ -60,7 +101,8 @@ def parse_explain_detail(text, source="unknown"):
 
         match = re.search(r"cooldown recovery\s*\+([\d.]+)%", line)
         if match:
-            cd_recovery_sum += float(match.group(1))
+            val = float(match.group(1))
+            cd_recovery_sum += val
             continue
 
         for key, element in ELEMENT_KEYWORDS.items():
@@ -69,7 +111,6 @@ def parse_explain_detail(text, source="unknown"):
                 if match:
                     val = float(match.group(1))
                     elemental_dmg_sum[element] += val
-                    print(f"🌟 Element {element} +{val:.1f} → total {elemental_dmg_sum[element]:.2f} ({source} / \"{line.strip()}\")")
 
 def parse_stat_entry(stat, source=None):
     global overall_dmg_mul, cd_reduction_mul, damage_value_sum, atk_amp_sum, cd_recovery_sum, elemental_dmg_sum
@@ -87,13 +128,20 @@ def parse_stat_entry(stat, source=None):
         value = float(value_raw)
 
     if "overall damage" in name:
-        return
+        if source and "세트효과" in source and is_cleansing_set(source):
+            return
+        overall_dmg_mul *= (1 + value / 100)
     elif "damage value" in name:
         damage_value_sum += value
-        print(f"📅 Damage Value +{value:.1f} → total {damage_value_sum:.2f} ({source or 'unknown'} / stat: \"{stat['name']}\")")
     elif "attack amplification" in name or "atk. amp" in name:
         atk_amp_sum += value
     elif "cooldown reduction" in name:
+        if source and "세트효과" in source:
+            if should_ignore_set_cd(source):
+                return
+            if is_cleansing_set(source):
+                cd_reduction_mul *= (1 - 0.55)
+                return
         cd_reduction_mul *= (1 - value / 100)
     elif "cooldown recovery" in name:
         cd_recovery_sum += value
@@ -101,8 +149,7 @@ def parse_stat_entry(stat, source=None):
         for key, element in ELEMENT_KEYWORDS.items():
             if key in name:
                 elemental_dmg_sum[element] += value
-                print(f"🌟 Element {element} +{value:.1f} → total {elemental_dmg_sum[element]:.2f} ({source or 'unknown'} / stat: \"{stat['name']}\")")
-
+                
 def parse_item_stats(item_id):
     url = f"{BASE_URL}/items/{item_id}?apikey={API_KEY}"
     res = requests.get(url).json()
@@ -191,7 +238,6 @@ def analyze_insignia():
 def analyze_character_equipment():
     url = f"{BASE_URL}/servers/{SERVER}/characters/{CHARACTER_ID}/equip/equipment?apikey={API_KEY}"
     res = requests.get(url).json()
-    print(f"\U0001f9fe 분석 대상 장비 수: {len(res.get('equipment', []))}")
 
     for item in res.get("equipment", []):
         if item.get("slotName") == "Secondary Weapon":
@@ -208,7 +254,6 @@ def analyze_character_equipment():
 
     for setitem in res.get("setItemInfo", []):
         set_name = setitem.get("setItemName", "Unknown Set")
-        print(f"[DEBUG] 세트효과 탐지됨: {set_name}")
         for stat in setitem.get("active", {}).get("status", []):
             parse_stat_entry(stat, source=f"[세트효과] {set_name}")
 
