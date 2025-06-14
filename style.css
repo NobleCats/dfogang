@@ -8,7 +8,7 @@
     --font-display: 'Poppins', sans-serif;
     --font-dfo: 'DNFForgedBlade', sans-serif; /* DFO Font */
 
-    /* Gemini-inspired Blue & Black theme */
+    /* [MODIFIED] Gemini-inspired Blue & Black theme */
     --color-background: #131314;
     --color-surface: #1E1E1E;
     --color-surface-light: #2C2C2C;
@@ -220,7 +220,7 @@ button:hover {
     grid-template-areas:
         "profile history"
         "fame    history";
-    grid-template-columns: 500px 1fr; /* Fixed width for left column */
+    grid-template-columns: 500px 1fr;
     justify-content: center;
     gap: 24px;
     max-width: 1100px;
@@ -315,10 +315,11 @@ button:hover {
 
 .fame-indicator {
     position: absolute;
-    right: 0px; /* Aligned to the bottom right of the icon wrapper */
-    bottom: 0px; /* Aligned to the bottom right of the icon wrapper */
-    width: 28px;
-    height: 14px;
+    right: 0px; 
+    bottom: 0px;
+    width: 21px; /* Adjusted size for better visibility */
+    height: 21px;
+    transform: translate(25%, 25%); /* Nudge to align corners */
 }
 
 .history-empty {
@@ -362,13 +363,13 @@ button:hover {
  * Responsive Design
  * =================================
  */
-@media (max-width: 1080px) { /* Breakpoint for tablet size */
+@media (max-width: 1080px) {
     .detail-grid {
         grid-template-areas:
             "profile"
             "history"
             "fame";
-        grid-template-columns: 1fr; /* Single column layout */
+        grid-template-columns: 1fr;
     }
 }
 
