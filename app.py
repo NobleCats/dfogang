@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify, send_file, Response
 import requests
 import datetime
-from datetime import datetime
 from collections import defaultdict
 from pathlib import Path
 import os
@@ -437,7 +436,6 @@ def history_cleaner(history):
     # 최신 30개만 유지
     return cleaned_history[-30:]
 
-
 @app.route("/search_log", methods=["POST"])
 def log_search():
     data = request.get_json()
@@ -446,14 +444,14 @@ def log_search():
     ip = request.headers.get("X-Forwarded-For", request.remote_addr)
 
     log_entry = {
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.date.today().isoformat(),
         "ip": ip,
         "server": server,
         "name": name
     }
 
-    # 오늘 날짜 기준 파일명 생성 (UTC 기준, 로컬 원하면 .now())
-    date_str = datetime.utcnow().strftime("%Y-%m-%d")
+    # ✅ 오늘 날짜 기준 파일명 (UTC 기준)
+    date_str = datetime.date.today().strftime("%Y-%m-%d")
     log_dir = "logs"
     log_path = os.path.join(log_dir, f"search_log_{date_str}.jsonl")
 
