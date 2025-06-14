@@ -30,16 +30,6 @@ function getSetIconPath(setName) {
     return "assets/sets/Unknown.png";
 }
 
-function getFusionIconPath(upgradeInfo) {
-    if (!upgradeInfo) return null;
-    const { itemRarity, itemName, setItemName } = upgradeInfo;
-    const distKeywords = ["Elegance", "Desire", "Betrayal"];
-    if (distKeywords.some(word => itemName.includes(word))) return `assets/sets/${itemRarity}/Dist.png`;
-    const keywordMatch = SET_CATEGORIES.find(k => setItemName?.includes(k));
-    if (keywordMatch) return `assets/sets/${itemRarity}/${keywordMatch}.png`;
-    return `assets/sets/${itemRarity}/Unknown.png`;
-}
-
 // 캐릭터 카드 HTML 생성
 export function createCharacterCard(profile, searchName) {
     const spritePath = `assets/characters/${profile.jobName}.png`;
@@ -94,7 +84,7 @@ export async function renderCharacterDetail(profile, equipmentData, fameHistory,
         </div>
     `;
 
-    renderCharacterCanvas(profile, equipmentData.equipment?.equipment); // [FIXED] Optional chaining 추가
+    renderCharacterCanvas(profile, equipmentData.equipment?.equipment);
     renderSetItems(equipmentData.setItemInfo);
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
@@ -114,7 +104,6 @@ function renderCharacterCanvas(profile, equipmentList) {
 
     const eqLayer = document.getElementById("equipment-layer");
 
-    // [FIXED] equipmentList가 배열인지 확인 후 forEach 실행
     if (Array.isArray(equipmentList)) {
         equipmentList.forEach(eq => {
             const slotKey = (eq.slotName || eq.slotId).replace(/[\s\/]/g, "");
@@ -130,14 +119,29 @@ function renderCharacterCanvas(profile, equipmentList) {
                 <img src="assets/equipments/edge/${eq.itemRarity}.png" style="width:100%; height:100%; position:absolute; z-index:3;">
             `;
             
+            // [FIXED] 융합석 아이콘 생성 로직 복원
             if (eq.upgradeInfo) {
-                const fusionIconPath = getFusionIconPath(eq.upgradeInfo);
-                if(fusionIconPath) {
-                    const fusionIcon = document.createElement('img');
-                    fusionIcon.src = fusionIconPath;
-                    fusionIcon.style.cssText = `position:absolute; right:0; top:0; width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px; z-index:4;`;
-                    itemEl.appendChild(fusionIcon);
+                const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
+                const baseRarity = eq.itemRarity;
+                const distKeywords = ["Elegance", "Desire", "Betrayal"];
+                const keywordMatch = setItemName ? SET_CATEGORIES.find(k => setItemName.includes(k)) : null;
+
+                const fusionIconWrapper = document.createElement('div');
+                fusionIconWrapper.style.cssText = `position:absolute; right:0; top:0; z-index:4;`;
+                
+                if (keywordMatch) { // 세트 융합석
+                    fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/${keywordMatch}.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
+                } else if (distKeywords.some(word => itemName.includes(word))) { // 왜곡된 차원
+                    fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/Dist.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
+                } else { // 일반 융합석
+                    fusionIconWrapper.style.width = `${28 * SCALE * 0.75}px`;
+                    fusionIconWrapper.style.height = `${13 * SCALE * 0.75}px`;
+                    fusionIconWrapper.innerHTML = `
+                        <img src="assets/fusions/${baseRarity}/Base.png" style="width:100%; height:100%; position:absolute; left:0; top:0;">
+                        <img src="assets/fusions/${fusionRarity}/Core.png" style="width:100%; height:100%; position:absolute; left:0; top:0;">
+                    `;
                 }
+                itemEl.appendChild(fusionIconWrapper);
             }
             eqLayer.appendChild(itemEl);
         });
@@ -145,8 +149,6 @@ function renderCharacterCanvas(profile, equipmentList) {
         console.error("Data Warning: equipmentList is not an array.", equipmentList);
     }
     
-    // 강화/증폭 및 캐릭터 정보 텍스트 렌더링
-    // equipmentList가 배열이 아닐 경우를 대비하여 빈 배열 전달
     drawReinforceText(Array.isArray(equipmentList) ? equipmentList : []);
     drawCharacterText(profile);
 }
