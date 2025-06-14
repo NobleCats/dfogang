@@ -190,7 +190,7 @@ function renderSetItems(setItemInfo) {
     });
 }
 
-// [MODIFIED] Renders the fame chart with tooltip functionality
+// [MODIFIED] Renders the fame chart with tooltip functionality and correct colors
 function renderFameChart(records, hoverX = null, hoverY = null) {
     const container = document.getElementById("fame-chart-container");
     const canvas = document.getElementById("fame-chart");
@@ -201,7 +201,12 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
 
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    
+    // Get colors from CSS variables
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--color-accent-blue').trim();
+    const gridColor = `rgba(78, 143, 248, 0.1)`; // Derived from blue
+    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--color-text-primary').trim();
+    
     const paddingX = 40;
     const paddingY = 30;
 
@@ -250,17 +255,17 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
     for (let value = firstLabel; value <= lastLabel; value += step) {
         if (value < fameMin || value > fameMax) continue;
         const y = paddingY + (1 - (value - fameMin) / fameRange) * chartHeight;
-        ctx.strokeStyle = "rgba(137, 180, 250, 0.1)"; // Blue grid
+        ctx.strokeStyle = gridColor;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(paddingX, y);
         ctx.lineTo(canvas.width - paddingX, y);
         ctx.stroke();
-        ctx.fillStyle = "#eee";
+        ctx.fillStyle = textColor;
         ctx.fillText(value.toLocaleString(), paddingX - 6, y);
     }
 
-    ctx.strokeStyle = "var(--color-accent-blue)";
+    ctx.strokeStyle = accentColor;
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(paddingX, paddingY);
@@ -275,11 +280,11 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
     points.forEach(pt => {
         const d = new Date(pt.date);
         const label = `${String(d.getMonth() + 1).padStart(2, "0")}/${String(d.getDate()).padStart(2, "0")}`;
-        ctx.fillStyle = "#eee";
+        ctx.fillStyle = textColor;
         ctx.fillText(label, pt.x, canvas.height - paddingY + 4);
     });
 
-    ctx.strokeStyle = "var(--color-accent-blue)";
+    ctx.strokeStyle = accentColor;
     ctx.lineWidth = 4;
     ctx.beginPath();
     points.forEach((pt, i) => i === 0 ? ctx.moveTo(pt.x, pt.y) : ctx.lineTo(pt.x, pt.y));
@@ -289,8 +294,8 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
     points.forEach(pt => {
         ctx.beginPath();
         ctx.arc(pt.x, pt.y, 4, 0, 2 * Math.PI);
-        ctx.fillStyle = "var(--color-accent-blue)";
-        ctx.shadowColor = "var(--color-accent-blue)";
+        ctx.fillStyle = accentColor;
+        ctx.shadowColor = accentColor;
         ctx.shadowBlur = 6;
         ctx.fill();
         ctx.shadowBlur = 0;
@@ -318,7 +323,7 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
         }
         ctx.fillStyle = "rgba(0, 0, 0, 0.85)";
         ctx.fillRect(boxX, boxY, width + padding * 2, height + padding);
-        ctx.strokeStyle = "var(--color-accent-blue)";
+        ctx.strokeStyle = accentColor;
         ctx.strokeRect(boxX, boxY, width + padding * 2, height + padding);
         ctx.fillStyle = "#ffffff";
         ctx.textAlign = "left";
@@ -327,7 +332,6 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
         });
     }
 
-    // [MODIFIED] Add event listeners for tooltip
     canvas.onmousemove = (e) => {
         const rect = canvas.getBoundingClientRect();
         const mx = e.clientX - rect.left;
