@@ -13,6 +13,7 @@ const state = {
     characterDetail: {
         profile: null,
         equipment: null,
+        setItemInfo: null,
         fameHistory: null,
         gearHistory: null,
     }
@@ -42,6 +43,7 @@ function render() {
         ui.renderCharacterDetail(
             state.characterDetail.profile,
             state.characterDetail.equipment,
+            state.characterDetail.setItemInfo,
             state.characterDetail.fameHistory,
             state.characterDetail.gearHistory
         );
@@ -82,10 +84,12 @@ async function showCharacterDetail(server, name) {
     ]);
     
     if (profile && equipmentResponse) {
-        // [FIXED] Pass the unwrapped equipment object to avoid confusion
+        // [FIXED] Unpack the nested data structure from the backend
+        const equipment = equipmentResponse.equipment;
         state.characterDetail = { 
             profile, 
-            equipment: equipmentResponse.equipment, 
+            equipment: equipment?.equipment, // The array of items
+            setItemInfo: equipment?.setItemInfo, // The set info array
             fameHistory: fameHistory?.records, 
             gearHistory 
         };
@@ -119,7 +123,7 @@ function handleCardClick(event) {
 
 function handleGoBack() {
     state.view = 'main';
-    state.characterDetail = { profile: null, equipment: null, fameHistory: null, gearHistory: null };
+    state.characterDetail = { profile: null, equipment: null, setItemInfo: null, fameHistory: null, gearHistory: null };
     updateURL('main', state.server, state.searchTerm);
     render();
 }

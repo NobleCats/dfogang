@@ -1,8 +1,7 @@
 // ===================================
 //          api.js
-// (Handles backend communication)
+// (No changes in this file)
 // ===================================
-
 const API_ROOT = "https://api-dfohistory.duckdns.org";
 
 async function postData(endpoint, body) {
@@ -25,29 +24,23 @@ async function postData(endpoint, body) {
 export async function logSearch(server, name) {
     await postData("/search_log", { server, name });
 }
-
 export async function searchCharacters(server, name) {
     const endpoint = server === "explorer" ? "/search_explorer" : "/search";
     const data = await postData(endpoint, { name, server });
     return data ? data.results : [];
 }
-
 export async function getCharacterProfile(server, name) {
     return await postData("/profile", { server, name });
 }
-
 export async function getCharacterEquipment(server, name) {
     return await postData("/equipment", { server, name });
 }
-
 export async function getFameHistory(server, characterName) {
     return await postData("/fame-history", { server, characterName });
 }
-
 export async function getGearHistory(server, characterName) {
     return await postData("/history", { server, characterName });
 }
-
 export async function getItemFame(itemId) {
     if (!itemId) return 0;
     try {
