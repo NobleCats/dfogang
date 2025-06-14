@@ -6,32 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow">
     <title>DFO History</title>
-    <!-- Connect API Files -->
+    <!-- [NEW] Google Fonts Link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- External CSS Link -->
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <!-- Navbar -->
     <nav class="navbar">
-        <a href="https://discord.gg/PXs3H3j42s" target="_blank" style="display: flex; align-items: center;">
-            <img src="assets/image/ch49gang.png" alt="Logo" style="height: 28px; margin-right: 8px;" />
-        </a>
-        <a href="https://dfohistory.netlify.app/"
-            style="color: white; font-weight: bold; font-size: 18px; text-decoration: none;">DFO History</a>
+        <div class="navbar-brand">
+            <img src="assets/image/ch49gang.png" alt="Logo" />
+            <a href="/" class="navbar-title">DFO History</a>
+        </div>
     </nav>
 
-    <!-- Main View -->
+    <!-- Main Search View -->
     <main class="main" id="main-view">
-        <div class="search-area">
-            <h1 class="logo">DFO History</h1>
+        <div class="search-container">
+            <h1 class="main-logo">DFO History</h1>
             <div class="search-box">
                 <select id="server-select">
                     <option value="cain">Cain</option>
                     <option value="siroco">Sirocco</option>
                     <option value="explorer">ExplorerName</option>
                 </select>
-                <input id="search-input" type="text" placeholder="Character, or Explorer Name" />
+                <input id="search-input" type="text" placeholder="Character or Explorer Name" />
                 <button id="search-button">SEARCH</button>
             </div>
         </div>
@@ -40,8 +43,9 @@
         </div>
     </main>
 
-    <!-- Detail View -->
-    <div id="detail-view" style="display:none;">
+    <!-- Detail View (Initially hidden) -->
+    <div id="detail-view" class="detail-container" style="display:none;">
+        <!-- Content will be dynamically populated by JavaScript. -->
     </div>
 
     <!-- Loading Spinner -->
@@ -50,14 +54,13 @@
     </div>
     
     <!-- Footer -->
-    <footer
-        style="width: 100%; background-color: #121212; border-top: 1px solid #333; padding: 16px 0; text-align: center; margin-top: 40px;">
+    <footer class="footer">
         <a href="https://www.dfoneople.com/developers" target="_blank">
-            <img src="assets/image/neople.png" alt="Neople Logo" style="height: 40px;" />
+            <img src="assets/image/neople.png" alt="Neople Logo" />
         </a>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- JavaScript Module Links -->
     <script type="module" src="app.js"></script>
 </body>
 
