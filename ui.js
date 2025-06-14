@@ -94,7 +94,8 @@ export async function renderCharacterDetail(profile, equipmentData, fameHistory,
         </div>
     `;
 
-    renderCharacterCanvas(profile, equipmentData.equipment);
+    // [FIXED] 실제 장비 배열을 전달하도록 수정
+    renderCharacterCanvas(profile, equipmentData.equipment.equipment);
     renderSetItems(equipmentData.setItemInfo);
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
