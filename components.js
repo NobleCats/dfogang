@@ -93,7 +93,7 @@ export function createDetailView({ profile, equipment, setItemInfo, fameHistory,
     return element;
 }
 
-function renderCharacterCanvas(profile, equipmentList) {
+export function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.style.width = '492px';
     container.style.height = '354px';
@@ -171,7 +171,7 @@ function renderCharacterCanvas(profile, equipmentList) {
     drawCharacterText(profile);
 }
 
-function renderSetItems(setItemInfo) {
+export function renderSetItems(setItemInfo) {
     const container = document.getElementById("set-info-container");
     container.innerHTML = "";
     if (!Array.isArray(setItemInfo) || setItemInfo.length === 0) {
@@ -201,7 +201,7 @@ function renderSetItems(setItemInfo) {
     });
 }
 
-function renderFameChart(records, hoverX = null, hoverY = null) {
+export function renderFameChart(records, hoverX = null, hoverY = null) {
     const container = document.getElementById("fame-chart-container");
     const canvas = document.getElementById("fame-chart");
     if (!canvas || !container) return;
@@ -356,7 +356,7 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
 
 
 
-async function renderHistoryPanel(gearHistory) {
+export async function renderHistoryPanel(gearHistory) {
     const panel = document.getElementById("history-panel");
     if (!gearHistory || gearHistory.length === 0) {
         panel.innerHTML = `<div class="history-empty">No equipment history.</div>`;
