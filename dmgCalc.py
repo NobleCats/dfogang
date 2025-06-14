@@ -4,7 +4,7 @@ import re
 API_KEY = "sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ"
 BASE_URL = "https://api.dfoneople.com/df"
 SERVER = "cain"
-CHARACTER_ID = "bbbefd9c996d81dce9a973d1b8df56ac"
+CHARACTER_ID = "c9dc39e505501ec93706356bba620c21"
 
 # 누적 스탯 초기화
 overall_dmg_mul = 1.0
@@ -37,31 +37,7 @@ def is_dragon_set(set_name):
 def parse_explain_detail(text, source="unknown", reinforce=None):
     global overall_dmg_mul, cd_reduction_mul, damage_value_sum, atk_amp_sum, cd_recovery_sum, elemental_dmg_sum
 
-    if "세트효과" in source and is_ethereal_set(source):
-        max_orbs = 0
-        dmg_per_orb = 0
-
-        max_orb_match = re.search(r"max orb charges\D*(\d+)", text.lower())
-        if max_orb_match:
-            max_orbs = int(max_orb_match.group(1))
-
-        dmg_match = re.search(r"overall damage \+(\d+)% per orb", text.lower())
-        if dmg_match:
-            dmg_per_orb = float(dmg_match.group(1)) / 100
-
-        if max_orbs and dmg_per_orb:
-            boost = (1 + dmg_per_orb * max_orbs)
-            print(f"[ETHEREAL] max_orbs={max_orbs}, dmg_per_orb={dmg_per_orb}, boost={boost:.4f}")
-            overall_dmg_mul *= boost
-        return
-
-    if "세트효과" in source and is_dragon_set(source):
-        dmg_match = re.search(r"overall damage \+(\d+)%", text.lower())
-        if dmg_match:
-            val = float(dmg_match.group(1)) / 100
-            print(f"[DRAGON] Overall Damage +{val*100}% -> x{1+val:.4f}")
-            overall_dmg_mul *= (1 + val)
-        return
+    
 
     lines = text.lower().split("\n")
     bonus_from_reinforce = 0
@@ -153,6 +129,35 @@ def parse_stat_entry(stat, source=None):
     else:
         value = float(value_raw)
 
+
+    if "세트효과" in source and is_ethereal_set(source):
+        max_orbs = 0
+        dmg_per_orb = 0
+
+        max_orb_match = re.search(r"max orb charges\D*(\d+)", source.lower())
+        if max_orb_match:
+            max_orbs = int(max_orb_match.group(1))
+
+        dmg_match = re.search(r"overall damage \+(\d+)% per orb", source.lower())
+        if dmg_match:
+            dmg_per_orb = float(dmg_match.group(1)) / 100
+
+        if max_orbs and dmg_per_orb:
+            boost = (1 + dmg_per_orb * max_orbs)
+            print(f"[ETHEREAL] max_orbs={max_orbs}, dmg_per_orb={dmg_per_orb}, boost={boost:.4f}")
+            overall_dmg_mul *= boost
+        return
+
+    if "세트효과" in source and is_dragon_set(source):
+        print(f"[Dragon Set] found")
+        dmg_match = re.search(r"overall damage \+(\d+)%", source.lower())
+        if dmg_match:
+            val = float(dmg_match.group(1)) / 100
+            print(f"[DRAGON] Overall Damage +{val*100}% -> x{1+val:.4f}")
+            overall_dmg_mul *= (1 + val)
+        return
+
+
     if "overall damage" in name:
         if source and "세트효과" in source and is_cleansing_set(source):
             return
@@ -188,6 +193,11 @@ def parse_item_stats(item_id):
     res = requests.get(url).json()
     item_name = res.get("itemName", item_id)
     stats = res.get("itemStatus", [])
+    setitem_infos = res.get("setItemInfo", [])
+    
+    for setitem_info in setitem_infos:
+        
+    
     for stat in stats:
         parse_stat_entry(stat, source=f"[아이템] {item_name}")
 
@@ -282,6 +292,7 @@ def analyze_character_equipment():
 
         parse_item_stats(item_id)
         parse_fusion_options(item)
+        parse_set_options(item);
 
         for stat in item.get("tune", {}).get("status", []):
             parse_stat_entry(stat, source=f"[튠] {item.get('itemName')}")
