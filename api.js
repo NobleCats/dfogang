@@ -1,0 +1,61 @@
+// -------------------
+//     api.js
+// (백엔드 통신 담당)
+// -------------------
+
+const API_ROOT = "https://api-dfohistory.duckdns.org"; // 필요시 로컬 주소로 변경: "http://127.0.0.1:5000"
+
+async function postData(endpoint, body) {
+    try {
+        const response = await fetch(`${API_ROOT}${endpoint}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(`Failed to fetch from ${endpoint}:`, error);
+        return null; // 오류 발생 시 null 반환
+    }
+}
+
+export async function logSearch(server, name) {
+    await postData("/search_log", { server, name });
+}
+
+export async function searchCharacters(server, name) {
+    const endpoint = server === "explorer" ? "/search_explorer" : "/search";
+    const data = await postData(endpoint, { name, server });
+    return data ? data.results : [];
+}
+
+export async function getCharacterProfile(server, name) {
+    return await postData("/profile", { server, name });
+}
+
+export async function getCharacterEquipment(server, name) {
+    return await postData("/equipment", { server, name });
+}
+
+export async function getFameHistory(server, characterName) {
+    return await postData("/fame-history", { server, characterName });
+}
+
+export async function getGearHistory(server, characterName) {
+    return await postData("/history", { server, characterName });
+}
+
+export async function getItemFame(itemId) {
+    if (!itemId) return 0;
+    try {
+        const response = await fetch(`${API_ROOT}/item-fame/${itemId}`);
+        if (!response.ok) return null;
+        const data = await response.json();
+        return data.fame ?? null;
+    } catch (e) {
+        return null;
+    }
+}
