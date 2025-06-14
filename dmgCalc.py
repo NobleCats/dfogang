@@ -37,7 +37,6 @@ def is_dragon_set(set_name):
 def parse_explain_detail(text, source="unknown"):
     global overall_dmg_mul, cd_reduction_mul, damage_value_sum, atk_amp_sum, cd_recovery_sum, elemental_dmg_sum
 
-    # 에테리얼 세트 예외 처리
     if "세트효과" in source and is_ethereal_set(source):
         max_orbs = 0
         dmg_per_orb = 0
@@ -51,14 +50,16 @@ def parse_explain_detail(text, source="unknown"):
             dmg_per_orb = float(dmg_match.group(1)) / 100
 
         if max_orbs and dmg_per_orb:
-            overall_dmg_mul *= (1 + dmg_per_orb * max_orbs)
+            boost = (1 + dmg_per_orb * max_orbs)
+            print(f"[ETHEREAL] max_orbs={max_orbs}, dmg_per_orb={dmg_per_orb}, boost={boost:.4f}")
+            overall_dmg_mul *= boost
         return
 
-    # 드래곤 세트 예외 처리
     if "세트효과" in source and is_dragon_set(source):
         dmg_match = re.search(r"overall damage \+(\d+)%", text.lower())
         if dmg_match:
             val = float(dmg_match.group(1)) / 100
+            print(f"[DRAGON] Overall Damage +{val*100}% -> x{1+val:.4f}")
             overall_dmg_mul *= (1 + val)
         return
 
@@ -70,19 +71,21 @@ def parse_explain_detail(text, source="unknown"):
                 val = float(match.group(1))
                 atk_amp_sum += val
                 continue
-
-        match = re.search(r"(overall|skill|attack)[^\n]*\+([\d.]+)%", line)
+            
+        match = re.search(r"overall damage\s*\+([\d.]+)%", line)
+        
         if match:
             if "세트효과" in source and is_cleansing_set(source):
-                continue  # cleansing 세트의 Overall 제외
-            val = float(match.group(2)) / 100
+                continue
+            val = float(match.group(1)) / 100
+            print(f"[EXPLAIN] {source} -> +{val*100:.1f}% Overall -> x{1+val:.4f}")
             overall_dmg_mul *= (1 + val)
             continue
 
         match = re.search(r"cooldown[^\n\-+]*[-–−+]([\d.]+)%", line)
         if match:
             if "세트효과" in source and is_cleansing_set(source):
-                cd_reduction_mul *= (1 - 0.55)  # cleansing 세트는 고정 55%
+                cd_reduction_mul *= (1 - 0.55)
             else:
                 val = float(match.group(1)) / 100
                 cd_reduction_mul *= (1 - val)
@@ -130,6 +133,7 @@ def parse_stat_entry(stat, source=None):
     if "overall damage" in name:
         if source and "세트효과" in source and is_cleansing_set(source):
             return
+        print(f"[STAT] {source} -> +{value:.1f}% Overall -> x{1 + value/100:.4f}")
         overall_dmg_mul *= (1 + value / 100)
     elif "damage value" in name:
         damage_value_sum += value
@@ -149,6 +153,12 @@ def parse_stat_entry(stat, source=None):
         for key, element in ELEMENT_KEYWORDS.items():
             if key in name:
                 elemental_dmg_sum[element] += value
+
+    # 무기 튠 확인
+    if source and "튠" in source:
+        if "overall damage" in name:
+            print(f"[TUNE] {source} -> +{value:.1f}% Overall -> x{1 + value/100:.4f}")
+            overall_dmg_mul *= (1 + value / 100)
                 
 def parse_item_stats(item_id):
     url = f"{BASE_URL}/items/{item_id}?apikey={API_KEY}"
@@ -248,6 +258,9 @@ def analyze_character_equipment():
 
         parse_item_stats(item_id)
         parse_fusion_options(item)
+
+        for stat in item.get("tune", {}).get("status", []):
+            parse_stat_entry(stat, source=f"[튠] {item.get('itemName')}")
 
         for stat in item.get("enchant", {}).get("status", []):
             parse_stat_entry(stat, source=f"[마부] {item_name}")
