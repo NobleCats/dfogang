@@ -264,7 +264,7 @@ button:hover {
 
 /* History Panel Styles */
 #history-panel {
-    max-height: 842px;
+    max-height: 100%;
     overflow-y: auto;
 }
 
