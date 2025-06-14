@@ -1,9 +1,9 @@
 // -------------------
-//     api.js
-// (백엔드 통신 담당)
+//      api.js
+// (Handles backend communication)
 // -------------------
 
-const API_ROOT = "https://api-dfohistory.duckdns.org"; // 필요시 로컬 주소로 변경: "http://127.0.0.1:5000"
+const API_ROOT = "https://api-dfohistory.duckdns.org"; // Or change to local address: "http://127.0.0.1:5000"
 
 async function postData(endpoint, body) {
     try {
@@ -18,7 +18,7 @@ async function postData(endpoint, body) {
         return await response.json();
     } catch (error) {
         console.error(`Failed to fetch from ${endpoint}:`, error);
-        return null; // 오류 발생 시 null 반환
+        return null; // Return null on error
     }
 }
 

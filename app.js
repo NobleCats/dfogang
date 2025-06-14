@@ -1,11 +1,11 @@
 // -------------------
 //      app.js
-// (메인 로직 및 상태 관리)
+// (Main logic and state management)
 // -------------------
 import * as api from './api.js';
 import * as ui from './ui.js';
 
-// 애플리케이션 상태
+// Application state
 const state = {
     isLoading: false,
     view: 'main', // 'main' or 'detail'
@@ -20,14 +20,14 @@ const state = {
     }
 };
 
-// DOM 요소
+// DOM elements
 const serverSelect = document.getElementById('server-select');
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const resultsDiv = document.getElementById('results');
 const detailView = document.getElementById('detail-view');
 
-// 렌더링 함수: 상태에 따라 UI를 업데이트하는 유일한 통로
+// Render function: The single point of truth for updating the UI based on state
 function render() {
     ui.setLoading(state.isLoading);
     ui.switchView(state.view);
@@ -52,9 +52,9 @@ function render() {
     }
 }
 
-// ---- 로직 함수들 ----
+// ---- Logic Functions ----
 
-// URL 상태를 업데이트하고 history에 푸시하는 함수
+// Function to update URL state and push to history
 function updateURL(view, server, name) {
     const params = new URLSearchParams();
     params.set('view', view);
@@ -63,7 +63,7 @@ function updateURL(view, server, name) {
     history.pushState({ view, server, name }, '', `?${params.toString()}`);
 }
 
-// 검색 수행
+// Perform search
 async function performSearch(server, name) {
     state.isLoading = true;
     state.searchTerm = name;
@@ -77,7 +77,7 @@ async function performSearch(server, name) {
     render();
 }
 
-// 캐릭터 상세 정보 표시
+// Display character details
 async function showCharacterDetail(server, name) {
     state.isLoading = true;
     state.view = 'detail';
@@ -94,14 +94,14 @@ async function showCharacterDetail(server, name) {
         state.characterDetail = { profile, equipment, fameHistory: fameHistory?.records, gearHistory };
     } else {
         alert('Failed to load character details.');
-        state.view = 'main'; // 실패 시 메인으로 복귀
+        state.view = 'main'; // Revert to main view on failure
     }
 
     state.isLoading = false;
     render();
 }
 
-// ---- 이벤트 핸들러 ----
+// ---- Event Handlers ----
 
 function handleSearchClick() {
     const server = serverSelect.value;
@@ -125,12 +125,12 @@ function handleCardClick(event) {
 function handleGoBack() {
     state.view = 'main';
     state.characterDetail = { profile: null, equipment: null, fameHistory: null, gearHistory: null };
-    // URL을 검색 결과 화면으로 되돌리거나 메인으로 보냄
+    // Revert URL to search results or main page
     updateURL('main', state.server, state.searchTerm);
     render();
 }
 
-// 브라우저 뒤로가기/앞으로가기 처리
+// Handle browser back/forward buttons
 window.onpopstate = (event) => {
     if (event.state) {
         const { view, server, name } = event.state;
@@ -140,7 +140,7 @@ window.onpopstate = (event) => {
             performSearch(server, name);
         }
     } else {
-        // 초기 상태로 복귀
+        // Revert to initial state
         state.view = 'main';
         state.searchTerm = '';
         state.searchResults = [];
@@ -149,7 +149,7 @@ window.onpopstate = (event) => {
     }
 };
 
-// --- 초기화 ---
+// --- Initialization ---
 async function init() {
     searchButton.addEventListener('click', handleSearchClick);
     searchInput.addEventListener('keydown', (e) => {
@@ -162,7 +162,7 @@ async function init() {
         }
     });
 
-    // 페이지 로드 시 URL 파라미터 확인 및 처리
+    // Check and handle URL parameters on page load
     const params = new URLSearchParams(window.location.search);
     const view = params.get('view');
     const server = params.get('server');
