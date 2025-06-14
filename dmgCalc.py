@@ -22,7 +22,7 @@ ELEMENT_KEYWORDS = {
     "all elemental": "All"
 }
 
-def should_ignore_set_cd(set_name):
+def is_paradise_set(set_name):
     return "paradise" in set_name.lower() or "gold" in set_name.lower()
 
 def is_cleansing_set(set_name):
@@ -33,6 +33,12 @@ def is_ethereal_set(set_name):
 
 def is_dragon_set(set_name):
     return "dragon" in set_name.lower()
+
+def is_serendipity_set(set_name):
+    return "serendipity" in set_name.lower()
+
+def is_pack_set(set_name):
+    return "pack" in set_name.lower()
 
 def parse_explain_detail(text, source="unknown", reinforce=None):
     global overall_dmg_mul, cd_reduction_mul, damage_value_sum, atk_amp_sum, cd_recovery_sum, elemental_dmg_sum
@@ -153,22 +159,11 @@ def parse_stat_entry(stat, source=None):
     else:
         value = float(value_raw)
 
-    if "overall damage" in name:
-        if source and "세트효과" in source and is_cleansing_set(source):
-            return
-        print(f"[STAT] {source} -> +{value:.1f}% Overall -> x{1 + value/100:.4f}")
-        overall_dmg_mul *= (1 + value / 100)
-    elif "damage value" in name:
+    if "damage value" in name:
         damage_value_sum += value
     elif "attack amplification" in name or "atk. amp" in name:
         atk_amp_sum += value
     elif "cooldown reduction" in name:
-        if source and "세트효과" in source:
-            if should_ignore_set_cd(source):
-                return
-            if is_cleansing_set(source):
-                cd_reduction_mul *= (1 - 0.55)
-                return
         cd_reduction_mul *= (1 - value / 100)
     elif "cooldown recovery" in name:
         cd_recovery_sum += value
@@ -268,6 +263,25 @@ def analyze_insignia():
     for gem in flag.get("gems", []):
         if gem.get("itemId"):
             parse_creature_item(gem["itemId"], source=f"[인시그니아 젬] {gem.get('itemName')}")
+            
+def analyze_setitem(setiteminfo):
+    setitemname = setiteminfo[0].get("setItemName")
+    
+    if is_paradise_set(setitemname):
+        return
+    elif is_cleansing_set(setitemname):
+        return
+    elif is_ethereal_set(setitemname):
+        return
+    elif is_dragon_set(setitemname):
+        return
+    elif is_serendipity_set(setitemname):
+        return
+    elif is_pack_set(setitemname):
+        return
+    else:
+        return
+    
 
 def analyze_character_equipment():
     url = f"{BASE_URL}/servers/{SERVER}/characters/{CHARACTER_ID}/equip/equipment?apikey={API_KEY}"
@@ -289,10 +303,8 @@ def analyze_character_equipment():
         for stat in item.get("enchant", {}).get("status", []):
             parse_stat_entry(stat, source=f"[마부] {item_name}")
 
-    for setitem in res.get("setItemInfo", []):
-        set_name = setitem.get("setItemName", "Unknown Set")
-        for stat in setitem.get("active", {}).get("status", []):
-            parse_stat_entry(stat, source=f"[세트효과] {set_name}")
+    setiteminfo = res.get("setItemInfo", [])
+    analyze_setitem(setiteminfo)
 
 def print_results():
     print(f"\n\U0001f3af 최종 계산 결과")
