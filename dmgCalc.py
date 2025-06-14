@@ -8,6 +8,7 @@ SERVER = "cain"
 CHARACTER_ID = "d25349b117002ecfbe3fb50c572f65dc"
 CLEANSING_CDR = True
 WEAPON_CDR = True
+AVERAGE_SET_DMG = False
 
 # 누적 스탯 초기화
 overall_dmg_mul = 1.0
@@ -101,19 +102,19 @@ def overall_dmg_calc(overall_dmg, source="unknown"):
     if overall_dmg == 0: return
     global overall_dmg_mul
     
-    print(f"[OVERALL]\t+{overall_dmg:.1f}%\tfrom {source}")
-    print(f"-> Total : {overall_dmg_mul * 100:.1f}% -> ", end="")
+#    print(f"[OVERALL]\t+{overall_dmg:.1f}%\tfrom {source}")
+#    print(f"-> Total : {overall_dmg_mul * 100:.1f}% -> ", end="")
     overall_dmg_mul *= (1 + overall_dmg * 0.01)
-    print(f"{overall_dmg_mul * 100:.1f}%")
+#    print(f"{overall_dmg_mul * 100:.1f}%")
     
 def cooldown_reduction_calc(cooldown_reduction, source="unknown"):
     if cooldown_reduction == 0: return
     global cd_reduction_mul
     
-    print(f"[COOLDOWN]\t+{cooldown_reduction:.1f}%\tfrom {source}")
-    print(f"-> Total : {cd_reduction_mul * 100:.1f}% -> ", end="")
+#    print(f"[COOLDOWN]\t+{cooldown_reduction:.1f}%\tfrom {source}")
+#    print(f"-> Total : {cd_reduction_mul * 100:.1f}% -> ", end="")
     cd_reduction_mul *= (1 - cooldown_reduction / 100)
-    print(f"{cooldown_reduction * 100:.1f}%")
+#    print(f"{cooldown_reduction * 100:.1f}%")
 
 
 def parse_explain_detail(text, source="unknown", reinforce=None, option=None):
@@ -361,6 +362,28 @@ def analyze_setitem(res):
     
     stat = setItemInfo
     
+    if(AVERAGE_SET_DMG):
+        parts = setItemRarityName.strip().split()
+        
+        values = {
+            "Unique":   [48.5, 68.3, 88.1, 107.9, 127.7],
+            "Legendary": [184.6, 204.4, 224.2, 244.0, 263.8],
+            "Epic":     [318.4, 338.2, 358.0, 377.8, 397.6],
+            "Primeval": 447.4
+        }
+        
+        if len(parts) == 2:
+            rarity = parts[0]  # Unique, Legendary, Epic 등
+            step = parts[1]    # I, II, III, IV, V
+            step_map = {"I": 0, "II": 1, "III": 2, "IV": 3, "V": 4}
+            index = step_map.get(step.upper())
+            overall_dmg_calc(values[rarity][index], source="[AVERAGE SET]")
+        elif len(parts) == 1:
+            overall_dmg_calc(values["Primeval"], source="[AVERAGE SET]")
+        
+        return
+    
+    
     if is_paradise_set(setItemName):
         reinforce_acc = 0
         reinforce_total = 0
@@ -527,15 +550,54 @@ def print_results():
     status = res.get("status", [])
     atk_amp = next((s["value"] for s in status if s["name"] == "Atk. Amp."), None)
     
-    print(f"[RESULT]")
-    print(f"Overall Damage : \t{overall_dmg_mul * 100:.4f}%")
-    print(f"Cooldown Reduction : \t{(1 - cd_reduction_mul) * 100:.4f}%")
-    print(f"Damage Value : \t\t{damage_value_sum:.2f}")
-    print(f"Atk. Amp : \t\t{atk_amp:.2f}")
-    print(f"Cooldown Recovery : \t{cd_recovery_sum:.2f}")
-    print("Elemental Damage :")
-    for key, val in elemental_dmg_sum.items():
-        print(f"   - {key}: {val:.2f}")
+#    print(f"[RESULT]")
+#    print(f"Overall Damage : \t{overall_dmg_mul * 100:.4f}%")
+#    print(f"Cooldown Reduction : \t{(1 - cd_reduction_mul) * 100:.4f}%")
+#    print(f"Damage Value : \t\t{damage_value_sum:.2f}")
+#    print(f"Atk. Amp : \t\t{atk_amp:.2f}")
+#    print(f"Cooldown Recovery : \t{cd_recovery_sum:.2f}")
+#    print("Elemental Damage :")
+#    for key, val in elemental_dmg_sum.items():
+#        print(f"   - {key}: {val:.2f}")
+        
+    all_value = elemental_dmg_sum.get("All", 0.0)
+    if all_value:
+        for element in ["Fire", "Water", "Light", "Shadow"]:
+            elemental_dmg_sum[element] += all_value
+        
+    max_elemental_value = max(elemental_dmg_sum.values())
+#    print(f"Max Elemental Damage : \t{max_elemental_value}")
+
+    print(calculate_dps(overall_dmg_mul, (1 - cd_reduction_mul) * 100, damage_value_sum, atk_amp, cd_recovery_sum, max_elemental_value))
+
+def calculate_dps(
+    overall_dmg,            # Overall Damage (퍼센트)
+    cd_reduction,           # Skill Cooldown Reduction (%)
+    damage_value,           # Damage Value (%)
+    atk_amp,                # Atk Amplification (%)
+    cd_recovery,            # Cooldown Recovery 수치 (ex: 50)
+    max_elemental_value     # 최고 속성 강화 수치 (ex: 100)
+):
+    # 1️⃣ 속강 배율
+    elemental_multiplier = 1.05 + 0.0045 * max_elemental_value
+
+    # 2️⃣ 데미지 값에 Atk Amp 적용
+    damage_value *= (1 + atk_amp / 100)
+
+    # 3️⃣ Damage Value에 Overall Damage 및 속강 배율 적용
+    final_damage = damage_value * (1 + overall_dmg / 100) * elemental_multiplier
+
+    # 4️⃣ 쿨타임 계산
+    effective_cooldown = (1 - cd_reduction / 100) * (100 / (100 + cd_recovery))
+
+    # 5️⃣ DPS 계산
+    dps = final_damage / effective_cooldown
+
+    return {
+        "damage": round(final_damage / 100),
+        "cooldown": round((1 - effective_cooldown) * 100, 1),
+        "dps": round(dps)
+    }
 
 if __name__ == "__main__":
     analyze_character_equipment()
