@@ -264,9 +264,8 @@ button:hover {
 
 /* History Panel Styles */
 #history-panel {
-    max-height: 800px;
+    max-height: 842px;
     overflow-y: auto;
-    padding: 0 12px;
 }
 
 .history-date-header {
@@ -334,7 +333,7 @@ button:hover {
 .history-empty {
     text-align: center;
     color: var(--color-text-secondary);
-    padding: 40px 0;
+    padding-top: 40px 0;
     height: 100%;
     display: flex;
     align-items: center;
