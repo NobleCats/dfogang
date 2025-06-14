@@ -1,6 +1,6 @@
-
 // ===================================
 //          ui.js
+// (Handles DOM manipulation and rendering)
 // ===================================
 import * as api from './api.js';
 
@@ -47,16 +47,16 @@ export function createCharacterCard(profile, searchName) {
     card.dataset.characterName = profile.characterName;
     card.dataset.serverId = profile.serverId;
     card.innerHTML = `
-        <div style="position: absolute; top: 10px; right: 10px; text-align: right;">
-            <div style="font-size: 0.75em; color:#d2d2d2;">${profile.serverId}</div>
-            <div style="display:flex; align-items:center; margin-top:4px;">
+        <div style="position: absolute; top: 16px; right: 16px; text-align: right;">
+            <div style="font-size: 0.8em; color:var(--color-text-secondary);">${profile.serverId}</div>
+            <div style="display:flex; align-items:center; justify-content: flex-end; margin-top:4px;">
                 <img src="assets/image/fame.png" alt="Fame" style="width:15px; height:13px; margin-right:4px;">
-                <span style="color:#3ba042; font-size:0.8em;">${profile.fame?.toLocaleString() ?? '-'}</span>
+                <span style="color:var(--color-fame); font-size:0.9em; font-weight: 500;">${profile.fame?.toLocaleString() ?? '-'}</span>
             </div>
         </div>
         <img src="${spritePath}" alt="${profile.jobName}" style="width:200px; height:230px; object-fit:contain; margin-bottom:12px;">
-        <div style="color:${profile.adventureName === searchName ? '#3ba042' : '#7db88a'};">${profile.adventureName ?? '-'}</div>
-        <div style="color:#eee; font-size:1.8em; font-weight:600;">${profile.characterName ?? '-'}</div>
+        <div style="color:${profile.adventureName === searchName ? 'var(--color-fame)' : 'var(--color-text-secondary)'}; font-weight:500;">${profile.adventureName ?? '-'}</div>
+        <div style="font-family: var(--font-display); color:#eee; font-size:1.8em; font-weight:600;">${profile.characterName ?? '-'}</div>
         <div style="color:#A0844B; font-size:0.8em;">[${profile.jobGrowName ?? '-'}]</div>
         <div style="display: flex; align-items: center; gap: 2px; margin-top: 10px;">
             <img src="${setIconPath}" alt="Set Icon" style="transform: scale(0.666); padding-top:10px;">
@@ -249,7 +249,7 @@ function renderFameChart(records) {
     for (let value = firstLabel; value <= lastLabel; value += step) {
         if (value < fameMin || value > fameMax) continue;
         const y = paddingY + (1 - (value - fameMin) / fameRange) * chartHeight;
-        ctx.strokeStyle = "rgba(72,191,240,0.1)";
+        ctx.strokeStyle = "rgba(137, 180, 250, 0.1)"; // Blue grid
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(paddingX, y);
@@ -259,7 +259,7 @@ function renderFameChart(records) {
         ctx.fillText(value.toLocaleString(), paddingX - 6, y);
     }
 
-    ctx.strokeStyle = "#48bfe3";
+    ctx.strokeStyle = "var(--color-accent-blue)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(paddingX, paddingY);
@@ -278,7 +278,7 @@ function renderFameChart(records) {
         ctx.fillText(label, pt.x, canvas.height - paddingY + 4);
     });
 
-    ctx.strokeStyle = "#4cc9f0";
+    ctx.strokeStyle = "var(--color-accent-blue)";
     ctx.lineWidth = 4;
     ctx.beginPath();
     points.forEach((pt, i) => i === 0 ? ctx.moveTo(pt.x, pt.y) : ctx.lineTo(pt.x, pt.y));
@@ -287,8 +287,8 @@ function renderFameChart(records) {
     points.forEach(pt => {
         ctx.beginPath();
         ctx.arc(pt.x, pt.y, 4, 0, 2 * Math.PI);
-        ctx.fillStyle = "#4cc9f0";
-        ctx.shadowColor = "#4cc9f0";
+        ctx.fillStyle = "var(--color-accent-blue)";
+        ctx.shadowColor = "var(--color-accent-blue)";
         ctx.shadowBlur = 6;
         ctx.fill();
         ctx.shadowBlur = 0;
@@ -412,7 +412,7 @@ async function drawCharacterText(profile) {
         ctx.lineWidth = 3;
         ctx.strokeStyle = "black";
         ctx.strokeText(fameText, textX, fameY);
-        ctx.fillStyle = "#3ba042";
+        ctx.fillStyle = "#81C784"; // Fame Green
         ctx.fillText(fameText, textX, fameY);
         ctx.textAlign = "center";
     };
