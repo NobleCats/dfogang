@@ -48,10 +48,11 @@ async function performSearch(server, name) {
 async function showCharacterDetail(server, name) {
     setState({ isLoading: true, view: 'detail' });
     
-    const [profile, equipmentResponse, fameHistory, gearHistory] = await Promise.all([
+    const [profile, equipmentResponse, fameHistory, setItemInfo, gearHistory] = await Promise.all([
         api.getCharacterProfile(server, name),
         api.getCharacterEquipment(server, name),
         api.getFameHistory(server, name),
+        api.getSetItemInfo(server, name),
         api.getGearHistory(server, name),
     ]);
     

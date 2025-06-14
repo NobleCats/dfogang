@@ -28,6 +28,7 @@ function render(state) {
         components.renderCharacterCanvas(state.characterDetail.profile, state.characterDetail.equipment);
         components.renderFameChart(state.characterDetail.fameHistory);
         components.renderHistoryPanel(state.characterDetail.gearHistory);
+        components.renderSetItems(state.characterDetail.gearHistory);
     }
 }
 

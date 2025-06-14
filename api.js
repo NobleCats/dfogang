@@ -37,6 +37,9 @@ export async function getCharacterEquipment(server, name) {
 export async function getFameHistory(server, characterName) {
     return await postData("/fame-history", { server, characterName });
 }
+export async function getSetItemInfo(server, characterName) {
+    return await postData("/setItemInfo", { server, characterName });
+}
 export async function getGearHistory(server, characterName) {
     return await postData("/history", { server, characterName });
 }
