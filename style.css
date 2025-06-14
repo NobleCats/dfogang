@@ -7,10 +7,11 @@
     --font-primary: 'Inter', 'Noto Sans KR', sans-serif;
     --font-display: 'Poppins', sans-serif;
 
-    --color-background: #1A202C; /* Very dark grayish blue */
-    --color-surface: #2D3748;   /* Dark grayish blue */
-    --color-surface-light: #4A5568; /* Lighter grayish blue */
-    --color-border: #4A5568;
+    /* [MODIFIED] Black-based color theme */
+    --color-background: #121212;      /* Pure dark background */
+    --color-surface: #1E1E1E;        /* Elevated surfaces like cards */
+    --color-surface-light: #2C2C2C;  /* Lighter surfaces, for hover states */
+    --color-border: #333333;          /* Subtle borders */
     
     --color-text-primary: #E2E8F0;
     --color-text-secondary: #A0AEC0;
@@ -47,7 +48,8 @@ body {
     right: 0;
     height: 60px;
     z-index: 1000;
-    background-color: rgba(26, 32, 44, 0.8);
+    /* [MODIFIED] Darker navbar with blur effect */
+    background-color: rgba(30, 30, 30, 0.8);
     backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
@@ -135,7 +137,7 @@ input {
 }
 
 button {
-    color: #1A202C;
+    color: #121212; /* [MODIFIED] Darker text for better contrast on cyan */
     background-color: var(--color-accent-cyan);
     border: none;
     padding: 0 24px;
@@ -182,7 +184,7 @@ button:hover {
     text-align: center;
     position: relative;
     cursor: pointer;
-    border: 1px solid transparent;
+    border: 1px solid var(--color-border); /* [MODIFIED] Added subtle border */
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
@@ -254,7 +256,7 @@ button:hover {
 
 .footer {
     width: 100%;
-    background-color: #161c27; /* Slightly different from main background */
+    background-color: #181818; /* [MODIFIED] Darker footer background */
     border-top: 1px solid var(--color-border);
     padding: 24px 0;
     text-align: center;
