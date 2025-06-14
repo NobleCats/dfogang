@@ -215,6 +215,7 @@ def equipment():
 
     profile = get_profile(server, character_id)
     adventure_name = profile.get("adventureName")
+    fame = profile.get("fame")
 
     char_dir = os.path.join(DATA_DIR, server, adventure_name, character_id)
     os.makedirs(char_dir, exist_ok=True)
@@ -293,7 +294,7 @@ def equipment():
 
     return jsonify({
     "equipment": new_eq,
-    "explorerName": adventure_name  # ✅ 추가
+    "explorerName": adventure_name,  # ✅ 추가
     "fame": fame# ✅ 추가
     })
 
