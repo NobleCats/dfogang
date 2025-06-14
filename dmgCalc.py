@@ -5,7 +5,7 @@ import math
 API_KEY = "sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ"
 BASE_URL = "https://api.dfoneople.com/df"
 SERVER = "cain"
-CHARACTER_ID = "479957cad33e18e35d5ae25d3a4a688c"
+CHARACTER_ID = "d25349b117002ecfbe3fb50c572f65dc"
 CLEANSING_CDR = True
 WEAPON_CDR = True
 
@@ -73,7 +73,7 @@ def engrave_cal(option=None):
     return 0
 
 def reinforce_calc(reinforce, amplificationName, slotName, source=""):
-    base_overall_dmg = 0.4
+    base_overall_dmg = 0.2
     under15 = 0.3
     over15 = 0.2
     total_overall_dmg = 0
@@ -83,7 +83,7 @@ def reinforce_calc(reinforce, amplificationName, slotName, source=""):
             if reinforce < 12:
                 return
             else:
-                total_overall_dmg += base_overall_dmg + under15 * min(2, (reinforce - 12))
+                total_overall_dmg += base_overall_dmg * 2 + under15 * min(2, (reinforce - 12))
                 total_overall_dmg += over15 * max(0, (reinforce - 15))
         else:
             return
@@ -91,7 +91,8 @@ def reinforce_calc(reinforce, amplificationName, slotName, source=""):
         if reinforce < 10:
             return
         else:
-            total_overall_dmg += under15 * min(4, (reinforce - 9)) - 0.1
+            total_overall_dmg += base_overall_dmg + base_overall_dmg * min(1, (reinforce - 10))
+            total_overall_dmg += under15 * max(0, min(2, (reinforce - 11)))
             total_overall_dmg += over15 * max(0, (reinforce - 13))
 
     overall_dmg_calc(total_overall_dmg, source)
@@ -106,18 +107,22 @@ def overall_dmg_calc(overall_dmg, source="unknown"):
     print(f"{overall_dmg_mul * 100:.1f}%")
     
 
+
 def parse_explain_detail(text, source="unknown", reinforce=None, option=None):
     global overall_dmg_mul, cd_reduction_mul, damage_value_sum, cd_recovery_sum, elemental_dmg_sum
 
     lines = text.lower().split("\n")
-    bonus_from_reinforce = 0
-    current_ovarall_dmg = 0
+    
+    if "[FUSION_LEG]" in source:
+        option = None
     
     for line in lines:
+        current_ovarall_dmg = 0
         if "sensory satisfaction" in line and reinforce is not None:
             bonus = min(max(reinforce - 10, 0), 2)
-            bonus_from_reinforce = bonus
-            continue
+            overall_dmg_calc(bonus, source)
+            return
+            
 
         match = re.search(r"(\d+(?:\.\d+)?)% chance.*?skill atk\. \+(\d+(?:\.\d+)?)%", line)
         if match:
@@ -126,8 +131,6 @@ def parse_explain_detail(text, source="unknown", reinforce=None, option=None):
             expected = chance * bonus
             current_ovarall_dmg = engrave_cal(option)
             current_ovarall_dmg += expected
-            print(f"[EXPLAIN] {source} -> {chance*100:.2f}% chance of +{bonus*100:.2f}% -> x{1 + expected:.4f}%")
-            continue
 
         match = re.search(r"(\d+(?:\.\d+)?)% chance.*?reset.*cooldown", line)
         if match:
@@ -135,29 +138,23 @@ def parse_explain_detail(text, source="unknown", reinforce=None, option=None):
             boost = 1 / (1 - chance)
             current_ovarall_dmg = engrave_cal(option)
             current_ovarall_dmg += (boost - 1) * 100
-            print(f"[EXPLAIN] {source} -> {chance*100:.2f}% chance of cooldown reset -> treated as x{boost:.4f}%")
-            continue
 
 
         match = re.search(r"overall damage[^\n\d]*\+([\d.]+)%", line)
         if match:
             val = float(match.group(1))
-            mult = (1 + val * 0.01) * (1 + bonus_from_reinforce * 0.01)
             current_ovarall_dmg = engrave_cal(option)
-            current_ovarall_dmg += (mult - 1) * 100
-            continue
+            current_ovarall_dmg += val
 
         match = re.search(r"damage value\s*\+([\d.]+)", line)
         if match:
             val = float(match.group(1))
             damage_value_sum += val
-            continue
 
         match = re.search(r"cooldown recovery\s*\+([\d.]+)%", line)
         if match:
             val = float(match.group(1))
             cd_recovery_sum += val
-            continue
 
         for key, element in ELEMENT_KEYWORDS.items():
             if key in line:
@@ -166,7 +163,8 @@ def parse_explain_detail(text, source="unknown", reinforce=None, option=None):
                     val = float(match.group(1))
                     elemental_dmg_sum[element] += val
                     
-    overall_dmg_calc(current_ovarall_dmg, source)
+        overall_dmg_calc(current_ovarall_dmg, source)
+                    
 
 
 def parse_stat_entry(stat, source=None):
@@ -361,9 +359,9 @@ def analyze_setitem(res):
         reinforce_acc_overall_damage = min(math.floor(reinforce_acc / 3), max_reinforce_acc_stack)
         reinforce_total_overall_damage = min(math.floor((reinforce_total - 110) / 11), max_reinforce_total_stack) * 2
         
-        reinforce_overall_damage = (1 + reinforce_acc_overall_damage / 100) * (1 + reinforce_total_overall_damage / 100) + 100
 
-        overall_dmg_calc(reinforce_overall_damage, setItemName)
+        overall_dmg_calc(reinforce_acc_overall_damage, setItemName)
+        overall_dmg_calc(reinforce_total_overall_damage, setItemName)
         overall_dmg_calc(overall_damage, setItemName)
         
         #Trim CDR part
