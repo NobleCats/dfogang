@@ -8,7 +8,7 @@
     --font-display: 'Poppins', sans-serif;
     --font-dfo: 'DNFForgedBlade', sans-serif; /* DFO Font */
 
-    /* Gemini-inspired Blue & Black theme */
+    /* [MODIFIED] Gemini-inspired Blue & Black theme */
     --color-background: #131314;
     --color-surface: #1E1E1E;
     --color-surface-light: #2C2C2C;
@@ -18,14 +18,14 @@
     --color-text-secondary: #A0AEC0;
     --color-text-tertiary: #718096;
 
-    --color-accent-blue: #4e8ff8;
-    --color-accent-blue-hover: #63a1f9;
+    --color-accent-blue: #58A6FF; /* Brighter, Neon-like Blue */
+    --color-accent-blue-hover: #79B8FF;
     --color-fame: #81C784;
 
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --shadow-blue: 0 0 15px -3px rgba(78, 143, 248, 0.3);
+    --shadow-blue: 0 0 15px -3px rgba(88, 166, 255, 0.3);
 }
 
 @font-face{
@@ -220,7 +220,7 @@ button:hover {
     grid-template-areas:
         "profile history"
         "fame    history";
-    grid-template-columns: 500px 500px; /* Fixed width columns */
+    grid-template-columns: 492px 1fr; /* Fixed width for left, flexible for right */
     justify-content: center;
     gap: 24px;
     max-width: 1100px;
@@ -238,12 +238,24 @@ button:hover {
     flex-direction: column;
 }
 
-.detail-widget-profile { grid-area: profile; }
-.detail-widget-fame { grid-area: fame; }
-.detail-widget-history { grid-area: history; }
+.detail-widget-profile { 
+    grid-area: profile; 
+    width: 492px; /* Set fixed width */
+    box-sizing: border-box; /* Include padding in width */
+}
+.detail-widget-fame { 
+    grid-area: fame;
+    width: 492px;
+    box-sizing: border-box;
+}
+.detail-widget-history { 
+    grid-area: history;
+    width: 492px;
+    box-sizing: border-box;
+}
 
 .widget-title {
-    font-family: var(--font-dfo); /* DFO Font for titles */
+    font-family: var(--font-dfo);
     font-size: 22px;
     font-weight: 700;
     color: var(--color-text-primary);
@@ -318,8 +330,8 @@ button:hover {
     right: 0px; 
     bottom: 0px;
     width: 28px;
-    height: 14px;
-    transform: translate(15%, 15%); /* Nudge to align corners better */
+    height: 13px;
+    transform: translate(20%, 20%);
 }
 
 .history-empty {
@@ -363,16 +375,13 @@ button:hover {
  * Responsive Design
  * =================================
  */
-@media (max-width: 1100px) { /* Breakpoint for tablet size */
+@media (max-width: 1100px) {
     .detail-grid {
         grid-template-areas:
             "profile"
             "history"
             "fame";
-        grid-template-columns: 1fr; /* Single column layout */
-    }
-    .detail-widget-history {
-        min-height: 400px; /* Give history a min-height on mobile */
+        grid-template-columns: 1fr;
     }
 }
 
