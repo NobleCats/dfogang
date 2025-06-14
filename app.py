@@ -435,5 +435,31 @@ def history_cleaner(history):
     # 최신 30개만 유지
     return cleaned_history[-30:]
 
+
+@app.route("/search_log", methods=["POST"])
+def log_search():
+    data = request.get_json()
+    server = data.get("server", "")
+    name = data.get("name", "").strip()
+    ip = request.headers.get("X-Forwarded-For", request.remote_addr)
+
+    log_entry = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "ip": ip,
+        "server": server,
+        "name": name
+    }
+
+    # 오늘 날짜 기준 파일명 생성 (UTC 기준, 로컬 원하면 .now())
+    date_str = datetime.utcnow().strftime("%Y-%m-%d")
+    log_dir = "logs"
+    log_path = os.path.join(log_dir, f"search_log_{date_str}.jsonl")
+
+    os.makedirs(log_dir, exist_ok=True)
+    with open(log_path, "a", encoding="utf-8") as f:
+        f.write(json.dumps(log_entry, ensure_ascii=False) + "\n")
+
+    return jsonify({"status": "ok"})
+
 if __name__ == "__main__":
     app.run(debug=True)
