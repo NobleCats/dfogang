@@ -4,7 +4,7 @@ import re
 API_KEY = "sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ"
 BASE_URL = "https://api.dfoneople.com/df"
 SERVER = "cain"
-CHARACTER_ID = "479957cad33e18e35d5ae25d3a4a688c"
+CHARACTER_ID = "bbbefd9c996d81dce9a973d1b8df56ac"
 
 # 누적 스탯 초기화
 overall_dmg_mul = 1.0
@@ -34,7 +34,7 @@ def is_ethereal_set(set_name):
 def is_dragon_set(set_name):
     return "dragon" in set_name.lower()
 
-def parse_explain_detail(text, source="unknown"):
+def parse_explain_detail(text, source="unknown", reinforce=None):
     global overall_dmg_mul, cd_reduction_mul, damage_value_sum, atk_amp_sum, cd_recovery_sum, elemental_dmg_sum
 
     if "세트효과" in source and is_ethereal_set(source):
@@ -64,22 +64,44 @@ def parse_explain_detail(text, source="unknown"):
         return
 
     lines = text.lower().split("\n")
+    bonus_from_reinforce = 0
     for line in lines:
+        if "sensory satisfaction" in line and reinforce is not None:
+            bonus = min(max(reinforce - 10, 0), 2) * 0.01
+            bonus_from_reinforce = bonus
+            continue
+
         if "all atk." in line:
             match = re.search(r"\+([\d.]+)%", line)
             if match:
                 val = float(match.group(1))
                 atk_amp_sum += val
                 continue
-            
-        match = re.search(r"overall damage\s*\+([\d.]+)%", line)
-        
+
+        match = re.search(r"(\d+(?:\.\d+)?)% chance.*?skill atk\. \+(\d+(?:\.\d+)?)%", line)
         if match:
-            if "세트효과" in source and is_cleansing_set(source):
-                continue
+            chance = float(match.group(1)) / 100
+            bonus = float(match.group(2)) / 100
+            expected = chance * bonus
+            print(f"[EXPLAIN] {source} -> {chance*100:.2f}% chance of +{bonus*100:.2f}% -> x{1 + expected:.4f}")
+            overall_dmg_mul *= (1 + expected)
+            continue
+
+        match = re.search(r"(\d+(?:\.\d+)?)% chance.*?reset.*cooldown", line)
+        if match:
+            chance = float(match.group(1)) / 100
+            boost = 1 / (1 - chance)
+            print(f"[EXPLAIN] {source} -> {chance*100:.2f}% chance of cooldown reset -> treated as x{boost:.4f} Overall Dmg")
+            overall_dmg_mul *= boost
+            continue
+
+
+        match = re.search(r"overall damage[^\n\d]*\+([\d.]+)%", line)
+        if match:
             val = float(match.group(1)) / 100
-            print(f"[EXPLAIN] {source} -> +{val*100:.1f}% Overall -> x{1+val:.4f}")
-            overall_dmg_mul *= (1 + val)
+            mult = (1 + val) * (1 + bonus_from_reinforce)
+            print(f"[EXPLAIN] {source} -> +{val*100:.1f}% Overall (+{bonus_from_reinforce*100:.1f}% cond) -> x{mult:.4f}")
+            overall_dmg_mul *= mult
             continue
 
         match = re.search(r"cooldown[^\n\-+]*[-–−+]([\d.]+)%", line)
@@ -114,6 +136,7 @@ def parse_explain_detail(text, source="unknown"):
                 if match:
                     val = float(match.group(1))
                     elemental_dmg_sum[element] += val
+
 
 def parse_stat_entry(stat, source=None):
     global overall_dmg_mul, cd_reduction_mul, damage_value_sum, atk_amp_sum, cd_recovery_sum, elemental_dmg_sum
@@ -173,6 +196,7 @@ def parse_item_stats(item_id):
         parse_explain_detail(detail, source=f"[아이템설명] {item_name}")
 
 def parse_fusion_options(item):
+    reinforce = item.get("reinforce")
     upgrade_info = item.get("upgradeInfo", {})
     fusion = item.get("fusionOption", {})
     options = fusion.get("options", [])
@@ -196,7 +220,7 @@ def parse_fusion_options(item):
     for opt in fusion_options:
         detail = opt.get("explainDetail", "") or opt.get("explain", "")
         if detail:
-            parse_explain_detail(detail, source=f"[융합석:조회] {upgrade_info.get('itemName', 'Unknown')}")
+            parse_explain_detail(detail, source=f"[융합석:조회] {upgrade_info.get('itemName', 'Unknown')}", reinforce=reinforce)
 
 def parse_creature_item(item_id, source="unknown"):
     url = f"{BASE_URL}/items/{item_id}?apikey={API_KEY}"
