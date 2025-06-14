@@ -78,7 +78,7 @@ export async function renderCharacterDetail(profile, equipmentData, fameHistory,
         <div style="display: flex; justify-content: center; gap: 32px; align-items: flex-start;">
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <div class="character-canvas" id="character-canvas-container" style="width:492px; height:354px; position: relative;"></div>
-                <div id="set-info-container" style="margin-top: 28px; width: 492px;"></div>
+                <div id="set-info-container"></div>
                 <canvas id="fame-chart" width="492" height="265" style="margin-top: 20px;"></canvas>
             </div>
             <div id="history-panel" style="width:492px; height:769px; overflow-y: auto; background:#222; border-radius:8px; padding:16px;"></div>
@@ -120,7 +120,6 @@ function renderCharacterCanvas(profile, equipmentList) {
                 <img src="assets/equipments/edge/${eq.itemRarity}.png" style="width:100%; height:100%; position:absolute; z-index:3;">
             `;
             
-            // [FIXED] 융합석 아이콘 생성 로직 복원
             if (eq.upgradeInfo) {
                 const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
                 const baseRarity = eq.itemRarity;
@@ -130,11 +129,11 @@ function renderCharacterCanvas(profile, equipmentList) {
                 const fusionIconWrapper = document.createElement('div');
                 fusionIconWrapper.style.cssText = `position:absolute; right:0; top:0; z-index:4;`;
                 
-                if (keywordMatch) { // 세트 융합석
+                if (keywordMatch) {
                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/${keywordMatch}.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
-                } else if (distKeywords.some(word => itemName.includes(word))) { // 왜곡된 차원
+                } else if (distKeywords.some(word => itemName.includes(word))) {
                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/Dist.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
-                } else { // 일반 융합석
+                } else {
                     fusionIconWrapper.style.width = `${28 * SCALE * 0.75}px`;
                     fusionIconWrapper.style.height = `${13 * SCALE * 0.75}px`;
                     fusionIconWrapper.innerHTML = `
@@ -158,7 +157,21 @@ function renderCharacterCanvas(profile, equipmentList) {
 function renderSetItems(setItemInfo) {
     const container = document.getElementById("set-info-container");
     container.innerHTML = "";
-    if (!setItemInfo || setItemInfo.length === 0) return;
+    if (!Array.isArray(setItemInfo) || setItemInfo.length === 0) {
+        return;
+    }
+    
+    // [FIXED] 원본의 컨테이너 스타일링 로직 복원
+    container.style.width = "492px";
+    container.style.marginTop = "28px";
+    container.style.display = "flex";
+    container.style.flexDirection = "column";
+    container.style.alignItems = "center";
+    container.style.backgroundColor = "#1a1a1a";
+    container.style.borderRadius = "8px";
+    container.style.padding = "16px 20px";
+    container.style.boxShadow = "0 0 12px rgba(0, 0, 0, 0.5)";
+    container.style.boxSizing = "border-box";
     
     setItemInfo.forEach(item => {
         const rarityName = item.setItemRarityName ?? "None";
@@ -167,16 +180,20 @@ function renderSetItems(setItemInfo) {
             rarityStyle = `background: linear-gradient(to bottom, #57e95b, #3a8390); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`;
         }
 
-        container.innerHTML += `
-            <div style="background-color:#1a1a1a; border-radius:8px; padding:16px; text-align:center;">
-                <div style="font-size:28px; font-weight:700; color:#eee;">${item.setItemName}</div>
-                <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName}" style="display:block;">
-                    <span style="font-size:24px; font-weight:600; ${rarityStyle}">${rarityName}</span>
-                </div>
-                <div style="font-size:16px; color:#aaa;">(${item.active?.setPoint?.current ?? 0})</div>
+        const wrapper = document.createElement('div');
+        wrapper.style.display = 'flex';
+        wrapper.style.flexDirection = 'column';
+        wrapper.style.alignItems = 'center';
+
+        wrapper.innerHTML = `
+            <div style="font-size:28px; font-weight:700; color:#eee; margin-top:12px; margin-bottom:2px;">${item.setItemName}</div>
+            <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName}" style="display:block; margin-right:8px;">
+                <span style="font-size:24px; font-weight:600; padding:12px 0; ${rarityStyle}">${rarityName}</span>
             </div>
+            <div style="font-size:16px; color:#aaa; margin-bottom:8px; line-height:1;">(${item.active?.setPoint?.current ?? 0})</div>
         `;
+        container.appendChild(wrapper);
     });
 }
 
