@@ -1,10 +1,13 @@
 import requests
 import re
+import math
 
 API_KEY = "sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ"
 BASE_URL = "https://api.dfoneople.com/df"
 SERVER = "cain"
-CHARACTER_ID = "bbbefd9c996d81dce9a973d1b8df56ac"
+CHARACTER_ID = "66707ebab4c88f3cb5d15e7dff83bb35"
+CLEANSING_CDR = False
+WEAPON_CDR = True
 
 # 누적 스탯 초기화
 overall_dmg_mul = 1.0
@@ -42,32 +45,6 @@ def is_pack_set(set_name):
 
 def parse_explain_detail(text, source="unknown", reinforce=None):
     global overall_dmg_mul, cd_reduction_mul, damage_value_sum, atk_amp_sum, cd_recovery_sum, elemental_dmg_sum
-
-    if "세트효과" in source and is_ethereal_set(source):
-        max_orbs = 0
-        dmg_per_orb = 0
-
-        max_orb_match = re.search(r"max orb charges\D*(\d+)", text.lower())
-        if max_orb_match:
-            max_orbs = int(max_orb_match.group(1))
-
-        dmg_match = re.search(r"overall damage \+(\d+)% per orb", text.lower())
-        if dmg_match:
-            dmg_per_orb = float(dmg_match.group(1)) / 100
-
-        if max_orbs and dmg_per_orb:
-            boost = (1 + dmg_per_orb * max_orbs)
-            print(f"[ETHEREAL] max_orbs={max_orbs}, dmg_per_orb={dmg_per_orb}, boost={boost:.4f}")
-            overall_dmg_mul *= boost
-        return
-
-    if "세트효과" in source and is_dragon_set(source):
-        dmg_match = re.search(r"overall damage \+(\d+)%", text.lower())
-        if dmg_match:
-            val = float(dmg_match.group(1)) / 100
-            print(f"[DRAGON] Overall Damage +{val*100}% -> x{1+val:.4f}")
-            overall_dmg_mul *= (1 + val)
-        return
 
     lines = text.lower().split("\n")
     bonus_from_reinforce = 0
@@ -108,15 +85,6 @@ def parse_explain_detail(text, source="unknown", reinforce=None):
             mult = (1 + val) * (1 + bonus_from_reinforce)
             print(f"[EXPLAIN] {source} -> +{val*100:.1f}% Overall (+{bonus_from_reinforce*100:.1f}% cond) -> x{mult:.4f}")
             overall_dmg_mul *= mult
-            continue
-
-        match = re.search(r"cooldown[^\n\-+]*[-–−+]([\d.]+)%", line)
-        if match:
-            if "세트효과" in source and is_cleansing_set(source):
-                cd_reduction_mul *= (1 - 0.55)
-            else:
-                val = float(match.group(1)) / 100
-                cd_reduction_mul *= (1 - val)
             continue
 
         match = re.search(r"damage value\s*\+([\d.]+)", line)
@@ -264,23 +232,144 @@ def analyze_insignia():
         if gem.get("itemId"):
             parse_creature_item(gem["itemId"], source=f"[인시그니아 젬] {gem.get('itemName')}")
             
-def analyze_setitem(setiteminfo):
-    setitemname = setiteminfo[0].get("setItemName")
+def analyze_setitem(res):
+    global overall_dmg_mul, cd_reduction_mul, damage_value_sum, atk_amp_sum, cd_recovery_sum, elemental_dmg_sum
+    setItemInfoList = res.get("setItemInfo", [])
+    if not setItemInfoList:
+        return 
+
+    setItemInfo = setItemInfoList[0]
+    setItemName = setItemInfo.get("setItemName")
+    setItemRarityName = setItemInfo.get("setItemRarityName")
+    setItemActive = setItemInfo.get("active")
+    setItemStat = setItemActive.get("status", [])
     
-    if is_paradise_set(setitemname):
-        return
-    elif is_cleansing_set(setitemname):
-        return
-    elif is_ethereal_set(setitemname):
-        return
-    elif is_dragon_set(setitemname):
-        return
-    elif is_serendipity_set(setitemname):
-        return
-    elif is_pack_set(setitemname):
-        return
-    else:
-        return
+    stat = setItemInfo
+    
+    if is_paradise_set(setItemName):
+        reinforce_acc = 0
+        reinforce_total = 0
+        overall_damage = 0
+        
+        #Calc reinforce overall damage
+        for item in res.get("equipment", []):
+            if "weapon" in item.get("slotName").lower():
+                continue
+            if any(x in item.get("slotName").lower() for x in ["ring", "bracelet", "necklace"]):
+                reinforce_acc += item.get("reinforce", 0)
+            reinforce_total += item.get("reinforce", 0)
+            
+        if "unique" in setItemRarityName.lower():
+            max_reinforce_acc_stack = 7
+        elif "legendary" in setItemRarityName.lower():
+            max_reinforce_acc_stack = 12
+        else:
+            max_reinforce_acc_stack = 12
+            max_reinforce_total_stack = 2
+            
+        reinforce_acc_overall_damage = min(math.floor(reinforce_acc / 3), max_reinforce_acc_stack)
+        reinforce_total_overall_damage = min(math.floor((reinforce_total - 110) / 11), max_reinforce_total_stack) * 2
+        
+        reinforce_overall_damage = (1 + reinforce_acc_overall_damage / 100) * (1 + reinforce_total_overall_damage / 100)
+        overall_dmg_mul *= reinforce_overall_damage
+            
+        overall_dmg_mul *= (1 + overall_damage / 100)
+        
+        #Trim CDR part
+        filtered_status = [s for s in setItemStat if s.get("name") != "Skill Cooldown Reduction"]
+        setItemStat = filtered_status
+
+    elif is_cleansing_set(setItemName):
+        overall_damage = 0
+        if any(x in setItemRarityName.lower() for x in ["legendary", "epic", "primeval"]):
+            if(CLEANSING_CDR):
+                for stat in setItemStat:
+                    if stat.get("name") == "Skill Cooldown Reduction":
+                        stat["value"] = "55%"
+                        break
+            else:
+                overall_damage = 17.5
+                for stat in setItemStat:
+                    if stat.get("name") == "Skill Cooldown Reduction":
+                        stat["value"] = "30%"
+                        break
+                
+        overall_dmg_mul *= (1 + overall_damage / 100)
+        
+    elif is_ethereal_set(setItemName):
+        overall_damage = 0
+        orb_count = 0
+        
+        if "unique" in setItemRarityName.lower():
+            orb_count = 1
+        elif "legendary" in setItemRarityName.lower():
+            orb_count = 2
+        elif "epic" in setItemRarityName.lower():
+            orb_count = 3
+        elif "primeval" in setItemRarityName.lower():
+            orb_count = 4
+        overall_damage = 10 * orb_count
+        
+        overall_dmg_mul *= (1 + overall_damage / 100)
+        
+    elif is_dragon_set(setItemName):
+        if "epic" in setItemRarityName.lower():
+            overall_damage = 1.5
+        elif "primeval" in setItemRarityName.lower():
+            overall_damage = 3
+            
+        overall_dmg_mul *= (1 + overall_damage / 100)
+        
+    elif is_serendipity_set(setItemName):
+        overall_damage = 0
+        elemental_dmg = 0
+        expected_overall_damage = []
+        expected_overall_damage_short = 1.5
+        expected_overall_damage_long = 4
+        expected_overall_damage_random = 3
+        expected_overall_damage_all = 10
+        
+        if "unique" in setItemRarityName.lower():
+            overall_damage = 3
+            expected_overall_damage.append(expected_overall_damage_long)
+        elif "legendary" in setItemRarityName.lower():
+            overall_damage = 3
+            elemental_dmg = 33
+            expected_overall_damage.append(expected_overall_damage_short)
+            expected_overall_damage.append(expected_overall_damage_long)
+        elif "epic" in setItemRarityName.lower():
+            overall_damage = 3
+            elemental_dmg = 33
+            expected_overall_damage.append(expected_overall_damage_long)
+            expected_overall_damage.append(expected_overall_damage_all)
+        elif "primeval" in setItemRarityName.lower():
+            overall_damage = 3
+            elemental_dmg = 33
+            expected_overall_damage.append(expected_overall_damage_long)
+            expected_overall_damage.append(expected_overall_damage_random)
+            expected_overall_damage.append(expected_overall_damage_all)
+            
+        elemental_dmg_sum["All"] += elemental_dmg
+        total_expected_overall_dmg = math.prod([1 + x / 100 for x in expected_overall_damage])
+
+        overall_dmg_mul *= (1 + overall_damage / 100)
+        overall_dmg_mul *= (1 + total_expected_overall_dmg / 100)
+        
+    elif is_pack_set(setItemName):
+        overall_damage = 0
+        if "unique" in setItemRarityName.lower():
+            overall_damage = 5
+        elif "legendary" in setItemRarityName.lower():
+            overall_damage = 6
+        elif "epic" in setItemRarityName.lower():
+            overall_damage = 7
+        elif "primeval" in setItemRarityName.lower():
+            overall_damage = 8
+    
+        overall_dmg_mul *= (1 + overall_damage / 100)
+        
+    for stat in setItemStat:
+        parse_stat_entry(stat, source=f"[세트효과] {setItemName}")
     
 
 def analyze_character_equipment():
@@ -303,8 +392,7 @@ def analyze_character_equipment():
         for stat in item.get("enchant", {}).get("status", []):
             parse_stat_entry(stat, source=f"[마부] {item_name}")
 
-    setiteminfo = res.get("setItemInfo", [])
-    analyze_setitem(setiteminfo)
+    analyze_setitem(res)
 
 def print_results():
     print(f"\n\U0001f3af 최종 계산 결과")
