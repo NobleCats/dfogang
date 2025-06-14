@@ -82,7 +82,7 @@ async function showCharacterDetail(server, name) {
     ]);
     
     if (profile && equipmentResponse) {
-        // [FIXED] Pass the unwrapped equipment object
+        // [FIXED] Pass the unwrapped equipment object to avoid confusion
         state.characterDetail = { 
             profile, 
             equipment: equipmentResponse.equipment, 

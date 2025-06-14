@@ -1,6 +1,5 @@
 // ===================================
 //          ui.js
-// (Handles DOM manipulation and rendering)
 // ===================================
 import * as api from './api.js';
 
@@ -67,7 +66,7 @@ export function createCharacterCard(profile, searchName) {
     return card;
 }
 
-export async function renderCharacterDetail(profile, equipment, fameHistory, gearHistory) {
+export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory) {
     const detailView = document.getElementById('detail-view');
     detailView.innerHTML = `
         <div style="padding: 24px 32px 10px; display: flex; justify-content: flex-start;">
@@ -91,8 +90,8 @@ export async function renderCharacterDetail(profile, equipment, fameHistory, gea
         </div>
     `;
 
-    renderCharacterCanvas(profile, equipment?.equipment);
-    renderSetItems(equipment?.setItemInfo);
+    renderCharacterCanvas(profile, equipment);
+    renderSetItems(setItemInfo);
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
 }
@@ -152,6 +151,22 @@ function renderCharacterCanvas(profile, equipmentList) {
                 }
                 itemEl.appendChild(fusionIconWrapper);
             }
+
+            // [FIXED] Tune icon rendering logic restored
+            const tuneLevel = eq.tune?.level || 0;
+            if (tuneLevel >= 1 && tuneLevel <= 3) {
+                const tuneSize = [8 * SCALE, 10 * SCALE];
+                const tuneImg = document.createElement("img");
+                tuneImg.src = `assets/equipments/etc/tune${tuneLevel}.png`;
+                tuneImg.style.position = "absolute";
+                tuneImg.style.width = `${tuneSize[0]}px`;
+                tuneImg.style.height = `${tuneSize[1]}px`;
+                tuneImg.style.left = `${iconSize - tuneSize[0] - 1}px`;
+                tuneImg.style.top = `${iconSize - tuneSize[1]}px`;
+                tuneImg.style.zIndex = "3";
+                itemEl.appendChild(tuneImg);
+            }
+
             eqLayer.appendChild(itemEl);
         });
     }
@@ -179,7 +194,7 @@ function renderSetItems(setItemInfo) {
 
         container.innerHTML += `
             <div style="text-align:center;">
-                <div style="font-family: var(--font-display); font-size:20px; font-weight:600; color:#eee; margin-bottom:4px;">${item.setItemName}</div>
+                <div style="font-family: var(--font-dfo); font-size:22px; font-weight:700; color:#eee; margin-bottom:4px;">${item.setItemName}</div>
                 <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
                     <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName}" style="height: 24px;">
                     <span style="font-size:16px; font-weight:500; ${rarityStyle}">${rarityName}</span>
@@ -190,8 +205,7 @@ function renderSetItems(setItemInfo) {
     });
 }
 
-// [MODIFIED] Renders the fame chart with tooltip functionality and correct colors
-function renderFameChart(records, hoverX = null, hoverY = null) {
+function renderFameChart(records) {
     const container = document.getElementById("fame-chart-container");
     const canvas = document.getElementById("fame-chart");
     if (!canvas || !container) return;
@@ -202,10 +216,10 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Get colors from CSS variables
-    const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--color-accent-blue').trim();
-    const gridColor = `rgba(78, 143, 248, 0.1)`; // Derived from blue
-    const textColor = getComputedStyle(document.documentElement).getPropertyValue('--color-text-primary').trim();
+    const style = getComputedStyle(document.documentElement);
+    const accentColor = style.getPropertyValue('--color-accent-blue').trim();
+    const gridColor = `rgba(78, 143, 248, 0.1)`;
+    const textColor = style.getPropertyValue('--color-text-primary').trim();
     
     const paddingX = 40;
     const paddingY = 30;
