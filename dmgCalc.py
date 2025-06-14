@@ -66,16 +66,16 @@ def parse_explain_detail(text, source="unknown", reinforce=None):
             chance = float(match.group(1)) / 100
             bonus = float(match.group(2)) / 100
             expected = chance * bonus
-            print(f"[EXPLAIN] {source} -> {chance*100:.2f}% chance of +{bonus*100:.2f}% -> x{1 + expected:.4f}")
             overall_dmg_mul *= (1 + expected)
+            print(f"[EXPLAIN] {source} -> {chance*100:.2f}% chance of +{bonus*100:.2f}% -> x{1 + expected:.4f} -> Total : {overall_dmg_mul * 100:.1f}%")
             continue
 
         match = re.search(r"(\d+(?:\.\d+)?)% chance.*?reset.*cooldown", line)
         if match:
             chance = float(match.group(1)) / 100
             boost = 1 / (1 - chance)
-            print(f"[EXPLAIN] {source} -> {chance*100:.2f}% chance of cooldown reset -> treated as x{boost:.4f} Overall Dmg")
             overall_dmg_mul *= boost
+            print(f"[EXPLAIN] {source} -> {chance*100:.2f}% chance of cooldown reset -> treated as x{boost:.4f} Overall Dmg -> Total : {overall_dmg_mul * 100:.1f}%")
             continue
 
 
@@ -83,8 +83,8 @@ def parse_explain_detail(text, source="unknown", reinforce=None):
         if match:
             val = float(match.group(1)) / 100
             mult = (1 + val) * (1 + bonus_from_reinforce)
-            print(f"[EXPLAIN] {source} -> +{val*100:.1f}% Overall (+{bonus_from_reinforce*100:.1f}% cond) -> x{mult:.4f}")
             overall_dmg_mul *= mult
+            print(f"🔥[OVERALL] {source} -> +{val*100:.1f}% Overall (+{bonus_from_reinforce*100:.1f}% cond) -> x{mult:.4f} -> Total : {overall_dmg_mul * 100:.1f}%")
             continue
 
         match = re.search(r"damage value\s*\+([\d.]+)", line)
@@ -117,7 +117,8 @@ def parse_stat_entry(stat, source=None):
 
     name = stat["name"].lower()
     value_raw = stat["value"]
-
+    
+    
     if isinstance(value_raw, str):
         value_str = value_raw.replace('%', '').replace(',', '').strip()
         try:
@@ -135,22 +136,27 @@ def parse_stat_entry(stat, source=None):
         cd_reduction_mul *= (1 - value / 100)
     elif "cooldown recovery" in name:
         cd_recovery_sum += value
+    elif "overall damage" in name:
+        overall_dmg_mul *= (1 + value / 100)
+        print(f"🔥[OVERALL] {source} -> +{value:.1f}% Overall (Tune) -> x{1 + value/100:.4f} -> Total : {overall_dmg_mul * 100:.1f}%")
     else:
         for key, element in ELEMENT_KEYWORDS.items():
             if key in name:
                 elemental_dmg_sum[element] += value
 
     # 무기 튠 확인
-    if source and "튠" in source:
-        if "overall damage" in name:
-            print(f"[TUNE] {source} -> +{value:.1f}% Overall -> x{1 + value/100:.4f}")
-            overall_dmg_mul *= (1 + value / 100)
+#    if source and "튠" in source:
+#        if "overall damage" in name:
+#            overall_dmg_mul *= (1 + value / 100)
+#            print(f"🔥[OVERALL] {source} -> +{value:.1f}% Overall (Tune) -> x{1 + value/100:.4f} -> Total : {overall_dmg_mul * 100:.1f}%")
                 
 def parse_item_stats(item_id):
     url = f"{BASE_URL}/items/{item_id}?apikey={API_KEY}"
     res = requests.get(url).json()
     item_name = res.get("itemName", item_id)
     stats = res.get("itemStatus", [])
+    
+    
     for stat in stats:
         parse_stat_entry(stat, source=f"[아이템] {item_name}")
 
@@ -271,9 +277,11 @@ def analyze_setitem(res):
         reinforce_total_overall_damage = min(math.floor((reinforce_total - 110) / 11), max_reinforce_total_stack) * 2
         
         reinforce_overall_damage = (1 + reinforce_acc_overall_damage / 100) * (1 + reinforce_total_overall_damage / 100)
+
         overall_dmg_mul *= reinforce_overall_damage
             
         overall_dmg_mul *= (1 + overall_damage / 100)
+        print(f"🔥[OVERALL] [세트] {setItemName} -> 악세 강화: {reinforce_acc}, 무기 제외 총 강화: {reinforce_total} -> x{reinforce_overall_damage:.4f} -> Total : {overall_dmg_mul * 100:.1f}%")
         
         #Trim CDR part
         filtered_status = [s for s in setItemStat if s.get("name") != "Skill Cooldown Reduction"]
@@ -295,6 +303,7 @@ def analyze_setitem(res):
                         break
                 
         overall_dmg_mul *= (1 + overall_damage / 100)
+        print(f"🔥[OVERALL] [세트] {setItemName} -> +{overall_damage:.1f}% Overall (쿨감 {CLEANSING_CDR}) -> Total : {overall_dmg_mul * 100:.1f}%")
         
     elif is_ethereal_set(setItemName):
         overall_damage = 0
@@ -310,15 +319,19 @@ def analyze_setitem(res):
             orb_count = 4
         overall_damage = 10 * orb_count
         
+
         overall_dmg_mul *= (1 + overall_damage / 100)
+        print(f"🔥[OVERALL] [세트] {setItemName} -> +{overall_damage:.1f}% Overall -> Total : {overall_dmg_mul * 100:.1f}%")
         
     elif is_dragon_set(setItemName):
         if "epic" in setItemRarityName.lower():
             overall_damage = 1.5
         elif "primeval" in setItemRarityName.lower():
             overall_damage = 3
-            
+        
+
         overall_dmg_mul *= (1 + overall_damage / 100)
+        print(f"🔥[OVERALL] [세트] {setItemName} -> +{overall_damage:.1f}% Overall -> Total : {overall_dmg_mul * 100:.1f}%")
         
     elif is_serendipity_set(setItemName):
         overall_damage = 0
@@ -354,6 +367,7 @@ def analyze_setitem(res):
 
         overall_dmg_mul *= (1 + overall_damage / 100)
         overall_dmg_mul *= (1 + total_expected_overall_dmg / 100)
+        print(f"🔥[OVERALL] [세트] {setItemName} 기본: +{overall_damage}%, 기대값: x{total_expected_overall_dmg:.4f} -> Total : {overall_dmg_mul * 100:.1f}%")
         
     elif is_pack_set(setItemName):
         overall_damage = 0
@@ -365,8 +379,10 @@ def analyze_setitem(res):
             overall_damage = 7
         elif "primeval" in setItemRarityName.lower():
             overall_damage = 8
-    
+            
+
         overall_dmg_mul *= (1 + overall_damage / 100)
+        print(f"🔥[OVERALL] [세트] {setItemName} -> +{overall_damage:.1f}% Overall -> Total : {overall_dmg_mul * 100:.1f}%")
         
     for stat in setItemStat:
         parse_stat_entry(stat, source=f"[세트효과] {setItemName}")
@@ -382,7 +398,7 @@ def analyze_character_equipment():
 
         item_id = item.get("itemId")
         item_name = item.get("itemName")
-
+        
         parse_item_stats(item_id)
         parse_fusion_options(item)
 
@@ -396,8 +412,8 @@ def analyze_character_equipment():
 
 def print_results():
     print(f"\n\U0001f3af 최종 계산 결과")
-    print(f"✅ Overall Damage Multiplier: x{overall_dmg_mul:.4f}")
-    print(f"✅ Cooldown Reduction Multiplier: x{cd_reduction_mul:.4f}")
+    print(f"✅ Overall Damage Multiplier: {overall_dmg_mul * 100:.4f}%")
+    print(f"✅ Cooldown Reduction Multiplier: x{(1 - cd_reduction_mul) * 100:.4f}")
     print(f"✅ Damage Value Sum: {damage_value_sum:.2f}")
     print(f"✅ Atk. Amp Sum: {atk_amp_sum:.2f}")
     print(f"✅ Cooldown Recovery Sum: {cd_recovery_sum:.2f}")
