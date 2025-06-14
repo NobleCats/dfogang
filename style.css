@@ -6,6 +6,7 @@
 :root {
     --font-primary: 'Inter', 'Noto Sans KR', sans-serif;
     --font-display: 'Poppins', sans-serif;
+    --font-dfo: 'DNFForgedBlade', sans-serif; /* DFO Font */
 
     /* Gemini-inspired Blue & Black theme */
     --color-background: #131314;
@@ -25,6 +26,13 @@
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
     --shadow-blue: 0 0 15px -3px rgba(78, 143, 248, 0.3);
+}
+
+@font-face{
+    font-family:'DNFForgedBlade';
+    font-style:normal;
+    font-weight:700;
+    src:url('//cdn.df.nexon.com/img/common/font/DNFForgedBlade-Bold.otf') format('opentype');
 }
 
 body {
@@ -69,9 +77,9 @@ body {
 
 .navbar-title {
     color: var(--color-text-primary);
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 20px;
+    font-family: var(--font-dfo); /* DFO Font */
+    font-weight: 700;
+    font-size: 22px;
     text-decoration: none;
 }
 
@@ -98,8 +106,8 @@ body {
 }
 
 .main-logo {
-    font-family: var(--font-display);
-    font-size: 48px;
+    font-family: var(--font-dfo); /* DFO Font */
+    font-size: 52px;
     font-weight: 700;
     color: var(--color-text-primary);
     margin-bottom: 24px;
@@ -212,8 +220,8 @@ button:hover {
     grid-template-areas:
         "profile history"
         "fame    history";
-    grid-template-columns: minmax(0, 500px) minmax(0, 500px); /* Fixed width columns */
-    justify-content: center; /* Center the grid */
+    grid-template-columns: 500px 1fr; /* Fixed width for left column */
+    justify-content: center;
     gap: 24px;
     max-width: 1100px;
     margin: 40px auto;
@@ -254,16 +262,16 @@ button:hover {
 .history-date-header {
     text-align: center;
     color: var(--color-text-secondary);
-    margin: 20px auto 12px;
-    font-size: 14px;
-    font-weight: 500;
-    /* [NEW] Stylized date */
+    margin: 24px auto 16px;
+    font-family: var(--font-dfo);
+    font-size: 18px;
+    font-weight: 700;
     background-image: url('assets/image/history_date.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    width: 200px; /* Adjust size as needed */
-    height: 25px;
+    width: 220px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -307,8 +315,8 @@ button:hover {
 
 .fame-indicator {
     position: absolute;
-    right: -4px;
-    bottom: -4px;
+    right: 0px; /* Aligned to the bottom right of the icon wrapper */
+    bottom: 0px; /* Aligned to the bottom right of the icon wrapper */
     width: 28px;
     height: 14px;
 }
@@ -354,12 +362,12 @@ button:hover {
  * Responsive Design
  * =================================
  */
-@media (max-width: 1024px) {
+@media (max-width: 1080px) { /* Breakpoint for tablet size */
     .detail-grid {
         grid-template-areas:
             "profile"
-            "fame"
-            "history";
+            "history"
+            "fame";
         grid-template-columns: 1fr; /* Single column layout */
     }
 }
