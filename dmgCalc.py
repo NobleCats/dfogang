@@ -99,13 +99,21 @@ def reinforce_calc(reinforce, amplificationName, slotName, source=""):
     
 def overall_dmg_calc(overall_dmg, source="unknown"):
     if overall_dmg == 0: return
-    global overall_dmg_mul, cd_reduction_mul, damage_value_sum, cd_recovery_sum, elemental_dmg_sum
+    global overall_dmg_mul
     
     print(f"[OVERALL]\t+{overall_dmg:.1f}%\tfrom {source}")
     print(f"-> Total : {overall_dmg_mul * 100:.1f}% -> ", end="")
     overall_dmg_mul *= (1 + overall_dmg * 0.01)
     print(f"{overall_dmg_mul * 100:.1f}%")
     
+def cooldown_reduction_calc(cooldown_reduction, source="unknown"):
+    if cooldown_reduction == 0: return
+    global cd_reduction_mul
+    
+    print(f"[COOLDOWN]\t+{cooldown_reduction:.1f}%\tfrom {source}")
+    print(f"-> Total : {cd_reduction_mul * 100:.1f}% -> ", end="")
+    cd_reduction_mul *= (1 - cooldown_reduction / 100)
+    print(f"{cooldown_reduction * 100:.1f}%")
 
 
 def parse_explain_detail(text, source="unknown", reinforce=None, option=None):
@@ -155,6 +163,21 @@ def parse_explain_detail(text, source="unknown", reinforce=None, option=None):
         if match:
             val = float(match.group(1))
             cd_recovery_sum += val
+            
+        match = re.search(r"cooldown recovery\s*\+([\d.]+)%", line)
+        if match:
+            val = float(match.group(1))
+            cd_recovery_sum += val
+            
+        match = re.search(r"cooldown reduction\s*\+([\d.]+)%", line)
+        if match:
+            value = float(match.group(1))
+            cooldown_reduction_calc(value, source)
+            
+        match = re.search(r"skill cooldown\s*\-([\d.]+)%", line)
+        if match:
+            value = float(match.group(1))
+            cooldown_reduction_calc(value, source)
 
         for key, element in ELEMENT_KEYWORDS.items():
             if key in line:
@@ -187,7 +210,7 @@ def parse_stat_entry(stat, source=None):
     if "damage value" in name:
         damage_value_sum += value
     elif "cooldown reduction" in name:
-        cd_reduction_mul *= (1 - value / 100)
+        cooldown_reduction_calc(value, source)
     elif "cooldown recovery" in name:
         cd_recovery_sum += value
     elif "overall damage" in name:
@@ -217,7 +240,7 @@ def parse_explain(explain, source=None):
         match = re.search(r"cooldown reduction\s*\+([\d.]+)%", explain_txt)
         if match:
             value = float(match.group(1))
-            cd_reduction_mul *= (1 - value / 100)
+            cooldown_reduction_calc(value, source)
     elif "cooldown recovery" in explain_txt:
         match = re.search(r"cooldown recovery\s*\+([\d.]+)%", explain_txt)
         if match:
@@ -237,8 +260,11 @@ def parse_item_stats(item_id):
     res = requests.get(url).json()
     item_name = res.get("itemName", item_id)
     stats = res.get("itemStatus", [])
-    explain = res.get("explain", "")
+    itemBuff = res.get("itemBuff", {})
+    explain = itemBuff.get("explain", "")
     
+    if "skill cooldown" in explain.lower():
+        stats = [stat for stat in stats if stat.get("name") != "Skill Cooldown Reduction"]
     
     for stat in stats:
         parse_stat_entry(stat, source=f"[ITEM] {item_name}")
