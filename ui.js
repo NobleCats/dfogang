@@ -1,6 +1,6 @@
 // -------------------
 //      ui.js
-// (DOM 조작 및 렌더링 담당)
+// (Handles DOM manipulation and rendering)
 // -------------------
 import * as api from './api.js';
 
@@ -30,7 +30,7 @@ function getSetIconPath(setName) {
     return "assets/sets/Unknown.png";
 }
 
-// 캐릭터 카드 HTML 생성
+// Generates the HTML for a character card
 export function createCharacterCard(profile, searchName) {
     const spritePath = `assets/characters/${profile.jobName}.png`;
     const setIconPath = getSetIconPath(profile.setItemName ?? "");
@@ -51,7 +51,7 @@ export function createCharacterCard(profile, searchName) {
         <div style="position: absolute; top: 10px; right: 10px; text-align: right;">
             <div style="font-size: 0.75em; color:#d2d2d2;">${profile.serverId}</div>
             <div style="display:flex; align-items:center; margin-top:4px;">
-                <img src="assets/image/fame.png" alt="명성" style="width:15px; height:13px; margin-right:4px;">
+                <img src="assets/image/fame.png" alt="Fame" style="width:15px; height:13px; margin-right:4px;">
                 <span style="color:#3ba042; font-size:0.8em;">${profile.fame?.toLocaleString() ?? '-'}</span>
             </div>
         </div>
@@ -60,7 +60,7 @@ export function createCharacterCard(profile, searchName) {
         <div style="color:#eee; font-size:1.8em; font-weight:600;">${profile.characterName ?? '-'}</div>
         <div style="color:#A0844B; font-size:0.8em;">[${profile.jobGrowName ?? '-'}]</div>
         <div style="display: flex; align-items: center; gap: 2px; margin-top: 10px;">
-            <img src="${setIconPath}" alt="세트 아이콘" style="transform: scale(0.666); padding-top:10px;">
+            <img src="${setIconPath}" alt="Set Icon" style="transform: scale(0.666); padding-top:10px;">
             <span style="${rarityStyle}; margin: 10px 0;">${rarityName}</span>
             ${profile.setPoint > 0 ? `<span style="color:#aaa; font-size: 0.9em; margin-left: 4px;">(${profile.setPoint})</span>` : ''}
         </div>
@@ -68,7 +68,7 @@ export function createCharacterCard(profile, searchName) {
     return card;
 }
 
-// 캐릭터 상세 정보 뷰의 모든 컴포넌트를 렌더링하는 메인 함수
+// Main function to render all components of the character detail view
 export async function renderCharacterDetail(profile, equipmentData, fameHistory, gearHistory) {
     const detailView = document.getElementById('detail-view');
     detailView.innerHTML = `
@@ -86,13 +86,13 @@ export async function renderCharacterDetail(profile, equipmentData, fameHistory,
     `;
 
     renderCharacterCanvas(profile, equipmentData.equipment?.equipment);
-    // [FIXED] setItemInfo에 접근하는 경로를 수정했습니다.
+    // [FIXED] Corrected the data path to access setItemInfo.
     renderSetItems(equipmentData.equipment?.setItemInfo);
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
 }
 
-// 캐릭터 장비 캔버스 렌더링
+// Renders the character equipment canvas
 function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.innerHTML = `
@@ -130,11 +130,11 @@ function renderCharacterCanvas(profile, equipmentList) {
                 const fusionIconWrapper = document.createElement('div');
                 fusionIconWrapper.style.cssText = `position:absolute; right:0; top:0; z-index:4;`;
                 
-                if (keywordMatch) {
+                if (keywordMatch) { // Set fusion equipment
                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/${keywordMatch}.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
-                } else if (distKeywords.some(word => itemName.includes(word))) {
+                } else if (distKeywords.some(word => itemName.includes(word))) { // Distorted Dimension equipment
                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/Dist.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
-                } else {
+                } else { // Normal fusion equipment
                     fusionIconWrapper.style.width = `${28 * SCALE * 0.75}px`;
                     fusionIconWrapper.style.height = `${13 * SCALE * 0.75}px`;
                     fusionIconWrapper.innerHTML = `
@@ -154,7 +154,7 @@ function renderCharacterCanvas(profile, equipmentList) {
     drawCharacterText(profile);
 }
 
-// 세트 아이템 정보 렌더링
+// Renders the set item information
 function renderSetItems(setItemInfo) {
     const container = document.getElementById("set-info-container");
     container.innerHTML = "";
@@ -197,7 +197,7 @@ function renderSetItems(setItemInfo) {
     });
 }
 
-// 명성치 차트 렌더링
+// Renders the fame chart
 function renderFameChart(records, hoverX = null, hoverY = null) {
     const canvas = document.getElementById("fame-chart");
     if (!canvas) return;
@@ -330,7 +330,7 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
     }
 }
 
-// 장비 변경 히스토리 렌더링 (네트워크 최적화 적용)
+// Renders the equipment change history
 async function renderHistoryPanel(gearHistory) {
     const panel = document.getElementById("history-panel");
     if (!gearHistory || gearHistory.length === 0) {
@@ -387,7 +387,7 @@ async function renderHistoryPanel(gearHistory) {
 }
 
 
-// 캐릭터 정보 텍스트 그리기
+// Draws character text on the canvas
 async function drawCharacterText(profile) {
     const canvas = document.getElementById("text-canvas");
     if(!canvas) return;
@@ -448,7 +448,7 @@ async function drawCharacterText(profile) {
     };
 }
 
-// 강화/증폭 텍스트 그리기
+// Draws reinforce/amplify text on the canvas
 function drawReinforceText(equipmentList) {
     const canvas = document.getElementById("reinforce-canvas");
     if (!canvas) return;
@@ -486,13 +486,13 @@ function drawReinforceText(equipmentList) {
 }
 
 
-// 뷰 전환
+// Switches between views
 export function switchView(view) {
     document.getElementById('main-view').style.display = view === 'main' ? 'flex' : 'none';
     document.getElementById('detail-view').style.display = view === 'detail' ? 'block' : 'none';
 }
 
-// 로딩 스피너 제어
+// Controls the loading spinner
 export function setLoading(isLoading) {
     document.getElementById('loading-spinner').style.display = isLoading ? 'block' : 'none';
 }
