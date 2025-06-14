@@ -25,12 +25,17 @@ def get_profile(server, character_id):
     r.raise_for_status()
     return r.json()
 
-
 def get_equipment(server, character_id):
     url = f"https://api.dfoneople.com/df/servers/{server}/characters/{character_id}/equip/equipment?apikey={API_KEY}"
     r = requests.get(url)
     r.raise_for_status()
     return r.json()
+
+def get_buff_equipment(server, character_id):
+    url = f"https://api.dfoneople.com/df/servers/{server}/characters/{character_id}/skill/buff/equip/equipment?apikey={API_KEY}"
+    r = request.get(url)
+    r.raise_for_status()
+    return r.json
 
 def get_character_id(server, name):
     url = f"https://api.dfoneople.com/df/servers/{server}/characters?characterName={name}&limit=1&wordType=full&apikey={API_KEY}"
