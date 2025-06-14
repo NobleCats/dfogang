@@ -1,7 +1,7 @@
-// -------------------
-//      ui.js
+// ===================================
+//          ui.js
 // (Handles DOM manipulation and rendering)
-// -------------------
+// ===================================
 import * as api from './api.js';
 
 const SCALE = 2.0;
@@ -30,7 +30,6 @@ function getSetIconPath(setName) {
     return "assets/sets/Unknown.png";
 }
 
-// Generates the HTML for a character card
 export function createCharacterCard(profile, searchName) {
     const spritePath = `assets/characters/${profile.jobName}.png`;
     const setIconPath = getSetIconPath(profile.setItemName ?? "");
@@ -68,33 +67,40 @@ export function createCharacterCard(profile, searchName) {
     return card;
 }
 
-// Main function to render all components of the character detail view
-export async function renderCharacterDetail(profile, equipmentData, fameHistory, gearHistory) {
+export async function renderCharacterDetail(profile, equipment, fameHistory, gearHistory) {
     const detailView = document.getElementById('detail-view');
     detailView.innerHTML = `
-        <div style="padding: 120px 32px 10px; display: flex; justify-content: flex-start;">
+        <div style="padding: 24px 32px 10px; display: flex; justify-content: flex-start;">
             <button class="back-button">← Back</button>
         </div>
-        <div style="display: flex; justify-content: center; gap: 32px; align-items: flex-start;">
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <div class="character-canvas" id="character-canvas-container" style="width:492px; height:354px; position: relative;"></div>
-                <div id="set-info-container"></div>
-                <canvas id="fame-chart" width="492" height="265" style="margin-top: 20px;"></canvas>
+        <div class="detail-grid">
+            <div class="detail-widget detail-widget-profile">
+                <div class="character-canvas" id="character-canvas-container"></div>
+                <div id="set-info-container" class="detail-widget" style="margin-top: 24px;"></div>
             </div>
-            <div id="history-panel" style="width:492px; height:769px; overflow-y: auto; background:#222; border-radius:8px; padding:16px;"></div>
+            <div class="detail-widget detail-widget-history">
+                 <h3 class="widget-title">Equipment History</h3>
+                 <div id="history-panel"></div>
+            </div>
+            <div class="detail-widget detail-widget-fame">
+                <h3 class="widget-title">Fame Trend</h3>
+                <canvas id="fame-chart"></canvas>
+            </div>
         </div>
     `;
 
-    renderCharacterCanvas(profile, equipmentData.equipment?.equipment);
-    // [FIXED] Corrected the data path to access setItemInfo.
-    renderSetItems(equipmentData.equipment?.setItemInfo);
+    renderCharacterCanvas(profile, equipment?.equipment);
+    renderSetItems(equipment?.setItemInfo);
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
 }
 
-// Renders the character equipment canvas
 function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
+    container.style.width = '492px';
+    container.style.height = '354px';
+    container.style.position = 'relative';
+
     container.innerHTML = `
         <img class="background" src="assets/image/background.png" alt="Background" style="width:100%; height:100%; position:absolute; z-index:0; border-radius:8px;">
         <img class="character-sprite" src="assets/characters/${profile.jobName}.png"
@@ -130,11 +136,11 @@ function renderCharacterCanvas(profile, equipmentList) {
                 const fusionIconWrapper = document.createElement('div');
                 fusionIconWrapper.style.cssText = `position:absolute; right:0; top:0; z-index:4;`;
                 
-                if (keywordMatch) { // Set fusion equipment
+                if (keywordMatch) {
                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/${keywordMatch}.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
-                } else if (distKeywords.some(word => itemName.includes(word))) { // Distorted Dimension equipment
+                } else if (distKeywords.some(word => itemName.includes(word))) {
                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/Dist.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
-                } else { // Normal fusion equipment
+                } else {
                     fusionIconWrapper.style.width = `${28 * SCALE * 0.75}px`;
                     fusionIconWrapper.style.height = `${13 * SCALE * 0.75}px`;
                     fusionIconWrapper.innerHTML = `
@@ -146,32 +152,21 @@ function renderCharacterCanvas(profile, equipmentList) {
             }
             eqLayer.appendChild(itemEl);
         });
-    } else {
-        console.error("Data Warning: equipmentList is not an array.", equipmentList);
     }
     
     drawReinforceText(Array.isArray(equipmentList) ? equipmentList : []);
     drawCharacterText(profile);
 }
 
-// Renders the set item information
 function renderSetItems(setItemInfo) {
     const container = document.getElementById("set-info-container");
     container.innerHTML = "";
     if (!Array.isArray(setItemInfo) || setItemInfo.length === 0) {
+        container.style.display = 'none';
         return;
     }
     
-    container.style.width = "492px";
-    container.style.marginTop = "28px";
-    container.style.display = "flex";
-    container.style.flexDirection = "column";
-    container.style.alignItems = "center";
-    container.style.backgroundColor = "#1a1a1a";
-    container.style.borderRadius = "8px";
-    container.style.padding = "16px 20px";
-    container.style.boxShadow = "0 0 12px rgba(0, 0, 0, 0.5)";
-    container.style.boxSizing = "border-box";
+    container.style.display = 'block';
     
     setItemInfo.forEach(item => {
         const rarityName = item.setItemRarityName ?? "None";
@@ -180,25 +175,20 @@ function renderSetItems(setItemInfo) {
             rarityStyle = `background: linear-gradient(to bottom, #57e95b, #3a8390); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`;
         }
 
-        const wrapper = document.createElement('div');
-        wrapper.style.display = 'flex';
-        wrapper.style.flexDirection = 'column';
-        wrapper.style.alignItems = 'center';
-
-        wrapper.innerHTML = `
-            <div style="font-size:28px; font-weight:700; color:#eee; margin-top:12px; margin-bottom:2px;">${item.setItemName}</div>
-            <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName}" style="display:block; margin-right:8px;">
-                <span style="font-size:24px; font-weight:600; padding:12px 0; ${rarityStyle}">${rarityName}</span>
+        container.innerHTML += `
+            <div style="text-align:center;">
+                <div style="font-family: var(--font-display); font-size:20px; font-weight:600; color:#eee; margin-bottom:4px;">${item.setItemName}</div>
+                <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName}" style="height: 24px;">
+                    <span style="font-size:16px; font-weight:500; ${rarityStyle}">${rarityName}</span>
+                </div>
+                <div style="font-size:14px; color:var(--color-text-secondary); margin-top:2px;">(${item.active?.setPoint?.current ?? 0})</div>
             </div>
-            <div style="font-size:16px; color:#aaa; margin-bottom:8px; line-height:1;">(${item.active?.setPoint?.current ?? 0})</div>
         `;
-        container.appendChild(wrapper);
     });
 }
 
-// Renders the fame chart
-function renderFameChart(records, hoverX = null, hoverY = null) {
+function renderFameChart(records) {
     const canvas = document.getElementById("fame-chart");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -287,7 +277,6 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
     points.forEach((pt, i) => i === 0 ? ctx.moveTo(pt.x, pt.y) : ctx.lineTo(pt.x, pt.y));
     ctx.stroke();
 
-    let hovered = null;
     points.forEach(pt => {
         ctx.beginPath();
         ctx.arc(pt.x, pt.y, 4, 0, 2 * Math.PI);
@@ -296,77 +285,41 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
         ctx.shadowBlur = 6;
         ctx.fill();
         ctx.shadowBlur = 0;
-        if (hoverX !== null && Math.hypot(pt.x - hoverX, pt.y - hoverY) < 8) {
-            hovered = pt;
-        }
     });
-
-    if (hovered) {
-        const d = new Date(hovered.date);
-        const dateStr = d.toLocaleDateString("en-US", { year: "numeric", month: "2-digit", day: "2-digit" });
-        const fameStr = hovered.fame.toLocaleString();
-        const tooltipLines = [`${dateStr}`, `Fame: ${fameStr}`];
-        ctx.font = `bold 11px 'Noto Sans KR', sans-serif`;
-        ctx.textBaseline = "top";
-        ctx.textAlign = "left";
-        const padding = 6;
-        const lineHeight = 18;
-        const width = Math.max(...tooltipLines.map(t => ctx.measureText(t).width));
-        const height = tooltipLines.length * lineHeight;
-        let boxX = hovered.x + 10;
-        const boxY = hovered.y - height - 10;
-        if (boxX + width + padding * 2 > canvas.width) {
-            boxX = hovered.x - (width + padding * 2) - 10;
-        }
-        ctx.fillStyle = "rgba(0, 0, 0, 0.85)";
-        ctx.fillRect(boxX, boxY, width + padding * 2, height + padding);
-        ctx.strokeStyle = "#4cc9f0";
-        ctx.strokeRect(boxX, boxY, width + padding * 2, height + padding);
-        ctx.fillStyle = "#ffffff";
-        ctx.textAlign = "left";
-        tooltipLines.forEach((line, i) => {
-            ctx.fillText(line, boxX + padding, boxY + padding + i * lineHeight);
-        });
-    }
 }
 
-// Renders the equipment change history
 async function renderHistoryPanel(gearHistory) {
     const panel = document.getElementById("history-panel");
     if (!gearHistory || gearHistory.length === 0) {
-        panel.innerHTML = `<div style="text-align:center; color:#888;">No equipment history.</div>`;
+        panel.innerHTML = `<div class="history-empty">No equipment history.</div>`;
         return;
     }
 
-    panel.innerHTML = ''; // Clear previous content
+    panel.innerHTML = '';
 
-    const famePromises = [];
-    gearHistory.forEach(entry => {
-        entry.before.forEach(item => famePromises.push(api.getItemFame(item.itemId)));
-        entry.after.forEach(item => famePromises.push(api.getItemFame(item.itemId)));
-    });
+    const famePromises = gearHistory.flatMap(entry => [
+        ...entry.before.map(item => api.getItemFame(item.itemId)),
+        ...entry.after.map(item => api.getItemFame(item.itemId))
+    ]);
     const fameResults = await Promise.all(famePromises);
     let fameIndex = 0;
     
-    gearHistory.slice().reverse().forEach(entry => {
-        const entryDiv = document.createElement('div');
-        entryDiv.style.marginBottom = '12px';
-        
-        const date = entry.date.substring(5).replace('-', '/');
-        entryDiv.innerHTML = `<div style="text-align:center; color:#ccc; margin-bottom:4px;">--- ${date} ---</div>`;
+    const groupedByDate = gearHistory.reduce((acc, entry) => {
+        (acc[entry.date] = acc[entry.date] || []).push(...entry.before.map((b, i) => ({ before: b, after: entry.after[i] })));
+        return acc;
+    }, {});
 
-        const changes = entry.before.map((b, i) => ({ before: b, after: entry.after[i] }));
-        
-        changes.forEach(change => {
+    Object.keys(groupedByDate).sort().reverse().forEach(date => {
+        const dateStr = date.substring(5).replace('-', '/');
+        const dateHeader = document.createElement('div');
+        dateHeader.className = 'history-date-header';
+        dateHeader.textContent = `--- ${dateStr} ---`;
+        panel.appendChild(dateHeader);
+
+        groupedByDate[date].forEach(change => {
             const beforeFame = fameResults[fameIndex++];
             const afterFame = fameResults[fameIndex++];
             
-            let fameChangeIndicator = '';
-            if (beforeFame != null && afterFame != null && beforeFame !== afterFame) {
-                const isUp = afterFame > beforeFame;
-                fameChangeIndicator = `<img src="assets/image/${isUp ? 'up' : 'down'}.png" style="position:absolute; left:0; bottom:0; width:21px; height:10px;">`;
-            }
-
             const beforeIcon = change.before.itemId 
                 ? `https://img-api.dfoneople.com/df/items/${change.before.itemId}`
                 : `assets/equipments/null/${change.before.slotName.replace(/[\s\/]/g, "")}.png`;
@@ -374,20 +327,28 @@ async function renderHistoryPanel(gearHistory) {
                 ? `https://img-api.dfoneople.com/df/items/${change.after.itemId}`
                 : `assets/equipments/null/${change.after.slotName.replace(/[\s\/]/g, "")}.png`;
 
-            entryDiv.innerHTML += `
-                <div style="background:url('assets/image/history.png') no-repeat center/contain; width:460px; height:75px; display:flex; align-items:center; justify-content:space-between; padding: 0 20px;">
-                    <img src="${beforeIcon}" style="width:42px; height:42px;">
-                    <img src="${afterIcon}" style="width:42px; height:42px; position:relative;">
-                    ${fameChangeIndicator}
+            const itemRow = document.createElement('div');
+            itemRow.className = 'history-item';
+            
+            let fameIndicator = '';
+            if (beforeFame != null && afterFame != null && beforeFame !== afterFame) {
+                const isUp = afterFame > beforeFame;
+                fameIndicator = `<img src="assets/image/${isUp ? 'up' : 'down'}.png" class="fame-indicator">`;
+            }
+
+            itemRow.innerHTML = `
+                <img src="${beforeIcon}" class="history-icon">
+                <div class="history-arrow">→</div>
+                <div style="position: relative;">
+                    <img src="${afterIcon}" class="history-icon">
+                    ${fameIndicator}
                 </div>
             `;
+            panel.appendChild(itemRow);
         });
-        panel.appendChild(entryDiv);
     });
 }
 
-
-// Draws character text on the canvas
 async function drawCharacterText(profile) {
     const canvas = document.getElementById("text-canvas");
     if(!canvas) return;
@@ -448,7 +409,6 @@ async function drawCharacterText(profile) {
     };
 }
 
-// Draws reinforce/amplify text on the canvas
 function drawReinforceText(equipmentList) {
     const canvas = document.getElementById("reinforce-canvas");
     if (!canvas) return;
@@ -485,14 +445,11 @@ function drawReinforceText(equipmentList) {
     });
 }
 
-
-// Switches between views
 export function switchView(view) {
     document.getElementById('main-view').style.display = view === 'main' ? 'flex' : 'none';
-    document.getElementById('detail-view').style.display = view === 'detail' ? 'block' : 'none';
+    document.getElementById('detail-view').style.display = view === 'detail' ? 'grid' : 'none';
 }
 
-// Controls the loading spinner
 export function setLoading(isLoading) {
     document.getElementById('loading-spinner').style.display = isLoading ? 'block' : 'none';
 }

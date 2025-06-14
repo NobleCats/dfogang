@@ -7,11 +7,11 @@
     --font-primary: 'Inter', 'Noto Sans KR', sans-serif;
     --font-display: 'Poppins', sans-serif;
 
-    /* [MODIFIED] Black-based color theme */
-    --color-background: #121212;      /* Pure dark background */
-    --color-surface: #1E1E1E;        /* Elevated surfaces like cards */
-    --color-surface-light: #2C2C2C;  /* Lighter surfaces, for hover states */
-    --color-border: #333333;          /* Subtle borders */
+    /* Black-based color theme */
+    --color-background: #121212;
+    --color-surface: #1E1E1E;
+    --color-surface-light: #2C2C2C;
+    --color-border: #333333;
     
     --color-text-primary: #E2E8F0;
     --color-text-secondary: #A0AEC0;
@@ -36,6 +36,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* ... (Navbar, Main Layout, Search Section styles are unchanged) ... */
+
 /*
  * =================================
  * Navbar
@@ -48,7 +50,6 @@ body {
     right: 0;
     height: 60px;
     z-index: 1000;
-    /* [MODIFIED] Darker navbar with blur effect */
     background-color: rgba(30, 30, 30, 0.8);
     backdrop-filter: blur(8px);
     display: flex;
@@ -87,7 +88,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 10vh; /* Use vh for responsive vertical spacing */
+    padding-top: 10vh;
 }
 
 .search-container {
@@ -132,12 +133,17 @@ select {
     padding-right: 12px;
 }
 
+select option {
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+}
+
 input {
     min-width: 350px;
 }
 
 button {
-    color: #121212; /* [MODIFIED] Darker text for better contrast on cyan */
+    color: #121212; 
     background-color: var(--color-accent-cyan);
     border: none;
     padding: 0 24px;
@@ -184,7 +190,7 @@ button:hover {
     text-align: center;
     position: relative;
     cursor: pointer;
-    border: 1px solid var(--color-border); /* [MODIFIED] Added subtle border */
+    border: 1px solid var(--color-border);
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
@@ -203,6 +209,94 @@ button:hover {
     padding-top: 60px; /* Navbar height */
 }
 
+/* [NEW] Grid layout for detail page */
+.detail-grid {
+    display: grid;
+    grid-template-areas:
+        "profile history"
+        "fame    history";
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 24px;
+}
+
+.detail-widget {
+    background-color: var(--color-surface);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+}
+
+.detail-widget-profile { grid-area: profile; }
+.detail-widget-fame { grid-area: fame; }
+.detail-widget-history { grid-area: history; }
+
+.widget-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 20px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* History Panel Styles */
+#history-panel {
+    max-height: 800px; /* Adjust as needed */
+    overflow-y: auto;
+}
+
+.history-date-header {
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.history-item {
+    background-image: url('assets/image/history.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+
+.history-icon {
+    width: 42px;
+    height: 42px;
+}
+
+.history-arrow {
+    font-size: 24px;
+    color: var(--color-text-tertiary);
+}
+
+.fame-indicator {
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    width: 21px;
+    height: 10px;
+}
+
+.history-empty {
+    text-align: center;
+    color: var(--color-text-secondary);
+    padding: 40px 0;
+}
+
+
 .back-button {
     color: var(--color-text-primary);
     background-color: var(--color-surface-light);
@@ -213,6 +307,7 @@ button:hover {
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
+    margin-left: 24px;
 }
 
 .back-button:hover {
@@ -256,7 +351,7 @@ button:hover {
 
 .footer {
     width: 100%;
-    background-color: #181818; /* [MODIFIED] Darker footer background */
+    background-color: #181818;
     border-top: 1px solid var(--color-border);
     padding: 24px 0;
     text-align: center;
@@ -275,7 +370,7 @@ button:hover {
 
 /* Scrollbar styles for history panel */
 #history-panel::-webkit-scrollbar { width: 8px; }
-#history-panel::-webkit-scrollbar-track { background: none; }
+#history-panel::-webkit-scrollbar-track { background: var(--color-surface); }
 #history-panel::-webkit-scrollbar-thumb {
     background-color: var(--color-surface-light);
     border-radius: 6px;

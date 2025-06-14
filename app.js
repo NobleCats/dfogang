@@ -1,14 +1,13 @@
-// -------------------
-//      app.js
+// ===================================
+//          app.js
 // (Main logic and state management)
-// -------------------
+// ===================================
 import * as api from './api.js';
 import * as ui from './ui.js';
 
-// Application state
 const state = {
     isLoading: false,
-    view: 'main', // 'main' or 'detail'
+    view: 'main',
     searchTerm: '',
     server: 'cain',
     searchResults: [],
@@ -20,14 +19,12 @@ const state = {
     }
 };
 
-// DOM elements
 const serverSelect = document.getElementById('server-select');
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const resultsDiv = document.getElementById('results');
 const detailView = document.getElementById('detail-view');
 
-// Render function: The single point of truth for updating the UI based on state
 function render() {
     ui.setLoading(state.isLoading);
     ui.switchView(state.view);
@@ -52,9 +49,6 @@ function render() {
     }
 }
 
-// ---- Logic Functions ----
-
-// Function to update URL state and push to history
 function updateURL(view, server, name) {
     const params = new URLSearchParams();
     params.set('view', view);
@@ -63,7 +57,6 @@ function updateURL(view, server, name) {
     history.pushState({ view, server, name }, '', `?${params.toString()}`);
 }
 
-// Perform search
 async function performSearch(server, name) {
     state.isLoading = true;
     state.searchTerm = name;
@@ -77,31 +70,34 @@ async function performSearch(server, name) {
     render();
 }
 
-// Display character details
 async function showCharacterDetail(server, name) {
     state.isLoading = true;
     state.view = 'detail';
     render();
     
-    const [profile, equipment, fameHistory, gearHistory] = await Promise.all([
+    const [profile, equipmentResponse, fameHistory, gearHistory] = await Promise.all([
         api.getCharacterProfile(server, name),
         api.getCharacterEquipment(server, name),
         api.getFameHistory(server, name),
         api.getGearHistory(server, name),
     ]);
     
-    if (profile && equipment) {
-        state.characterDetail = { profile, equipment, fameHistory: fameHistory?.records, gearHistory };
+    if (profile && equipmentResponse) {
+        // Pass the nested equipment object to the state
+        state.characterDetail = { 
+            profile, 
+            equipment: equipmentResponse, // Pass the whole response
+            fameHistory: fameHistory?.records, 
+            gearHistory 
+        };
     } else {
         alert('Failed to load character details.');
-        state.view = 'main'; // Revert to main view on failure
+        state.view = 'main';
     }
 
     state.isLoading = false;
     render();
 }
-
-// ---- Event Handlers ----
 
 function handleSearchClick() {
     const server = serverSelect.value;
@@ -125,12 +121,10 @@ function handleCardClick(event) {
 function handleGoBack() {
     state.view = 'main';
     state.characterDetail = { profile: null, equipment: null, fameHistory: null, gearHistory: null };
-    // Revert URL to search results or main page
     updateURL('main', state.server, state.searchTerm);
     render();
 }
 
-// Handle browser back/forward buttons
 window.onpopstate = (event) => {
     if (event.state) {
         const { view, server, name } = event.state;
@@ -140,7 +134,6 @@ window.onpopstate = (event) => {
             performSearch(server, name);
         }
     } else {
-        // Revert to initial state
         state.view = 'main';
         state.searchTerm = '';
         state.searchResults = [];
@@ -149,7 +142,6 @@ window.onpopstate = (event) => {
     }
 };
 
-// --- Initialization ---
 async function init() {
     searchButton.addEventListener('click', handleSearchClick);
     searchInput.addEventListener('keydown', (e) => {
@@ -162,7 +154,6 @@ async function init() {
         }
     });
 
-    // Check and handle URL parameters on page load
     const params = new URLSearchParams(window.location.search);
     const view = params.get('view');
     const server = params.get('server');

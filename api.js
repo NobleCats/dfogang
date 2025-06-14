@@ -1,9 +1,9 @@
-// -------------------
-//      api.js
+// ===================================
+//          api.js
 // (Handles backend communication)
-// -------------------
+// ===================================
 
-const API_ROOT = "https://api-dfohistory.duckdns.org"; // Or change to local address: "http://127.0.0.1:5000"
+const API_ROOT = "https://api-dfohistory.duckdns.org";
 
 async function postData(endpoint, body) {
     try {
@@ -18,7 +18,7 @@ async function postData(endpoint, body) {
         return await response.json();
     } catch (error) {
         console.error(`Failed to fetch from ${endpoint}:`, error);
-        return null; // Return null on error
+        return null;
     }
 }
 
