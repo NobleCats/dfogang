@@ -94,8 +94,7 @@ export async function renderCharacterDetail(profile, equipmentData, fameHistory,
         </div>
     `;
 
-    // [FIXED] 실제 장비 배열을 전달하도록 수정
-    renderCharacterCanvas(profile, equipmentData.equipment.equipment);
+    renderCharacterCanvas(profile, equipmentData.equipment?.equipment); // [FIXED] Optional chaining 추가
     renderSetItems(equipmentData.setItemInfo);
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
@@ -114,34 +113,41 @@ function renderCharacterCanvas(profile, equipmentList) {
     `;
 
     const eqLayer = document.getElementById("equipment-layer");
-    equipmentList.forEach(eq => {
-        const slotKey = (eq.slotName || eq.slotId).replace(/[\s\/]/g, "");
-        if (!SLOT_POSITION[slotKey]) return;
-        const [x, y] = SLOT_POSITION[slotKey];
-        const iconSize = 28 * SCALE;
 
-        const itemEl = document.createElement("div");
-        itemEl.style.cssText = `position:absolute; left:${x * SCALE}px; top:${y * SCALE}px; width:${iconSize}px; height:${iconSize}px;`;
+    // [FIXED] equipmentList가 배열인지 확인 후 forEach 실행
+    if (Array.isArray(equipmentList)) {
+        equipmentList.forEach(eq => {
+            const slotKey = (eq.slotName || eq.slotId).replace(/[\s\/]/g, "");
+            if (!SLOT_POSITION[slotKey]) return;
+            const [x, y] = SLOT_POSITION[slotKey];
+            const iconSize = 28 * SCALE;
 
-        itemEl.innerHTML = `
-            <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" style="width:100%; height:100%; position:absolute; z-index:2;">
-            <img src="assets/equipments/edge/${eq.itemRarity}.png" style="width:100%; height:100%; position:absolute; z-index:3;">
-        `;
-        
-        if (eq.upgradeInfo) {
-            const fusionIconPath = getFusionIconPath(eq.upgradeInfo);
-            if(fusionIconPath) {
-                const fusionIcon = document.createElement('img');
-                fusionIcon.src = fusionIconPath;
-                fusionIcon.style.cssText = `position:absolute; right:0; top:0; width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px; z-index:4;`;
-                itemEl.appendChild(fusionIcon);
+            const itemEl = document.createElement("div");
+            itemEl.style.cssText = `position:absolute; left:${x * SCALE}px; top:${y * SCALE}px; width:${iconSize}px; height:${iconSize}px;`;
+
+            itemEl.innerHTML = `
+                <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" style="width:100%; height:100%; position:absolute; z-index:2;">
+                <img src="assets/equipments/edge/${eq.itemRarity}.png" style="width:100%; height:100%; position:absolute; z-index:3;">
+            `;
+            
+            if (eq.upgradeInfo) {
+                const fusionIconPath = getFusionIconPath(eq.upgradeInfo);
+                if(fusionIconPath) {
+                    const fusionIcon = document.createElement('img');
+                    fusionIcon.src = fusionIconPath;
+                    fusionIcon.style.cssText = `position:absolute; right:0; top:0; width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px; z-index:4;`;
+                    itemEl.appendChild(fusionIcon);
+                }
             }
-        }
-        eqLayer.appendChild(itemEl);
-    });
+            eqLayer.appendChild(itemEl);
+        });
+    } else {
+        console.error("Data Warning: equipmentList is not an array.", equipmentList);
+    }
     
     // 강화/증폭 및 캐릭터 정보 텍스트 렌더링
-    drawReinforceText(equipmentList);
+    // equipmentList가 배열이 아닐 경우를 대비하여 빈 배열 전달
+    drawReinforceText(Array.isArray(equipmentList) ? equipmentList : []);
     drawCharacterText(profile);
 }
 
