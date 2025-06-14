@@ -152,7 +152,6 @@ function renderCharacterCanvas(profile, equipmentList) {
                 itemEl.appendChild(fusionIconWrapper);
             }
 
-            // [FIXED] Tune icon rendering logic restored
             const tuneLevel = eq.tune?.level || 0;
             if (tuneLevel >= 1 && tuneLevel <= 3) {
                 const tuneSize = [8 * SCALE, 10 * SCALE];
@@ -205,7 +204,7 @@ function renderSetItems(setItemInfo) {
     });
 }
 
-function renderFameChart(records) {
+function renderFameChart(records, hoverX = null, hoverY = null) {
     const container = document.getElementById("fame-chart-container");
     const canvas = document.getElementById("fame-chart");
     if (!canvas || !container) return;
