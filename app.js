@@ -1,6 +1,5 @@
 // ===================================
 //          app.js
-// (Main logic and state management)
 // ===================================
 import * as api from './api.js';
 import * as ui from './ui.js';
@@ -83,10 +82,10 @@ async function showCharacterDetail(server, name) {
     ]);
     
     if (profile && equipmentResponse) {
-        // Pass the nested equipment object to the state
+        // [FIXED] Pass the unwrapped equipment object
         state.characterDetail = { 
             profile, 
-            equipment: equipmentResponse, // Pass the whole response
+            equipment: equipmentResponse.equipment, 
             fameHistory: fameHistory?.records, 
             gearHistory 
         };

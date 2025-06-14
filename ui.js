@@ -1,6 +1,6 @@
+
 // ===================================
 //          ui.js
-// (Handles DOM manipulation and rendering)
 // ===================================
 import * as api from './api.js';
 
@@ -84,7 +84,9 @@ export async function renderCharacterDetail(profile, equipment, fameHistory, gea
             </div>
             <div class="detail-widget detail-widget-fame">
                 <h3 class="widget-title">Fame Trend</h3>
-                <canvas id="fame-chart"></canvas>
+                <div id="fame-chart-container" style="width: 100%; height: 265px;">
+                    <canvas id="fame-chart"></canvas>
+                </div>
             </div>
         </div>
     `;
@@ -189,8 +191,13 @@ function renderSetItems(setItemInfo) {
 }
 
 function renderFameChart(records) {
+    const container = document.getElementById("fame-chart-container");
     const canvas = document.getElementById("fame-chart");
-    if (!canvas) return;
+    if (!canvas || !container) return;
+    
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -337,9 +344,11 @@ async function renderHistoryPanel(gearHistory) {
             }
 
             itemRow.innerHTML = `
-                <img src="${beforeIcon}" class="history-icon">
+                <div style="position: relative;" class="history-icon-wrapper">
+                    <img src="${beforeIcon}" class="history-icon">
+                </div>
                 <div class="history-arrow">→</div>
-                <div style="position: relative;">
+                <div style="position: relative;" class="history-icon-wrapper">
                     <img src="${afterIcon}" class="history-icon">
                     ${fameIndicator}
                 </div>
