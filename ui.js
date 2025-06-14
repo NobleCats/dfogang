@@ -62,6 +62,7 @@ export function createCharacterCard(profile, searchName) {
         <div style="display: flex; align-items: center; gap: 2px; margin-top: 10px;">
             <img src="${setIconPath}" alt="세트 아이콘" style="transform: scale(0.666); padding-top:10px;">
             <span style="${rarityStyle}; margin: 10px 0;">${rarityName}</span>
+            ${profile.setPoint > 0 ? `<span style="color:#aaa; font-size: 0.9em; margin-left: 4px;">(${profile.setPoint})</span>` : ''}
         </div>
     `;
     return card;
