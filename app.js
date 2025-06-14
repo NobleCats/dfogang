@@ -19,16 +19,36 @@ const state = {
     }
 };
 
-function setState(newState) {
-    Object.assign(state, newState);
-    ui.render(state);
-}
-
 const serverSelect = document.getElementById('server-select');
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const resultsDiv = document.getElementById('results');
 const detailView = document.getElementById('detail-view');
+
+function render() {
+    ui.setLoading(state.isLoading);
+    ui.switchView(state.view);
+
+    if (state.view === 'main') {
+        resultsDiv.innerHTML = '';
+        if (state.searchResults.length > 0) {
+            state.searchResults.forEach(profile => {
+                const card = ui.createCharacterCard(profile, state.searchTerm);
+                resultsDiv.appendChild(card);
+            });
+        } else if (state.searchTerm) {
+             resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
+        }
+    } else if (state.view === 'detail' && state.characterDetail.profile) {
+        ui.renderCharacterDetail(
+            state.characterDetail.profile,
+            state.characterDetail.equipment,
+            state.characterDetail.setItemInfo,
+            state.characterDetail.fameHistory,
+            state.characterDetail.gearHistory
+        );
+    }
+}
 
 function updateURL(view, server, name) {
     const params = new URLSearchParams();
@@ -39,39 +59,47 @@ function updateURL(view, server, name) {
 }
 
 async function performSearch(server, name) {
-    setState({ isLoading: true, searchTerm: name, server: server });
+    state.isLoading = true;
+    state.searchTerm = name;
+    state.server = server;
+    render();
+    
     await api.logSearch(server, name);
-    const results = await api.searchCharacters(server, name);
-    setState({ isLoading: false, searchResults: results });
+    state.searchResults = await api.searchCharacters(server, name);
+    
+    state.isLoading = false;
+    render();
 }
 
 async function showCharacterDetail(server, name) {
-    setState({ isLoading: true, view: 'detail' });
+    state.isLoading = true;
+    state.view = 'detail';
+    render();
     
-    const [profile, equipmentResponse, fameHistory, setItemInfo, gearHistory] = await Promise.all([
+    const [profile, equipmentResponse, fameHistory, gearHistory] = await Promise.all([
         api.getCharacterProfile(server, name),
         api.getCharacterEquipment(server, name),
         api.getFameHistory(server, name),
-        api.getSetItemInfo(server, name),
         api.getGearHistory(server, name),
     ]);
     
     if (profile && equipmentResponse) {
+        // [FIXED] Unpack the nested data structure from the backend
         const equipment = equipmentResponse.equipment;
-        setState({
-            isLoading: false,
-            characterDetail: { 
-                profile, 
-                equipment: equipment?.equipment,
-                setItemInfo: equipment?.setItemInfo,
-                fameHistory: fameHistory?.records, 
-                gearHistory 
-            }
-        });
+        state.characterDetail = { 
+            profile, 
+            equipment: equipment?.equipment, // The array of items
+            setItemInfo: equipment?.setItemInfo, // The set info array
+            fameHistory: fameHistory?.records, 
+            gearHistory 
+        };
     } else {
         alert('Failed to load character details.');
-        setState({ isLoading: false, view: 'main' });
+        state.view = 'main';
     }
+
+    state.isLoading = false;
+    render();
 }
 
 function handleSearchClick() {
@@ -94,11 +122,10 @@ function handleCardClick(event) {
 }
 
 function handleGoBack() {
-    setState({
-        view: 'main',
-        characterDetail: { profile: null, equipment: null, setItemInfo: null, fameHistory: null, gearHistory: null }
-    });
+    state.view = 'main';
+    state.characterDetail = { profile: null, equipment: null, setItemInfo: null, fameHistory: null, gearHistory: null };
     updateURL('main', state.server, state.searchTerm);
+    render();
 }
 
 window.onpopstate = (event) => {
@@ -107,18 +134,14 @@ window.onpopstate = (event) => {
         if (view === 'detail') {
             showCharacterDetail(server, name);
         } else {
-            setState({ view: 'main', server, searchTerm: name });
             performSearch(server, name);
         }
     } else {
-        setState({
-            view: 'main',
-            searchTerm: '',
-            searchResults: [],
-            server: 'cain'
-        });
+        state.view = 'main';
+        state.searchTerm = '';
+        state.searchResults = [];
         searchInput.value = '';
-        serverSelect.value = 'cain';
+        render();
     }
 };
 
