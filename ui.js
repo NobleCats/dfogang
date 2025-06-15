@@ -648,8 +648,8 @@ function drawReinforceText(equipmentList) {
 }
 
 export function switchView(view) {
-    document.getElementById('main-view').style.display = view === 'main' ? 'flex' : 'none';
-    document.getElementById('detail-view').style.display = view === 'detail' ? 'grid' : 'none';
+    document.getElementById('main-view').style.setProperty('display', view === 'main' ? 'grid' : 'none', 'important'); 
+    document.getElementById('detail-view').style.setProperty('display', view === 'detail' ? 'grid' : 'none', 'important');
 }
 
 export function setLoading(isLoading) {
