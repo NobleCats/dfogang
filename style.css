@@ -19,13 +19,13 @@
     --color-text-tertiary: #718096;
 
     --color-accent-blue: #58A6FF; /* Brighter, Neon-like Blue */
-    --color-accent-blue-hover: #79B8FF;
+    --color-accent-blue-hover: rgb(121, 184, 255);
     --color-fame: #81C784;
 
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --shadow-blue: 0 0 15px -3px rgba(88, 166, 255, 0.3);
+    --shadow-blue: 0 0 15px -3px rgb(121, 184, 255, 0.3);
 }
 
 @font-face{
@@ -190,7 +190,7 @@ button:hover {
 .card {
     width: 270px; 
     height: 435px;
-    padding: 16px;
+    padding: 0px 16px 16px 16px;
     box-sizing: border-box;
 
     display: flex;
@@ -200,7 +200,7 @@ button:hover {
 
     background-color: var(--color-background-card); 
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(44, 44, 44, 0.2);
     position: relative; 
     overflow: hidden;
 }
@@ -265,6 +265,7 @@ button:hover {
 .card > div:last-child { 
     margin-top: auto; 
     padding-top: 10px; 
+    margin-bottom: 10px;
     width: 100%; 
     display: flex; 
     justify-content: center; 
