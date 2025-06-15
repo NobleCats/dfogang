@@ -97,10 +97,17 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
     if (isCleansingSetEquipped) {
         container.innerHTML += `
             <div class="dps-toggle-group">
-                <div class="dps-toggle-label">Cleansing Mode</div>
+                <div class="dps-toggle-label">
+                    Set Normalize
+                    <span class="tooltip-icon">?</span>
+                    <div class="tooltip-content">
+                        <p>Calculates damage based on a comparable tier of the "Death in the Shadows" Set.</p>
+                        <p>(This feature was added to provide a rough standard, as object damage is not reflected in DPS calculations.)</p>
+                    </div>
+                </div>
                 <div class="dps-toggle-switch">
-                    <div class="dps-toggle-option ${!dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="false">Corruption</div>
-                    <div class="dps-toggle-option ${dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="true">Cleansing</div>
+                    <div class="dps-toggle-option ${dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="true">On</div>
+                    <div class="dps-toggle-option ${!dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="false">Off</div>
                 </div>
             </div>
         `;

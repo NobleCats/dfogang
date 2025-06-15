@@ -281,6 +281,72 @@ button:hover {
     color: var(--color-text-secondary);
     font-weight: 500;
 }
+.dps-toggle-label {
+    position: relative; 
+    display: inline-flex; 
+    align-items: center;
+    cursor: help;
+}
+.tooltip-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-left: 5px;
+    cursor: help;
+}
+
+.tooltip-content {
+    visibility: hidden;
+    opacity: 0;
+    width: 250px; 
+    background-color: var(--color-background-dark); 
+    color: var(--color-text-primary); 
+    text-align: left;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 100; 
+    bottom: 125%; 
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.3s ease; 
+    font-size: 0.9em;
+    border: 1px solid var(--color-border); 
+}
+
+.tooltip-content p {
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+.tooltip-content p:last-child {
+    padding-bottom: 0;
+}
+
+.dps-toggle-label:hover .tooltip-content {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip-content::after {
+    content: " ";
+    position: absolute;
+    top: 100%; 
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--color-background-dark) transparent transparent transparent;
+}
+
 .dps-toggle-switch {
     display: flex;
     border: 1px solid var(--color-border);
