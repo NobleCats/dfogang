@@ -125,7 +125,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center; 
-    padding: 20vh 20px 100px 20px;
+    padding: 20vh 0px 100px 0px;
     position: relative;
     top: 0;
     z-index: 10;
@@ -333,7 +333,6 @@ button:hover {
 
 .detail-grid {
     display: grid;
-    /* [MODIFIED] 새 위젯 영역(dps) 추가 */
     grid-template-areas:
         "back    back"
         "profile history"
@@ -634,6 +633,22 @@ button:hover {
     }
     .detail-widget-profile, .detail-widget-fame, .detail-widget-history {
         width: 100%;
+    }
+}
+
+@media (max-width: 1350px) {
+    #results-wrapper {
+        max-width: 1030px;
+    }
+}
+@media (max-width: 1080px) {
+    #results-wrapper {
+        max-width: 760px;
+    }
+}
+@media (max-width: 760px) {
+    #results-wrapper {
+        max-width: 400px;
     }
 }
 
