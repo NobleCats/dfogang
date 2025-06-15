@@ -120,12 +120,9 @@ function loadMoreResults() {
 
 
 function handleScroll() {
-    const resultsSection = document.querySelector('.results-section'); 
-    if (!resultsSection) return;
-
-    const scrollHeight = resultsSection.scrollHeight;
-    const scrollTop = resultsSection.scrollTop;
-    const clientHeight = resultsSection.clientHeight;
+    const scrollHeight = document.documentElement.scrollHeight; 
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop; 
+    const clientHeight = document.documentElement.clientHeight; 
 
     if (scrollTop + clientHeight >= scrollHeight - 100) {
         loadMoreResults();
@@ -287,6 +284,7 @@ async function init() {
         resultsSection.addEventListener('scroll', handleScroll);
     }
 
+    window.addEventListener('scroll', handleScroll); 
 
     const params = new URLSearchParams(window.location.search);
     const view = params.get('view');
