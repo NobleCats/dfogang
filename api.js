@@ -21,6 +21,16 @@ async function postData(endpoint, body) {
     }
 }
 
+export async function getCharacterDps(server, characterName, options) {
+    return await postData("/dps", {
+        server,
+        characterName,
+        cleansing_cdr: options.cleansing_cdr,
+        weapon_cdr: options.weapon_cdr,
+        average_set_dmg: options.average_set_dmg,
+    });
+}
+
 export async function logSearch(server, name) {
     await postData("/search_log", { server, name });
 }

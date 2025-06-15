@@ -34,20 +34,27 @@ DATA_DIR = "datas"
 
 # --- 비동기 API 헬퍼 함수 ---
 async def fetch_json(session, url):
-    """주어진 URL로 비동기 GET 요청을 보내고 JSON 응답을 반환합니다."""
-    try:
-        # URL에 API 키가 없을 경우 자동으로 추가합니다.
-        if 'apikey=' not in url:
-            # [FIXED] URL에 '?'가 있는지 여부에 따라 올바른 구분자를 사용합니다.
-            separator = '?' if '?' not in url else '&'
-            url += f"{separator}apikey={API_KEY}"
-
-        async with session.get(url) as response:
-            response.raise_for_status()  # 200 OK가 아니면 예외 발생
-            return await response.json()
-    except aiohttp.ClientError as e:
-        print(f"API 요청 실패: {url}, 오류: {e}")
-        return None
+    headers = {
+        'User-Agent': 'DFO-History-App/1.0 (https://api-dfohistory.duckdns.org)'
+    }
+    retries = 3
+    for attempt in range(retries):
+        try:
+            if 'apikey=' not in url:
+                separator = '?' if '?' not in url else '&'
+                url += f"{separator}apikey={API_KEY}"
+            
+            # [MODIFIED] session.get 호출에 headers=headers 추가
+            async with session.get(url, headers=headers, timeout=10) as response:
+                response.raise_for_status()
+                return await response.json()
+        except (aiohttp.ClientError, asyncio.TimeoutError) as e:
+            print(f"API 요청 실패 (시도 {attempt + 1}/{retries}): {url}, 오류: {e}")
+            if attempt < retries - 1:
+                await asyncio.sleep(0.5)
+            else:
+                return None
+    return None
 
 async def async_search_characters(session, server, name):
     url = f"{BASE_URL}/servers/{server}/characters?characterName={name}&limit=50&wordType=full&apikey={API_KEY}"
@@ -92,8 +99,11 @@ async def get_character_card_data(session, server, character_id):
     """단일 캐릭터의 장비 정보와 DPS 정보를 비동기적으로 함께 가져옵니다."""
     try:
         equipment_task = async_get_equipment(session, server, character_id)
-        analyzer = CharacterAnalyzer(api_key=API_KEY, server=server, character_id=character_id)
-        # analyzer.run_analysis 대신 세마포어 헬퍼 함수를 호출
+        # [MODIFIED] weapon_cdr 기본값을 false로 설정
+        analyzer = CharacterAnalyzer(
+            api_key=API_KEY, server=server, character_id=character_id,
+            cleansing_cdr=True, weapon_cdr=False, average_set_dmg=False
+        )
         dps_task = run_dps_with_semaphore(analyzer, session)
 
         # 두 태스크를 동시에 실행
@@ -338,12 +348,13 @@ async def search_explorer():
         async with aiohttp.ClientSession() as session:
             tasks = []
             for char_info in characters_to_process:
+                # [MODIFIED] weapon_cdr 기본값을 false로 설정
                 analyzer = CharacterAnalyzer(
                     api_key=API_KEY,
                     server=char_info["serverId"],
-                    character_id=char_info["characterId"]
+                    character_id=char_info["characterId"],
+                    cleansing_cdr=True, weapon_cdr=False, average_set_dmg=False
                 )
-                # analyzer.run_analysis 대신 세마포어 헬퍼 함수를 호출
                 tasks.append(run_dps_with_semaphore(analyzer, session))
             
             dps_results = await asyncio.gather(*tasks, return_exceptions=True)

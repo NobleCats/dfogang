@@ -10,19 +10,28 @@ import os
 # --- 유틸리티 함수 ---
 async def fetch_json(session, url, api_key):
     """주어진 URL로 비동기 GET 요청을 보내고 JSON 응답을 반환합니다."""
-    # URL에 이미 API 키가 있는지 확인하고, 없으면 추가합니다.
-    if 'apikey=' not in url:
-        # [FIXED] URL에 '?'가 있는지 여부에 따라 올바른 구분자를 사용합니다.
-        separator = '?' if '?' not in url else '&'
-        url += f"{separator}apikey={api_key}"
-        
-    try:
-        async with session.get(url) as response:
-            response.raise_for_status()
-            return await response.json()
-    except aiohttp.ClientError as e:
-        print(f"API 요청 실패: {url}, 오류: {e}")
-        return None
+    # [NEW] 웹 브라우저처럼 보이기 위한 헤더 정보
+    headers = {
+        'User-Agent': 'DFO-History-App/1.0 (https://api-dfohistory.duckdns.org)'
+    }
+    retries = 3
+    for attempt in range(retries):
+        try:
+            if 'apikey=' not in url:
+                separator = '?' if '?' not in url else '&'
+                url += f"{separator}apikey={api_key}"
+
+            # [MODIFIED] session.get 호출에 headers=headers 추가
+            async with session.get(url, headers=headers, timeout=10) as response:
+                response.raise_for_status()
+                return await response.json()
+        except (aiohttp.ClientError, asyncio.TimeoutError) as e:
+            print(f"API 요청 실패 (시도 {attempt + 1}/{retries}): {url}, 오류: {e}")
+            if attempt < retries - 1:
+                await asyncio.sleep(0.5)
+            else:
+                return None
+    return None
 
 # --- 메인 분석 클래스 ---
 class CharacterAnalyzer:
