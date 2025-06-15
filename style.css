@@ -34,6 +34,12 @@
     font-weight:700;
     src:url('//cdn.df.nexon.com/img/common/font/DNFForgedBlade-Bold.otf') format('opentype');
 }
+html, body {
+    height: 100%; 
+    margin: 0; 
+    padding: 0; 
+    overflow-x: hidden; 
+}
 
 body {
     background-color: var(--color-background);
