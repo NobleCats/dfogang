@@ -33,7 +33,7 @@ const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const resultsDiv = document.getElementById('results');
 const detailView = document.getElementById('detail-view');
-const mainViewDpsOptions = document.getElementById('main-view-dps-options');
+let mainViewDpsOptions = null;
 
 
 function render() {
