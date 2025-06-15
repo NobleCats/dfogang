@@ -12,7 +12,9 @@ async def fetch_json(session, url, api_key):
     """주어진 URL로 비동기 GET 요청을 보내고 JSON 응답을 반환합니다."""
     # URL에 이미 API 키가 있는지 확인하고, 없으면 추가합니다.
     if 'apikey=' not in url:
-        url += f"&apikey={api_key}"
+        # [FIXED] URL에 '?'가 있는지 여부에 따라 올바른 구분자를 사용합니다.
+        separator = '?' if '?' not in url else '&'
+        url += f"{separator}apikey={api_key}"
         
     try:
         async with session.get(url) as response:
@@ -319,7 +321,7 @@ class CharacterAnalyzer:
         return {
             "finalDamage": round(final_damage),
             "cooldownReduction": round(final_cooldown_reduction_percent, 2),
-            "dps": round(dps)
+            "dps": round(dps / 1000)
         }
 
     async def run_analysis(self, session):

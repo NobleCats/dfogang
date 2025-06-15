@@ -212,12 +212,13 @@ button:hover {
  * =================================
  */
 .detail-container {
-    padding-top: 125px;
+    padding-top: 50px;
 }
 
 .detail-grid {
     display: grid;
     grid-template-areas:
+        "back    back"
         "profile history"
         "fame    history";
     grid-template-columns: 542px 1fr; /* [MODIFIED] Set fixed width including padding/border */
@@ -226,6 +227,11 @@ button:hover {
     max-width: 1150px;
     margin: 40px auto;
     padding: 0 24px;
+}
+
+.back-button-container {
+    grid-area: back;
+    padding: 24px 0px 10px;
 }
 
 .detail-widget {
@@ -374,9 +380,10 @@ button:hover {
 @media (max-width: 1150px) {
     .detail-grid {
         grid-template-areas:
+            "back"
             "profile"
-            "history"
-            "fame";
+            "fame"
+            "history";
         grid-template-columns: 1fr;
     }
     .detail-widget-profile, .detail-widget-fame, .detail-widget-history {

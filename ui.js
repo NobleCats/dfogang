@@ -62,6 +62,14 @@ export function createCharacterCard(profile, searchName) {
             <span style="${rarityStyle}; margin: 10px 0;">${rarityName}</span>
             ${profile.setPoint > 0 ? `<span style="color:#aaa; font-size: 0.9em; margin-left: 4px;">(${profile.setPoint})</span>` : ''}
         </div>
+        
+        <div style="display: flex; align-items: center; gap: 6px; margin-top: 12px; font-family: var(--font-dfo);">
+            <span style="font-size: 1em; color: var(--color-text-secondary);">DPS</span>
+            <span style="font-size: 1.2em; color: var(--color-accent-blue);">${
+              // [REVERTED] 원래 로직으로 되돌려 받은 값을 그대로 표시합니다.
+              profile.dps != null ? profile.dps.toLocaleString() : 'N/A'
+            }</span>
+        </div>
     `;
     return card;
 }
@@ -70,7 +78,7 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
     const detailView = document.getElementById('detail-view');
     detailView.innerHTML = `
         <div class="detail-grid">
-            <div style="padding: 24px 0px 10px; width: fit; display: flex; justify-content: flex-start;">
+            <div class="back-button-container">
                 <button class="back-button">← Back</button>
             </div>
             <div class="detail-widget detail-widget-profile">

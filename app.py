@@ -8,6 +8,14 @@ from pathlib import Path
 import os
 import json
 
+# 동시 요청을 100개로 제한하는 세마포어 생성
+SEMAPHORE = asyncio.Semaphore(100)
+
+async def run_dps_with_semaphore(analyzer, session):
+    async with SEMAPHORE:
+        # 이 블록 안의 코드는 동시에 최대 100개만 실행됩니다.
+        return await analyzer.run_analysis(session)
+
 # --- dmgCalc.py에서 CharacterAnalyzer 클래스를 임포트합니다 ---
 # 이 코드가 작동하려면 dmgCalc.py와 app.py가 같은 폴더에 있어야 합니다.
 try:
@@ -30,7 +38,9 @@ async def fetch_json(session, url):
     try:
         # URL에 API 키가 없을 경우 자동으로 추가합니다.
         if 'apikey=' not in url:
-            url += f"&apikey={API_KEY}"
+            # [FIXED] URL에 '?'가 있는지 여부에 따라 올바른 구분자를 사용합니다.
+            separator = '?' if '?' not in url else '&'
+            url += f"{separator}apikey={API_KEY}"
 
         async with session.get(url) as response:
             response.raise_for_status()  # 200 OK가 아니면 예외 발생
@@ -78,6 +88,49 @@ async def profile():
             
         return jsonify(profile_data)
 
+async def get_character_card_data(session, server, character_id):
+    """단일 캐릭터의 장비 정보와 DPS 정보를 비동기적으로 함께 가져옵니다."""
+    try:
+        equipment_task = async_get_equipment(session, server, character_id)
+        analyzer = CharacterAnalyzer(api_key=API_KEY, server=server, character_id=character_id)
+        # analyzer.run_analysis 대신 세마포어 헬퍼 함수를 호출
+        dps_task = run_dps_with_semaphore(analyzer, session)
+
+        # 두 태스크를 동시에 실행
+        equip_data, dps_results = await asyncio.gather(equipment_task, dps_task)
+
+        if not equip_data:
+            return None
+
+        # 기존 장비 정보 처리 로직
+        set_info_list = equip_data.get("setItemInfo")
+        if set_info_list and isinstance(set_info_list, list) and len(set_info_list) > 0:
+            set_info = set_info_list[0]
+        else:
+            set_info = {}
+        
+        # DPS 결과에서 dps 값 추출
+        dps_value = dps_results.get("dps") if dps_results and "error" not in dps_results else None
+
+        # 최종 결과 조합
+        return {
+            "characterId": equip_data.get("characterId", ""),
+            "characterName": equip_data.get("characterName", ""),
+            "jobName": equip_data.get("jobName", ""),
+            "jobGrowName": equip_data.get("jobGrowName", ""),
+            "adventureName": equip_data.get("adventureName", ""),
+            "fame": equip_data.get("fame", 0),
+            "level": equip_data.get("level", 0),
+            "setItemName": set_info.get("setItemName", ""),
+            "setItemRarityName": set_info.get("setItemRarityName", ""),
+            "setPoint": set_info.get("active", {}).get("setPoint", {}).get("current", 0),
+            "serverId": server,
+            "dps": dps_value  # DPS 정보 추가
+        }
+    except Exception as e:
+        print(f"Error processing character {character_id}: {e}")
+        return None
+
 @app.route("/search", methods=["POST"])
 async def search():
     data = request.json
@@ -86,36 +139,15 @@ async def search():
     async with aiohttp.ClientSession() as session:
         characters = await async_search_characters(session, server, name)
         if not characters:
-            return jsonify({"error": "No characters found"}), 404
-        
-        tasks = [async_get_equipment(session, server, char["characterId"]) for char in characters]
-        equipment_results = await asyncio.gather(*tasks)
+            return jsonify({"results": []}) # 에러 대신 빈 리스트 반환
 
-        final_result = []
-        for equip_data in equipment_results:
-            if not equip_data: continue
+        # 각 캐릭터에 대한 정보 조회 태스크 생성
+        tasks = [get_character_card_data(session, server, char["characterId"]) for char in characters]
+        results = await asyncio.gather(*tasks)
 
-            # [FIXED] setItemInfo가 None이거나 비어있는 경우를 방어적으로 처리
-            set_info_list = equip_data.get("setItemInfo")
-            if set_info_list and isinstance(set_info_list, list) and len(set_info_list) > 0:
-                set_info = set_info_list[0]
-            else:
-                set_info = {} # 기본값으로 빈 딕셔너리 사용
+        # None 값을 제외하고 최종 결과 필터링
+        final_result = [res for res in results if res is not None]
 
-            final_result.append({
-                "characterId": equip_data.get("characterId", ""),
-                "characterName": equip_data.get("characterName", ""),
-                "jobName": equip_data.get("jobName", ""),
-                "jobGrowName": equip_data.get("jobGrowName", ""),
-                "adventureName": equip_data.get("adventureName", ""),
-                "fame": equip_data.get("fame", 0),
-                "level": equip_data.get("level", 0),
-                "setItemName": set_info.get("setItemName", ""),
-                "setItemRarityName": set_info.get("setItemRarityName", ""),
-                "setPoint": set_info.get("active", {}).get("setPoint", {}).get("current", 0),
-                "serverId": server
-            })
-            
     return jsonify({"results": final_result})
 
 @app.route("/equipment", methods=["POST"])
@@ -262,42 +294,81 @@ async def get_history():
     return jsonify(history_data)
 
 @app.route("/search_explorer", methods=["POST"])
-def search_explorer():
-    data = request.get_json()
-    servers = ["cain", "siroco"]
-    explorer_name = data.get("name")
-    result = []
-    for serverId in servers:
-        base_path = Path(f"datas/{serverId}/{explorer_name}")
-        if not base_path.exists(): continue
-        for char_dir in base_path.iterdir():
-            if not char_dir.is_dir(): continue
-            equipment_path = char_dir / "equipment.json"
-            if not equipment_path.exists(): continue
-            try:
+async def search_explorer():
+    try:
+        data = request.get_json()
+        servers = ["cain", "siroco"]
+        explorer_name = data.get("name")
+
+        # 1단계: 로컬 파일 시스템에서 조회할 캐릭터 목록 수집
+        characters_to_process = []
+        for serverId in servers:
+            base_path = Path(f"datas/{serverId}/{explorer_name}")
+            if not base_path.exists(): continue
+            for char_dir in base_path.iterdir():
+                if not char_dir.is_dir(): continue
+                equipment_path = char_dir / "equipment.json"
+                if not equipment_path.exists(): continue
+                
                 with open(equipment_path, encoding="utf-8") as f:
                     equip_data = json.load(f)
-                
-                # [FIXED] setItemInfo가 None이거나 비어있는 경우를 방어적으로 처리
+
                 set_info_list = equip_data.get("setItemInfo")
+                set_info = {}
                 if set_info_list and isinstance(set_info_list, list) and len(set_info_list) > 0:
                     set_info = set_info_list[0]
-                else:
-                    set_info = {} # 기본값으로 빈 딕셔너리 사용
-                    
-                result.append({
-                    "characterId": char_dir.name, "characterName": equip_data.get("characterName", ""),
-                    "jobName": equip_data.get("jobName", ""), "jobGrowName": equip_data.get("jobGrowName", ""),
-                    "adventureName": equip_data.get("adventureName", ""), "fame": equip_data.get("fame", 0),
-                    "level": equip_data.get("level", 0), "setItemName": set_info.get("setItemName", ""),
-                    "setItemRarityName": set_info.get("setItemRarityName", ""),
-                    "setPoint": set_info.get("active", {}).get("setPoint", {}).get("current", 0),
-                    "serverId": serverId
+
+                characters_to_process.append({
+                    "base_data": {
+                        "characterId": char_dir.name, "characterName": equip_data.get("characterName", ""),
+                        "jobName": equip_data.get("jobName", ""), "jobGrowName": equip_data.get("jobGrowName", ""),
+                        "adventureName": equip_data.get("adventureName", ""), "fame": equip_data.get("fame", 0),
+                        "level": equip_data.get("level", 0), "setItemName": set_info.get("setItemName", ""),
+                        "setItemRarityName": set_info.get("setItemRarityName", ""),
+                        "setPoint": set_info.get("active", {}).get("setPoint", {}).get("current", 0),
+                        "serverId": serverId
+                    },
+                    "characterId": char_dir.name, "serverId": serverId
                 })
-            except Exception as e:
-                print(f"[❌] Error reading {equipment_path}: {e}")
-    if not result: return jsonify({"error": "No explorer name found"}), 404
-    return jsonify({"results": result})
+
+        if not characters_to_process:
+            return jsonify({"results": []})
+
+        # 2단계: 수집된 모든 캐릭터의 DPS를 병렬로 계산 (오류 처리 강화)
+        async with aiohttp.ClientSession() as session:
+            tasks = []
+            for char_info in characters_to_process:
+                analyzer = CharacterAnalyzer(
+                    api_key=API_KEY,
+                    server=char_info["serverId"],
+                    character_id=char_info["characterId"]
+                )
+                # analyzer.run_analysis 대신 세마포어 헬퍼 함수를 호출
+                tasks.append(run_dps_with_semaphore(analyzer, session))
+            
+            dps_results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        # 3단계: 기본 캐릭터 데이터에 계산된 DPS 결과 결합
+        final_result = []
+        for i, char_info in enumerate(characters_to_process):
+            dps_data = dps_results[i]
+            
+            # 개별 태스크의 실패 여부 확인
+            if isinstance(dps_data, Exception):
+                print(f"[❌] DPS calculation for {char_info['characterId']} failed with an exception: {dps_data}")
+                dps_value = None
+            else:
+                dps_value = dps_data.get("dps") if dps_data and "error" not in dps_data else None
+            
+            char_info["base_data"]["dps"] = dps_value
+            final_result.append(char_info["base_data"])
+
+        return jsonify({"results": final_result})
+
+    except Exception as e:
+        # 이 함수 전체에서 발생하는 예외를 처리하여 서버가 다운되는 것을 방지합니다.
+        print(f"[💥] Unhandled exception in /search_explorer: {e}")
+        return jsonify({"error": "An internal server error occurred."}), 500
 
 @app.route("/search_log", methods=["POST"])
 def log_search():
