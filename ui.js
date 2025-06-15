@@ -101,7 +101,7 @@ function renderDpsCalculatorWidget(profile, equipment, dpsState) {
     const weaponName = weapon?.itemName || "";
     const nonCdrWeapon = !["Primeval Star", "Heroic Saga", "Legendary Lore"].some(name => weaponName.includes(name));
 
-    if (profile.jobId === 'e74229356353245521404a3783b96355' && nonCdrWeapon) { // Archer Job ID
+    if (profile.jobId === 'dbbdf2dd28072b26f22b77454d665f21' && nonCdrWeapon) { // Archer Job ID
         const jobGrowName = profile.jobGrowName;
         let labels = {};
         if (jobGrowName.includes("Hunter")) labels = { title: "Change Tactics", false: "Falke Assist", true: "Falke Patrol" };
