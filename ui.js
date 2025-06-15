@@ -132,16 +132,6 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
             `;
         }
     }
-    
-    container.innerHTML += `
-        <div class="dps-toggle-group">
-            <div class="dps-toggle-label">Set Normalize</div>
-            <div class="dps-toggle-switch">
-                <div class="dps-toggle-option ${dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="true">On</div>
-                <div class="dps-toggle-option ${!dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="false">Off</div>
-            </div>
-        </div>
-    `;
 
     const appliedDamage = dpsResult?.finalDamage != null ? dpsResult.finalDamage.toLocaleString() : 'N/A';
     const appliedCooldownReduction = dpsResult?.cooldownReduction != null ? dpsResult.cooldownReduction.toFixed(2) + '%' : 'N/A';
