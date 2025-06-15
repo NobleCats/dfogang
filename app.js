@@ -118,10 +118,10 @@ function loadMoreResults() {
 }
 
 function handleScroll() {
-    const scrollHeight = resultsWrapper.scrollHeight; 
-    const scrollTop = resultsWrapper.scrollTop; 
-    const clientHeight = resultsWrapper.clientHeight; 
-    
+    const scrollHeight = document.documentElement.scrollHeight; 
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop; 
+    const clientHeight = document.documentElement.clientHeight; 
+
     if (scrollTop + clientHeight >= scrollHeight - 100) {
         loadMoreResults();
     }
@@ -278,10 +278,9 @@ async function init() {
         });
     }
 
-    if (resultsWrapper) { // resultsWrapper가 존재하는지 확인
-        resultsWrapper.addEventListener('scroll', handleScroll);
-    }
-    
+        window.addEventListener('scroll', handleScroll);
+
+
     const params = new URLSearchParams(window.location.search);
     const view = params.get('view');
     const server = params.get('server');
