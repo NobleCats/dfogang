@@ -661,7 +661,6 @@ export function showMoreResultsIndicator(hasMore) {
     if (hasMore && !existingIndicator) {
         const indicator = document.createElement('div');
         indicator.id = 'load-more-indicator';
-        indicator.textContent = 'Scroll down to load more results...';
         indicator.style.cssText = `
             text-align: center;
             color: var(--color-text-secondary);
