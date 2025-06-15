@@ -88,16 +88,26 @@ body {
  * Main Layout & Search Section
  * =================================
  */
-.main {
-    min-height: 100vh; 
-    display: flex;
+ .fixed-search-area {
+    position: sticky;
+    top: 0; 
+    width: 100%;
+    background-color: var(--color-background); 
+    padding-bottom: 20px; 
+    z-index: 100; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+    display: flex; 
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: 0;
-    padding-top: max(0, 120px);
+    padding-top: 50px;
 }
 
+.main {
+    min-height: calc(100vh - 150px); 
+    margin-top: 0; 
+    padding-top: 0;
+    justify-content: flex-start; 
+}
 .search-container {
     display: flex;
     flex-direction: column;

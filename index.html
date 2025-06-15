@@ -25,24 +25,23 @@
     </nav>
 
     <div id="loading-spinner" class="spinner"></div>
-    <!-- Main Search View -->
-    <main class="main" id="main-view">
+
+    <div class="fixed-search-area">
         <div class="search-container">
             <h1 class="main-logo">DFO History</h1>
             <div class="search-box">
-                <select id="server-select">
-                    <option value="cain">Cain</option>
-                    <option value="siroco">Sirocco</option>
-                    <option value="explorer">ExplorerName</option>
-                </select>
+                <select id="server-select">...</select>
                 <input id="search-input" type="text" placeholder="Character or Explorer Name" />
                 <button id="search-button">SEARCH</button>
             </div>
         </div>
         <div id="main-view-dps-options" style="margin-top: 20px;"></div>
+    </div>
+
+    <!-- Main Search View -->
+    <main class="main" id="main-view">
         <div id="results-wrapper" style="width: 100%; padding: 20px 0; box-sizing: border-box;">
-            <div id="results" class="card-grid">
-                </div>
+            <div id="results" class="card-grid"></div>
         </div>
     </main>
 
