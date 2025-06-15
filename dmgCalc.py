@@ -141,7 +141,7 @@ class CharacterAnalyzer:
             current_ovarall_dmg = 0
             if "sensory satisfaction" in line and reinforce is not None:
                 bonus = min(max(reinforce - 10, 0), 2)
-                self.overall_dmg_calc(bonus, source); return
+                self.overall_dmg_calc(bonus, source); continue # 'return' 대신 'continue'로 변경
             match = re.search(r"(\d+(?:\.\d+)?)% chance.*?skill atk\. \+(\d+(?:\.\d+)?)%", line)
             if match:
                 chance, bonus = float(match.group(1)) / 100, float(match.group(2))
@@ -155,15 +155,26 @@ class CharacterAnalyzer:
                 val = float(match.group(1)); current_ovarall_dmg = self.engrave_cal(option); current_ovarall_dmg += val
             match = re.search(r"damage value\s*\+([\d.]+)", line)
             if match: self.damage_value_sum += float(match.group(1))
-            match = re.search(r"cooldown recovery\s*\+([\d.]+)%", line)
-            if match: self.cd_recovery_sum += float(match.group(1))
-            match = re.search(r"cooldown reduction\s*\+([\d.]+)%", line)
-            if match: self.cooldown_reduction_calc(float(match.group(1)), source)
-            match = re.search(r"skill cooldown\s*\-([\d.]+)%", line)
-            if match: self.cooldown_reduction_calc(float(match.group(1)), source)
+            
+            # [MODIFIED] 쿨타임 회복속도와 쿨다운 감소를 명확히 구분하여 파싱
+            match_cd_recovery = re.search(r"cooldown recovery\s*\+([\d.]+)%", line)
+            if match_cd_recovery:
+                self.cd_recovery_sum += float(match_cd_recovery.group(1))
+                continue # 다음 줄로 이동하여 중복 파싱 방지
+
+            match_cd_reduction = re.search(r"cooldown reduction\s*\+([\d.]+)%", line)
+            if match_cd_reduction:
+                self.cooldown_reduction_calc(float(match_cd_reduction.group(1)), source)
+                continue # 다음 줄로 이동하여 중복 파싱 방지
+
+            match_skill_cd_minus = re.search(r"skill cooldown\s*\-([\d.]+)%", line)
+            if match_skill_cd_minus:
+                self.cooldown_reduction_calc(float(match_skill_cd_minus.group(1)), source)
+                continue # 다음 줄로 이동하여 중복 파싱 방지
+
             for key, element in self.ELEMENT_KEYWORDS.items():
                 if key in line:
-                    match = re.search(r"\+([\d.]+)", line)
+                    match = re.search(rf"{key}[^+]*\+([\d.]+)", line)
                     if match: self.elemental_dmg_sum[element] += float(match.group(1))
             self.overall_dmg_calc(current_ovarall_dmg, source)
 
