@@ -381,7 +381,7 @@ async function renderHistoryPanel(gearHistory) {
         const dateStr = date.substring(5).replace('-', '/');
         const dateHeader = document.createElement('div');
         dateHeader.className = 'history-date-header';
-        dateHeader.textContent = `--- ${dateStr} ---`;
+        dateHeader.textContent = `${dateStr}`;
         panel.appendChild(dateHeader);
 
         groupedByDate[date].forEach(change => {
