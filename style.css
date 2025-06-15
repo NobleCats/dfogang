@@ -95,7 +95,7 @@ body {
     align-items: center;
     justify-content: center;
     margin-top: 0;
-    padding-top: max(0, 20vh);
+    padding-top: max(0, 120px);
 }
 
 .search-container {
