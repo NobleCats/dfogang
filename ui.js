@@ -53,20 +53,18 @@ export function createCharacterCard(profile, searchName) {
                 <span style="color:var(--color-fame); font-size:0.9em; font-weight: 500;">${profile.fame?.toLocaleString() ?? '-'}</span>
             </div>
         </div>
-        <img src="${spritePath}" alt="${profile.jobName}" style="width:200px; height:230px; object-fit:contain; margin-bottom:12px;">
+        <div class="character-sprite-container"> <img src="${spritePath}" alt="${profile.jobName}"> </div>
+
         <div style="color:${profile.adventureName === searchName ? 'var(--color-fame)' : 'var(--color-text-secondary)'}; font-weight:500;">${profile.adventureName ?? '-'}</div>
         <div style="font-family: var(--font-display); color:#eee; font-size:1.8em; font-weight:600;">${profile.characterName ?? '-'}</div>
         <div style="color:#A0844B; font-size:0.8em;">[${profile.jobGrowName ?? '-'}]</div>
-        <div style="display: flex; align-items: center; gap: 2px; margin-top: 10px;">
-            <img src="${setIconPath}" alt="Set Icon" style="transform: scale(0.666); padding-top:10px;">
-            <span style="${rarityStyle}; margin: 10px 0;">${rarityName}</span>
+        <div style="display: flex; align-items: center; gap: 2px;"> <img src="${setIconPath}" alt="Set Icon"> <span style="${rarityStyle};"> ${rarityName}</span>
             ${profile.setPoint > 0 ? `<span style="color:#aaa; font-size: 0.9em; margin-left: 4px;">(${profile.setPoint})</span>` : ''}
         </div>
-        
-        <div style="display: flex; align-items: center; gap: 6px; margin-top: 12px; font-family: var(--font-dfo);">
-            <span style="font-size: 1em; color: var(--color-text-secondary);">DPS</span>
+
+        <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);"> <span style="font-size: 1em; color: var(--color-text-secondary);">DPS</span>
             <span style="font-size: 1.2em; color: var(--color-accent-blue);">${
-              profile.dps != null ? profile.dps.toLocaleString() : 'N/A'
+            profile.dps != null ? profile.dps.toLocaleString() : 'N/A'
             }</span>
         </div>
     `;

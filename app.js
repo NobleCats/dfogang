@@ -45,8 +45,10 @@ function render() {
                 const card = ui.createCharacterCard(profile, state.searchTerm);
                 resultsDiv.appendChild(card);
             });
-        } else if (state.searchTerm) {
+        } else if (state.searchTerm && !state.isLoading) {
              resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
+        } else if (state.searchTerm && state.isLoading) {
+             resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
         }
     } else if (state.view === 'detail' && state.characterDetail.profile) {
         ui.renderCharacterDetail(
