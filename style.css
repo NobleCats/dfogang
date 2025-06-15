@@ -387,7 +387,7 @@ button:hover {
     bottom: 125%; 
     left: 50%;
     transform: translateX(-50%);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
     transition: opacity 0.3s ease; 
     font-size: 0.9em;
     border: 1px solid var(--color-border); 
