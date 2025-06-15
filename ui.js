@@ -84,8 +84,17 @@ function renderDpsCalculatorWidget(profile, equipment, dpsState) {
     const container = document.createElement('div');
     container.className = 'dps-calculator-container';
 
-    const setItemName = profile.setItemInfo?.[0]?.setItemName || "";
-    if (setItemName.includes("Cleansing")) {
+    let isCleansingSetEquipped = false;
+    if (setItemInfo && Array.isArray(setItemInfo)) {
+        for (const itemInfo of setItemInfo) {
+            if (itemInfo.setItemName && itemInfo.setItemName.includes("Cleansing")) {
+                isCleansingSetEquipped = true;
+                break;
+            }
+        }
+    }
+
+    if (isCleansingSetEquipped) {
         container.innerHTML += `
             <div class="dps-toggle-group">
                 <div class="dps-toggle-label">Cleansing Mode</div>
@@ -175,7 +184,7 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
     
-    const dpsWidget = renderDpsCalculatorWidget(profile, equipment, dpsState);
+    const dpsWidget = renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState);
     document.getElementById('dps-widget-area').appendChild(dpsWidget);
 }
 
