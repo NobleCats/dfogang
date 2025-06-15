@@ -50,6 +50,13 @@ class CharacterAnalyzer:
         self.WEAPON_CDR = weapon_cdr
         self.AVERAGE_SET_DMG = average_set_dmg
         
+        self.WEAPON_NAMES_WITH_CONDITIONAL_EFFECT = {
+            "Falke the Ally", "Falke the Friend", "Falke the Family",
+            "Secret Solo", "Secret Duet", "Secret Concert",
+            "Mist Traveler", "Mist Explorer", "Mist Pioneer",
+            "Malefic Dawn", "Malefic Daybreak", "Malefic Twilight"
+        }
+        
         # 데이터 캐시 및 상수
         self.item_details_cache = {}
         self.ELEMENT_KEYWORDS = {"fire": "Fire", "water": "Water", "light": "Light", "shadow": "Shadow", "all elemental": "All"}
@@ -108,9 +115,28 @@ class CharacterAnalyzer:
             total_overall_dmg += over15 * max(0, (reinforce - 13))
         self.overall_dmg_calc(total_overall_dmg, source)
     
-    def parse_explain_detail(self, text, source="unknown", reinforce=None, option=None):
+    def parse_explain_detail(self, text, source="unknown", reinforce=None, option=None, is_weapon_explain=False):
         lines = text.lower().split("\n")
         if "[FUSION_LEG]" in source: option = None
+        
+        match_item_name = re.search(r"\[ITEM_DETAIL\]\s*(.+)", source)
+        current_item_name = match_item_name.group(1).strip() if match_item_name else None
+        
+        is_conditional_weapon_effect = (
+            is_weapon_explain and current_item_name in self.WEAPON_NAMES_WITH_CONDITIONAL_EFFECT
+        )
+        
+        if is_conditional_weapon_effect:
+            # weapon_cdr 옵션에 따라 해당 무기의 조건부 효과 중 하나만 적용
+            if self.WEAPON_CDR: # weapon_cdr이 True이면 쿨감 효과 적용
+                    self.cooldown_reduction_calc(20, source=f"[WEAPON EFFECT] {current_item_name} (Mode A - CDR)")
+                    return # 찾아서 적용했으므로 다른 라인 파싱 불필요
+            else: # weapon_cdr이 False이면 전체 데미지 효과 적용
+                    self.overall_dmg_calc(12.3, source=f"[WEAPON EFFECT] {current_item_name} (Mode B - Overall Dmg)")
+                    return # 찾아서 적용했으므로 다른 라인 파싱 불필요
+
+
+        
         for line in lines:
             current_ovarall_dmg = 0
             if "sensory satisfaction" in line and reinforce is not None:
@@ -141,14 +167,18 @@ class CharacterAnalyzer:
                     if match: self.elemental_dmg_sum[element] += float(match.group(1))
             self.overall_dmg_calc(current_ovarall_dmg, source)
 
-    def parse_stat_entry(self, stat, source=None):
+    def parse_stat_entry(self, stat, source=None, item_name=None):
         name = stat.get("name", "").lower()
         try: value = float(str(stat["value"]).replace('%', '').replace(',', '').strip())
         except (ValueError, TypeError, KeyError): return
         if "damage value" in name: self.damage_value_sum += value
         elif "cooldown reduction" in name: self.cooldown_reduction_calc(value, source)
         elif "cooldown recovery" in name: self.cd_recovery_sum += value
-        elif "overall damage" in name: self.overall_dmg_calc(value, source)
+        elif "overall damage" in name:
+            # [MODIFIED] 조건부 효과를 가진 무기일 경우, weapon_cdr이 True이면 특정 Overall Damage 스탯 무시
+            if item_name in self.WEAPON_NAMES_WITH_CONDITIONAL_EFFECT and value == 12.3 and self.WEAPON_CDR:
+                return # 이 스탯은 무시하고 다음으로 진행 (쿨감 모드를 선택했으므로)
+            self.overall_dmg_calc(value, source)
         else:
             for key, element in self.ELEMENT_KEYWORDS.items():
                 if key in name: self.elemental_dmg_sum[element] += value
@@ -177,12 +207,20 @@ class CharacterAnalyzer:
         res = self.item_details_cache.get(item_id)
         if not res: return
         item_name = res.get("itemName", item_id)
+        item_type = res.get("itemType", "") # 아이템 타입 가져오기
+
         stats = res.get("itemStatus", [])
         if "skill cooldown" in res.get("itemBuff", {}).get("explain", "").lower():
             stats = [s for s in stats if s.get("name") != "Skill Cooldown Reduction"]
-        for stat in stats: self.parse_stat_entry(stat, source=f"[ITEM] {item_name}")
+
+        for stat in stats:
+            # parse_stat_entry에 item_name 전달
+            self.parse_stat_entry(stat, source=f"[ITEM] {item_name}", item_name=item_name)
+
         detail = res.get("itemExplainDetail", "")
-        if detail: self.parse_explain_detail(detail, source=f"[ITEM_DETAIL] {item_name}")
+        if detail:
+            # parse_explain_detail에 is_weapon_explain 플래그 전달
+            self.parse_explain_detail(detail, source=f"[ITEM_DETAIL] {item_name}", is_weapon_explain=(item_type == "Weapon"))
 
     def parse_fusion_options_from_cache(self, item):
         upgrade_info = item.get("upgradeInfo", {})
@@ -325,7 +363,7 @@ class CharacterAnalyzer:
         elemental_multiplier = 1.05 + 0.0045 * max_elemental_value
         final_damage_value = self.damage_value_sum * (1 + atk_amp / 100)
         final_damage = final_damage_value * self.overall_dmg_mul * elemental_multiplier
-        effective_cooldown_multiplier = self.cd_reduction_mul * (100 / (100 + self.cd_recovery_sum if self.cd_recovery_sum > 0 else 100))
+        effective_cooldown_multiplier = max(0.3, self.cd_reduction_mul * (100 / (100 + self.cd_recovery_sum if self.cd_recovery_sum > 0 else 100)))
         final_cooldown_reduction_percent = (1 - effective_cooldown_multiplier) * 100
         dps = final_damage / effective_cooldown_multiplier if effective_cooldown_multiplier > 0 else 0
         return {

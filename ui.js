@@ -556,7 +556,7 @@ async function drawCharacterText(profile) {
         ctx.lineWidth = 3;
         ctx.strokeStyle = "black";
         ctx.strokeText(fameText, textX, fameY);
-        ctx.fillStyle = "var(--color-fame)";
+        ctx.fillStyle = "#81C784";
         ctx.fillText(fameText, textX, fameY);
         ctx.textAlign = "center";
     };
