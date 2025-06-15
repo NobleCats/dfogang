@@ -141,15 +141,29 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
         </div>
     `;
 
+    const appliedDamage = dpsResult?.finalDamage != null ? dpsResult.finalDamage.toLocaleString() : 'N/A';
+    const appliedCooldownReduction = dpsResult?.cooldownReduction != null ? dpsResult.cooldownReduction.toFixed(2) + '%' : 'N/A';
+
     const dpsDisplayValue = dpsResult?.dps != null ? dpsResult.dps.toLocaleString() : 'N/A';
-    const dpsDisplayHtml = `
-        <div class="dps-result-display">
+
+    const dpsResultHtml = `
+        <div class="dps-stats-display" style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                <span>Applied Damage:</span>
+                <span style="color: var(--color-text-primary); font-weight: 500;">${appliedDamage}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                <span>Applied Cooldown Reduction:</span>
+                <span style="color: var(--color-text-primary); font-weight: 500;">${appliedCooldownReduction}</span>
+            </div>
+        </div>
+        <div class="dps-result-display" style="margin-top: 16px;">
             <span class="dps-result-label">Expected DPS</span>
             <span class="dps-result-value">${dpsDisplayValue}</span>
         </div>
     `;
 
-    container.innerHTML += dpsDisplayHtml;
+    container.innerHTML += dpsResultHtml;
     widgetDiv.appendChild(container);
     return widgetDiv;
 }

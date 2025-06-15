@@ -89,7 +89,7 @@ body {
  * =================================
  */
 .main {
-    margin-top: 60px;
+    margin-top: 20%;
     min-height: calc(100vh - 120px);
     display: flex;
     flex-direction: column;
