@@ -21,7 +21,7 @@ const state = {
         options: {
             cleansing_cdr: true,
             weapon_cdr: false,
-            average_set_dmg: false,
+            average_set_dmg: false, 
         },
         result: null,
         isCalculating: false,
@@ -33,12 +33,15 @@ const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const resultsDiv = document.getElementById('results');
 const detailView = document.getElementById('detail-view');
+const mainViewDpsOptions = document.getElementById('main-view-dps-options');
+
 
 function render() {
     ui.setLoading(state.isLoading || state.dps.isCalculating);
     ui.switchView(state.view);
 
     if (state.view === 'main') {
+        ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
         resultsDiv.innerHTML = '';
         if (state.searchResults.length > 0) {
             state.searchResults.forEach(profile => {
@@ -67,26 +70,26 @@ function updateURL(view, server, name) {
     params.set('view', view);
     params.set('server', server);
     params.set('name', name);
-    history.pushState({ view, server, name }, '', `?${params.toString()}`);
+    params.set('average_set_dmg', state.dps.options.average_set_dmg.toString());
+    history.pushState({ view, server, name, average_set_dmg: state.dps.options.average_set_dmg }, '', `?${params.toString()}`);
 }
 
 async function performSearch(server, name) {
     state.isLoading = true;
     state.searchTerm = name;
     state.server = server;
-    render();
+    render(); 
     
     await api.logSearch(server, name);
-    state.searchResults = await api.searchCharacters(server, name);
+    state.searchResults = await api.searchCharacters(server, name, state.dps.options.average_set_dmg);
     
     state.isLoading = false;
-    render();
+    render(); 
 }
 
 async function showCharacterDetail(server, name) {
     state.isLoading = true;
     state.view = 'detail';
-    state.dps.options = { cleansing_cdr: true, weapon_cdr: false, average_set_dmg: false };
     render();
     
     const [profile, equipmentResponse, fameHistory, gearHistory, dpsResult] = await Promise.all([
@@ -99,12 +102,12 @@ async function showCharacterDetail(server, name) {
     
     if (profile && equipmentResponse) {
         const equipment = equipmentResponse.equipment;
-        state.characterDetail = {
+        state.characterDetail = { 
             profile: { ...profile, server: server, characterName: name },
             equipment: equipment?.equipment,
             setItemInfo: equipment?.setItemInfo,
-            fameHistory: fameHistory?.records,
-            gearHistory: gearHistory
+            fameHistory: fameHistory?.records, 
+            gearHistory 
         };
         state.dps.result = dpsResult;
     } else {
@@ -120,17 +123,36 @@ async function recalculateDps() {
     if (!state.characterDetail.profile) return;
     
     state.dps.isCalculating = true;
-    render();
+    render(); 
 
     const { server, characterName } = state.characterDetail.profile;
     const newDpsResult = await api.getCharacterDps(server, characterName, state.dps.options);
     state.dps.result = newDpsResult;
 
     state.dps.isCalculating = false;
+    render(); 
+}
+
+function handleMainDpsToggleClick(event) {
+    const toggle = event.target.closest('[data-dps-option]');
+    if (!toggle) return;
+
+    const optionName = toggle.dataset.dpsOption;
+    const optionValue = toggle.dataset.dpsValue === 'true';
+
+    if (state.dps.options[optionName] === optionValue) return;
+
+    state.dps.options[optionName] = optionValue;
+    
+    if (state.searchTerm) { 
+        performSearch(state.server, state.searchTerm);
+    }
+    updateURL(state.view, state.server, state.searchTerm);
     render();
 }
 
-function handleDpsToggleClick(event) {
+
+function handleDpsToggleClick(event) { 
     const toggle = event.target.closest('[data-dps-option]');
     if (!toggle) return;
 
@@ -171,7 +193,10 @@ function handleGoBack() {
 
 window.onpopstate = (event) => {
     if (event.state) {
-        const { view, server, name } = event.state;
+        const { view, server, name, average_set_dmg } = event.state;
+        if (average_set_dmg !== undefined) {
+             state.dps.options.average_set_dmg = (average_set_dmg === 'true');
+        }
         if (view === 'detail') {
             showCharacterDetail(server, name);
         } else {
@@ -182,6 +207,7 @@ window.onpopstate = (event) => {
         state.searchTerm = '';
         state.searchResults = [];
         searchInput.value = '';
+        state.dps.options.average_set_dmg = false;
         render();
     }
 };
@@ -196,20 +222,27 @@ async function init() {
         if (e.target.classList.contains('back-button')) {
             handleGoBack();
         }
-    });
-    detailView.addEventListener('click', (e) => {
-        if (e.target.closest('.dps-toggle-switch')) {
+        if (e.target.closest('.dps-toggle-switch')) { 
             handleDpsToggleClick(e);
         }
-        if (e.target.classList.contains('back-button')) {
-            handleGoBack();
+    });
+    
+    mainViewDpsOptions.addEventListener('click', (e) => {
+        if (e.target.closest('.dps-toggle-switch')) {
+            handleMainDpsToggleClick(e);
         }
     });
+
 
     const params = new URLSearchParams(window.location.search);
     const view = params.get('view');
     const server = params.get('server');
     const name = params.get('name');
+    const average_set_dmg = params.get('average_set_dmg');
+
+    if (average_set_dmg !== null) {
+        state.dps.options.average_set_dmg = (average_set_dmg === 'true');
+    }
 
     if (name && server) {
         searchInput.value = name;
@@ -221,6 +254,7 @@ async function init() {
             await performSearch(server, name);
         }
     }
+    render(); 
 }
 
 document.addEventListener('DOMContentLoaded', init);

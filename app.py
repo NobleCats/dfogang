@@ -94,15 +94,15 @@ async def profile():
             return jsonify({"error": "Failed to fetch profile"}), 500
             
         return jsonify(profile_data)
-
-async def get_character_card_data(session, server, character_id):
+    
+async def get_character_card_data(session, server, character_id, average_set_dmg):
     """단일 캐릭터의 장비 정보와 DPS 정보를 비동기적으로 함께 가져옵니다."""
     try:
         equipment_task = async_get_equipment(session, server, character_id)
         # [MODIFIED] weapon_cdr 기본값을 false로 설정
         analyzer = CharacterAnalyzer(
             api_key=API_KEY, server=server, character_id=character_id,
-            cleansing_cdr=True, weapon_cdr=False, average_set_dmg=False
+            cleansing_cdr=True, weapon_cdr=False, average_set_dmg=average_set_dmg
         )
         dps_task = run_dps_with_semaphore(analyzer, session)
 
@@ -135,7 +135,7 @@ async def get_character_card_data(session, server, character_id):
             "setItemRarityName": set_info.get("setItemRarityName", ""),
             "setPoint": set_info.get("active", {}).get("setPoint", {}).get("current", 0),
             "serverId": server,
-            "dps": dps_value  # DPS 정보 추가
+            "dps": dps_value
         }
     except Exception as e:
         print(f"Error processing character {character_id}: {e}")
@@ -145,6 +145,7 @@ async def get_character_card_data(session, server, character_id):
 async def search():
     data = request.json
     server, name = data.get("server"), data.get("name")
+    average_set_dmg = data.get("average_set_dmg", False)
 
     async with aiohttp.ClientSession() as session:
         characters = await async_search_characters(session, server, name)
@@ -152,7 +153,7 @@ async def search():
             return jsonify({"results": []}) # 에러 대신 빈 리스트 반환
 
         # 각 캐릭터에 대한 정보 조회 태스크 생성
-        tasks = [get_character_card_data(session, server, char["characterId"]) for char in characters]
+        tasks = [get_character_card_data(session, server, char["characterId"], average_set_dmg) for char in characters]
         results = await asyncio.gather(*tasks)
 
         # None 값을 제외하고 최종 결과 필터링
@@ -309,6 +310,7 @@ async def search_explorer():
         data = request.get_json()
         servers = ["cain", "siroco"]
         explorer_name = data.get("name")
+        average_set_dmg = data.get("average_set_dmg", False)
 
         # 1단계: 로컬 파일 시스템에서 조회할 캐릭터 목록 수집
         characters_to_process = []
@@ -353,7 +355,7 @@ async def search_explorer():
                     api_key=API_KEY,
                     server=char_info["serverId"],
                     character_id=char_info["characterId"],
-                    cleansing_cdr=True, weapon_cdr=False, average_set_dmg=False
+                    cleansing_cdr=True, weapon_cdr=False, average_set_dmg=average_set_dmg
                 )
                 tasks.append(run_dps_with_semaphore(analyzer, session))
             

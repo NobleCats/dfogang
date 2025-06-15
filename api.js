@@ -1,6 +1,5 @@
 // ===================================
 //          api.js
-// (No changes in this file)
 // ===================================
 const API_ROOT = "https://api-dfohistory.duckdns.org";
 
@@ -34,9 +33,9 @@ export async function getCharacterDps(server, characterName, options) {
 export async function logSearch(server, name) {
     await postData("/search_log", { server, name });
 }
-export async function searchCharacters(server, name) {
+export async function searchCharacters(server, name, average_set_dmg) {
     const endpoint = server === "explorer" ? "/search_explorer" : "/search";
-    const data = await postData(endpoint, { name, server });
+    const data = await postData(endpoint, { name, server, average_set_dmg });
     return data ? data.results : [];
 }
 export async function getCharacterProfile(server, name) {

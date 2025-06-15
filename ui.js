@@ -71,6 +71,25 @@ export function createCharacterCard(profile, searchName) {
     return card;
 }
 
+export function renderMainDpsOptions(container, dpsOptions) {
+    container.innerHTML = `
+        <div class="dps-toggle-group">
+            <div class="dps-toggle-label">
+                Set Normalize
+                <span class="tooltip-icon">?</span>
+                <div class="tooltip-content">
+                    <p>Calculates damage based on a comparable tier of the Death in the Shadows Set.</p>
+                    <p>(This feature was added to provide a rough standard, as object damage is not reflected in DPS calculations.)</p>
+                </div>
+            </div>
+            <div class="dps-toggle-switch">
+                <div class="dps-toggle-option ${dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="true">On</div>
+                <div class="dps-toggle-option ${!dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="false">Off</div>
+            </div>
+        </div>
+    `;
+}
+
 function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
     const dpsOptions = dpsState.options;
     const dpsResult = dpsState.result;
@@ -82,22 +101,6 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
     const container = document.createElement('div');
     container.className = 'dps-calculator-container';
 
-    container.innerHTML += `
-        <div class="dps-toggle-group">
-            <div class="dps-toggle-label">
-                Set Normalize
-                <span class="tooltip-icon">?</span> <div class="tooltip-content">
-                    <p>Calculates damage based on a comparable tier of the Death in the Shadows Set.</p>
-                    <p>(This feature was added to provide a rough standard, as object damage is not reflected in DPS calculations.)</p>
-                </div>
-            </div>
-            <div class="dps-toggle-switch">
-                <div class="dps-toggle-option ${dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="true">On</div>
-                <div class="dps-toggle-option ${!dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="false">Off</div>
-            </div>
-        </div>
-    `;
-
     let isCleansingSetEquipped = false;
     if (setItemInfo && Array.isArray(setItemInfo)) {
         for (const itemInfo of setItemInfo) {
@@ -108,7 +111,7 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
         }
     }
 
-    if (isCleansingSetEquipped) { // [MODIFIED] isCleansingSetEquipped 변수를 사용하여 조건문 적용
+    if (isCleansingSetEquipped) {
         container.innerHTML += `
             <div class="dps-toggle-group">
                 <div class="dps-toggle-label">Cleansing Mode</div>
@@ -122,15 +125,26 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
 
     const weapon = equipment.find(eq => eq.slotId === 'WEAPON');
     const weaponName = weapon?.itemName || "";
-    const nonCdrWeapon = !["Primeval Star", "Heroic Saga", "Legendary Lore"].some(name => weaponName.includes(name));
+    const conditional_weapon_names = new Set([
+        "Falke the Ally", "Falke the Friend", "Falke the Family",
+        "Secret Solo", "Secret Duet", "Secret Concert",
+        "Mist Traveler", "Mist Explorer", "Mist Pioneer",
+        "Malefic Dawn", "Malefic Daybreak", "Malefic Twilight",
+        "Yang Ull's Twig: Extreme"
+    ]);
 
-    if (profile.jobId === 'dbbdf2dd28072b26f22b77454d665f21' && nonCdrWeapon) { // Archer Job ID
+    if (conditional_weapon_names.has(weaponName)) { 
+        const jobId = profile.jobId; 
         const jobGrowName = profile.jobGrowName;
+
         let labels = {};
-        if (jobGrowName.includes("Hunter")) labels = { title: "Change Tactics", false: "Falke Assist", true: "Falke Patrol" };
-        else if (jobGrowName.includes("Muse")) labels = { title: "Harmonize", false: "Climax!", true: "Vivace!" };
-        else if (jobGrowName.includes("Traveler")) labels = { title: "Wayfinder", false: "Mist Path", true: "Mist Road" };
-        else if (jobGrowName.includes("Vigilante")) labels = { title: "Sensory Focus", false: "Spot Weakness", true: "Sense Menace" };
+        if (jobId === 'dbbdf2dd28072b26f22b77454d665f21') { 
+            if (jobGrowName.includes("Hunter")) labels = { title: "Change Tactics", false: "Falke Assist", true: "Falke Patrol" };
+            else if (jobGrowName.includes("Muse")) labels = { title: "Harmonize", false: "Climax!", true: "Vivace!" };
+            else if (jobGrowName.includes("Traveler")) labels = { title: "Wayfinder", false: "Mist Path", true: "Mist Road" };
+            else if (jobGrowName.includes("Vigilante")) labels = { title: "Sensory Focus", false: "Spot Weakness", true: "Sense Menace" };
+        }
+        
 
         if (labels.title) {
             container.innerHTML += `
@@ -144,6 +158,16 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
             `;
         }
     }
+    
+    container.innerHTML += `
+        <div class="dps-toggle-group">
+            <div class="dps-toggle-label">Set Normalize</div>
+            <div class="dps-toggle-switch">
+                <div class="dps-toggle-option ${dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="true">On</div>
+                <div class="dps-toggle-option ${!dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="false">Off</div>
+            </div>
+        </div>
+    `;
 
     const appliedDamage = dpsResult?.finalDamage != null ? dpsResult.finalDamage.toLocaleString() : 'N/A';
     const appliedCooldownReduction = dpsResult?.cooldownReduction != null ? dpsResult.cooldownReduction.toFixed(2) + '%' : 'N/A';
@@ -205,7 +229,6 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
     const dpsWidget = renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState);
     document.getElementById('dps-widget-area').appendChild(dpsWidget);
 }
-
 function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.style.width = '492px';
