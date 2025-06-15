@@ -213,6 +213,8 @@ window.onpopstate = (event) => {
 };
 
 async function init() {
+    mainViewDpsOptions = document.getElementById('main-view-dps-options');
+
     searchButton.addEventListener('click', handleSearchClick);
     searchInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') handleSearchClick();
@@ -222,16 +224,18 @@ async function init() {
         if (e.target.classList.contains('back-button')) {
             handleGoBack();
         }
-        if (e.target.closest('.dps-toggle-switch')) { 
+        if (e.target.closest('.dps-toggle-switch')) {
             handleDpsToggleClick(e);
         }
     });
-    
-    mainViewDpsOptions.addEventListener('click', (e) => {
-        if (e.target.closest('.dps-toggle-switch')) {
-            handleMainDpsToggleClick(e);
-        }
-    });
+
+    if (mainViewDpsOptions) {
+        mainViewDpsOptions.addEventListener('click', (e) => {
+            if (e.target.closest('.dps-toggle-switch')) {
+                handleMainDpsToggleClick(e);
+            }
+        });
+    }
 
 
     const params = new URLSearchParams(window.location.search);
