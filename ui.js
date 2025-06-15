@@ -66,7 +66,6 @@ export function createCharacterCard(profile, searchName) {
         <div style="display: flex; align-items: center; gap: 6px; margin-top: 12px; font-family: var(--font-dfo);">
             <span style="font-size: 1em; color: var(--color-text-secondary);">DPS</span>
             <span style="font-size: 1.2em; color: var(--color-accent-blue);">${
-              // [REVERTED] 원래 로직으로 되돌려 받은 값을 그대로 표시합니다.
               profile.dps != null ? profile.dps.toLocaleString() : 'N/A'
             }</span>
         </div>
@@ -85,7 +84,6 @@ function renderDpsCalculatorWidget(profile, equipment, dpsState) {
     const container = document.createElement('div');
     container.className = 'dps-calculator-container';
 
-    // 1. Cleansing Mode 토글
     const setItemName = profile.setItemInfo?.[0]?.setItemName || "";
     if (setItemName.includes("Cleansing")) {
         container.innerHTML += `
@@ -99,7 +97,6 @@ function renderDpsCalculatorWidget(profile, equipment, dpsState) {
         `;
     }
 
-    // 2. Archer 관련 토글
     const weapon = equipment.find(eq => eq.slotId === 'WEAPON');
     const weaponName = weapon?.itemName || "";
     const nonCdrWeapon = !["Primeval Star", "Heroic Saga", "Legendary Lore"].some(name => weaponName.includes(name));
@@ -125,7 +122,6 @@ function renderDpsCalculatorWidget(profile, equipment, dpsState) {
         }
     }
     
-    // 3. Set Normalize 토글 (상시 표시)
     container.innerHTML += `
         <div class="dps-toggle-group">
             <div class="dps-toggle-label">Set Normalize</div>
@@ -136,7 +132,6 @@ function renderDpsCalculatorWidget(profile, equipment, dpsState) {
         </div>
     `;
 
-    // DPS 결과 표시 영역
     const dpsDisplayValue = dpsResult?.dps != null ? dpsResult.dps.toLocaleString() : 'N/A';
     const dpsDisplayHtml = `
         <div class="dps-result-display">
@@ -152,7 +147,6 @@ function renderDpsCalculatorWidget(profile, equipment, dpsState) {
 
 export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory, dpsState) {
     const detailView = document.getElementById('detail-view');
-    // 새 위젯을 포함하도록 레이아웃 구조 변경
     detailView.innerHTML = `
         <div class="detail-grid">
             <div class="back-button-container">
@@ -176,13 +170,11 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
         </div>
     `;
 
-    // 위젯 렌더링 및 DOM에 추가
     renderCharacterCanvas(profile, equipment);
     renderSetItems(setItemInfo);
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
     
-    // [NEW] DPS 계산기 위젯 렌더링 및 삽입
     const dpsWidget = renderDpsCalculatorWidget(profile, equipment, dpsState);
     document.getElementById('dps-widget-area').appendChild(dpsWidget);
 }

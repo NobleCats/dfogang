@@ -233,6 +233,7 @@ class CharacterAnalyzer:
             return
         if self.is_paradise_set(setItemName):
             reinforce_acc, reinforce_total, overall_damage = 0, 0, 0
+            max_reinforce_total_stack = 0
             for item in res.get("equipment", []):
                 if "weapon" in item.get("slotName").lower(): continue
                 if any(x in item.get("slotName").lower() for x in ["ring", "bracelet", "necklace"]): reinforce_acc += item.get("reinforce", 0)
