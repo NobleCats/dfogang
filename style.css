@@ -35,7 +35,7 @@
     src:url('//cdn.df.nexon.com/img/common/font/DNFForgedBlade-Bold.otf') format('opentype');
 }
 html, body {
-    height: 100%; 
+    min-height: 100%;
     margin: 0; 
     padding: 0; 
     overflow-x: hidden; 
@@ -125,7 +125,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center; 
-    padding: 50px 20px 20px 20px;
+    padding: 20vh 20px 100px 20px;
     position: relative;
     top: 0;
     z-index: 10;
