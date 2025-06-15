@@ -9,6 +9,10 @@ const state = {
     view: 'main',
     searchTerm: '',
     server: 'cain',
+    allSearchResults: [],
+    displayedResults: [],
+    resultsPerPage: 8, 
+    resultsPerScroll: 4,  
     searchResults: [],
     characterDetail: {
         profile: null,
@@ -34,7 +38,7 @@ const searchButton = document.getElementById('search-button');
 const resultsDiv = document.getElementById('results');
 const detailView = document.getElementById('detail-view');
 let mainViewDpsOptions = null;
-
+const resultsWrapper = document.getElementById('results-wrapper');
 
 function render() {
     ui.setLoading(state.isLoading || state.dps.isCalculating);
@@ -43,16 +47,19 @@ function render() {
     if (state.view === 'main') {
         ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
         resultsDiv.innerHTML = '';
-        if (state.searchResults.length > 0) {
-            state.searchResults.forEach(profile => {
+
+        if (state.displayedResults.length > 0) {
+            state.displayedResults.forEach(profile => {
                 const card = ui.createCharacterCard(profile, state.searchTerm);
                 resultsDiv.appendChild(card);
             });
-        } else if (state.searchTerm && !state.isLoading) {
+        } else if (state.searchTerm && !state.isLoading && state.allSearchResults.length === 0) {
              resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
         } else if (state.searchTerm && state.isLoading) {
              resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
         }
+        ui.showMoreResultsIndicator(state.displayedResults.length < state.allSearchResults.length);
+
     } else if (state.view === 'detail' && state.characterDetail.profile) {
         ui.renderCharacterDetail(
             state.characterDetail.profile,
@@ -78,13 +85,46 @@ async function performSearch(server, name) {
     state.isLoading = true;
     state.searchTerm = name;
     state.server = server;
+    state.allSearchResults = [];
+    state.displayedResults = [];
     render(); 
     
     await api.logSearch(server, name);
-    state.searchResults = await api.searchCharacters(server, name, state.dps.options.average_set_dmg);
+    const results = await api.searchCharacters(server, name, state.dps.options.average_set_dmg);
     
+    state.allSearchResults = results;
+    state.displayedResults = results.slice(0, state.resultsPerPage);
+
     state.isLoading = false;
-    render(); 
+    render();
+}
+
+function loadMoreResults() {
+    if (state.isLoading) return; 
+    if (state.displayedResults.length >= state.allSearchResults.length) return; 
+
+    state.isLoading = true; 
+    render();
+
+    setTimeout(() => {
+        const nextStartIndex = state.displayedResults.length;
+        const nextEndIndex = nextStartIndex + state.resultsPerScroll;
+        const newResults = state.allSearchResults.slice(nextStartIndex, nextEndIndex);
+        
+        state.displayedResults.push(...newResults); 
+        state.isLoading = false;
+        render(); 
+    }, 300);
+}
+
+function handleScroll() {
+    const scrollHeight = resultsWrapper.scrollHeight; 
+    const scrollTop = resultsWrapper.scrollTop; 
+    const clientHeight = resultsWrapper.clientHeight; 
+    
+    if (scrollTop + clientHeight >= scrollHeight - 100) {
+        loadMoreResults();
+    }
 }
 
 async function showCharacterDetail(server, name) {
@@ -200,12 +240,13 @@ window.onpopstate = (event) => {
         if (view === 'detail') {
             showCharacterDetail(server, name);
         } else {
-            performSearch(server, name);
+            performSearch(server, name); 
         }
     } else {
         state.view = 'main';
         state.searchTerm = '';
-        state.searchResults = [];
+        state.allSearchResults = []; 
+        state.displayedResults = []; 
         searchInput.value = '';
         state.dps.options.average_set_dmg = false;
         render();
@@ -237,7 +278,10 @@ async function init() {
         });
     }
 
-
+    if (resultsWrapper) { // resultsWrapper가 존재하는지 확인
+        resultsWrapper.addEventListener('scroll', handleScroll);
+    }
+    
     const params = new URLSearchParams(window.location.search);
     const view = params.get('view');
     const server = params.get('server');

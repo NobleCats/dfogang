@@ -76,8 +76,7 @@ export function renderMainDpsOptions(container, dpsOptions) {
         <div class="dps-toggle-group">
             <div class="dps-toggle-label">
                 Set Normalize
-                <span class="tooltip-icon">?</span>
-                <div class="tooltip-content">
+                <span class="tooltip-icon">?</span> <div class="tooltip-content">
                     <p>Calculates damage based on a comparable tier of the Death in the Shadows Set.</p>
                     <p>(This feature was added to provide a rough standard, as object damage is not reflected in DPS calculations.)</p>
                 </div>
@@ -657,3 +656,21 @@ export function setLoading(isLoading) {
     document.getElementById('loading-spinner').style.display = isLoading ? 'block' : 'none';
 }
 
+export function showMoreResultsIndicator(hasMore) {
+    const existingIndicator = document.getElementById('load-more-indicator');
+    if (hasMore && !existingIndicator) {
+        const indicator = document.createElement('div');
+        indicator.id = 'load-more-indicator';
+        indicator.textContent = 'Scroll down to load more results...';
+        indicator.style.cssText = `
+            text-align: center;
+            color: var(--color-text-secondary);
+            margin-top: 20px;
+            font-size: 0.9em;
+            padding-bottom: 20px;
+        `;
+        document.getElementById('results-wrapper').appendChild(indicator);
+    } else if (!hasMore && existingIndicator) {
+        existingIndicator.remove();
+    }
+}
