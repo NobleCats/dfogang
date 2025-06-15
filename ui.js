@@ -69,10 +69,10 @@ export function createCharacterCard(profile, searchName) {
 export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory) {
     const detailView = document.getElementById('detail-view');
     detailView.innerHTML = `
-        <div style="padding: 24px 32px 10px; display: flex; justify-content: flex-start;">
-            <button class="back-button">← Back</button>
-        </div>
         <div class="detail-grid">
+            <div style="padding: 24px 0px 10px; width: fit; display: flex; justify-content: flex-start;">
+                <button class="back-button">← Back</button>
+            </div>
             <div class="detail-widget detail-widget-profile">
                 <div class="character-canvas" id="character-canvas-container"></div>
                 <div id="set-info-container" class="detail-widget" style="margin-top: 24px;"></div>
