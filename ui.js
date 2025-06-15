@@ -77,15 +77,15 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
                 <div class="character-canvas" id="character-canvas-container"></div>
                 <div id="set-info-container" class="detail-widget" style="margin-top: 24px;"></div>
             </div>
-            <div class="detail-widget detail-widget-history">
-                 <h3 class="widget-title">Equipment History</h3>
-                 <div id="history-panel"></div>
-            </div>
             <div class="detail-widget detail-widget-fame">
                 <h3 class="widget-title">Fame Trend</h3>
                 <div id="fame-chart-container" style="width: 100%; height: 265px;">
                     <canvas id="fame-chart"></canvas>
                 </div>
+            </div>
+            <div class="detail-widget detail-widget-history">
+                 <h3 class="widget-title">Equipment History</h3>
+                 <div id="history-panel"></div>
             </div>
         </div>
     `;
