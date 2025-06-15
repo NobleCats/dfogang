@@ -649,7 +649,6 @@ function drawReinforceText(equipmentList) {
 
 export function switchView(view) {
     document.getElementById('main-view').style.display = view === 'main' ? 'flex' : 'none';
-    document.getElementById('fixed-search-area').style.setProperty('display', view === 'main' ? 'block' : 'none', 'important');
     document.getElementById('detail-view').style.display = view === 'detail' ? 'grid' : 'none';
 }
 

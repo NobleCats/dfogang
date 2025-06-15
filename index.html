@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-brand">
             <img src="assets/image/ch49gang.png" alt="Logo" />
@@ -26,47 +26,39 @@
 
     <div id="loading-spinner" class="spinner"></div>
 
-    <div class="fixed-search-area" id="fixed-search-area"> 
-        <div class="search-container">
-            <h1 class="main-logo">DFO History</h1>
-            <div class="search-box">
-                <select id="server-select">
-                    <option value="cain">Cain</option>
-                    <option value="siroco">Sirocco</option>
-                    <option value="explorer">ExplorerName</option>
-                </select>
-                <input id="search-input" type="text" placeholder="Character or Explorer Name" />
-                <button id="search-button">SEARCH</button>
+    <main class="main" id="main-view">
+        <div class="search-section">
+            <div class="search-container">
+                <h1 class="main-logo">DFO History</h1>
+                <div class="search-box">
+                    <select id="server-select">
+                        <option value="cain">Cain</option>
+                        <option value="siroco">Sirocco</option>
+                        <option value="explorer">ExplorerName</option>
+                    </select>
+                    <input id="search-input" type="text" placeholder="Character or Explorer Name" />
+                    <button id="search-button">SEARCH</button>
+                </div>
             </div>
             <div id="main-view-dps-options" style="margin-top: 20px;"></div>
         </div>
-    </div>
-
-    <!-- Main Search View -->
-    <main class="main" id="main-view">
-        <div id="results-wrapper" style="width: 100%; padding: 20px 0; box-sizing: border-box;">
-            <div id="results" class="card-grid"></div>
+        
+        <div class="results-section">
+            <div id="results-wrapper">
+                <div id="results" class="card-grid"></div>
+            </div>
         </div>
     </main>
 
-    <!-- Detail View (Initially hidden) -->
     <div id="detail-view" class="detail-container" style="display:none;">
-        <!-- Content will be dynamically populated by JavaScript. -->
-    </div>
+        </div>
 
-    <!-- Loading Spinner -->
-    <div id="loading-spinner" style="display: none;">
-        <div class="spinner"></div>
-    </div>
-    
-    <!-- Footer -->
     <footer class="footer">
         <a href="https://www.dfoneople.com/developers" target="_blank">
             <img src="assets/image/neople.png" alt="Neople Logo" />
         </a>
     </footer>
 
-    <!-- JavaScript Module Links -->
     <script type="module" src="app.js"></script>
 </body>
 

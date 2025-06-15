@@ -94,26 +94,45 @@ body {
     width: 100%;
     background-color: var(--color-background); 
     box-shadow: 0 2px 5px var(--color-background); 
-    padding-bottom: 100px; 
+    padding-bottom: 50px; 
     z-index: 100; 
     display: flex; 
     flex-direction: column;
     align-items: center;
-    padding-top: 20vh;
+    padding-top: 10vh;
 }
 
 .main {
-    min-height: calc(100vh - 150px); 
-    margin-top: 0; 
-    padding-top: 10vh;
-    justify-content: flex-start; 
+    display: grid;
+    grid-template-rows: auto 1fr; 
+    min-height: calc(100vh - var(--navbar-height, 60px)); 
+    padding: 0; 
+    margin: 0; 
+    width: 100%; 
+    box-sizing: border-box; 
 }
-.search-container {
+
+.search-section {
+    grid-row: 1; 
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 0px;
-    text-align: center;
+    align-items: center; 
+    padding: 50px 20px 20px 20px; 
+    background-color: var(--color-background); 
+    position: sticky; 
+    top: 0; 
+    z-index: 10; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.results-section {
+    grid-row: 2; 
+    overflow-y: auto; 
+    padding: 20px 0; 
+    box-sizing: border-box;
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-start;
 }
 
 .main-logo {
@@ -181,10 +200,8 @@ button:hover {
  * =================================
  */
 #results-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 0 24px;
+    width: 100%; 
+    padding: 0; 
     box-sizing: border-box;
 }
 
@@ -195,7 +212,16 @@ button:hover {
     width: 100%;
     max-width: 1280px;
 }
-
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    padding: 0 20px; 
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
 .card {
     width: 270px; 
     height: 435px;
