@@ -74,8 +74,85 @@ export function createCharacterCard(profile, searchName) {
     return card;
 }
 
+function renderDpsCalculatorWidget(profile, equipment, dpsState) {
+    const dpsOptions = dpsState.options;
+    const dpsResult = dpsState.result;
+
+    const widgetDiv = document.createElement('div');
+    widgetDiv.className = 'detail-widget detail-widget-dps';
+    widgetDiv.innerHTML = `<h3 class="widget-title">DPS Calculator</h3>`;
+
+    const container = document.createElement('div');
+    container.className = 'dps-calculator-container';
+
+    // 1. Cleansing Mode 토글
+    const setItemName = profile.setItemInfo?.[0]?.setItemName || "";
+    if (setItemName.includes("Cleansing")) {
+        container.innerHTML += `
+            <div class="dps-toggle-group">
+                <div class="dps-toggle-label">Cleansing Mode</div>
+                <div class="dps-toggle-switch">
+                    <div class="dps-toggle-option ${!dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="false">Corruption</div>
+                    <div class="dps-toggle-option ${dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="true">Cleansing</div>
+                </div>
+            </div>
+        `;
+    }
+
+    // 2. Archer 관련 토글
+    const weapon = equipment.find(eq => eq.slotId === 'WEAPON');
+    const weaponName = weapon?.itemName || "";
+    const nonCdrWeapon = !["Primeval Star", "Heroic Saga", "Legendary Lore"].some(name => weaponName.includes(name));
+
+    if (profile.jobId === 'e74229356353245521404a3783b96355' && nonCdrWeapon) { // Archer Job ID
+        const jobGrowName = profile.jobGrowName;
+        let labels = {};
+        if (jobGrowName.includes("Hunter")) labels = { title: "Change Tactics", false: "Falke Assist", true: "Falke Patrol" };
+        else if (jobGrowName.includes("Muse")) labels = { title: "Harmonize", false: "Climax!", true: "Vivace!" };
+        else if (jobGrowName.includes("Traveler")) labels = { title: "Wayfinder", false: "Mist Path", true: "Mist Road" };
+        else if (jobGrowName.includes("Vigilante")) labels = { title: "Sensory Focus", false: "Spot Weakness", true: "Sense Menace" };
+
+        if (labels.title) {
+            container.innerHTML += `
+                <div class="dps-toggle-group">
+                    <div class="dps-toggle-label">${labels.title}</div>
+                    <div class="dps-toggle-switch">
+                        <div class="dps-toggle-option ${!dpsOptions.weapon_cdr ? 'active' : ''}" data-dps-option="weapon_cdr" data-dps-value="false">${labels.false}</div>
+                        <div class="dps-toggle-option ${dpsOptions.weapon_cdr ? 'active' : ''}" data-dps-option="weapon_cdr" data-dps-value="true">${labels.true}</div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+    
+    // 3. Set Normalize 토글 (상시 표시)
+    container.innerHTML += `
+        <div class="dps-toggle-group">
+            <div class="dps-toggle-label">Set Normalize</div>
+            <div class="dps-toggle-switch">
+                <div class="dps-toggle-option ${dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="true">On</div>
+                <div class="dps-toggle-option ${!dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="false">Off</div>
+            </div>
+        </div>
+    `;
+
+    // DPS 결과 표시 영역
+    const dpsDisplayValue = dpsResult?.dps != null ? dpsResult.dps.toLocaleString() : 'N/A';
+    const dpsDisplayHtml = `
+        <div class="dps-result-display">
+            <span class="dps-result-label">Expected DPS</span>
+            <span class="dps-result-value">${dpsDisplayValue}</span>
+        </div>
+    `;
+
+    container.innerHTML += dpsDisplayHtml;
+    widgetDiv.appendChild(container);
+    return widgetDiv;
+}
+
 export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory) {
     const detailView = document.getElementById('detail-view');
+    // 새 위젯을 포함하도록 레이아웃 구조 변경
     detailView.innerHTML = `
         <div class="detail-grid">
             <div class="back-button-container">
@@ -85,6 +162,7 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
                 <div class="character-canvas" id="character-canvas-container"></div>
                 <div id="set-info-container" class="detail-widget" style="margin-top: 24px;"></div>
             </div>
+            <div id="dps-widget-area"></div>
             <div class="detail-widget detail-widget-fame">
                 <h3 class="widget-title">Fame Trend</h3>
                 <div id="fame-chart-container" style="width: 100%; height: 265px;">
@@ -98,10 +176,15 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
         </div>
     `;
 
+    // 위젯 렌더링 및 DOM에 추가
     renderCharacterCanvas(profile, equipment);
     renderSetItems(setItemInfo);
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
+    
+    // [NEW] DPS 계산기 위젯 렌더링 및 삽입
+    const dpsWidget = renderDpsCalculatorWidget(profile, equipment, dpsState);
+    document.getElementById('dps-widget-area').appendChild(dpsWidget);
 }
 
 function renderCharacterCanvas(profile, equipmentList) {
