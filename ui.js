@@ -73,7 +73,7 @@ export function createCharacterCard(profile, searchName) {
     return card;
 }
 
-function renderDpsCalculatorWidget(profile, equipment, dpsState) {
+function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
     const dpsOptions = dpsState.options;
     const dpsResult = dpsState.result;
 
