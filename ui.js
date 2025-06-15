@@ -82,16 +82,6 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
     const container = document.createElement('div');
     container.className = 'dps-calculator-container';
 
-    let isCleansingSetEquipped = false;
-    if (setItemInfo && Array.isArray(setItemInfo)) {
-        for (const itemInfo of setItemInfo) {
-            if (itemInfo.setItemName && itemInfo.setItemName.includes("Cleansing")) {
-                isCleansingSetEquipped = true;
-                break;
-            }
-        }
-    }
-
     container.innerHTML += `
         <div class="dps-toggle-group">
             <div class="dps-toggle-label">
@@ -107,6 +97,28 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
             </div>
         </div>
     `;
+
+    let isCleansingSetEquipped = false;
+    if (setItemInfo && Array.isArray(setItemInfo)) {
+        for (const itemInfo of setItemInfo) {
+            if (itemInfo.setItemName && itemInfo.setItemName.includes("Cleansing")) {
+                isCleansingSetEquipped = true;
+                break;
+            }
+        }
+    }
+
+    if (isCleansingSetEquipped) { // [MODIFIED] isCleansingSetEquipped 변수를 사용하여 조건문 적용
+        container.innerHTML += `
+            <div class="dps-toggle-group">
+                <div class="dps-toggle-label">Cleansing Mode</div>
+                <div class="dps-toggle-switch">
+                    <div class="dps-toggle-option ${!dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="false">Corruption</div>
+                    <div class="dps-toggle-option ${dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="true">Cleansing</div>
+                </div>
+            </div>
+        `;
+    }
 
     const weapon = equipment.find(eq => eq.slotId === 'WEAPON');
     const weaponName = weapon?.itemName || "";
