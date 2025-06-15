@@ -62,7 +62,7 @@ export function createCharacterCard(profile, searchName) {
             ${profile.setPoint > 0 ? `<span style="color:#aaa; font-size: 0.9em; margin-left: 4px;">(${profile.setPoint})</span>` : ''}
         </div>
 
-        <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);"> <span style="font-size: 1em; color: var(--color-text-secondary);">DPS</span>
+        <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);"> <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">DPS</span>
             <span style="font-size: 1.2em; color: var(--color-accent-blue);">${
             profile.dps != null ? profile.dps.toLocaleString() : 'N/A'
             }</span>

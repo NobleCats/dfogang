@@ -260,6 +260,7 @@ button:hover {
     padding-top: 0; 
     height: 24px; 
     width: auto;
+    margin-top: 5px;
 }
 
 .card > div:last-child { 
