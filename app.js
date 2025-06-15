@@ -90,7 +90,7 @@ async function showCharacterDetail(server, name) {
     state.dps.options = { cleansing_cdr: true, weapon_cdr: false, average_set_dmg: false };
     render();
     
-    const [profile, equipmentResponse, fameHistory, gearHistory] = await Promise.all([
+    const [profile, equipmentResponse, fameHistory, gearHistory, dpsResult] = await Promise.all([
         api.getCharacterProfile(server, name),
         api.getCharacterEquipment(server, name),
         api.getFameHistory(server, name),
