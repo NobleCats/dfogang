@@ -150,7 +150,7 @@ function renderDpsCalculatorWidget(profile, equipment, dpsState) {
     return widgetDiv;
 }
 
-export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory) {
+export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory, dpsState) {
     const detailView = document.getElementById('detail-view');
     // 새 위젯을 포함하도록 레이아웃 구조 변경
     detailView.innerHTML = `
