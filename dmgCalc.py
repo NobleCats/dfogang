@@ -286,8 +286,14 @@ class CharacterAnalyzer:
         setItemInfoList = res.get("setItemInfo", [])
         if not setItemInfoList: return
         setItemInfo = setItemInfoList[0]; setItemName = setItemInfo.get("setItemName"); setItemRarityName = setItemInfo.get("setItemRarityName")
+        
+        # [수정] setItemRarityName이 None이 아닌지 확인하는 로직 추가
+        if not setItemRarityName:
+            return # 희귀도 이름이 없으면 세트 아이템 분석을 진행하지 않고 함수 종료
+
         setItemStat = setItemInfo.get("active", {}).get("status", [])
         if self.AVERAGE_SET_DMG:
+            # 이 코드는 이제 setItemRarityName이 None이 아닐 때만 실행되므로 안전합니다.
             parts = setItemRarityName.strip().split()
             values = {
                 "Rare":      [0.0, 0.0, 0.0, 0.0, 0.0], # Added 'Rare' with placeholder values
