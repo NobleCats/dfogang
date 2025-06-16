@@ -35,19 +35,28 @@ SKILL_NAMES = {
     "ENCHANTRESS": {"main": "Forbidden Curse", "1a": "Marionette", "3a": "Curtain Call", "aura": "Petite Diablo"},
     "MUSE": {"main": "Lovely Tempo", "1a": "On the Stage", "3a": "Finale: Special Story", "aura": "Celebrity"},
 }
+# SADER_JOB_MAP의 키도 미리 strip() 처리하여 공백 문제 방지
 SADER_JOB_MAP = {
-    "92d1c40f5e486e3aa4fae8db283d1fd3": {"ba2ae3598c3af10c26562e073bc92060": "M_SADER"},
-    "2ae47d662a9b18848c5e314966762bd7": {"ba2ae3598c3af10c26562e073bc92060": "F_SADER"},
-    "fc067d0781f1d01ef8f0b215440bac6d": {"5dff544828c42d8fc109f2f747d50c7f": "ENCHANTRESS"},
-    "dbbdf2dd28072b26f22b77454d665f21": {"ba2ae3598c3af10c26562e073bc92060": "MUSE"},
+    "92d1c40f5e486e3aa4fae8db283d1fd3".strip(): {"ba2ae3598c3af10c26562e073bc92060".strip(): "M_SADER"},
+    "2ae47d662a9b18848c5e314966765bd7".strip(): {"ba2ae3598c3af10c26562e073bc92060".strip(): "F_SADER"}, # 수정된 부분
+    "fc067d0781f1d01ef8f0b215440bac6d".strip(): {"5dff544828c42d8fc109f2f747d50c7f".strip(): "ENCHANTRESS"},
+    "dbbdf2dd28072b26f22b77454d665f21".strip(): {"ba2ae3598c3af10c26562e073bc92060".strip(): "MUSE"},
 }
-# FORMULA_CONSTANTS는 더 이상 공식에 직접 사용되지 않지만, 다른 곳에서 참조될 수 있으므로 유지
 FORMULA_CONSTANTS = {
     "Valor Blessing":  {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379}, "Divine Invocation": {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379},
     "Forbidden Curse": {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379}, "Lovely Tempo":    {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379},
     "Apocalypse":      {"c": 750, "X": 5250, "Y": 5000, "Z": 0.000025}, "Crux of Victoria":{"c": 750, "X": 5250, "Y": 5000, "Z": 0.000025},
     "Marionette":      {"c": 750, "X": 5250, "Y": 5000, "Z": 0.000025}, "On the Stage":    {"c": 750, "X": 5250, "Y": 5000, "Z": 0.000025},
 }
+# 직업별 메인 버프 최종 결과 상수
+JOB_MAIN_BUFF_MULTIPLIERS = {
+    "ENCHANTRESS": 1.25,
+    "M_SADER": 1.12,
+    "F_SADER": 1.15,
+    "MUSE": 1.10
+}
+# 인챈트리스 추가 상수 (1.15)
+ENCHANTRESS_ADDITIONAL_MULTIPLIER = 1.15
 
 class BufferAnalyzer:
     def __init__(self, api_key, server, character_id):
@@ -226,7 +235,6 @@ class BufferAnalyzer:
         if not self.job_code: return {}
         skill_name, (stat, buff_power) = SKILL_NAMES[self.job_code][skill_name_key], (calculated_stats.get("stat_value", 0), calculated_stats.get("buff_power", 0))
 
-        # Apply aura_stat_bonus to the stat value for main, 1a, and 3a buffs
         if skill_name_key in ["main", "1a", "3a"]:
             stat += aura_stat_bonus
 
@@ -246,7 +254,7 @@ class BufferAnalyzer:
             coeffs = table.get(skill_level)
             if not coeffs: return {} 
 
-            c_val = coeffs["stat"] # c는 stat에 대해 진행
+            c_val = coeffs["stat"]
             
             stat_bonus_calc = c_val * (stat / 750 + 1) + c_val * ((stat + 5250) / 750 + 1) * (buff_power + 5000) * 0.000025
             
@@ -260,18 +268,24 @@ class BufferAnalyzer:
                 base_result["stat_bonus"] = round(first_awakening_buff['stat_bonus'] * (percent_increase / 100))
             return base_result
         if skill_name_key == "main":
-            # New formula for main: c * (stat / 665 + 1) + c * ((stat + 4350) / 665 + 1) * (buffpower + 3500) * 0.000379
+            # New formula for main: c * (stat / 665 + 1) + c * ((stat + 4350) / 665 + 1) * (buffpower + 3500) * 0.0000379
             table = BUFF_TABLES[self.job_code]
             coeffs = table.get(skill_level)
             if not coeffs: return {}
 
+            # Constants for main buff formula
+            DENOM_C = 665
+            X_CONST = 4350
+            Y_CONST = 3500
+            Z_CONST = 0.0000379
+
             # stat에 대해 진행
             c_stat = coeffs["stat"]
-            stat_bonus_calc = c_stat * (stat / 665 + 1) + c_stat * ((stat + 4350) / 665 + 1) * (buff_power + 3500) * 0.000379
+            stat_bonus_calc = c_stat * (stat / DENOM_C + 1) + c_stat * ((stat + X_CONST) / DENOM_C + 1) * (buff_power + Y_CONST) * Z_CONST
             
             # atk에 대해 진행
             c_atk = coeffs["atk"]
-            atk_bonus_calc = c_atk * (stat / 665 + 1) + c_atk * ((stat + 4350) / 665 + 1) * (buff_power + 3500) * 0.000379
+            atk_bonus_calc = c_atk * (stat / DENOM_C + 1) + c_atk * ((stat + X_CONST) / DENOM_C + 1) * (buff_power + Y_CONST) * Z_CONST
             
             base_result.update({
                 "stat_bonus": round(stat_bonus_calc),
@@ -292,16 +306,34 @@ class BufferAnalyzer:
             "buff_equip_creature": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/creature",
             "buff_equip_avatar": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/avatar"
         }
-        tasks = {name: fetch_json(session, f"{self.BASE_URL}{path}", self.API_KEY) for name, path in endpoints.items()}
+        tasks = {}
+        for name, path in endpoints.items():
+            tasks[name] = fetch_json(session, f"{self.BASE_URL}{path}", self.API_KEY)
+            
         api_data = await asyncio.gather(*tasks.values())
         data = dict(zip(tasks.keys(), api_data))
 
         profile = data.get("profile")
         if not profile: return {"error": "Can not load the character information."}
         character_job_id = profile.get("jobId")
-        self.job_code = SADER_JOB_MAP.get(character_job_id, {}).get(profile.get("jobGrowId"))
-        self.character_job_id = character_job_id
-        if not self.job_code: return {"error": "Not a sader."}
+        character_job_grow_id = profile.get("jobGrowId") # jobGrowId도 명확하게 변수로 받기
+
+        # DEBUG: Print retrieved Job IDs
+        print(f"DEBUG: Retrieved Character JobId: {character_job_id}")
+        print(f"DEBUG: Retrieved Character JobGrowId: {character_job_grow_id}")
+
+        # Apply .strip() to job IDs to remove any hidden whitespace
+        character_job_id_stripped = character_job_id.strip() if character_job_id else character_job_id
+        character_job_grow_id_stripped = character_job_grow_id.strip() if character_job_grow_id else character_job_grow_id
+
+        self.job_code = SADER_JOB_MAP.get(character_job_id_stripped, {}).get(character_job_grow_id_stripped)
+        self.character_job_id = character_job_id_stripped # Use stripped version for consistency
+        if not self.job_code: # Not a sader.
+            # DEBUG: Print Job IDs if not a sader
+            print(f"DEBUG: JobId '{character_job_id_stripped}' NOT found in SADER_JOB_MAP keys or JobGrowId '{character_job_grow_id_stripped}' not mapped.")
+            if character_job_id_stripped in SADER_JOB_MAP:
+                print(f"DEBUG: Available JobGrowIds for this JobId: {SADER_JOB_MAP[character_job_id_stripped].keys()}")
+            return {"error": "Not a sader."}
 
 
         item_ids_to_fetch = set()
@@ -317,7 +349,7 @@ class BufferAnalyzer:
             current_creature.extend(temp_current_creature)
         elif isinstance(temp_current_creature, dict):
             current_creature.append(temp_current_creature)
-
+            
         # Initialize gear_sources_for_fetching with all known lists, ensuring they are lists (even empty)
         gear_sources_for_fetching = []
         gear_sources_for_fetching.append(current_equipment_data)
@@ -328,7 +360,7 @@ class BufferAnalyzer:
         buff_equip_data = data.get("buff_equip_equipment", {}).get("skill", {}).get("buff", {})
         buff_enhancement_equipment = buff_equip_data.get("equipment", [])
         gear_sources_for_fetching.append(buff_enhancement_equipment)
-
+        
         # Collect item IDs from buff enhancement creature
         buff_equip_creature_data = data.get("buff_equip_creature", {}).get("skill", {}).get("buff", {})
         buff_enhancement_creature = buff_equip_creature_data.get("creature")
@@ -344,7 +376,6 @@ class BufferAnalyzer:
         buff_equip_avatar_data = data.get("buff_equip_avatar", {}).get("skill", {}).get("buff", {})
         buff_enhancement_avatars = buff_equip_avatar_data.get("avatar", [])
         gear_sources_for_fetching.append(buff_enhancement_avatars)
-
 
         for source_list in gear_sources_for_fetching:
             if not isinstance(source_list, (list, tuple)):
@@ -372,8 +403,7 @@ class BufferAnalyzer:
         
         item_tasks = [fetch_json(session, f"https://api.dfoneople.com/df/items/{item_id}", self.API_KEY) for item_id in item_ids_to_fetch]
         self.item_details_cache = {res['itemId']: res for res in await asyncio.gather(*item_tasks) if res and 'itemId' in res}
-
-
+        
         if "status" not in data or not data["status"]:
             return {"error": "Character status data is not available."}
 
@@ -394,10 +424,6 @@ class BufferAnalyzer:
                     buff_power_from_status_api = value
                 elif name == "Buff Power Amp.":
                     buff_power_amp_from_status_api = value
-
-        # Original stats from Status API (important for base values)
-        # Removed all initial DEBUG prints here.
-
 
         # Determine the applicable stat name and value based on character's job
         applicable_stat_name = ""
@@ -445,20 +471,12 @@ class BufferAnalyzer:
             parsing_for=['main', '1a', '3a', 'aura']
         )
 
-        # 버프 강화 장비 세트 파싱 (스킬 레벨 보너스만)
-        parsed_stats_from_buff_enhancement_gear = self._parse_stats_from_gear_set(
-            buff_enhancement_gear_set,
-            {"Intelligence": 0, "Spirit": 0, "Vitality": 0},
-            character_job_id,
-            parsing_for=['main']
-        )
-
-
         # --- 메인 버프 계산을 위한 스탯 및 Buff Power Amp. 조정 ---
         # 초기값은 status API에서 가져온 캐릭터의 전체 스탯
         adjusted_main_buff_stat_value = applicable_stat_value
         adjusted_buff_power_amp_for_main = buff_power_amp_from_status_api
         adjusted_buff_power_from_status_api_for_main = buff_power_from_status_api
+
 
         # --- 장비(Equipment) 스탯 조정 ---
         current_equipment_by_slot = {item.get("slotName"): item for item in current_equipment_data if item.get("slotName")}
@@ -494,7 +512,6 @@ class BufferAnalyzer:
                 adjusted_main_buff_stat_value -= current_item_subtract_stat
                 adjusted_buff_power_amp_for_main -= current_item_subtract_amp
 
-
                 # 버프 강화 장비 (해당 슬롯)의 스탯/Amp.를 더합니다.
                 buff_enh_item_add_stat = 0
                 buff_enh_item_add_amp = 0
@@ -520,20 +537,17 @@ class BufferAnalyzer:
                 adjusted_main_buff_stat_value += buff_enh_item_add_stat
                 adjusted_buff_power_amp_for_main += buff_enh_item_add_amp
 
-
         # --- 크리처 스탯 조정 (버프 강화 크리처가 있을 때만 적용) ---
-        if buff_enh_creature_list: # Check if the list contains any creature
+        if buff_enh_creature_list:
             # 현재 장착 중인 크리처 스탯 및 버프 파워를 합산 (뺄 값)
             current_creature_subtract_stat = 0
             current_creature_subtract_amp = 0
             current_creature_subtract_bp = 0
-            if current_creature: # current_creature is already a list guaranteed from above
+            if current_creature:
                 creature_id = current_creature[0].get("itemId")
                 full_item_details = self.item_details_cache.get(creature_id, {})
                 stats_to_process = []
                 if full_item_details.get("itemStatus"): stats_to_process.extend(full_item_details.get("itemStatus", []))
-                if current_creature[0].get("enchant", {}).get("status"): stats_to_process.extend(current_creature[0].get("enchant", {}).get("status", []))
-                elif full_item_details.get("enchant", {}).get("status"): stats_to_process.extend(full_item_details.get("enchant", {}).get("status", []))
 
                 for stat_entry in stats_to_process:
                     name = stat_entry.get("name", "")
@@ -553,20 +567,17 @@ class BufferAnalyzer:
             adjusted_buff_power_amp_for_main -= current_creature_subtract_amp
             adjusted_buff_power_from_status_api_for_main -= current_creature_subtract_bp
 
-
             # 버프 강화 크리처 스탯 및 버프 파워를 합산 (더할 값)
             buff_enh_creature_add_stat = 0
             buff_enh_creature_add_amp = 0
             buff_enh_creature_add_bp = 0
             processed_buff_enh_creature = buff_enh_creature_list[0]
+            
             if processed_buff_enh_creature:
                 creature_id = processed_buff_enh_creature.get("itemId")
                 full_item_details = self.item_details_cache.get(creature_id, {})
                 stats_to_process = []
                 if full_item_details.get("itemStatus"): stats_to_process.extend(full_item_details.get("itemStatus", []))
-                if processed_buff_enh_creature.get("enchant", {}).get("status"): stats_to_process.extend(processed_buff_enh_creature.get("enchant", {}).get("status", []))
-                elif full_item_details.get("enchant", {}).get("status"): stats_to_process.extend(full_item_details.get("enchant", {}).get("status", []))
-
                 for stat_entry in stats_to_process:
                     name = stat_entry.get("name", "")
                     value_raw = stat_entry.get("value", 0)
@@ -584,7 +595,6 @@ class BufferAnalyzer:
             adjusted_main_buff_stat_value += buff_enh_creature_add_stat
             adjusted_buff_power_amp_for_main += buff_enh_creature_add_amp
             adjusted_buff_power_from_status_api_for_main += buff_enh_creature_add_bp
-
 
         # --- 아바타 엠블렘 스탯 조정 (버프 강화 아바타의 특정 슬롯이 현재 장착 아바타와 일치할 경우에만 적용) ---
         current_avatar_by_slot = {item.get("slotName"): item for item in current_avatar_data if item.get("slotName")}
@@ -645,8 +655,7 @@ class BufferAnalyzer:
 
         # Final values for logging before returning
         adjusted_final_calculated_buff_power_for_main = adjusted_buff_power_from_status_api_for_main * (1 + adjusted_buff_power_amp_for_main * 0.01)
-
-
+        
         # For other buffs (1a, 3a, aura), use the original values from status API + current gear bonuses
         calculated_stats_for_other_buffs = {
             "stat_value": applicable_stat_value,
@@ -707,7 +716,25 @@ class BufferAnalyzer:
            main_buff_equip_data["skill"]["buff"]["skillInfo"].get("option"):
             main_buff_lv = main_buff_equip_data["skill"]["buff"]["skillInfo"]["option"].get("level", 0)
 
-        final_buffs["main"] = self._calculate_buff("main", main_buff_lv, calculated_stats_for_main_buff, aura_stat_bonus=aura_stat_bonus_value)
+        # Calculate main buff
+        main_buff_result = self._calculate_buff("main", main_buff_lv, calculated_stats_for_main_buff, aura_stat_bonus=aura_stat_bonus_value)
+        
+        # Apply job-specific multiplier to main buff results
+        if main_buff_result and self.job_code in JOB_MAIN_BUFF_MULTIPLIERS:
+            multiplier = JOB_MAIN_BUFF_MULTIPLIERS[self.job_code]
+            if "stat_bonus" in main_buff_result:
+                main_buff_result["stat_bonus"] = round(main_buff_result["stat_bonus"] * multiplier)
+            if "atk_bonus" in main_buff_result:
+                main_buff_result["atk_bonus"] = round(main_buff_result["atk_bonus"] * multiplier)
+        
+        # Apply Enchantress specific additional multiplier and store original value
+        if self.job_code == "ENCHANTRESS":
+            if "stat_bonus" in main_buff_result:
+                main_buff_result["stat_bonus_fav"] = round(main_buff_result["stat_bonus"] * ENCHANTRESS_ADDITIONAL_MULTIPLIER)
+            if "atk_bonus" in main_buff_result:
+                main_buff_result["atk_bonus_fav"] = round(main_buff_result["atk_bonus"] * ENCHANTRESS_ADDITIONAL_MULTIPLIER)
+
+        final_buffs["main"] = main_buff_result
         if final_buffs.get("main"): final_buffs["main"]["level"] = main_buff_lv
 
 
