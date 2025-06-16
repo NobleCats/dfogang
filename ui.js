@@ -206,7 +206,7 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
                 <div class="character-canvas" id="character-canvas-container"></div>
                 <div id="set-info-container" class="detail-widget" style="margin-top: 24px;"></div>
             </div>
-            <div id="dps-widget-area"></div>
+            <div id="dps-widget-area"></div> {/* This is the existing placeholder */}
             <div class="detail-widget detail-widget-fame">
                 <h3 class="widget-title">Fame Trend</h3>
                 <div id="fame-chart-container" style="width: 100%; height: 265px;">
@@ -225,8 +225,11 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
     
+    // Clear the existing content of dps-widget-area before appending
+    const dpsWidgetArea = document.getElementById('dps-widget-area');
+    dpsWidgetArea.innerHTML = ''; // Add this line to clear the content
     const dpsWidget = renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState);
-    document.getElementById('dps-widget-area').appendChild(dpsWidget);
+    dpsWidgetArea.appendChild(dpsWidget); // Append the new widget
 }
 function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');

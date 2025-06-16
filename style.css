@@ -368,6 +368,7 @@ button:hover {
 }
 #dps-widget-area {
     grid-area: dps;
+    width: 542px;
 }
 .detail-widget-fame { 
     grid-area: fame;
