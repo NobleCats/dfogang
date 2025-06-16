@@ -27,6 +27,8 @@ API_KEY = os.environ.get('DFO_API_KEY', 'sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ')
 BASE_URL = "https://api.dfoneople.com/df"
 DATA_DIR = "datas"
 
+BUFFER_SKILLS = {"Divine Invocation", "Valor Blessing", "Forbidden Curse", "Lovely Tempo"}
+
 # --- 비동기 API 헬퍼 함수 ---
 async def fetch_json(session, url):
     headers = {
@@ -71,6 +73,18 @@ async def async_get_character_id(session, server, name):
     if data and data.get("rows"):
         return data["rows"][0]["characterId"]
     return None
+
+async def async_get_buff_skill_equipment(session, server, character_id):
+    url = f"{BASE_URL}/servers/{server}/characters/{character_id}/skill/buff/equip/equipment?apikey={API_KEY}"
+    return await fetch_json(session, url)
+
+def is_character_buffer(buff_skill_data):
+    if buff_skill_data and buff_skill_data.get("skill", {}).get("buff", {}).get("skillInfo", {}).get("name"):
+        skill_name = buff_skill_data["skill"]["buff"]["skillInfo"]["name"]
+        for buffer_skill in BUFFER_SKILLS:
+            if buffer_skill in skill_name:
+                return True
+    return False
 
 # --- 기존 라우트 (변경 없음) ---
 
@@ -463,6 +477,9 @@ async def create_or_update_profile_cache(session, server, character_id):
     if not profile_data:
         return None
 
+    buff_skill_data = await async_get_buff_skill_equipment(session, server, character_id)
+    is_buffer = is_character_buffer(buff_skill_data)
+    
     # CharacterAnalyzer를 사용하여 Normal/Normalized DPS를 한 번에 계산합니다.
     analyzer = CharacterAnalyzer(API_KEY, server, character_id)
     all_dps_results = await analyzer.run_analysis_for_all_dps(session)
@@ -498,6 +515,7 @@ async def create_or_update_profile_cache(session, server, character_id):
         "level": profile_data.get("level"),
         "serverId": server,
         **set_info,
+        "is_buffer": is_buffer,
         "dps": {
             "normal": normal_dps,
             "normalized": normalized_dps
