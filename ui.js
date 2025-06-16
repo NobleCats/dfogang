@@ -212,7 +212,7 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, is
 
 function renderBuffCalculatorWidget(buffResults) {
     const widgetDiv = document.createElement('div');
-    widgetDiv.className = 'detail-widget detail-widget-buff';
+    widgetDiv.className = 'detail-widget detail-widget-buff'; 
     widgetDiv.innerHTML = `<h3 class="widget-title">Buff Calculator</h3>`;
 
     const container = document.createElement('div');
@@ -238,32 +238,55 @@ function renderBuffCalculatorWidget(buffResults) {
             const atkBonus = mainBuff.atk_bonus != null ? mainBuff.atk_bonus.toLocaleString() : 'N/A';
             let enchantressFavoredBonus = '';
             if (mainBuff.stat_bonus_fav != null && mainBuff.atk_bonus_fav != null) {
-                enchantressFavoredBonus = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; color: var(--color-text-tertiary); margin-top: 4px;">
-                        <span>(Favored Stat Bonus:</span>
-                        <span style="font-weight: 500;">${mainBuff.stat_bonus_fav.toLocaleString()})</span>
+                
+                buffDetailsHtml += `
+                    <div class="buff-category">
+                        <span class="buff-title">Main Buff (${mainLevel})</span>
+                        <div>
+                            <span>Stat:</span>
+                            <span>${statBonus}</span>
+                        </div>
+                        <div>
+                            <span></span>
+                            <span style="color: var(--color-text-tertiary)">${mainBuff.stat_bonus_fav.toLocaleString()}</span>
+                        </div>
+                        <div>
+                            <span>Attack:</span>
+                            <span>${atkBonus}</span>
+                        </div>
+                        <div>
+                            <span></span>
+                            <span style="color: var(--color-text-tertiary)">${mainBuff.atk_bonus_fav.toLocaleString()}</span>
+                        </div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; color: var(--color-text-tertiary);">
-                        <span>(Favored Atk Bonus:</span>
-                        <span style="font-weight: 500;">${mainBuff.atk_bonus_fav.toLocaleString()})</span>
+                `;
+                enchantressFavoredBonus = `
+                    <div class="favored-bonus-line">
+                        <span>Favored Stat:</span>
+                        <span>${mainBuff.stat_bonus_fav.toLocaleString()}</span>
+                    </div>
+                    <div class="favored-bonus-line">
+                        <span>Favored Atk:</span>
+                        <span>${mainBuff.atk_bonus_fav.toLocaleString()}</span>
+                    </div>
+                `;
+            }
+            else {
+                buffDetailsHtml += `
+                    <div class="buff-category">
+                        <span class="buff-title">Main Buff (${mainLevel})</span>
+                        <div>
+                            <span>Stat:</span>
+                            <span>${statBonus}</span>
+                        </div>
+                        <div>
+                            <span>Attack:</span>
+                            <span>${atkBonus}</span>
+                        </div>
                     </div>
                 `;
             }
 
-            buffDetailsHtml += `
-                <div class="buff-category">
-                    <span class="buff-title">Main Buff (${mainLevel})</span>
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
-                        <span>Stat Bonus:</span>
-                        <span style="color: var(--color-text-primary); font-weight: 500;">${statBonus}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
-                        <span>Attack Bonus:</span>
-                        <span style="color: var(--color-text-primary); font-weight: 500;">${atkBonus}</span>
-                    </div>
-                    ${enchantressFavoredBonus}
-                </div>
-            `;
         }
 
         // 1A Buff
@@ -274,9 +297,9 @@ function renderBuffCalculatorWidget(buffResults) {
             buffDetailsHtml += `
                 <div class="buff-category">
                     <span class="buff-title">1st Awakening Buff (${oneALevel})</span>
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
-                        <span>Stat Bonus:</span>
-                        <span style="color: var(--color-text-primary); font-weight: 500;">${statBonus}</span>
+                    <div>
+                        <span>Stat:</span>
+                        <span>${statBonus}</span>
                     </div>
                 </div>
             `;
@@ -291,13 +314,9 @@ function renderBuffCalculatorWidget(buffResults) {
             buffDetailsHtml += `
                 <div class="buff-category">
                     <span class="buff-title">3rd Awakening Buff (${threeALevel})</span>
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
-                        <span>Stat Bonus (from 1A):</span>
-                        <span style="color: var(--color-text-primary); font-weight: 500;">${statBonus}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
-                        <span>Increase Percent:</span>
-                        <span style="color: var(--color-text-primary); font-weight: 500;">${increasePercent}</span>
+                    <div>
+                        <span>Stat:</span>
+                        <span>${statBonus}</span>
                     </div>
                 </div>
             `;
@@ -310,21 +329,20 @@ function renderBuffCalculatorWidget(buffResults) {
             const statBonus = auraBuff.stat_bonus != null ? auraBuff.stat_bonus.toLocaleString() : 'N/A';
             buffDetailsHtml += `
                 <div class="buff-category">
-                    <span class="buff-title">Aura Buff (${auraLevel})</span>
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
-                        <span>Stat Bonus:</span>
-                        <span style="color: var(--color-text-primary); font-weight: 500;">${statBonus}</span>
+                    <span class="buff-title">Aura (${auraLevel})</span>
+                    <div>
+                        <span>Stat:</span>
+                        <span>${statBonus}</span>
                     </div>
                 </div>
             `;
         }
 
-
         container.innerHTML = `
             ${buffDetailsHtml}
-            <div class="buff-score-display" style="margin-top: 16px; border-top: 1px solid var(--color-border); padding-top: 20px;">
-                <span class="buff-score-label">Total Buff Score</span>
-                <span class="buff-score-value">${totalBuffScore}</span>
+            <div class="buff-score-display"> 
+                <span class="buff-score-label">Buff Score</span>
+                <span class="buff-score-value">${totalBuffScore}</span> 
             </div>
         `;
     }
@@ -332,7 +350,6 @@ function renderBuffCalculatorWidget(buffResults) {
     widgetDiv.appendChild(container);
     return widgetDiv;
 }
-
 
 export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory, dpsState, isBuffer, buffResults) {
     const detailView = document.getElementById('detail-view');

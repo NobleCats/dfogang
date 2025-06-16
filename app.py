@@ -535,34 +535,35 @@ async def create_or_update_profile_cache(session, server, character_id):
 
     # [NEW] 버퍼 여부 판별
     is_buffer = False
+    total_buff_score = None # 기본값
     buff_skill_data = await async_get_buff_skill(session, server, character_id)
     if buff_skill_data and buff_skill_data.get("skill", {}).get("buff", {}).get("skillInfo", {}).get("name"):
         skill_name = buff_skill_data["skill"]["buff"]["skillInfo"]["name"]
         if any(buffer_skill in skill_name for buffer_skill in BUFFER_SKILLS):
             is_buffer = True
+            # 버퍼일 경우 버프 능력치 계산
+            buff_analyzer = BufferAnalyzer(API_KEY, server, character_id)
+            buff_results = await buff_analyzer.run_buff_power_analysis(session)
+            if buff_results and "total_buff_score" in buff_results:
+                total_buff_score = buff_results["total_buff_score"]
+
 
     normal_dps = None
     normalized_dps = None
-    buff_power_score = None
-    buff_details = None
+    equip_data = None
 
-    if is_buffer and BufferAnalyzer:
-        # 버퍼일 경우 BuffAnalyzer를 사용
-        buffer_analyzer = BufferAnalyzer(API_KEY, server, character_id)
-        buff_results = await buffer_analyzer.run_buff_power_analysis(session)
-        if "error" not in buff_results:
-            buff_power_score = buff_results.get("total_buff_score")
-            buff_details = buff_results.get("buffs")
-    elif CharacterAnalyzer:
-        # 딜러일 경우 CharacterAnalyzer를 사용
+    if not is_buffer: # [MODIFIED] 버퍼가 아닐 때만 DPS 계산
         analyzer = CharacterAnalyzer(API_KEY, server, character_id)
         all_dps_results = await analyzer.run_analysis_for_all_dps(session)
+
         if "error" not in all_dps_results:
             normal_dps = all_dps_results.get("normal", {}).get("dps")
             normalized_dps = all_dps_results.get("normalized", {}).get("dps")
-    else:
-        print("Warning: Neither CharacterAnalyzer nor BufferAnalyzer is loaded.")
-        return None
+            equip_data = all_dps_results.get("equipment_data")
+    else: # [NEW] 버퍼일 경우 장비 정보는 buffCalc에서 가져오지 않으므로, 여기서 가져옴
+        equip_data = await async_get_equipment(session, server, character_id)
+
+
 
     # 세트 아이템 정보를 추출합니다.
     equip_data = await async_get_equipment(session, server, character_id) # Equipment data needed for setItemInfo
@@ -588,13 +589,12 @@ async def create_or_update_profile_cache(session, server, character_id):
         "level": profile_data.get("level"),
         "serverId": server,
         **set_info,
-        "dps": { # DPS는 딜러에게만 해당
+        "dps": { # 버퍼일 경우 None이 될 수 있음
             "normal": normal_dps,
             "normalized": normalized_dps
         },
-        "buff_power": buff_power_score, # 버퍼 버프력
-        "buff_details": buff_details, # 버퍼 상세 버프 정보
         "is_buffer": is_buffer,
+        "total_buff_score": total_buff_score, # [NEW] total_buff_score 추가
         "last_updated": datetime.datetime.utcnow().isoformat() + "Z"
     }
 

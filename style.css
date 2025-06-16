@@ -498,6 +498,88 @@ button:hover {
     align-items: center;
     cursor: help;
 }
+
+.detail-widget-buff {
+    grid-area: dps; 
+}
+
+.buff-calculator-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+}
+
+.buff-category {
+    background-color: transparent; 
+    border-radius: 0; 
+    padding: 0; 
+    border: none; 
+    margin-bottom: 0; 
+}
+
+.buff-title {
+    font-size: 1.0em;
+    font-weight: 500; 
+    color: var(--color-text-secondary); 
+    margin-bottom: 8px; 
+    display: block;
+    padding-bottom: 0; 
+    border-bottom: none; 
+}
+
+.buff-category > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.0em; 
+    color: var(--color-text-secondary); 
+    margin-top: 0px;
+    padding-bottom: 4px;
+}
+
+.buff-category > div:last-child {
+    padding-bottom: 0; 
+}
+
+.buff-category span:nth-child(2) { 
+    color: var(--color-text-primary); 
+    font-weight: 500; 
+}
+
+.buff-category .favored-bonus-line { 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9em; 
+    color: var(--color-text-tertiary);
+    margin-top: 4px; 
+    padding-bottom: 0px;
+}
+.buff-category .favored-bonus-line span:last-child {
+    font-weight: 500;
+}
+
+.buff-score-display {
+    border-top: 1px solid var(--color-border);
+    padding-top: 20px; 
+    margin-top: 10px; 
+    text-align: right;
+}
+
+.buff-score-label {
+    display: block;
+    font-size: 14px;
+    color: var(--color-text-secondary); 
+    margin-bottom: 4px; 
+}
+
+.buff-score-value {
+    font-family: var(--font-dfo);
+    font-size: 28px; 
+    color: var(--color-accent-blue); 
+}
+
+
 .tooltip-icon {
     display: inline-flex;
     justify-content: center;
