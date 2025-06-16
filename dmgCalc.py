@@ -87,30 +87,6 @@ class CharacterAnalyzer:
     def is_dragon_set(self, set_name): return "dragon" in set_name.lower()
     def is_serendipity_set(self, set_name): return "serendipity" in set_name.lower()
     def is_pack_set(self, set_name): return "pack" in set_name.lower()
-    
-    def _calculate_dps_from_state(self, status):
-        atk_amp = next((s["value"] for s in status if s["name"] == "Atk. Amp."), 0.0)
-        
-        # 계산 중 원본 elemental_dmg_sum이 변경되지 않도록 복사본을 사용합니다.
-        temp_elemental_dmg = self.elemental_dmg_sum.copy()
-        all_value = temp_elemental_dmg.get("All", 0.0)
-        if all_value:
-            for element in ["Fire", "Water", "Light", "Shadow"]:
-                temp_elemental_dmg[element] += all_value
-
-        max_elemental_value = max((v for k, v in temp_elemental_dmg.items() if k != "All"), default=13.0)
-        elemental_multiplier = 1.05 + 0.0045 * max_elemental_value
-        final_damage_value = self.damage_value_sum * (1 + atk_amp / 100)
-        
-        final_damage = final_damage_value * self.overall_dmg_mul * elemental_multiplier
-        effective_cooldown_multiplier = max(0.3, self.cd_reduction_mul * (100 / (100 + self.cd_recovery_sum if self.cd_recovery_sum > 0 else 100)))
-        dps = final_damage / effective_cooldown_multiplier if effective_cooldown_multiplier > 0 else 0
-        
-        return {
-            "finalDamage": round(final_damage),
-            "cooldownReduction": round((1 - effective_cooldown_multiplier) * 100, 2),
-            "dps": round(dps / 1000)
-        }
 
     def engrave_cal(self, option=None):
         if not isinstance(option, list): return 0
@@ -386,18 +362,36 @@ class CharacterAnalyzer:
         if flag.get("itemId"): self.parse_creature_item_from_cache(flag["itemId"], source=f"[INSIGNIA] {flag.get('itemName')}")
         for gem in flag.get("gems", []):
             if gem.get("itemId"): self.parse_creature_item_from_cache(gem["itemId"], source=f"[INSIGNIA GEM] {gem.get('itemName')}")
-        
+            
+    def get_final_dps(self, status_res):
+        if not status_res: return {"error": "캐릭터 상태 정보를 가져올 수 없습니다."}
+        status = status_res.get("status", [])
+        atk_amp = next((s["value"] for s in status if s["name"] == "Atk. Amp."), 0.0)
+        all_value = self.elemental_dmg_sum.get("All", 0.0)
+        if all_value:
+            for element in ["Fire", "Water", "Light", "Shadow"]: self.elemental_dmg_sum[element] += all_value
+        max_elemental_value = max((v for k, v in self.elemental_dmg_sum.items() if k != "All"), default=13.0)
+        elemental_multiplier = 1.05 + 0.0045 * max_elemental_value
+        final_damage_value = self.damage_value_sum * (1 + atk_amp / 100)
+        final_damage = final_damage_value * self.overall_dmg_mul * elemental_multiplier
+        effective_cooldown_multiplier = max(0.3, self.cd_reduction_mul * (100 / (100 + self.cd_recovery_sum if self.cd_recovery_sum > 0 else 100)))
+        final_cooldown_reduction_percent = (1 - effective_cooldown_multiplier) * 100
+        dps = final_damage / effective_cooldown_multiplier if effective_cooldown_multiplier > 0 else 0
+        return {
+            "finalDamage": round(final_damage),
+            "cooldownReduction": round(final_cooldown_reduction_percent, 2),
+            "dps": round(dps / 1000)
+        }
 
-    async def run_analysis_for_all_dps(self, session):
-
-        # --- 1. 데이터 로딩 (API 호출) ---
+    async def run_analysis(self, session):
+        """캐릭터 분석을 실행하고 최종 DPS 결과를 반환하는 메인 메소드."""
+        self._reset_stats()
         endpoints = ["equip/equipment", "equip/avatar", "equip/creature", "equip/flag", "status"]
         tasks = [fetch_json(session, f"{self.BASE_URL}/characters/{self.CHARACTER_ID}/{ep}", self.API_KEY) for ep in endpoints]
         responses = await asyncio.gather(*tasks)
         char_data = dict(zip(["equipment", "avatar", "creature", "flag", "status"], responses))
 
-        if not char_data.get("equipment"):
-            return {"error": "장비 정보를 불러올 수 없습니다."}
+        if not char_data.get("equipment"): return {"error": "장비 정보를 불러올 수 없습니다."}
 
         item_ids_to_fetch = set()
         if char_data["equipment"]:
@@ -422,32 +416,12 @@ class CharacterAnalyzer:
         item_responses = await asyncio.gather(*item_tasks)
         self.item_details_cache = {res['itemId']: res for res in item_responses if res and 'itemId' in res}
 
-        # --- 2. DPS 계산 ---
-        results = {}
-        status_info = char_data["status"].get("status", [])
-
-        # 2-1. Normal DPS 계산
-        self._reset_stats()
-        self.AVERAGE_SET_DMG = False
         self.analyze_character_equipment(char_data["equipment"])
         self.analyze_aura_avatar(char_data["avatar"])
         self.analyze_creature(char_data["creature"])
         self.analyze_insignia(char_data["flag"])
-        results["normal"] = self._calculate_dps_from_state(status_info)
-
-        # 2-2. Normalized DPS 계산
-        self._reset_stats()
-        self.AVERAGE_SET_DMG = True
-        self.analyze_character_equipment(char_data["equipment"])
-        self.analyze_aura_avatar(char_data["avatar"])
-        self.analyze_creature(char_data["creature"])
-        self.analyze_insignia(char_data["flag"])
-        results["normalized"] = self._calculate_dps_from_state(status_info)
         
-        # app.py에서 장비 정보를 재사용할 수 있도록 함께 반환
-        results["equipment_data"] = char_data["equipment"]
-
-        return results
+        return self.get_final_dps(char_data["status"])
 
 # --- 스크립트 실행 부분 ---
 async def main():

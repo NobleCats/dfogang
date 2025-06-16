@@ -29,10 +29,10 @@ function getSetIconPath(setName) {
     return "assets/sets/Unknown.png";
 }
 
-export function createCharacterCard(profile, searchName, dpsToShow) {
+export function createCharacterCard(profile, searchName) {
     const spritePath = `assets/characters/${profile.jobName}.png`;
     const setIconPath = getSetIconPath(profile.setItemName ?? "");
-    const rarityName = profile.setItemRarityName ?? ""; 
+    const rarityName = profile.setItemRarityName ?? "None";
     let rarityStyle = 'padding:2px 0;';
     if (rarityName === "Primeval") {
         rarityStyle = `background: linear-gradient(to bottom, #57e95b, #3a8390); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`;
@@ -64,7 +64,7 @@ export function createCharacterCard(profile, searchName, dpsToShow) {
 
         <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);"> <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">DPS</span>
             <span style="font-size: 1.2em; color: var(--color-accent-blue);">${
-            dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A'
+            profile.dps != null ? profile.dps.toLocaleString() : 'N/A'
             }</span>
         </div>
     `;
@@ -306,8 +306,6 @@ function renderCharacterCanvas(profile, equipmentList) {
     drawCharacterText(profile);
 }
 
-// ui.js
-
 function renderSetItems(setItemInfo) {
     const container = document.getElementById("set-info-container");
     container.innerHTML = "";
@@ -319,7 +317,7 @@ function renderSetItems(setItemInfo) {
     container.style.display = 'block';
     
     setItemInfo.forEach(item => {
-        const rarityName = item.setItemRarityName ?? "";
+        const rarityName = item.setItemRarityName ?? "None";
         let rarityStyle = `color: ${rarityColors[Object.keys(rarityColors).find(key => rarityName.includes(key)) || "None"]};`;
         if (rarityName === "Primeval") {
             rarityStyle = `background: linear-gradient(to bottom, #57e95b, #3a8390); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`;
@@ -327,9 +325,9 @@ function renderSetItems(setItemInfo) {
 
         container.innerHTML += `
             <div style="text-align:center;">
-                <div style="font-family: var(--font-dfo); font-size:22px; font-weight:700; color:#eee; margin-bottom:4px;">${item.setItemName ?? ''}</div>
+                <div style="font-family: var(--font-dfo); font-size:22px; font-weight:700; color:#eee; margin-bottom:4px;">${item.setItemName}</div>
                 <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName ?? ''}" style="height: 24px;">
+                    <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName}" style="height: 24px;">
                     <span style="font-size:16px; font-weight:500; ${rarityStyle}">${rarityName}</span>
                 </div>
                 <div style="font-size:14px; color:var(--color-text-secondary); margin-top:2px;">(${item.active?.setPoint?.current ?? 0})</div>
