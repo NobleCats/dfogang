@@ -27,26 +27,26 @@ async def fetch_json(session, url, api_key):
 # --- 상수 정의 ---
 # 스킬 이름 상수
 SKILL_NAMES = {
-    "M_SADER": {"main": "Divine Invocation", "1a": "Apocalypse", "3a": "The Day of Judgment", "aura": "Guardian's Blessing"},
-    "F_SADER": {"main": "Valor Blessing", "1a": "Crux of Victoria", "3a": "Laus di Angelus", "aura": "Guardian's Blessing"},
-    "ENCHANTRESS": {"main": "Forbidden Curse", "1a": "Marionette", "3a": "The Little Witch's Whimsy", "aura": "First Aid of Love"},
-    "MUSE": {"main": "Lovely Tempo", "1a": "On the Stage", "3a": "FINALE: Special Story", "aura": "Ad-lib"},
+    "M_SADER": {"main": "Divine Invocation", "1a": "Apocalypse", "3a": "Final Judgment", "aura": "Aura of Conviction"},
+    "F_SADER": {"main": "Valor Blessing", "1a": "Crux of Victoria", "3a": "Laus di Angelus", "aura": "Pious Passion"},
+    "ENCHANTRESS": {"main": "Forbidden Curse", "1a": "Marionette", "3a": "Curtain Call", "aura": "Petite Diablo"},
+    "MUSE": {"main": "Lovely Tempo", "1a": "On the Stage", "3a": "Finale: Special Story", "aura": "Celebrity"},
 }
 
 # 직업 ID - 직업 코드 매핑
 JOB_ID_TO_CODE = {
-    "d1b9435b94e0944517625577549414e9": "M_SADER",
-    "26a3934e889417de2b32454634281c60": "F_SADER",
-    "5d21752b57f8648e1eda3f1a4e15ec4c": "ENCHANTRESS",
-    "dbbdf2dd28072b26f22b77454d665f21": "MUSE",
+    "ba2ae3598c3af10c26562e073bc92060": "M_SADER",
+    "ba2ae3598c3af10c26562e073bc92060": "F_SADER",
+    "5dff544828c42d8fc109f2f747d50c7f": "ENCHANTRESS",
+    "ba2ae3598c3af10c26562e073bc92060": "MUSE",
 }
 
 # 계산 공식 상수
 FORMULA_CONSTANTS = {
-    "Valor Blessing":  {"c": 620, "X": 4348, "Y": 3488, "Z": 0.000357},
-    "Divine Invocation": {"c": 620, "X": 4348, "Y": 3488, "Z": 0.000357}, # 여크루와 동일 계수 사용
+    "Valor Blessing":  {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379},
+    "Divine Invocation": {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379},
     "Forbidden Curse": {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379},
-    "Lovely Tempo":    {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379}, # 인챈과 동일 계수 사용 (가정)
+    "Lovely Tempo":    {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379},
     "Apocalypse":      {"c": 750, "X": 5250, "Y": 5000, "Z": 0.000025},
     "Crux of Victoria":{"c": 750, "X": 5250, "Y": 5000, "Z": 0.000025},
     "Marionette":      {"c": 750, "X": 5250, "Y": 5000, "Z": 0.000025},
