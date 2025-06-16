@@ -389,10 +389,9 @@ button:hover {
 }
 .dps-toggle-group {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: space-between; 
     align-items: center;
-    width: 250px; 
-    gap: 10px; 
+    width: 100%; 
 }
 .dps-toggle-label {
     font-size: 15px;
