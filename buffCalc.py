@@ -52,9 +52,13 @@ class BufferAnalyzer:
         self.job_code, self.item_details_cache = None, {}
 
     def _parse_stats_from_gear_set(self, gear_set, base_stats, character_job_id, parsing_for=['main', '1a', '3a', 'aura']):
-        """[최종] 어떤 버프를 위해 파싱하는지(parsing_for)에 따라 필요한 스킬 옵션만 검사합니다."""
+        
+        print(f"\n{'='*20}\n[+] Parsing Stats for '{gear_set.get('type', 'Unknown')}' Gear (Target: {', '.join(parsing_for).upper()})\n{'='*20}")
+        
         stats = { "Intelligence": base_stats.get("Intelligence", 0), "Spirit": base_stats.get("Spirit", 0), "Stamina": base_stats.get("Stamina", 0) }
         total_buff_power, skill_lv_bonuses = 0, {"main": 0, "1a": 0, "3a": 0, "aura": 0}
+        
+        print(f"[STAT_LOG] Source: Base Stats | INT: {stats['Intelligence']}, SPI: {stats['Spirit']}, STA: {stats['Stamina']}")
         
         all_items = gear_set.get("equipment", [])
         if gear_set.get("avatar"): all_items.extend(gear_set.get("avatar", []))
@@ -133,13 +137,39 @@ class BufferAnalyzer:
                             if skill_type == 'aura': print(f"[AURA-LOG] '{item_name}' ({origin}): +{bonus} to aura")
             
                 # 기본 스탯 및 버프력 합산
-            for stat in item.get("itemStatus", []) + item.get("enchant", {}).get("status", []):
+            for stat in item.get("itemStatus", []):
                 name, value = stat.get("name", ""), stat.get("value", 0)
                 if "Buff Power" in name: total_buff_power += value
-                elif "Intelligence" in name: stats["Intelligence"] += value
-                elif "Spirit" in name: stats["Spirit"] += value
-                elif "Stamina" in name: stats["Stamina"] += value
-                elif "All Stats" in name: stats["Intelligence"] += value; stats["Spirit"] += value; stats["Stamina"] += value
+                elif "All Stats" in name:
+                    stats["Intelligence"] += value; stats["Spirit"] += value; stats["Stamina"] += value
+                    print(f"[STAT_LOG] Item: '{item_name}' | Source: Item Base | Stat: All Stats (+{value}) | New Totals -> INT: {stats['Intelligence']}, SPI: {stats['Spirit']}, STA: {stats['Stamina']}")
+                elif "Intelligence" in name:
+                    stats["Intelligence"] += value
+                    print(f"[STAT_LOG] Item: '{item_name}' | Source: Item Base | Stat: Intelligence (+{value}) | New Totals -> INT: {stats['Intelligence']}, SPI: {stats['Spirit']}, STA: {stats['Stamina']}")
+                elif "Spirit" in name:
+                    stats["Spirit"] += value
+                    print(f"[STAT_LOG] Item: '{item_name}' | Source: Item Base | Stat: Spirit (+{value}) | New Totals -> INT: {stats['Intelligence']}, SPI: {stats['Spirit']}, STA: {stats['Stamina']}")
+                elif "Stamina" in name:
+                    stats["Stamina"] += value
+                    print(f"[STAT_LOG] Item: '{item_name}' | Source: Item Base | Stat: Stamina (+{value}) | New Totals -> INT: {stats['Intelligence']}, SPI: {stats['Spirit']}, STA: {stats['Stamina']}")
+
+            # 소스 2: 마법 부여 스탯 (enchant.status)
+            for stat in item.get("enchant", {}).get("status", []):
+                name, value = stat.get("name", ""), stat.get("value", 0)
+                if "Buff Power" in name: total_buff_power += value
+                elif "All Stats" in name:
+                    stats["Intelligence"] += value; stats["Spirit"] += value; stats["Stamina"] += value
+                    print(f"[STAT_LOG] Item: '{item_name}' | Source: Enchant | Stat: All Stats (+{value}) | New Totals -> INT: {stats['Intelligence']}, SPI: {stats['Spirit']}, STA: {stats['Stamina']}")
+                elif "Intelligence" in name:
+                    stats["Intelligence"] += value
+                    print(f"[STAT_LOG] Item: '{item_name}' | Source: Enchant | Stat: Intelligence (+{value}) | New Totals -> INT: {stats['Intelligence']}, SPI: {stats['Spirit']}, STA: {stats['Stamina']}")
+                elif "Spirit" in name:
+                    stats["Spirit"] += value
+                    print(f"[STAT_LOG] Item: '{item_name}' | Source: Enchant | Stat: Spirit (+{value}) | New Totals -> INT: {stats['Intelligence']}, SPI: {stats['Spirit']}, STA: {stats['Stamina']}")
+                elif "Stamina" in name:
+                    stats["Stamina"] += value
+                    print(f"[STAT_LOG] Item: '{item_name}' | Source: Enchant | Stat: Stamina (+{value}) | New Totals -> INT: {stats['Intelligence']}, SPI: {stats['Spirit']}, STA: {stats['Stamina']}")
+        
         
         print("--- Parsing Complete ---")
         
@@ -147,6 +177,10 @@ class BufferAnalyzer:
         if self.job_code in ["F_SADER", "ENCHANTRESS"]: applicable_stat_value, applicable_stat_name = stats["Intelligence"], "Intelligence"
         elif self.job_code == "MUSE": applicable_stat_value, applicable_stat_name = stats["Spirit"], "Spirit"
         elif self.job_code == "M_SADER": applicable_stat_value, applicable_stat_name = (stats["Stamina"], "Stamina") if stats["Stamina"] > stats["Spirit"] else (stats["Spirit"], "Spirit")
+        
+        print(f"[*] Final Applicable Stat for '{gear_set.get('type', 'Unknown')}' Gear -> {applicable_stat_name}: {applicable_stat_value}")
+        print(f"{'='*20}\n")
+
         return { "stat_value": applicable_stat_value, "stat_name": applicable_stat_name, "buff_power": total_buff_power, "skill_lv_bonuses": skill_lv_bonuses }
 
     def _calculate_buff(self, skill_name_key, skill_level, calculated_stats, first_awakening_buff=None):
@@ -188,7 +222,6 @@ class BufferAnalyzer:
             return base_result
         return {}
 
-
     async def run_buff_power_analysis(self, session):
         endpoints = {"profile": f"/characters/{self.CHARACTER_ID}", "status": f"/characters/{self.CHARACTER_ID}/status", "skills": f"/characters/{self.CHARACTER_ID}/skill/style","current_equipment": f"/characters/{self.CHARACTER_ID}/equip/equipment", "current_avatar": f"/characters/{self.CHARACTER_ID}/equip/avatar", "current_creature": f"/characters/{self.CHARACTER_ID}/equip/creature", "buff_equipment": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/equipment", "buff_avatar": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/avatar", "buff_creature": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/creature"}
         tasks = {name: fetch_json(session, f"{self.BASE_URL}{path}", self.API_KEY) for name, path in endpoints.items()}
@@ -200,6 +233,21 @@ class BufferAnalyzer:
         character_job_id = profile.get("jobId")
         self.job_code = SADER_JOB_MAP.get(character_job_id, {}).get(profile.get("jobGrowId"))
         if not self.job_code: return {"error": "Not a sader."}
+
+        # [수정] 기본 스탯 파싱 로직 변경
+        base_stats = {}
+        status_list = data.get("status", {}).get("status", [])
+        if status_list:
+            for s in status_list:
+                stat_name = s.get("name")
+                # 원하는 스탯의 첫 번째 값만 저장하여 덮어쓰기 방지
+                if stat_name == "Intelligence" and "Intelligence" not in base_stats:
+                    base_stats["Intelligence"] = s.get("value", 0)
+                elif stat_name == "Spirit" and "Spirit" not in base_stats:
+                    base_stats["Spirit"] = s.get("value", 0)
+                # API의 'Vitality'를 내부적으로 사용하는 'Stamina'로 매핑
+                elif stat_name == "Vitality" and "Stamina" not in base_stats:
+                    base_stats["Stamina"] = s.get("value", 0)
 
         item_ids_to_fetch = set()
         gear_sources = [data.get(k, {}).get(v, []) for k, v in {"current_equipment": "equipment", "current_avatar": "avatar", "buff_equipment": "equipment", "buff_avatar": "avatar"}.items()]
@@ -215,7 +263,6 @@ class BufferAnalyzer:
         item_tasks = [fetch_json(session, f"https://api.dfoneople.com/df/items/{item_id}", self.API_KEY) for item_id in item_ids_to_fetch]
         self.item_details_cache = {res['itemId']: res for res in await asyncio.gather(*item_tasks) if res and 'itemId' in res}
         
-        base_stats = {s["name"]: s["value"] for s in data["status"]["status"]}
         all_skills = data.get("skills", {}).get("skill", {}).get("style", {}).get("active", []) + \
                  data.get("skills", {}).get("skill", {}).get("style", {}).get("passive", [])
         skill_info = {s["name"]: s["level"] for s in all_skills}
@@ -267,8 +314,5 @@ class BufferAnalyzer:
             main_buff_lv = skill_info.get(job_skills["main"], 0) + stats_for_main_buff["skill_lv_bonuses"].get("main", 0)
         final_buffs["main"] = self._calculate_buff("main", main_buff_lv, stats_for_main_buff)
         if final_buffs.get("main"): final_buffs["main"]["level"] = main_buff_lv
-        return { 
-            "characterName": profile["characterName"], 
-            "jobName": profile["jobName"], 
-            "buffs": final_buffs
-        }
+
+        return { "characterName": profile["characterName"], "jobName": profile["jobName"], "buffs": final_buffs }
