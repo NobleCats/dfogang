@@ -483,8 +483,10 @@ async def get_dps():
     server = data.get("server")
     character_name = data.get("characterName")
 
-    # 클라이언트가 요청한 옵션
+    # [수정] 클라이언트가 요청한 모든 옵션을 읽어옵니다.
     average_set_dmg = data.get("average_set_dmg", False)
+    cleansing_cdr = data.get("cleansing_cdr", True) # 기본값은 프론트엔드와 일치시키는 것이 좋습니다.
+    weapon_cdr = data.get("weapon_cdr", False)
 
     if not server or not character_name:
         return jsonify({"error": "server와 characterName은 필수 입력 항목입니다."}), 400
@@ -495,11 +497,19 @@ async def get_dps():
             return jsonify({"error": f"캐릭터 '{character_name}'를(을) 찾을 수 없습니다."}), 404
 
         # 1. 새 함수를 호출하여 모든 DPS 결과와 최신 정보를 가져옵니다.
-        analyzer = CharacterAnalyzer(API_KEY, server, character_id)
+        # [수정] 읽어온 모든 옵션을 CharacterAnalyzer 생성자에 전달합니다.
+        analyzer = CharacterAnalyzer(
+            api_key=API_KEY,
+            server=server,
+            character_id=character_id,
+            cleansing_cdr=cleansing_cdr,
+
+            weapon_cdr=weapon_cdr,
+            average_set_dmg=average_set_dmg # 이 값은 run_analysis_for_all_dps 내부에서 오버라이드되지만, 명시적으로 전달
+        )
         all_results = await analyzer.run_analysis_for_all_dps(session)
 
         # 2. 백그라운드에서 캐시를 업데이트합니다.
-        # (별도 태스크로 분리하거나, 여기서 동기적으로 처리)
         await create_or_update_profile_cache(session, server, character_id)
 
         # 3. 클라이언트가 요청한 옵션에 맞는 DPS 결과를 선택하여 반환합니다.
