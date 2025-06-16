@@ -362,7 +362,7 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
                 <div class="character-canvas" id="character-canvas-container"></div>
                 <div id="set-info-container" class="detail-widget" style="margin-top: 24px;"></div>
             </div>
-            <div id="dps-or-buff-widget-area"></div> {/* NEW ID for the dynamic widget area */}
+            <div id="dps-or-buff-widget-area"></div>
             <div class="detail-widget detail-widget-fame">
                 <h3 class="widget-title">Fame Trend</h3>
                 <div id="fame-chart-container" style="width: 100%; height: 265px;">
