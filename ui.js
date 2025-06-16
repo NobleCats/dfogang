@@ -196,7 +196,6 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
     return widgetDiv;
 }
 
-// ui.js 파일의 renderBuffPowerDetailsWidget 함수를 아래 코드로 교체하세요.
 
 function renderBuffPowerDetailsWidget(profile) {
     const widgetDiv = document.createElement('div');
@@ -205,112 +204,60 @@ function renderBuffPowerDetailsWidget(profile) {
 
     if (!profile.buff_details || profile.buff_details.error) {
         const errorMessage = profile.buff_details?.error || 'Can not read buff power.';
-        widgetDiv.innerHTML += `<div style="text-align:center; color: var(--color-text-secondary);">${errorMessage}</div>`;
+        widgetDiv.innerHTML += `<div class="buff-power-error">${errorMessage}</div>`;
         return widgetDiv;
     }
 
-    const buffDetails = profile.buff_details.buffs;
-    const baseStatInfo = profile.buff_details.base_stat_info || {};
-
-    if (!buffDetails) {
-        widgetDiv.innerHTML += `<div style="text-align:center; color: var(--color-text-secondary);">Can not read buff power.</div>`;
+    const buffs = profile.buff_details.buffs;
+    if (!buffs) {
+        widgetDiv.innerHTML += `<div class="buff-power-error">Can not read buff power.</div>`;
         return widgetDiv;
     }
-    
+
+    const createSkillBlock = (skillKey, skillData) => {
+        if (!skillData || !skillData.level) return '';
+
+        const titleMap = { main: "Main Buff", "1a": "1st Awakening", "3a": "3rd Awakening", aura: "Aura" };
+        let detailsHtml = `
+            <div class="buff-power-row sub-detail">
+                <span class="buff-power-label">Applied ${skillData.applied_stat_name || 'Stat'}</span>
+                <span class="buff-power-value">${skillData.applied_stat_value?.toLocaleString() || '-'}</span>
+            </div>
+        `;
+
+        if (skillData.stat_bonus) {
+            detailsHtml += `
+                <div class="buff-power-row">
+                    <span class="buff-power-label">Stat Bonus</span>
+                    <span class="buff-power-value">${skillData.stat_bonus.toLocaleString()}</span>
+                </div>`;
+        }
+        if (skillData.atk_bonus) {
+            detailsHtml += `
+                <div class="buff-power-row">
+                    <span class="buff-power-label">Atk Bonus</span>
+                    <span class="buff-power-value">${skillData.atk_bonus.toLocaleString()}</span>
+                </div>`;
+        }
+
+        return `
+            <div class="buff-power-skill-block">
+                <div class="buff-power-skill-header">
+                    <span class="buff-power-skill-name">${titleMap[skillKey]}</span>
+                    <span class="buff-power-skill-level">(Lv. ${skillData.level})</span>
+                </div>
+                <div class="buff-power-skill-details">${detailsHtml}</div>
+            </div>
+        `;
+    };
+
     let content = '<div class="buff-power-details-container">';
-
-    // [신규] 계산에 적용된 스탯 정보 표시
-    if (baseStatInfo.name && baseStatInfo.value) {
-        content += `
-            <div class="buff-power-base-stat">
-                <span class="buff-power-label">Applied ${baseStatInfo.name}</span>
-                <span class="buff-power-value">${baseStatInfo.value.toLocaleString()}</span>
-            </div>
-        `;
-    }
-
-    const mainBuff = buffDetails.main || {};
-    const firstAwakening = buffDetails['1a'] || {};
-    const thirdAwakening = buffDetails['3a'] || {};
-    const aura = buffDetails.aura || {};
-
-    // Main Buff
-    if (mainBuff.level) {
-        content += `
-            <div class="buff-power-skill-block">
-                <div class="buff-power-skill-header">
-                    <span class="buff-power-skill-name">Main Buff</span>
-                    <span class="buff-power-skill-level">(Lv. ${mainBuff.level})</span>
-                </div>
-                <div class="buff-power-skill-details">
-                    <div class="buff-power-row">
-                        <span class="buff-power-label">Stat</span>
-                        <span class="buff-power-value">${mainBuff.stat_bonus?.toLocaleString() || '-'}</span>
-                    </div>
-                    <div class="buff-power-row">
-                        <span class="buff-power-label">Atk</span>
-                        <span class="buff-power-value">${mainBuff.atk_bonus?.toLocaleString() || '-'}</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    // 1st Awakening
-    if (firstAwakening.level) {
-         content += `
-            <div class="buff-power-skill-block">
-                <div class="buff-power-skill-header">
-                    <span class="buff-power-skill-name">1st Awakening</span>
-                    <span class="buff-power-skill-level">(Lv. ${firstAwakening.level})</span>
-                </div>
-                <div class="buff-power-skill-details">
-                     <div class="buff-power-row">
-                        <span class="buff-power-label">Stat</span>
-                        <span class="buff-power-value">${firstAwakening.stat_bonus?.toLocaleString() || '-'}</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    // 3rd Awakening
-     if (thirdAwakening.level) {
-         content += `
-            <div class="buff-power-skill-block">
-                <div class="buff-power-skill-header">
-                    <span class="buff-power-skill-name">3rd Awakening</span>
-                    <span class="buff-power-skill-level">(Lv. ${thirdAwakening.level})</span>
-                </div>
-                <div class="buff-power-skill-details">
-                     <div class="buff-power-row">
-                        <span class="buff-power-label">Stat</span>
-                        <span class="buff-power-value">${thirdAwakening.stat_bonus?.toLocaleString() || '-'}</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    // Aura
-     if (aura.level && aura.stat_bonus > 0) {
-         content += `
-            <div class="buff-power-skill-block">
-                <div class="buff-power-skill-header">
-                    <span class="buff-power-skill-name">Aura</span>
-                    <span class="buff-power-skill-level">(Lv. ${aura.level})</span>
-                </div>
-                <div class="buff-power-skill-details">
-                     <div class="buff-power-row">
-                        <span class="buff-power-label">Stat</span>
-                        <span class="buff-power-value">${aura.stat_bonus?.toLocaleString() || '-'}</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
+    content += createSkillBlock('main', buffs.main);
+    content += createSkillBlock('1a', buffs['1a']);
+    content += createSkillBlock('3a', buffs['3a']);
+    content += createSkillBlock('aura', buffs.aura);
     content += '</div>';
+    
     widgetDiv.innerHTML += content;
     return widgetDiv;
 }
