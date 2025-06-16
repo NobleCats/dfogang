@@ -89,6 +89,11 @@ async function performSearch(server, name) {
     state.displayedResults = [];
     render(); 
     
+    const announcementSection = document.querySelector('.announcement-section');
+    if (announcementSection) {
+        announcementSection.style.display = 'none';
+    }
+
     await api.logSearch(server, name);
     const results = await api.searchCharacters(server, name, state.dps.options.average_set_dmg);
     
