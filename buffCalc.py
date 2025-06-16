@@ -231,13 +231,11 @@ class BufferAnalyzer:
 
         item_tasks = [fetch_json(session, f"https://api.dfoneople.com/df/items/{item_id}", self.API_KEY) for item_id in item_ids_to_fetch]
         self.item_details_cache = {res['itemId']: res for res in await asyncio.gather(*item_tasks) if res and 'itemId' in res}
-        
-        
-        # --- 이 위치에 추가 ---
+
+
         if "status" not in data or not data["status"]:
             print(f"ERROR: 'status' data is missing or empty. Full data received: {data}")
             return {"error": "Character status data is not available."}
-        # --- 여기까지 추가 ---
 
         # 1. "최종 스탯" (Final Stats) - from /status endpoint
         base_stats_from_status_api = {}
@@ -245,10 +243,12 @@ class BufferAnalyzer:
             for s in data["status"]["status"]:
                 name = s.get("name")
                 value = s.get("value", 0)
-                if name in base_stats_from_status_api:
-                    base_stats_from_status_api[name] = max(base_stats_from_status_api[name], value)
-                else:
-                    base_stats_from_status_api[name] = value
+                # Only include relevant stats (Intelligence, Spirit, Vitality)
+                if name in ["Intelligence", "Spirit", "Vitality"]:
+                    if name in base_stats_from_status_api:
+                        base_stats_from_status_api[name] = max(base_stats_from_status_api[name], value)
+                    else:
+                        base_stats_from_status_api[name] = value
 
         print(f"DEBUG: Base Stats from Status API: {base_stats_from_status_api}")
 
@@ -258,39 +258,80 @@ class BufferAnalyzer:
         job_skills = SKILL_NAMES[self.job_code]
         final_buffs = {}
 
-        # Use "최종 스탯" for 1a, 3a, Aura (current gear set)
-        current_gear_set = {
+        # For 1a, 3a, Aura, use base_stats_from_status_api directly as the starting point for stats
+        # and only parse skill level bonuses and buff power from current gear.
+        current_gear_set_for_1a_3a_aura = {
             "equipment": data.get("current_equipment", {}).get("equipment", []),
             "avatar": data.get("current_avatar", {}).get("avatar", []),
             "creature": data.get("current_creature", {}).get("creature"),
             "type": "Current"
         }
-        stats_for_current_gear = self._parse_stats_from_gear_set(current_gear_set, base_stats_from_status_api, character_job_id, parsing_for=['1a', '3a', 'aura'])
+        # Only parsing for skill_lv_bonuses and buff_power from current gear for 1a, 3a, aura
+        # The base stats (Intelligence, Spirit, Vitality) for these calculations will come directly from base_stats_from_status_api
+        parsed_stats_from_current_gear_only = self._parse_stats_from_gear_set(
+            current_gear_set_for_1a_3a_aura,
+            {"Intelligence": 0, "Spirit": 0, "Vitality": 0}, # Pass 0 for base stats as they will be added later
+            character_job_id,
+            parsing_for=['1a', '3a', 'aura']
+        )
+
+        # Now, combine base_stats_from_status_api with the buff power and skill level bonuses from current gear
+        stats_for_1a_3a_aura = {
+            "Intelligence": base_stats_from_status_api.get("Intelligence", 0),
+            "Spirit": base_stats_from_status_api.get("Spirit", 0),
+            "Vitality": base_stats_from_status_api.get("Vitality", 0),
+            "buff_power": parsed_stats_from_current_gear_only["buff_power"],
+            "skill_lv_bonuses": parsed_stats_from_current_gear_only["skill_lv_bonuses"]
+        }
+        # Determine the applicable stat for 1a, 3a, aura based on combined stats
+        applicable_stat_value_1a_3a_aura = 0
+        applicable_stat_name_1a_3a_aura = ""
+        if self.job_code in ["F_SADER", "ENCHANTRESS"]:
+            applicable_stat_value_1a_3a_aura = stats_for_1a_3a_aura["Intelligence"]
+            applicable_stat_name_1a_3a_aura = "Intelligence"
+        elif self.job_code == "MUSE":
+            applicable_stat_value_1a_3a_aura = stats_for_1a_3a_aura["Spirit"]
+            applicable_stat_name_1a_3a_aura = "Spirit"
+        elif self.job_code == "M_SADER":
+            if stats_for_1a_3a_aura["Vitality"] > stats_for_1a_3a_aura["Spirit"]:
+                applicable_stat_value_1a_3a_aura = stats_for_1a_3a_aura["Vitality"]
+                applicable_stat_name_1a_3a_aura = "Vitality"
+            else:
+                applicable_stat_value_1a_3a_aura = stats_for_1a_3a_aura["Spirit"]
+                applicable_stat_name_1a_3a_aura = "Spirit"
+
+        calculated_stats_for_1a_3a_aura = {
+            "stat_value": applicable_stat_value_1a_3a_aura,
+            "stat_name": applicable_stat_name_1a_3a_aura,
+            "buff_power": stats_for_1a_3a_aura["buff_power"],
+            "skill_lv_bonuses": stats_for_1a_3a_aura["skill_lv_bonuses"]
+        }
+
 
         base_level_1a = skill_info.get(job_skills["1a"], 0)
         # ### [신규] 1차 각성기 스킬 레벨 +1 보정 ###
         if base_level_1a > 0:
             base_level_1a += 1
 
-        bonus_level_1a = stats_for_current_gear["skill_lv_bonuses"].get("1a", 0)
+        bonus_level_1a = calculated_stats_for_1a_3a_aura["skill_lv_bonuses"].get("1a", 0)
         skill_level_1a = base_level_1a + bonus_level_1a
-        final_buffs["1a"] = self._calculate_buff("1a", skill_level_1a, stats_for_current_gear)
+        final_buffs["1a"] = self._calculate_buff("1a", skill_level_1a, calculated_stats_for_1a_3a_aura)
         if final_buffs.get("1a"): final_buffs["1a"]["level"] = skill_level_1a
 
-        skill_level_3a = skill_info.get(job_skills["3a"], 0) + stats_for_current_gear["skill_lv_bonuses"].get("3a", 0)
-        final_buffs["3a"] = self._calculate_buff("3a", skill_level_3a, stats_for_current_gear, final_buffs.get("1a"))
+        skill_level_3a = skill_info.get(job_skills["3a"], 0) + calculated_stats_for_1a_3a_aura["skill_lv_bonuses"].get("3a", 0)
+        final_buffs["3a"] = self._calculate_buff("3a", skill_level_3a, calculated_stats_for_1a_3a_aura, final_buffs.get("1a"))
         if final_buffs.get("3a"): final_buffs["3a"]["level"] = skill_level_3a
 
         base_level_aura = skill_info.get(job_skills["aura"], 0)
-        bonus_level_aura = stats_for_current_gear["skill_lv_bonuses"].get("aura", 0)
+        bonus_level_aura = calculated_stats_for_1a_3a_aura["skill_lv_bonuses"].get("aura", 0)
         skill_level_aura = base_level_aura + bonus_level_aura
 
-        final_buffs["aura"] = self._calculate_buff("aura", skill_level_aura, stats_for_current_gear)
+        final_buffs["aura"] = self._calculate_buff("aura", skill_level_aura, calculated_stats_for_1a_3a_aura)
         if final_buffs.get("aura"): final_buffs["aura"]["level"] = skill_level_aura
 
         # 2. "버프 스탯" (Buff Stats) - Merged buff gear + base stats from status API
-        # Start with base stats from status API
-        buff_base_stats = {s["name"]: s["value"] for s in data["status"]["status"]}
+        # Start with base stats from status API for the main buff calculation
+        buff_base_stats = {s["name"]: s["value"] for s in data["status"]["status"] if s["name"] in ["Intelligence", "Spirit", "Vitality"]}
 
         # Merge equipment: buff equipment takes precedence over current equipment for main buff
         merged_equipment_by_slot = {item['slotId']: item for item in data.get("current_equipment", {}).get("equipment", []) if item and 'slotId' in item}
