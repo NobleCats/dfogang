@@ -196,6 +196,8 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
     return widgetDiv;
 }
 
+// ui.js 파일의 renderBuffPowerDetailsWidget 함수를 아래 코드로 교체하세요.
+
 function renderBuffPowerDetailsWidget(profile) {
     const widgetDiv = document.createElement('div');
     widgetDiv.className = 'detail-widget detail-widget-buff-power';
@@ -208,9 +210,23 @@ function renderBuffPowerDetailsWidget(profile) {
     }
 
     const buffDetails = profile.buff_details.buffs;
+    const baseStatInfo = profile.buff_details.base_stat_info || {};
+
     if (!buffDetails) {
         widgetDiv.innerHTML += `<div style="text-align:center; color: var(--color-text-secondary);">Can not read buff power.</div>`;
         return widgetDiv;
+    }
+    
+    let content = '<div class="buff-power-details-container">';
+
+    // [신규] 계산에 적용된 스탯 정보 표시
+    if (baseStatInfo.name && baseStatInfo.value) {
+        content += `
+            <div class="buff-power-base-stat">
+                <span class="buff-power-label">Applied ${baseStatInfo.name}</span>
+                <span class="buff-power-value">${baseStatInfo.value.toLocaleString()}</span>
+            </div>
+        `;
     }
 
     const mainBuff = buffDetails.main || {};
@@ -218,31 +234,84 @@ function renderBuffPowerDetailsWidget(profile) {
     const thirdAwakening = buffDetails['3a'] || {};
     const aura = buffDetails.aura || {};
 
-    widgetDiv.innerHTML += `
-        <div class="buff-power-details-container">
-            <div class="buff-power-row">
-                <span class="buff-power-label">Main Buff (stat)</span>
-                <span class="buff-power-value">${mainBuff.stat_bonus?.toLocaleString() || '-'}</span>
+    // Main Buff
+    if (mainBuff.level) {
+        content += `
+            <div class="buff-power-skill-block">
+                <div class="buff-power-skill-header">
+                    <span class="buff-power-skill-name">Main Buff</span>
+                    <span class="buff-power-skill-level">(Lv. ${mainBuff.level})</span>
+                </div>
+                <div class="buff-power-skill-details">
+                    <div class="buff-power-row">
+                        <span class="buff-power-label">Stat</span>
+                        <span class="buff-power-value">${mainBuff.stat_bonus?.toLocaleString() || '-'}</span>
+                    </div>
+                    <div class="buff-power-row">
+                        <span class="buff-power-label">Atk</span>
+                        <span class="buff-power-value">${mainBuff.atk_bonus?.toLocaleString() || '-'}</span>
+                    </div>
+                </div>
             </div>
-            <div class="buff-power-row">
-                <span class="buff-power-label">Main Buff (atk)</span>
-                <span class="buff-power-value">${mainBuff.atk_bonus?.toLocaleString() || '-'}</span>
+        `;
+    }
+
+    // 1st Awakening
+    if (firstAwakening.level) {
+         content += `
+            <div class="buff-power-skill-block">
+                <div class="buff-power-skill-header">
+                    <span class="buff-power-skill-name">1st Awakening</span>
+                    <span class="buff-power-skill-level">(Lv. ${firstAwakening.level})</span>
+                </div>
+                <div class="buff-power-skill-details">
+                     <div class="buff-power-row">
+                        <span class="buff-power-label">Stat</span>
+                        <span class="buff-power-value">${firstAwakening.stat_bonus?.toLocaleString() || '-'}</span>
+                    </div>
+                </div>
             </div>
-            <hr class="buff-power-divider">
-            <div class="buff-power-row">
-                <span class="buff-power-label">1a (stat)</span>
-                <span class="buff-power-value">${firstAwakening.stat_bonus?.toLocaleString() || '-'}</span>
+        `;
+    }
+
+    // 3rd Awakening
+     if (thirdAwakening.level) {
+         content += `
+            <div class="buff-power-skill-block">
+                <div class="buff-power-skill-header">
+                    <span class="buff-power-skill-name">3rd Awakening</span>
+                    <span class="buff-power-skill-level">(Lv. ${thirdAwakening.level})</span>
+                </div>
+                <div class="buff-power-skill-details">
+                     <div class="buff-power-row">
+                        <span class="buff-power-label">Stat</span>
+                        <span class="buff-power-value">${thirdAwakening.stat_bonus?.toLocaleString() || '-'}</span>
+                    </div>
+                </div>
             </div>
-             <div class="buff-power-row">
-                <span class="buff-power-label">3a (stat)</span>
-                <span class="buff-power-value">${thirdAwakening.stat_bonus?.toLocaleString() || (thirdAwakening.increase_percent ? `${thirdAwakening.increase_percent}%` : '-')}</span>
+        `;
+    }
+
+    // Aura
+     if (aura.level && aura.stat_bonus > 0) {
+         content += `
+            <div class="buff-power-skill-block">
+                <div class="buff-power-skill-header">
+                    <span class="buff-power-skill-name">Aura</span>
+                    <span class="buff-power-skill-level">(Lv. ${aura.level})</span>
+                </div>
+                <div class="buff-power-skill-details">
+                     <div class="buff-power-row">
+                        <span class="buff-power-label">Stat</span>
+                        <span class="buff-power-value">${aura.stat_bonus?.toLocaleString() || '-'}</span>
+                    </div>
+                </div>
             </div>
-            <div class="buff-power-row">
-                <span class="buff-power-label">aura (stat)</span>
-                <span class="buff-power-value">${aura.stat_bonus?.toLocaleString() || '-'}</span>
-            </div>
-        </div>
-    `;
+        `;
+    }
+
+    content += '</div>';
+    widgetDiv.innerHTML += content;
     return widgetDiv;
 }
 
