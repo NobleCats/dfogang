@@ -29,10 +29,10 @@ function getSetIconPath(setName) {
     return "assets/sets/Unknown.png";
 }
 
-export function createCharacterCard(profile, searchName, dpsToShow) {
+export function createCharacterCard(profile, searchName, displayLabel, displayValue) {
     const spritePath = `assets/characters/${profile.jobName}.png`;
     const setIconPath = getSetIconPath(profile.setItemName ?? "");
-    const rarityName = profile.setItemRarityName ?? ""; 
+    const rarityName = profile.setItemRarityName ?? "";
     let rarityStyle = 'padding:2px 0;';
     if (rarityName === "Primeval") {
         rarityStyle = `background: linear-gradient(to bottom, #57e95b, #3a8390); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`;
@@ -40,11 +40,13 @@ export function createCharacterCard(profile, searchName, dpsToShow) {
         const colorKey = Object.keys(rarityColors).find(key => rarityName.includes(key)) || "None";
         rarityStyle = `color: ${rarityColors[colorKey]};`;
     }
+
     const card = document.createElement('div');
     card.className = 'card';
     card.dataset.characterId = profile.characterId;
     card.dataset.characterName = profile.characterName;
     card.dataset.serverId = profile.serverId;
+
     card.innerHTML = `
         <div style="position: absolute; top: 16px; right: 16px; text-align: right;">
             <div style="font-size: 0.8em; color:var(--color-text-secondary);">${profile.serverId}</div>
@@ -62,10 +64,9 @@ export function createCharacterCard(profile, searchName, dpsToShow) {
             ${profile.setPoint > 0 ? `<span style="color:#aaa; font-size: 0.9em; margin-left: 4px;">(${profile.setPoint})</span>` : ''}
         </div>
 
-        <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);"> <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">DPS</span>
-            <span style="font-size: 1.2em; color: var(--color-accent-blue);">${
-            dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A'
-            }</span>
+        <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);">
+            <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">${displayLabel ?? 'N/A'}</span>
+            <span style="font-size: 1.2em; color: var(--color-accent-blue);">${displayValue?.toLocaleString() ?? 'N/A'}</span>
         </div>
     `;
     return card;
@@ -195,6 +196,56 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
     return widgetDiv;
 }
 
+function renderBuffPowerDetailsWidget(profile) {
+    const widgetDiv = document.createElement('div');
+    widgetDiv.className = 'detail-widget detail-widget-buff-power';
+    widgetDiv.innerHTML = '<h3 class="widget-title">Buff Power</h3>';
+
+    if (!profile.buff_details || profile.buff_details.error) {
+        const errorMessage = profile.buff_details?.error || 'Can not read buff power.';
+        widgetDiv.innerHTML += `<div style="text-align:center; color: var(--color-text-secondary);">${errorMessage}</div>`;
+        return widgetDiv;
+    }
+
+    const buffDetails = profile.buff_details.buffs;
+    if (!buffDetails) {
+        widgetDiv.innerHTML += `<div style="text-align:center; color: var(--color-text-secondary);">Can not read buff power.</div>`;
+        return widgetDiv;
+    }
+
+    const mainBuff = buffDetails.main || {};
+    const firstAwakening = buffDetails['1a'] || {};
+    const thirdAwakening = buffDetails['3a'] || {};
+    const aura = buffDetails.aura || {};
+
+    widgetDiv.innerHTML += `
+        <div class="buff-power-details-container">
+            <div class="buff-power-row">
+                <span class="buff-power-label">Main Buff (stat)</span>
+                <span class="buff-power-value">${mainBuff.stat_bonus?.toLocaleString() || '-'}</span>
+            </div>
+            <div class="buff-power-row">
+                <span class="buff-power-label">Main Buff (atk)</span>
+                <span class="buff-power-value">${mainBuff.atk_bonus?.toLocaleString() || '-'}</span>
+            </div>
+            <hr class="buff-power-divider">
+            <div class="buff-power-row">
+                <span class="buff-power-label">1a (stat)</span>
+                <span class="buff-power-value">${firstAwakening.stat_bonus?.toLocaleString() || '-'}</span>
+            </div>
+             <div class="buff-power-row">
+                <span class="buff-power-label">3a (stat)</span>
+                <span class="buff-power-value">${thirdAwakening.increase_percent ? `${thirdAwakening.increase_percent}%` : '-'}</span>
+            </div>
+            <div class="buff-power-row">
+                <span class="buff-power-label">aura (stat)</span>
+                <span class="buff-power-value">${aura.stat_bonus?.toLocaleString() || '-'}</span>
+            </div>
+        </div>
+    `;
+    return widgetDiv;
+}
+
 export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory, dpsState) {
     const detailView = document.getElementById('detail-view');
     detailView.innerHTML = `
@@ -225,9 +276,17 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
     
-    const dpsWidget = renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState);
-    document.getElementById('dps-widget-area').appendChild(dpsWidget);
+    const widgetArea = document.getElementById('dps-widget-area');
+
+    if (profile.is_buffer) {
+        const buffPowerWidget = renderBuffPowerDetailsWidget(profile);
+        widgetArea.appendChild(buffPowerWidget);
+    } else {
+        const dpsWidget = renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState);
+        widgetArea.appendChild(dpsWidget);
+    }
 }
+
 function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.style.width = '492px';

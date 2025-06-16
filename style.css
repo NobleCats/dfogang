@@ -403,6 +403,40 @@ button:hover {
     align-items: center;
     cursor: help;
 }
+.detail-widget-buff-power {
+    grid-area: dps; 
+}
+
+.buff-power-details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px; 
+    margin-top: 8px;
+}
+
+.buff-power-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.0em;
+}
+
+.buff-power-label {
+    color: var(--color-text-secondary);
+}
+
+.buff-power-value {
+    color: var(--color-text-primary);
+    font-weight: 500;
+    font-size: 1.1em;
+}
+
+.buff-power-divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 4px 0;
+}
+
 .tooltip-icon {
     display: inline-flex;
     justify-content: center;

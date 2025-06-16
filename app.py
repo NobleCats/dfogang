@@ -11,13 +11,14 @@ import json
 # 동시 요청을 100개로 제한하는 세마포어 생성
 SEMAPHORE = asyncio.Semaphore(100)
 
-# --- dmgCalc.py에서 CharacterAnalyzer 클래스를 임포트합니다 ---
-# 이 코드가 작동하려면 dmgCalc.py와 app.py가 같은 폴더에 있어야 합니다.
 try:
     from dmgCalc import CharacterAnalyzer
+    from buffCalc import BufferAnalyzer, JOB_ID_TO_CODE 
 except ImportError:
-    print("오류: dmgCalc.py 파일을 찾을 수 없습니다. app.py와 같은 폴더에 있는지 확인해주세요.")
+    print("오류: dmgCalc.py 또는 buffCalc.py 파일을 찾을 수 없습니다.")
     CharacterAnalyzer = None
+    BufferAnalyzer = None
+    JOB_ID_TO_CODE = {}
 
 # --- 기본 설정 ---
 app = Flask(__name__)
@@ -87,6 +88,21 @@ async def profile():
         profile_data = await async_get_profile(session, server, character_id)
         if not profile_data:
             return jsonify({"error": "Failed to fetch profile"}), 500
+        
+        # --- 아래 로직 추가 ---
+        # jobGrowId를 기반으로 버퍼인지 판별하고 is_buffer 플래그를 추가합니다.
+        job_grow_id = profile_data.get("jobGrowId")
+        job_code = JOB_ID_TO_CODE.get(job_grow_id)
+        
+        if job_code:
+            profile_data["is_buffer"] = True
+            # 상세 정보 화면을 위해 버프력 상세 정보도 함께 보내줍니다.
+            analyzer = BufferAnalyzer(API_KEY, server, character_id)
+            buff_results = await analyzer.run_buff_power_analysis(session)
+            profile_data["buff_details"] = buff_results
+        else:
+            profile_data["is_buffer"] = False
+        # --- 여기까지 추가 ---
             
         return jsonify(profile_data)
     
@@ -454,41 +470,59 @@ async def get_dps():
     return jsonify(results_to_return)
 
 
-# app.py 파일에 이 함수 전체를 추가해주세요.
-# CharacterAnalyzer, Path, json, datetime 등이 import 되어 있는지 확인하세요.
 async def create_or_update_profile_cache(session, server, character_id):
-    """캐릭터의 프로필 정보를 API에서 가져와 profile.json 캐시 파일을 생성하거나 업데이트합니다."""
-    # 상세 프로필 정보를 가져옵니다.
+    """
+    [최종 수정] jobId 대신 jobGrowId를 사용하여 버퍼를 판별합니다.
+    """
     profile_data = await async_get_profile(session, server, character_id)
     if not profile_data:
         return None
 
-    # CharacterAnalyzer를 사용하여 Normal/Normalized DPS를 한 번에 계산합니다.
-    analyzer = CharacterAnalyzer(API_KEY, server, character_id)
-    all_dps_results = await analyzer.run_analysis_for_all_dps(session)
+    # [수정] jobId 대신 jobGrowId를 가져옵니다.
+    job_grow_id = profile_data.get("jobGrowId")
+    
+    # 디버깅용 print 문도 jobGrowId를 보도록 수정합니다.
+    print(f"DEBUG :: Character: {profile_data.get('characterName')}, JobGrowID from API: {job_grow_id}")
 
-    if "error" in all_dps_results:
-        return None
+    # [수정] job_grow_id를 사용하여 job_code를 찾습니다.
+    job_code = JOB_ID_TO_CODE.get(job_grow_id)
+    
+    cache_content = {}
 
-    # 결과에서 필요한 정보들을 추출합니다.
-    normal_dps = all_dps_results.get("normal", {}).get("dps")
-    normalized_dps = all_dps_results.get("normalized", {}).get("dps")
-    equip_data = all_dps_results.get("equipment_data")
+    if job_code:  # 버퍼일 경우
+        analyzer = BufferAnalyzer(API_KEY, server, character_id)
+        buff_results = await analyzer.run_buff_power_analysis(session)
 
-    # 세트 아이템 정보를 추출합니다.
+        if "error" in buff_results:
+            return None
+        
+        main_buff_stats = buff_results.get("buffs", {}).get("main", {})
+        total_stat, total_atk = main_buff_stats.get("stat_bonus", 0), main_buff_stats.get("atk_bonus", 0)
+        buff_power_score = ((total_stat + 25250) / 25250) * ((total_atk + 3000) / 3000) * 30750
+
+        cache_content = {"is_buffer": True, "buff_power": round(buff_power_score), "buff_details": buff_results}
+
+    else:  # 딜러일 경우
+        analyzer = CharacterAnalyzer(API_KEY, server, character_id)
+        all_dps_results = await analyzer.run_analysis_for_all_dps(session)
+        if "error" in all_dps_results:
+            return None
+        cache_content = {"is_buffer": False, "dps": {"normal": all_dps_results.get("normal", {}).get("dps"), "normalized": all_dps_results.get("normalized", {}).get("dps")}}
+    
+    # 공통 정보 추가 및 파일 저장
     set_info = {}
+    equip_data = await async_get_equipment(session, server, character_id)
     if equip_data and equip_data.get("setItemInfo"):
         set_info_list = equip_data["setItemInfo"]
         if set_info_list and isinstance(set_info_list, list) and len(set_info_list) > 0:
             set_info_data = set_info_list[0]
             set_info = {
-                "setItemName": set_info_data.get("setItemName", ""),
-                "setItemRarityName": set_info_data.get("setItemRarityName", ""),
+                "setItemName": set_info_data.get("setItemName"),
+                "setItemRarityName": set_info_data.get("setItemRarityName"),
                 "setPoint": set_info_data.get("active", {}).get("setPoint", {}).get("current", 0)
             }
 
-    # 캐시 파일에 저장할 최종 JSON 데이터를 구성합니다.
-    cache_content = {
+    final_cache_data = {
         "characterId": profile_data.get("characterId"),
         "characterName": profile_data.get("characterName"),
         "adventureName": profile_data.get("adventureName"),
@@ -498,22 +532,17 @@ async def create_or_update_profile_cache(session, server, character_id):
         "level": profile_data.get("level"),
         "serverId": server,
         **set_info,
-        "dps": {
-            "normal": normal_dps,
-            "normalized": normalized_dps
-        },
-        "last_updated": datetime.datetime.utcnow().isoformat() + "Z"
+        **cache_content
     }
 
-    # 구성된 데이터를 profile.json 파일로 저장합니다.
     adventure_name = profile_data.get("adventureName")
     char_dir = Path(DATA_DIR) / server / adventure_name / character_id
     char_dir.mkdir(parents=True, exist_ok=True)
     profile_path = char_dir / "profile.json"
     with open(profile_path, "w", encoding="utf-8") as f:
-        json.dump(cache_content, f, ensure_ascii=False, indent=2)
+        json.dump(final_cache_data, f, ensure_ascii=False, indent=2)
 
-    return cache_content
+    return final_cache_data
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

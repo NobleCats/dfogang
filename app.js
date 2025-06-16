@@ -40,6 +40,8 @@ const detailView = document.getElementById('detail-view');
 let mainViewDpsOptions = null;
 const resultsWrapper = document.getElementById('results-wrapper');
 
+// app.js
+
 function render() {
     ui.setLoading(state.isLoading || state.dps.isCalculating);
     ui.switchView(state.view);
@@ -48,23 +50,30 @@ function render() {
         ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
         resultsDiv.innerHTML = '';
 
-         if (state.displayedResults.length > 0) {
+        if (state.displayedResults.length > 0) {
             state.displayedResults.forEach(profile => {
-                const dpsToShow = (profile.dps && typeof profile.dps === 'object')
-                    ? (state.dps.options.average_set_dmg ? profile.dps.normalized : profile.dps.normal)
-                    : null;
+                let displayLabel, displayValue;
 
+                if (profile.is_buffer) {
+                    displayLabel = 'Buff Power';
+                    displayValue = profile.buff_power;
+                } else {
+                    displayLabel = 'DPS';
+                    const dpsObject = profile.dps || {};
+                    displayValue = state.dps.options.average_set_dmg
+                                   ? dpsObject.normalized
+                                   : dpsObject.normal;
+                }
 
-                const card = ui.createCharacterCard(profile, state.searchTerm, dpsToShow);
+                const card = ui.createCharacterCard(profile, state.searchTerm, displayLabel, displayValue);
                 resultsDiv.appendChild(card);
             });
         } else if (state.searchTerm && !state.isLoading && state.allSearchResults.length === 0) {
-            resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
+             resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
         } else if (state.searchTerm && state.isLoading) {
-            resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
+             resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
         }
         ui.showMoreResultsIndicator(state.displayedResults.length < state.allSearchResults.length);
-
 
     } else if (state.view === 'detail' && state.characterDetail.profile) {
         ui.renderCharacterDetail(
