@@ -21,6 +21,7 @@ const state = {
         fameHistory: null,
         gearHistory: null,
         isBuffer: false,
+        buffData: null,
     },
     dps: {
         options: {
@@ -91,7 +92,8 @@ function render() {
             state.characterDetail.fameHistory,
             state.characterDetail.gearHistory,
             state.dps,
-            state.characterDetail.isBuffer
+            state.characterDetail.isBuffer,
+            state.characterDetail.buffData 
         );
     }
 }
@@ -163,24 +165,28 @@ async function showCharacterDetail(server, name) {
     state.view = 'detail';
     render();
 
-    const [profile, equipmentResponse, fameHistory, gearHistory, dpsResult] = await Promise.all([
+    const [profile, equipmentResponse, fameHistory, gearHistory] = await Promise.all([
         api.getCharacterProfile(server, name),
         api.getCharacterEquipment(server, name),
         api.getFameHistory(server, name),
         api.getGearHistory(server, name),
-        api.getCharacterDps(server, name, state.dps.options)
     ]);
 
     let isBuffer = false;
+    let dpsResult = null;
+    let buffData = null;
+
     if (profile && profile.characterId) {
         const buffSkillInfo = await api.getCharacterBuffSkill(server, profile.characterId);
-        const buffSkillName = buffSkillInfo?.skill?.buff?.skillInfo?.name;
         const bufferSkills = ["Divine Invocation", "Valor Blessing", "Forbidden Curse", "Lovely Tempo"];
+        const buffSkillName = buffSkillInfo?.skill?.buff?.skillInfo?.name;
         if (buffSkillName && bufferSkills.some(skill => buffSkillName.includes(skill))) {
             isBuffer = true;
+            buffData = await api.getCharacterBuffPower(server, profile.characterId); 
+        } else {
+            dpsResult = await api.getCharacterDps(server, name, state.dps.options);
         }
     }
-
 
     if (profile && equipmentResponse) {
         const equipment = equipmentResponse.equipment;
@@ -191,6 +197,7 @@ async function showCharacterDetail(server, name) {
             fameHistory: fameHistory?.records,
             gearHistory,
             isBuffer: isBuffer,
+            buffData: buffData,
         };
         state.dps.result = dpsResult;
     } else {
@@ -204,6 +211,10 @@ async function showCharacterDetail(server, name) {
 
 async function recalculateDps() {
     if (!state.characterDetail.profile) return;
+    if (state.characterDetail.isBuffer) { 
+        console.log("Buffer character, skipping DPS recalculation.");
+        return;
+    }
 
     state.dps.isCalculating = true;
     render();
@@ -242,6 +253,11 @@ function handleDpsToggleClick(event) {
     const optionName = toggle.dataset.dpsOption;
     const optionValue = toggle.dataset.dpsValue === 'true';
 
+    if (state.characterDetail.isBuffer) {
+        console.log("Buffer character, cannot change DPS options.");
+        return;
+    }
+
     if (state.dps.options[optionName] === optionValue) return;
 
     state.dps.options[optionName] = optionValue;
@@ -269,7 +285,7 @@ function handleCardClick(event) {
 
 function handleGoBack() {
     state.view = 'main';
-    state.characterDetail = { profile: null, equipment: null, setItemInfo: null, fameHistory: null, gearHistory: null, isBuffer: false };
+    state.characterDetail = { profile: null, equipment: null, setItemInfo: null, fameHistory: null, gearHistory: null, isBuffer: false, buffData: null };
     updateURL('main', state.server, state.searchTerm);
     render();
 }

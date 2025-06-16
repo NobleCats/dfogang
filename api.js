@@ -30,6 +30,11 @@ export async function getCharacterDps(server, characterName, options) {
     });
 }
 
+export async function getCharacterBuffPower(server, characterId) {
+    return await postData("/buff_power", { server, characterId });
+}
+
+
 export async function logSearch(server, name) {
     await postData("/search_log", { server, name });
 }

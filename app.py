@@ -1,3 +1,5 @@
+# app.py (Modified)
+
 import asyncio
 import aiohttp
 from flask import Flask, request, jsonify
@@ -8,9 +10,6 @@ from pathlib import Path
 import os
 import json
 
-# 동시 요청을 100개로 제한하는 세마포어 생성
-SEMAPHORE = asyncio.Semaphore(100)
-
 # --- dmgCalc.py에서 CharacterAnalyzer 클래스를 임포트합니다 ---
 # 이 코드가 작동하려면 dmgCalc.py와 app.py가 같은 폴더에 있어야 합니다.
 try:
@@ -18,6 +17,13 @@ try:
 except ImportError:
     print("오류: dmgCalc.py 파일을 찾을 수 없습니다. app.py와 같은 폴더에 있는지 확인해주세요.")
     CharacterAnalyzer = None
+
+# [NEW] buffCalc.py에서 BufferAnalyzer 클래스를 임포트합니다.
+try:
+    from buffCalc import BufferAnalyzer
+except ImportError:
+    print("오류: buffCalc.py 파일을 찾을 수 없습니다. app.py와 같은 폴더에 있는지 확인해주세요.")
+    BufferAnalyzer = None
 
 # --- 기본 설정 ---
 app = Flask(__name__)
@@ -29,6 +35,10 @@ DATA_DIR = "datas"
 
 # [NEW] 버퍼 스킬 이름 목록
 BUFFER_SKILLS = ["Divine Invocation", "Valor Blessing", "Forbidden Curse", "Lovely Tempo"]
+
+async def async_get_buff_power(session, server, character_id):
+    analyzer = BufferAnalyzer(API_KEY, server, character_id)
+    return await analyzer.run_buff_power_analysis(session)
 
 # --- 비동기 API 헬퍼 함수 ---
 async def fetch_json(session, url):
@@ -107,7 +117,7 @@ async def get_character_card_data(session, server, character_id, average_set_dmg
             api_key=API_KEY, server=server, character_id=character_id,
             cleansing_cdr=True, weapon_cdr=False, average_set_dmg=average_set_dmg
         )
-        dps_task = run_dps_with_semaphore(analyzer, session)
+        dps_task = analyzer.run_analysis_for_all_dps(session)
 
         # 두 태스크를 동시에 실행
         equip_data, dps_results = await asyncio.gather(equipment_task, dps_task)
@@ -133,6 +143,14 @@ async def get_character_card_data(session, server, character_id, average_set_dmg
             if any(buffer_skill in skill_name for buffer_skill in BUFFER_SKILLS):
                 is_buffer = True
 
+        # [NEW] 버퍼일 경우 버프력 계산
+        buff_power_data = None
+        if is_buffer and BufferAnalyzer:
+            buffer_analyzer = BufferAnalyzer(API_KEY, server, character_id)
+            buff_power_data = await buffer_analyzer.run_buff_power_analysis(session)
+            # 여기서는 캐시에서 가져오는 것이 아니므로, 직접 계산된 값을 사용
+            dps_value = buff_power_data.get("total_buff_score") # 버퍼일 경우 DPS 대신 버프력 사용
+
         # 최종 결과 조합
         return {
             "characterId": equip_data.get("characterId", ""),
@@ -146,7 +164,7 @@ async def get_character_card_data(session, server, character_id, average_set_dmg
             "setItemRarityName": set_info.get("setItemRarityName", ""),
             "setPoint": set_info.get("active", {}).get("setPoint", {}).get("current", 0),
             "serverId": server,
-            "dps": dps_value,
+            "dps": dps_value, # 버퍼일 경우 버프력, 아닐 경우 DPS
             "is_buffer": is_buffer # [NEW] is_buffer 추가
         }
     except Exception as e:
@@ -273,6 +291,26 @@ async def equipment():
         json.dump(new_eq, f, ensure_ascii=False, indent=2)
 
     return jsonify({"equipment": new_eq, "explorerName": adventure_name, "fame": fame})
+
+@app.route("/buff_power", methods=["POST"])
+async def buff_power():
+    if BufferAnalyzer is None:
+        return jsonify({"error": "Buff analysis module (buffCalc.py) is not loaded."}), 500
+
+    data = request.json
+    server = data.get("server")
+    character_id = data.get("characterId") # Use characterId directly for buffCalc
+
+    if not server or not character_id:
+        return jsonify({"error": "server와 characterId는 필수 입력 항목입니다."}), 400
+
+    async with aiohttp.ClientSession() as session:
+        buff_results = await async_get_buff_power(session, server, character_id)
+        if not buff_results or "error" in buff_results:
+            return jsonify(buff_results or {"error": "버프 계산에 실패했습니다."}), 500
+        return jsonify(buff_results)
+
+
 
 @app.route("/fame-history", methods=["POST"])
 async def fame_history():
@@ -486,7 +524,6 @@ async def buff_skill():
             return jsonify({"error": "Failed to fetch buff skill data"}), 500
         return jsonify(buff_skill_data)
 
-
 # app.py 파일에 이 함수 전체를 추가해주세요.
 # CharacterAnalyzer, Path, json, datetime 등이 import 되어 있는지 확인하세요.
 async def create_or_update_profile_cache(session, server, character_id):
@@ -496,18 +533,6 @@ async def create_or_update_profile_cache(session, server, character_id):
     if not profile_data:
         return None
 
-    # CharacterAnalyzer를 사용하여 Normal/Normalized DPS를 한 번에 계산합니다.
-    analyzer = CharacterAnalyzer(API_KEY, server, character_id)
-    all_dps_results = await analyzer.run_analysis_for_all_dps(session)
-
-    if "error" in all_dps_results:
-        return None
-
-    # 결과에서 필요한 정보들을 추출합니다.
-    normal_dps = all_dps_results.get("normal", {}).get("dps")
-    normalized_dps = all_dps_results.get("normalized", {}).get("dps")
-    equip_data = all_dps_results.get("equipment_data")
-
     # [NEW] 버퍼 여부 판별
     is_buffer = False
     buff_skill_data = await async_get_buff_skill(session, server, character_id)
@@ -516,7 +541,31 @@ async def create_or_update_profile_cache(session, server, character_id):
         if any(buffer_skill in skill_name for buffer_skill in BUFFER_SKILLS):
             is_buffer = True
 
+    normal_dps = None
+    normalized_dps = None
+    buff_power_score = None
+    buff_details = None
+
+    if is_buffer and BufferAnalyzer:
+        # 버퍼일 경우 BuffAnalyzer를 사용
+        buffer_analyzer = BufferAnalyzer(API_KEY, server, character_id)
+        buff_results = await buffer_analyzer.run_buff_power_analysis(session)
+        if "error" not in buff_results:
+            buff_power_score = buff_results.get("total_buff_score")
+            buff_details = buff_results.get("buffs")
+    elif CharacterAnalyzer:
+        # 딜러일 경우 CharacterAnalyzer를 사용
+        analyzer = CharacterAnalyzer(API_KEY, server, character_id)
+        all_dps_results = await analyzer.run_analysis_for_all_dps(session)
+        if "error" not in all_dps_results:
+            normal_dps = all_dps_results.get("normal", {}).get("dps")
+            normalized_dps = all_dps_results.get("normalized", {}).get("dps")
+    else:
+        print("Warning: Neither CharacterAnalyzer nor BufferAnalyzer is loaded.")
+        return None
+
     # 세트 아이템 정보를 추출합니다.
+    equip_data = await async_get_equipment(session, server, character_id) # Equipment data needed for setItemInfo
     set_info = {}
     if equip_data and equip_data.get("setItemInfo"):
         set_info_list = equip_data["setItemInfo"]
@@ -539,11 +588,13 @@ async def create_or_update_profile_cache(session, server, character_id):
         "level": profile_data.get("level"),
         "serverId": server,
         **set_info,
-        "dps": {
+        "dps": { # DPS는 딜러에게만 해당
             "normal": normal_dps,
             "normalized": normalized_dps
         },
-        "is_buffer": is_buffer, # [NEW] is_buffer 추가
+        "buff_power": buff_power_score, # 버퍼 버프력
+        "buff_details": buff_details, # 버퍼 상세 버프 정보
+        "is_buffer": is_buffer,
         "last_updated": datetime.datetime.utcnow().isoformat() + "Z"
     }
 

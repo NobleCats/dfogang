@@ -45,6 +45,14 @@ export function createCharacterCard(profile, searchName, dpsToShow, isBuffer) {
     card.dataset.characterId = profile.characterId;
     card.dataset.characterName = profile.characterName;
     card.dataset.serverId = profile.serverId;
+
+    let dpsOrBuffDisplay = '';
+    if (isBuffer) {
+        dpsOrBuffDisplay = `<span style="font-size: 1.2em; color: var(--color-accent-blue);">${profile.buff_power != null ? profile.buff_power.toLocaleString() : 'N/A'} (Buff)</span>`;
+    } else {
+        dpsOrBuffDisplay = `<span style="font-size: 1.2em; color: var(--color-accent-blue);">${dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A'}</span>`;
+    }
+
     card.innerHTML = `
         <div style="position: absolute; top: 16px; right: 16px; text-align: right;">
             <div style="font-size: 0.8em; color:var(--color-text-secondary);">${profile.serverId}</div>
@@ -63,10 +71,8 @@ export function createCharacterCard(profile, searchName, dpsToShow, isBuffer) {
         </div>
 
         <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);">
-            <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">DPS</span>
-            <span style="font-size: 1.2em; color: var(--color-accent-blue);">
-                ${isBuffer ? 'Buffer' : (dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A')}
-            </span>
+            <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">${isBuffer ? 'Buff Score' : 'DPS'}</span>
+            ${dpsOrBuffDisplay}
         </div>
     `;
     return card;
@@ -101,7 +107,7 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, is
     const container = document.createElement('div');
     container.className = 'dps-calculator-container';
 
-    if (isBuffer) {
+    if (isBuffer) { // This block is now redundant due to the new conditional rendering in renderCharacterDetail
         container.innerHTML = `
             <div style="text-align: center; color: var(--color-text-secondary); padding: 20px;">
                 This character is a Buffer. DPS calculation is not applicable.
@@ -204,7 +210,131 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, is
     return widgetDiv;
 }
 
-export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory, dpsState, isBuffer) { 
+function renderBuffCalculatorWidget(buffResults) {
+    const widgetDiv = document.createElement('div');
+    widgetDiv.className = 'detail-widget detail-widget-buff';
+    widgetDiv.innerHTML = `<h3 class="widget-title">Buff Calculator</h3>`;
+
+    const container = document.createElement('div');
+    container.className = 'buff-calculator-container';
+
+    if (!buffResults || Object.keys(buffResults).length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; color: var(--color-text-secondary); padding: 20px;">
+                Failed to load buff data or no buff information available.
+            </div>
+        `;
+    } else {
+        const buffs = buffResults.buffs || {};
+        const totalBuffScore = buffResults.total_buff_score != null ? buffResults.total_buff_score.toLocaleString() : 'N/A';
+
+        let buffDetailsHtml = ``;
+
+        // Main Buff
+        const mainBuff = buffs.main;
+        if (mainBuff) {
+            const mainLevel = mainBuff.level != null ? `Lv.${mainBuff.level}` : '';
+            const statBonus = mainBuff.stat_bonus != null ? mainBuff.stat_bonus.toLocaleString() : 'N/A';
+            const atkBonus = mainBuff.atk_bonus != null ? mainBuff.atk_bonus.toLocaleString() : 'N/A';
+            let enchantressFavoredBonus = '';
+            if (mainBuff.stat_bonus_fav != null && mainBuff.atk_bonus_fav != null) {
+                enchantressFavoredBonus = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; color: var(--color-text-tertiary); margin-top: 4px;">
+                        <span>(Favored Stat Bonus:</span>
+                        <span style="font-weight: 500;">${mainBuff.stat_bonus_fav.toLocaleString()})</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; color: var(--color-text-tertiary);">
+                        <span>(Favored Atk Bonus:</span>
+                        <span style="font-weight: 500;">${mainBuff.atk_bonus_fav.toLocaleString()})</span>
+                    </div>
+                `;
+            }
+
+            buffDetailsHtml += `
+                <div class="buff-category">
+                    <span class="buff-title">Main Buff (${mainLevel})</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                        <span>Stat Bonus:</span>
+                        <span style="color: var(--color-text-primary); font-weight: 500;">${statBonus}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                        <span>Attack Bonus:</span>
+                        <span style="color: var(--color-text-primary); font-weight: 500;">${atkBonus}</span>
+                    </div>
+                    ${enchantressFavoredBonus}
+                </div>
+            `;
+        }
+
+        // 1A Buff
+        const oneABuff = buffs['1a'];
+        if (oneABuff) {
+            const oneALevel = oneABuff.level != null ? `Lv.${oneABuff.level}` : '';
+            const statBonus = oneABuff.stat_bonus != null ? oneABuff.stat_bonus.toLocaleString() : 'N/A';
+            buffDetailsHtml += `
+                <div class="buff-category">
+                    <span class="buff-title">1st Awakening Buff (${oneALevel})</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                        <span>Stat Bonus:</span>
+                        <span style="color: var(--color-text-primary); font-weight: 500;">${statBonus}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3A Buff
+        const threeABuff = buffs['3a'];
+        if (threeABuff) {
+            const threeALevel = threeABuff.level != null ? `Lv.${threeABuff.level}` : '';
+            const statBonus = threeABuff.stat_bonus != null ? threeABuff.stat_bonus.toLocaleString() : 'N/A';
+            const increasePercent = threeABuff.increase_percent != null ? threeABuff.increase_percent.toFixed(2) + '%' : 'N/A';
+            buffDetailsHtml += `
+                <div class="buff-category">
+                    <span class="buff-title">3rd Awakening Buff (${threeALevel})</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                        <span>Stat Bonus (from 1A):</span>
+                        <span style="color: var(--color-text-primary); font-weight: 500;">${statBonus}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                        <span>Increase Percent:</span>
+                        <span style="color: var(--color-text-primary); font-weight: 500;">${increasePercent}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Aura Buff
+        const auraBuff = buffs.aura;
+        if (auraBuff) {
+            const auraLevel = auraBuff.level != null ? `Lv.${auraBuff.level}` : '';
+            const statBonus = auraBuff.stat_bonus != null ? auraBuff.stat_bonus.toLocaleString() : 'N/A';
+            buffDetailsHtml += `
+                <div class="buff-category">
+                    <span class="buff-title">Aura Buff (${auraLevel})</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                        <span>Stat Bonus:</span>
+                        <span style="color: var(--color-text-primary); font-weight: 500;">${statBonus}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+
+        container.innerHTML = `
+            ${buffDetailsHtml}
+            <div class="buff-score-display" style="margin-top: 16px; border-top: 1px solid var(--color-border); padding-top: 20px;">
+                <span class="buff-score-label">Total Buff Score</span>
+                <span class="buff-score-value">${totalBuffScore}</span>
+            </div>
+        `;
+    }
+
+    widgetDiv.appendChild(container);
+    return widgetDiv;
+}
+
+
+export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory, dpsState, isBuffer, buffResults) {
     const detailView = document.getElementById('detail-view');
     detailView.innerHTML = `
         <div class="detail-grid">
@@ -215,7 +345,7 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
                 <div class="character-canvas" id="character-canvas-container"></div>
                 <div id="set-info-container" class="detail-widget" style="margin-top: 24px;"></div>
             </div>
-            <div id="dps-widget-area"></div>
+            <div id="dps-or-buff-widget-area"></div> {/* NEW ID for the dynamic widget area */}
             <div class="detail-widget detail-widget-fame">
                 <h3 class="widget-title">Fame Trend</h3>
                 <div id="fame-chart-container" style="width: 100%; height: 265px;">
@@ -234,16 +364,20 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
 
-    const dpsWidgetArea = document.getElementById('dps-widget-area');
-    if (dpsWidgetArea) {
-        dpsWidgetArea.innerHTML = '';
-    }
-
-    const dpsWidget = renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, isBuffer);
-    if (dpsWidgetArea) {
-        dpsWidgetArea.appendChild(dpsWidget);
+    const dpsOrBuffWidgetArea = document.getElementById('dps-or-buff-widget-area');
+    if (dpsOrBuffWidgetArea) {
+        dpsOrBuffWidgetArea.innerHTML = ''; // Clear previous content
+        let widgetToRender;
+        if (isBuffer) {
+            widgetToRender = renderBuffCalculatorWidget(buffResults);
+        } else {
+            widgetToRender = renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, isBuffer);
+        }
+        dpsOrBuffWidgetArea.appendChild(widgetToRender);
     }
 }
+
+
 function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.style.width = '492px';
@@ -322,7 +456,6 @@ function renderCharacterCanvas(profile, equipmentList) {
     drawCharacterText(profile);
 }
 
-// ui.js
 
 function renderSetItems(setItemInfo) {
     const container = document.getElementById("set-info-container");
