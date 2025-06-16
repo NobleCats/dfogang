@@ -50,6 +50,9 @@ export async function getFameHistory(server, characterName) {
 export async function getGearHistory(server, characterName) {
     return await postData("/history", { server, characterName });
 }
+export async function getCharacterBuffSkill(server, characterId) {
+    return await postData("/buff_skill", { server, characterId });
+}
 export async function getItemFame(itemId) {
     if (!itemId) return 0;
     try {

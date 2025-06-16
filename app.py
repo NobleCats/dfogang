@@ -27,6 +27,9 @@ API_KEY = os.environ.get('DFO_API_KEY', 'sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ')
 BASE_URL = "https://api.dfoneople.com/df"
 DATA_DIR = "datas"
 
+# [NEW] 버퍼 스킬 이름 목록
+BUFFER_SKILLS = ["Divine Invocation", "Valor Blessing", "Forbidden Curse", "Lovely Tempo"]
+
 # --- 비동기 API 헬퍼 함수 ---
 async def fetch_json(session, url):
     headers = {
@@ -38,7 +41,7 @@ async def fetch_json(session, url):
             if 'apikey=' not in url:
                 separator = '?' if '?' not in url else '&'
                 url += f"{separator}apikey={API_KEY}"
-            
+
             # [MODIFIED] session.get 호출에 headers=headers 추가
             async with session.get(url, headers=headers, timeout=10) as response:
                 response.raise_for_status()
@@ -72,24 +75,29 @@ async def async_get_character_id(session, server, name):
         return data["rows"][0]["characterId"]
     return None
 
+# [NEW] 버프 스킬 정보를 가져오는 비동기 함수
+async def async_get_buff_skill(session, server, character_id):
+    url = f"{BASE_URL}/servers/{server}/characters/{character_id}/skill/buff/equip/equipment?apikey={API_KEY}"
+    return await fetch_json(session, url)
+
 # --- 기존 라우트 (변경 없음) ---
 
 @app.route("/profile", methods=["POST"])
 async def profile():
     data = request.json
     server, name = data.get("server"), data.get("name")
-    
+
     async with aiohttp.ClientSession() as session:
         character_id = await async_get_character_id(session, server, name)
         if not character_id:
             return jsonify({"error": "Character not found"}), 404
-        
+
         profile_data = await async_get_profile(session, server, character_id)
         if not profile_data:
             return jsonify({"error": "Failed to fetch profile"}), 500
-            
+
         return jsonify(profile_data)
-    
+
 async def get_character_card_data(session, server, character_id, average_set_dmg):
     """단일 캐릭터의 장비 정보와 DPS 정보를 비동기적으로 함께 가져옵니다."""
     try:
@@ -113,9 +121,17 @@ async def get_character_card_data(session, server, character_id, average_set_dmg
             set_info = set_info_list[0]
         else:
             set_info = {}
-        
+
         # DPS 결과에서 dps 값 추출
         dps_value = dps_results.get("dps") if dps_results and "error" not in dps_results else None
+
+        # [NEW] 버퍼 여부 판별
+        is_buffer = False
+        buff_skill_data = await async_get_buff_skill(session, server, character_id)
+        if buff_skill_data and buff_skill_data.get("skill", {}).get("buff", {}).get("skillInfo", {}).get("name"):
+            skill_name = buff_skill_data["skill"]["buff"]["skillInfo"]["name"]
+            if any(buffer_skill in skill_name for buffer_skill in BUFFER_SKILLS):
+                is_buffer = True
 
         # 최종 결과 조합
         return {
@@ -130,7 +146,8 @@ async def get_character_card_data(session, server, character_id, average_set_dmg
             "setItemRarityName": set_info.get("setItemRarityName", ""),
             "setPoint": set_info.get("active", {}).get("setPoint", {}).get("current", 0),
             "serverId": server,
-            "dps": dps_value
+            "dps": dps_value,
+            "is_buffer": is_buffer # [NEW] is_buffer 추가
         }
     except Exception as e:
         print(f"Error processing character {character_id}: {e}")
@@ -163,7 +180,7 @@ async def search():
             async def process_character(p):
                 character_id = p["characterId"]
                 adventure_name = p["adventureName"]
-                
+
                 # 3. 이제 adventureName을 사용하여 캐시 파일 경로를 안전하게 만들 수 있습니다.
                 profile_path = Path(DATA_DIR) / server / adventure_name / character_id / "profile.json"
 
@@ -190,17 +207,17 @@ async def equipment():
         character_id = await async_get_character_id(session, server, name)
         if not character_id:
             return jsonify({"error": "Character not found"}), 404
-        
+
         profile_task = async_get_profile(session, server, character_id)
         equipment_task = async_get_equipment(session, server, character_id)
         profile_data, new_eq = await asyncio.gather(profile_task, equipment_task)
-        
+
         if not profile_data or not new_eq:
             return jsonify({"error": "Failed to fetch character data"}), 500
 
     adventure_name = profile_data.get("adventureName")
     fame = profile_data.get("fame")
-    
+
     char_dir = Path(DATA_DIR) / server / adventure_name / character_id
     char_dir.mkdir(parents=True, exist_ok=True)
     eq_path = char_dir / "equipment.json"
@@ -251,7 +268,7 @@ async def equipment():
         history = history_cleaner(history)
         with open(hist_path, "w", encoding="utf-8") as f:
             json.dump(history, f, ensure_ascii=False, indent=2)
-            
+
     with open(eq_path, "w", encoding="utf-8") as f:
         json.dump(new_eq, f, ensure_ascii=False, indent=2)
 
@@ -268,12 +285,12 @@ async def fame_history():
 
         profile_data = await async_get_profile(session, server, character_id)
         if not profile_data: return jsonify({"error": "Failed to fetch profile"}), 500
-            
+
     adventure_name = profile_data.get("adventureName")
     fame_path = Path(DATA_DIR) / server / adventure_name / character_id / "fame.json"
     current_fame = profile_data.get("fame")
     today_str = datetime.date.today().strftime("%Y-%m-%d")
-    
+
     fame_history_data = []
     if fame_path.exists():
         try:
@@ -281,7 +298,7 @@ async def fame_history():
                 fame_history_data = json.load(f)
         except (json.JSONDecodeError, FileNotFoundError):
             fame_history_data = [] # 파일 읽기 실패 시 빈 리스트로 처리
-            
+
     if not fame_history_data or fame_history_data[-1].get("fame") != current_fame:
         fame_history_data.append({"date": today_str, "fame": current_fame})
         fame_path.parent.mkdir(parents=True, exist_ok=True)
@@ -307,21 +324,21 @@ async def get_history():
     async with aiohttp.ClientSession() as session:
         character_id = await async_get_character_id(session, server, name)
         if not character_id: return jsonify([])
-        
+
         profile_data = await async_get_profile(session, server, character_id)
         if not profile_data: return jsonify([])
 
     adventure_name = profile_data.get("adventureName")
     hist_path = Path(DATA_DIR) / server / adventure_name / character_id / "history.json"
-    
+
     if not hist_path.exists(): return jsonify([])
-    
+
     try:
         with open(hist_path, "r", encoding="utf-8") as f:
             history_data = json.load(f)
     except (json.JSONDecodeError, FileNotFoundError):
         return jsonify([])
-            
+
     return jsonify(history_data)
 
 # app.py 의 기존 /search_explorer 함수를 아래 코드로 교체합니다.
@@ -341,12 +358,12 @@ async def search_explorer():
             base_path = Path(DATA_DIR) / serverId / explorer_name
             if not base_path.exists() or not base_path.is_dir():
                 continue
-            
+
             # 모험단 폴더 내의 각 캐릭터 폴더를 순회합니다.
             for char_dir in base_path.iterdir():
                 if not char_dir.is_dir():
                     continue
-                
+
                 profile_path = char_dir / "profile.json"
                 if profile_path.exists():
                     try:
@@ -357,7 +374,7 @@ async def search_explorer():
                         # JSON 파일이 손상된 경우를 대비한 예외 처리
                         print(f"Warning: Could not decode profile.json for {char_dir.name}")
                         continue
-        
+
         return jsonify({"results": final_result})
 
     except Exception as e:
@@ -397,10 +414,10 @@ def history_cleaner(history):
             for item_after in entry["after"]:
                 key = (item_after["slotName"], item_after["isUpgradeInfo"])
                 final_slot_state[key] = item_after["itemId"]
-        
+
         meaningful_changes = {"date": date, "before": [], "after": []}
         all_keys = set(initial_slot_state.keys()) | set(final_slot_state.keys())
-        
+
         for key in all_keys:
             initial_item = initial_slot_state.get(key)
             final_item = final_slot_state.get(key)
@@ -422,7 +439,7 @@ async def get_dps():
     data = request.json
     server = data.get("server")
     character_name = data.get("characterName")
-    
+
     # 클라이언트가 요청한 옵션
     average_set_dmg = data.get("average_set_dmg", False)
 
@@ -447,11 +464,27 @@ async def get_dps():
             results_to_return = all_results.get("normalized", {})
         else:
             results_to_return = all_results.get("normal", {})
-            
+
     if not results_to_return or "error" in results_to_return:
         return jsonify(results_to_return or {"error": "DPS 계산에 실패했습니다."}), 500
 
     return jsonify(results_to_return)
+
+# [NEW] 버프 스킬 정보를 제공하는 엔드포인트
+@app.route("/buff_skill", methods=["POST"])
+async def buff_skill():
+    data = request.json
+    server = data.get("server")
+    character_id = data.get("characterId")
+
+    if not server or not character_id:
+        return jsonify({"error": "server와 characterId는 필수 입력 항목입니다."}), 400
+
+    async with aiohttp.ClientSession() as session:
+        buff_skill_data = await async_get_buff_skill(session, server, character_id)
+        if not buff_skill_data:
+            return jsonify({"error": "Failed to fetch buff skill data"}), 500
+        return jsonify(buff_skill_data)
 
 
 # app.py 파일에 이 함수 전체를 추가해주세요.
@@ -474,6 +507,14 @@ async def create_or_update_profile_cache(session, server, character_id):
     normal_dps = all_dps_results.get("normal", {}).get("dps")
     normalized_dps = all_dps_results.get("normalized", {}).get("dps")
     equip_data = all_dps_results.get("equipment_data")
+
+    # [NEW] 버퍼 여부 판별
+    is_buffer = False
+    buff_skill_data = await async_get_buff_skill(session, server, character_id)
+    if buff_skill_data and buff_skill_data.get("skill", {}).get("buff", {}).get("skillInfo", {}).get("name"):
+        skill_name = buff_skill_data["skill"]["buff"]["skillInfo"]["name"]
+        if any(buffer_skill in skill_name for buffer_skill in BUFFER_SKILLS):
+            is_buffer = True
 
     # 세트 아이템 정보를 추출합니다.
     set_info = {}
@@ -502,6 +543,7 @@ async def create_or_update_profile_cache(session, server, character_id):
             "normal": normal_dps,
             "normalized": normalized_dps
         },
+        "is_buffer": is_buffer, # [NEW] is_buffer 추가
         "last_updated": datetime.datetime.utcnow().isoformat() + "Z"
     }
 
@@ -517,4 +559,3 @@ async def create_or_update_profile_cache(session, server, character_id):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-

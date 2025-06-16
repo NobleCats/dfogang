@@ -11,8 +11,8 @@ const state = {
     server: 'cain',
     allSearchResults: [],
     displayedResults: [],
-    resultsPerPage: 8, 
-    resultsPerScroll: 4,  
+    resultsPerPage: 8,
+    resultsPerScroll: 4,
     searchResults: [],
     characterDetail: {
         profile: null,
@@ -20,12 +20,13 @@ const state = {
         setItemInfo: null,
         fameHistory: null,
         gearHistory: null,
+        isBuffer: false,
     },
     dps: {
         options: {
             cleansing_cdr: true,
             weapon_cdr: false,
-            average_set_dmg: false, 
+            average_set_dmg: false,
         },
         result: null,
         isCalculating: false,
@@ -47,23 +48,23 @@ function render() {
     if (state.view === 'main') {
         ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
 
-        const resultsSection = document.querySelector('.results-section'); 
+        const resultsSection = document.querySelector('.results-section');
         const announcementSection = document.querySelector('.announcement-section');
         if (!state.searchTerm || (state.searchTerm && !state.isLoading && state.allSearchResults.length === 0)) {
             if (resultsSection) {
                 resultsSection.style.display = 'none';
             }
             if (announcementSection) {
-                announcementSection.style.display = 'block'; 
+                announcementSection.style.display = 'block';
             }
         } else {
             if (resultsSection) {
-                resultsSection.style.display = 'block'; 
+                resultsSection.style.display = 'block';
             }
             if (announcementSection) {
-                announcementSection.style.display = 'none'; 
+                announcementSection.style.display = 'none';
             }
-            resultsDiv.innerHTML = ''; 
+            resultsDiv.innerHTML = '';
 
             if (state.displayedResults.length > 0) {
                 state.displayedResults.forEach(profile => {
@@ -71,7 +72,7 @@ function render() {
                         ? (state.dps.options.average_set_dmg ? profile.dps.normalized : profile.dps.normal)
                         : null;
 
-                    const card = ui.createCharacterCard(profile, state.searchTerm, dpsToShow);
+                    const card = ui.createCharacterCard(profile, state.searchTerm, dpsToShow, profile.is_buffer);
                     resultsDiv.appendChild(card);
                 });
             } else if (state.searchTerm && state.isLoading) {
@@ -89,7 +90,8 @@ function render() {
             state.characterDetail.setItemInfo,
             state.characterDetail.fameHistory,
             state.characterDetail.gearHistory,
-            state.dps
+            state.dps,
+            state.characterDetail.isBuffer
         );
     }
 }
@@ -109,8 +111,8 @@ async function performSearch(server, name) {
     state.server = server;
     state.allSearchResults = [];
     state.displayedResults = [];
-    render(); 
-    
+    render();
+
     const announcementSection = document.querySelector('.announcement-section');
     if (announcementSection) {
         announcementSection.style.display = 'none';
@@ -118,7 +120,7 @@ async function performSearch(server, name) {
 
     await api.logSearch(server, name);
     const results = await api.searchCharacters(server, name, state.dps.options.average_set_dmg);
-    
+
     state.allSearchResults = results;
     state.displayedResults = results.slice(0, state.resultsPerPage);
 
@@ -127,29 +129,29 @@ async function performSearch(server, name) {
 }
 
 function loadMoreResults() {
-    if (state.isLoading) return; 
-    if (state.displayedResults.length >= state.allSearchResults.length) return; 
+    if (state.isLoading) return;
+    if (state.displayedResults.length >= state.allSearchResults.length) return;
 
-    state.isLoading = true; 
+    state.isLoading = true;
     render();
 
     setTimeout(() => {
         const nextStartIndex = state.displayedResults.length;
         const nextEndIndex = nextStartIndex + state.resultsPerScroll;
         const newResults = state.allSearchResults.slice(nextStartIndex, nextEndIndex);
-        
-        state.displayedResults.push(...newResults); 
+
+        state.displayedResults.push(...newResults);
         state.isLoading = false;
-        render(); 
+        render();
     }, 300);
 }
 
 
 
 function handleScroll() {
-    const scrollHeight = document.documentElement.scrollHeight; 
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop; 
-    const clientHeight = document.documentElement.clientHeight; 
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
 
     if (scrollTop + clientHeight >= scrollHeight - 100) {
         loadMoreResults();
@@ -160,7 +162,7 @@ async function showCharacterDetail(server, name) {
     state.isLoading = true;
     state.view = 'detail';
     render();
-    
+
     const [profile, equipmentResponse, fameHistory, gearHistory, dpsResult] = await Promise.all([
         api.getCharacterProfile(server, name),
         api.getCharacterEquipment(server, name),
@@ -168,15 +170,27 @@ async function showCharacterDetail(server, name) {
         api.getGearHistory(server, name),
         api.getCharacterDps(server, name, state.dps.options)
     ]);
-    
+
+    let isBuffer = false;
+    if (profile && profile.characterId) {
+        const buffSkillInfo = await api.getCharacterBuffSkill(server, profile.characterId);
+        const buffSkillName = buffSkillInfo?.skill?.buff?.skillInfo?.name;
+        const bufferSkills = ["Divine Invocation", "Valor Blessing", "Forbidden Curse", "Lovely Tempo"];
+        if (buffSkillName && bufferSkills.some(skill => buffSkillName.includes(skill))) {
+            isBuffer = true;
+        }
+    }
+
+
     if (profile && equipmentResponse) {
         const equipment = equipmentResponse.equipment;
-        state.characterDetail = { 
+        state.characterDetail = {
             profile: { ...profile, server: server, characterName: name },
             equipment: equipment?.equipment,
             setItemInfo: equipment?.setItemInfo,
-            fameHistory: fameHistory?.records, 
-            gearHistory 
+            fameHistory: fameHistory?.records,
+            gearHistory,
+            isBuffer: isBuffer,
         };
         state.dps.result = dpsResult;
     } else {
@@ -190,16 +204,16 @@ async function showCharacterDetail(server, name) {
 
 async function recalculateDps() {
     if (!state.characterDetail.profile) return;
-    
+
     state.dps.isCalculating = true;
-    render(); 
+    render();
 
     const { server, characterName } = state.characterDetail.profile;
     const newDpsResult = await api.getCharacterDps(server, characterName, state.dps.options);
     state.dps.result = newDpsResult;
 
     state.dps.isCalculating = false;
-    render(); 
+    render();
 }
 
 function handleMainDpsToggleClick(event) {
@@ -212,8 +226,8 @@ function handleMainDpsToggleClick(event) {
     if (state.dps.options[optionName] === optionValue) return;
 
     state.dps.options[optionName] = optionValue;
-    
-    if (state.searchTerm) { 
+
+    if (state.searchTerm) {
         performSearch(state.server, state.searchTerm);
     }
     updateURL(state.view, state.server, state.searchTerm);
@@ -221,7 +235,7 @@ function handleMainDpsToggleClick(event) {
 }
 
 
-function handleDpsToggleClick(event) { 
+function handleDpsToggleClick(event) {
     const toggle = event.target.closest('[data-dps-option]');
     if (!toggle) return;
 
@@ -255,7 +269,7 @@ function handleCardClick(event) {
 
 function handleGoBack() {
     state.view = 'main';
-    state.characterDetail = { profile: null, equipment: null, setItemInfo: null, fameHistory: null, gearHistory: null };
+    state.characterDetail = { profile: null, equipment: null, setItemInfo: null, fameHistory: null, gearHistory: null, isBuffer: false };
     updateURL('main', state.server, state.searchTerm);
     render();
 }
@@ -269,13 +283,13 @@ window.onpopstate = (event) => {
         if (view === 'detail') {
             showCharacterDetail(server, name);
         } else {
-            performSearch(server, name); 
+            performSearch(server, name);
         }
     } else {
         state.view = 'main';
         state.searchTerm = '';
-        state.allSearchResults = []; 
-        state.displayedResults = []; 
+        state.allSearchResults = [];
+        state.displayedResults = [];
         searchInput.value = '';
         state.dps.options.average_set_dmg = false;
         render();
@@ -310,7 +324,7 @@ function setupAccordions() {
 }
 
 async function init() {
-    mainViewDpsOptions = document.getElementById('main-view-dps-options'); 
+    mainViewDpsOptions = document.getElementById('main-view-dps-options');
 
     searchButton.addEventListener('click', handleSearchClick);
     searchInput.addEventListener('keydown', (e) => {
@@ -332,13 +346,13 @@ async function init() {
             }
         });
     }
-    
+
     const resultsSection = document.querySelector('.results-section');
-    if (resultsSection) { 
+    if (resultsSection) {
         resultsSection.addEventListener('scroll', handleScroll);
     }
 
-    window.addEventListener('scroll', handleScroll); 
+    window.addEventListener('scroll', handleScroll);
 
     const params = new URLSearchParams(window.location.search);
     const view = params.get('view');

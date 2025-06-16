@@ -29,7 +29,7 @@ function getSetIconPath(setName) {
     return "assets/sets/Unknown.png";
 }
 
-export function createCharacterCard(profile, searchName, dpsToShow) {
+export function createCharacterCard(profile, searchName, dpsToShow, isBuffer) { 
     const spritePath = `assets/characters/${profile.jobName}.png`;
     const setIconPath = getSetIconPath(profile.setItemName ?? "");
     const rarityName = profile.setItemRarityName ?? "None";
@@ -62,10 +62,11 @@ export function createCharacterCard(profile, searchName, dpsToShow) {
             ${profile.setPoint > 0 ? `<span style="color:#aaa; font-size: 0.9em; margin-left: 4px;">(${profile.setPoint})</span>` : ''}
         </div>
 
-        <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);"> <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">DPS</span>
-            <span style="font-size: 1.2em; color: var(--color-accent-blue);">${
-            dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A'
-            }</span>
+        <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);">
+            <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">DPS</span>
+            <span style="font-size: 1.2em; color: var(--color-accent-blue);">
+                ${isBuffer ? 'Buffer' : (dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A')}
+            </span>
         </div>
     `;
     return card;
@@ -89,7 +90,7 @@ export function renderMainDpsOptions(container, dpsOptions) {
     `;
 }
 
-function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
+function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, isBuffer) {
     const dpsOptions = dpsState.options;
     const dpsResult = dpsState.result;
 
@@ -100,102 +101,110 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
     const container = document.createElement('div');
     container.className = 'dps-calculator-container';
 
-    let isCleansingSetEquipped = false;
-    if (setItemInfo && Array.isArray(setItemInfo)) {
-        for (const itemInfo of setItemInfo) {
-            if (itemInfo.setItemName && itemInfo.setItemName.includes("Cleansing")) {
-                isCleansingSetEquipped = true;
-                break;
-            }
-        }
-    }
-
-    if (isCleansingSetEquipped) {
-        container.innerHTML += `
-            <div class="dps-toggle-group">
-                <div class="dps-toggle-label">Cleansing Mode</div>
-                <div class="dps-toggle-switch">
-                    <div class="dps-toggle-option ${!dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="false">Corruption</div>
-                    <div class="dps-toggle-option ${dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="true">Cleansing</div>
-                </div>
+    if (isBuffer) {
+        container.innerHTML = `
+            <div style="text-align: center; color: var(--color-text-secondary); padding: 20px;">
+                This character is a Buffer. DPS calculation is not applicable.
             </div>
         `;
-    }
-
-    const weapon = equipment.find(eq => eq.slotId === 'WEAPON');
-    const weaponName = weapon?.itemName || "";
-    const conditional_weapon_names = new Set([
-        "Falke the Ally", "Falke the Friend", "Falke the Family",
-        "Secret Solo", "Secret Duet", "Secret Concert",
-        "Mist Traveler", "Mist Explorer", "Mist Pioneer",
-        "Malefic Dawn", "Malefic Daybreak", "Malefic Twilight",
-        "Yang Ull's Twig: Extreme"
-    ]);
-
-    if (conditional_weapon_names.has(weaponName)) { 
-        const jobId = profile.jobId; 
-        const jobGrowName = profile.jobGrowName;
-
-        let labels = {};
-        if (jobId === 'dbbdf2dd28072b26f22b77454d665f21') { 
-            if (jobGrowName.includes("Hunter")) labels = { title: "Change Tactics", false: "Falke Assist", true: "Falke Patrol" };
-            else if (jobGrowName.includes("Muse")) labels = { title: "Harmonize", false: "Climax!", true: "Vivace!" };
-            else if (jobGrowName.includes("Traveler")) labels = { title: "Wayfinder", false: "Mist Path", true: "Mist Road" };
-            else if (jobGrowName.includes("Vigilante")) labels = { title: "Sensory Focus", false: "Spot Weakness", true: "Sense Menace" };
+    } else { 
+        let isCleansingSetEquipped = false;
+        if (setItemInfo && Array.isArray(setItemInfo)) {
+            for (const itemInfo of setItemInfo) {
+                if (itemInfo.setItemName && itemInfo.setItemName.includes("Cleansing")) {
+                    isCleansingSetEquipped = true;
+                    break;
+                }
+            }
         }
-        
 
-        if (labels.title) {
+        if (isCleansingSetEquipped) {
             container.innerHTML += `
                 <div class="dps-toggle-group">
-                    <div class="dps-toggle-label">${labels.title}</div>
+                    <div class="dps-toggle-label">Cleansing Mode</div>
                     <div class="dps-toggle-switch">
-                        <div class="dps-toggle-option ${!dpsOptions.weapon_cdr ? 'active' : ''}" data-dps-option="weapon_cdr" data-dps-value="false">${labels.false}</div>
-                        <div class="dps-toggle-option ${dpsOptions.weapon_cdr ? 'active' : ''}" data-dps-option="weapon_cdr" data-dps-value="true">${labels.true}</div>
+                        <div class="dps-toggle-option ${!dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="false">Corruption</div>
+                        <div class="dps-toggle-option ${dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="true">Cleansing</div>
                     </div>
                 </div>
             `;
         }
+
+        const weapon = equipment.find(eq => eq.slotId === 'WEAPON');
+        const weaponName = weapon?.itemName || "";
+        const conditional_weapon_names = new Set([
+            "Falke the Ally", "Falke the Friend", "Falke the Family",
+            "Secret Solo", "Secret Duet", "Secret Concert",
+            "Mist Traveler", "Mist Explorer", "Mist Pioneer",
+            "Malefic Dawn", "Malefic Daybreak", "Malefic Twilight",
+            "Yang Ull's Twig: Extreme"
+        ]);
+
+        if (conditional_weapon_names.has(weaponName)) {
+            const jobId = profile.jobId;
+            const jobGrowName = profile.jobGrowName;
+
+            let labels = {};
+            if (jobId === 'dbbdf2dd28072b26f22b77454d665f21') {
+                if (jobGrowName.includes("Hunter")) labels = { title: "Change Tactics", false: "Falke Assist", true: "Falke Patrol" };
+                else if (jobGrowName.includes("Muse")) labels = { title: "Harmonize", false: "Climax!", true: "Vivace!" };
+                else if (jobGrowName.includes("Traveler")) labels = { title: "Wayfinder", false: "Mist Path", true: "Mist Road" };
+                else if (jobGrowName.includes("Vigilante")) labels = { title: "Sensory Focus", false: "Spot Weakness", true: "Sense Menace" };
+            }
+
+
+            if (labels.title) {
+                container.innerHTML += `
+                    <div class="dps-toggle-group">
+                        <div class="dps-toggle-label">${labels.title}</div>
+                        <div class="dps-toggle-switch">
+                            <div class="dps-toggle-option ${!dpsOptions.weapon_cdr ? 'active' : ''}" data-dps-option="weapon_cdr" data-dps-value="false">${labels.false}</div>
+                            <div class="dps-toggle-option ${dpsOptions.weapon_cdr ? 'active' : ''}" data-dps-option="weapon_cdr" data-dps-value="true">${labels.true}</div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        container.innerHTML += `
+            <div class="dps-toggle-group">
+                <div class="dps-toggle-label">Set Normalize</div>
+                <div class="dps-toggle-switch">
+                    <div class="dps-toggle-option ${dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="true">On</div>
+                    <div class="dps-toggle-option ${!dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="false">Off</div>
+                </div>
+            </div>
+        `;
+
+        const appliedDamage = dpsResult?.finalDamage != null ? dpsResult.finalDamage.toLocaleString() : 'N/A';
+        const appliedCooldownReduction = dpsResult?.cooldownReduction != null ? dpsResult.cooldownReduction.toFixed(2) + '%' : 'N/A';
+
+        const dpsDisplayValue = dpsResult?.dps != null ? dpsResult.dps.toLocaleString() : 'N/A';
+
+        const dpsResultHtml = `
+            <div class="dps-stats-display" style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                    <span>Applied Damage:</span>
+                    <span style="color: var(--color-text-primary); font-weight: 500;">${appliedDamage}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                    <span>Applied Cooldown Reduction:</span>
+                    <span style="color: var(--color-text-primary); font-weight: 500;">${appliedCooldownReduction}</span>
+                </div>
+            </div>
+            <div class="dps-result-display" style="margin-top: 16px;">
+                <span class="dps-result-label">Expected DPS</span>
+                <span class="dps-result-value">${dpsDisplayValue}</span>
+            </div>
+        `;
+
+        container.innerHTML += dpsResultHtml;
     }
-    
-    container.innerHTML += `
-        <div class="dps-toggle-group">
-            <div class="dps-toggle-label">Set Normalize</div>
-            <div class="dps-toggle-switch">
-                <div class="dps-toggle-option ${dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="true">On</div>
-                <div class="dps-toggle-option ${!dpsOptions.average_set_dmg ? 'active' : ''}" data-dps-option="average_set_dmg" data-dps-value="false">Off</div>
-            </div>
-        </div>
-    `;
-
-    const appliedDamage = dpsResult?.finalDamage != null ? dpsResult.finalDamage.toLocaleString() : 'N/A';
-    const appliedCooldownReduction = dpsResult?.cooldownReduction != null ? dpsResult.cooldownReduction.toFixed(2) + '%' : 'N/A';
-
-    const dpsDisplayValue = dpsResult?.dps != null ? dpsResult.dps.toLocaleString() : 'N/A';
-
-    const dpsResultHtml = `
-        <div class="dps-stats-display" style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
-                <span>Applied Damage:</span>
-                <span style="color: var(--color-text-primary); font-weight: 500;">${appliedDamage}</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
-                <span>Applied Cooldown Reduction:</span>
-                <span style="color: var(--color-text-primary); font-weight: 500;">${appliedCooldownReduction}</span>
-            </div>
-        </div>
-        <div class="dps-result-display" style="margin-top: 16px;">
-            <span class="dps-result-label">Expected DPS</span>
-            <span class="dps-result-value">${dpsDisplayValue}</span>
-        </div>
-    `;
-
-    container.innerHTML += dpsResultHtml;
     widgetDiv.appendChild(container);
     return widgetDiv;
 }
 
-export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory, dpsState) {
+export async function renderCharacterDetail(profile, equipment, setItemInfo, fameHistory, gearHistory, dpsState, isBuffer) { 
     const detailView = document.getElementById('detail-view');
     detailView.innerHTML = `
         <div class="detail-grid">
@@ -224,15 +233,14 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
     renderSetItems(setItemInfo);
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
-    
-    // Get the DPS widget area and clear its content before appending
+
     const dpsWidgetArea = document.getElementById('dps-widget-area');
-    if (dpsWidgetArea) { // Check if the element exists
-        dpsWidgetArea.innerHTML = ''; // Clear existing content
+    if (dpsWidgetArea) {
+        dpsWidgetArea.innerHTML = '';
     }
 
-    const dpsWidget = renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState);
-    if (dpsWidgetArea) { // Check again before appending
+    const dpsWidget = renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, isBuffer);
+    if (dpsWidgetArea) {
         dpsWidgetArea.appendChild(dpsWidget);
     }
 }
@@ -267,7 +275,7 @@ function renderCharacterCanvas(profile, equipmentList) {
                 <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" style="width:100%; height:100%; position:absolute; z-index:2;">
                 <img src="assets/equipments/edge/${eq.itemRarity}.png" style="width:100%; height:100%; position:absolute; z-index:3;">
             `;
-            
+
             if (eq.upgradeInfo) {
                 const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
                 const baseRarity = eq.itemRarity;
@@ -276,7 +284,7 @@ function renderCharacterCanvas(profile, equipmentList) {
 
                 const fusionIconWrapper = document.createElement('div');
                 fusionIconWrapper.style.cssText = `position:absolute; right:0; top:0; z-index:4;`;
-                
+
                 if (keywordMatch) {
                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/${keywordMatch}.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
                 } else if (distKeywords.some(word => itemName.includes(word))) {
@@ -309,7 +317,7 @@ function renderCharacterCanvas(profile, equipmentList) {
             eqLayer.appendChild(itemEl);
         });
     }
-    
+
     drawReinforceText(Array.isArray(equipmentList) ? equipmentList : []);
     drawCharacterText(profile);
 }
@@ -323,9 +331,9 @@ function renderSetItems(setItemInfo) {
         container.style.display = 'none';
         return;
     }
-    
+
     container.style.display = 'block';
-    
+
     setItemInfo.forEach(item => {
         const rarityName = item.setItemRarityName ?? "";
         let rarityStyle = `color: ${rarityColors[Object.keys(rarityColors).find(key => rarityName.includes(key)) || "None"]};`;
@@ -350,18 +358,18 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
     const container = document.getElementById("fame-chart-container");
     const canvas = document.getElementById("fame-chart");
     if (!canvas || !container) return;
-    
+
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
 
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     const style = getComputedStyle(document.documentElement);
     const accentColor = style.getPropertyValue('--color-accent-blue').trim();
     const gridColor = `rgba(78, 143, 248, 0.1)`;
     const textColor = style.getPropertyValue('--color-text-primary').trim();
-    
+
     const paddingX = 40;
     const paddingY = 30;
 
@@ -513,7 +521,7 @@ async function renderHistoryPanel(gearHistory) {
     ]);
     const fameResults = await Promise.all(famePromises);
     let fameIndex = 0;
-    
+
     const groupedByDate = gearHistory.reduce((acc, entry) => {
         (acc[entry.date] = acc[entry.date] || []).push(...entry.before.map((b, i) => ({ before: b, after: entry.after[i] })));
         return acc;
@@ -529,8 +537,8 @@ async function renderHistoryPanel(gearHistory) {
         groupedByDate[date].forEach(change => {
             const beforeFame = fameResults[fameIndex++];
             const afterFame = fameResults[fameIndex++];
-            
-            const beforeIcon = change.before.itemId 
+
+            const beforeIcon = change.before.itemId
                 ? `https://img-api.dfoneople.com/df/items/${change.before.itemId}`
                 : `assets/equipments/null/${change.before.slotName.replace(/[\s\/]/g, "")}.png`;
             const afterIcon = change.after.itemId
@@ -539,7 +547,7 @@ async function renderHistoryPanel(gearHistory) {
 
             const itemRow = document.createElement('div');
             itemRow.className = 'history-item';
-            
+
             let fameIndicator = '';
             if (beforeFame != null && afterFame != null && beforeFame !== afterFame) {
                 const isUp = afterFame > beforeFame;
@@ -568,7 +576,7 @@ async function drawCharacterText(profile) {
     const font = new FontFace("GulimIndex", "url(font/gulim_index_2.ttf)");
     await font.load();
     document.fonts.add(font);
-    
+
     ctx.font = `${10 * SCALE}px GulimIndex`;
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
@@ -625,7 +633,7 @@ function drawReinforceText(equipmentList) {
     const canvas = document.getElementById("reinforce-canvas");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
-    
+
     function drawText(x, y, text, color, scaleFactor = 1) {
         const fontSize = Math.floor(9 * SCALE * scaleFactor);
         ctx.font = `${fontSize}px gulim, sans-serif`;
@@ -658,7 +666,7 @@ function drawReinforceText(equipmentList) {
 }
 
 export function switchView(view) {
-    document.getElementById('main-view').style.setProperty('display', view === 'main' ? 'grid' : 'none', 'important'); 
+    document.getElementById('main-view').style.setProperty('display', view === 'main' ? 'grid' : 'none', 'important');
     document.getElementById('detail-view').style.setProperty('display', view === 'detail' ? 'grid' : 'none', 'important');
 }
 
