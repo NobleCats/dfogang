@@ -19,27 +19,21 @@ async function postData(endpoint, body) {
         return null;
     }
 }
-export async function updateCharacterCache(server, characterId) {
-    return await postData("/update_character_cache", { server, characterId });
-}
 
 export async function getCharacterDps(server, characterName, options) {
-    const response = await postData("/dps", {
+    return await postData("/dps", {
         server,
         characterName,
         cleansing_cdr: options.cleansing_cdr,
         weapon_cdr: options.weapon_cdr,
         average_set_dmg: options.average_set_dmg,
     });
-    return response;
 }
 
 export async function getCharacterBuffPower(server, characterId) {
     return await postData("/buff_power", { server, characterId });
 }
-export async function updateProfileCacheBackend(data) {
-    return await postData("/update_profile_cache_backend", data);
-}
+
 
 export async function logSearch(server, name) {
     await postData("/search_log", { server, name });

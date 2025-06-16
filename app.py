@@ -107,22 +107,6 @@ async def profile():
             return jsonify({"error": "Failed to fetch profile"}), 500
 
         return jsonify(profile_data)
-    
-@app.route("/update_character_cache", methods=["POST"])
-async def update_character_cache_route():
-    data = request.json
-    server = data.get("server")
-    character_id = data.get("characterId")
-
-    if not server or not character_id:
-        return jsonify({"error": "server or characterId is null"}), 400
-
-    async with aiohttp.ClientSession() as session:
-        # create_or_update_profile_cache 함수 호출
-        updated_profile = await create_or_update_profile_cache(session, server, character_id)
-        if not updated_profile:
-            return jsonify({"error": "Failed to update character cache."}), 500
-        return jsonify({"status": "success", "profile": updated_profile})
 
 async def get_character_card_data(session, server, character_id, average_set_dmg):
     """단일 캐릭터의 장비 정보와 DPS 정보를 비동기적으로 함께 가져옵니다."""
@@ -186,34 +170,52 @@ async def get_character_card_data(session, server, character_id, average_set_dmg
     except Exception as e:
         print(f"Error processing character {character_id}: {e}")
         return None
-    
+
+# app.py
+
 @app.route("/search", methods=["POST"])
 async def search():
     data = request.json
     server, name = data.get("server"), data.get("name")
-    average_set_dmg = data.get("average_set_dmg", False)
 
     async with aiohttp.ClientSession() as session:
+        # 1. Neople API로 캐릭터 기본 정보 목록을 가져옵니다. (여기엔 adventureName이 없습니다.)
         characters_summary = await async_search_characters(session, server, name)
         if not characters_summary:
             return jsonify({"results": []})
 
+        # 2. 받아온 캐릭터 목록 각각의 상세 프로필을 비동기적으로 모두 조회하여 adventureName을 얻습니다.
+        profile_tasks = [async_get_profile(session, server, char['characterId']) for char in characters_summary]
+        full_profiles = await asyncio.gather(*profile_tasks)
+
         tasks = []
-        for char_summary in characters_summary:
-            tasks.append(
-                asyncio.create_task(
-                    _process_character_for_search( # [MODIFIED] profile_task 등은 _process_character_for_search 내부에서 처리
-                        session, server, char_summary, average_set_dmg
-                    )
-                )
-            )
+        for profile in full_profiles:
+            # 프로필 조회가 실패했거나 adventureName이 없는 경우 건너뜁니다.
+            if not profile or not profile.get("adventureName"):
+                continue
+
+            # 비동기 처리를 위한 내부 헬퍼 함수
+            async def process_character(p):
+                character_id = p["characterId"]
+                adventure_name = p["adventureName"]
+
+                # 3. 이제 adventureName을 사용하여 캐시 파일 경로를 안전하게 만들 수 있습니다.
+                profile_path = Path(DATA_DIR) / server / adventure_name / character_id / "profile.json"
+
+                if profile_path.exists():
+                    # 캐시 파일이 있으면 읽어서 반환
+                    with open(profile_path, "r", encoding="utf-8") as f:
+                        return json.load(f)
+                else:
+                    # 캐시 파일이 없으면 새로 생성
+                    return await create_or_update_profile_cache(session, server, character_id)
+
+            tasks.append(process_character(profile))
 
         results = await asyncio.gather(*tasks)
         final_result = [res for res in results if res is not None]
 
     return jsonify({"results": final_result})
-
-
 @app.route("/equipment", methods=["POST"])
 async def equipment():
     data = request.json
@@ -377,6 +379,8 @@ async def get_history():
 
     return jsonify(history_data)
 
+# app.py 의 기존 /search_explorer 함수를 아래 코드로 교체합니다.
+
 @app.route("/search_explorer", methods=["POST"])
 async def search_explorer():
     try:
@@ -386,12 +390,14 @@ async def search_explorer():
         if not explorer_name:
             return jsonify({"results": []})
 
+        # 실시간 DPS 계산 대신, 저장된 profile.json 캐시를 읽어옵니다.
         final_result = []
         for serverId in servers:
             base_path = Path(DATA_DIR) / serverId / explorer_name
             if not base_path.exists() or not base_path.is_dir():
                 continue
 
+            # 모험단 폴더 내의 각 캐릭터 폴더를 순회합니다.
             for char_dir in base_path.iterdir():
                 if not char_dir.is_dir():
                     continue
@@ -403,6 +409,7 @@ async def search_explorer():
                             profile_data = json.load(f)
                             final_result.append(profile_data)
                     except json.JSONDecodeError:
+                        # JSON 파일이 손상된 경우를 대비한 예외 처리
                         print(f"Warning: Could not decode profile.json for {char_dir.name}")
                         continue
 
@@ -411,7 +418,6 @@ async def search_explorer():
     except Exception as e:
         print(f"[💥] Unhandled exception in /search_explorer: {e}")
         return jsonify({"error": "An internal server error occurred."}), 500
-
 
 @app.route("/search_log", methods=["POST"])
 def log_search():
@@ -487,17 +493,15 @@ async def get_dps():
         analyzer = CharacterAnalyzer(API_KEY, server, character_id)
         all_results = await analyzer.run_analysis_for_all_dps(session)
 
-        # [MODIFIED] 백그라운드에서 캐시를 업데이트하는 로직 제거
-        # await create_or_update_profile_cache(session, server, character_id)
+        # 2. 백그라운드에서 캐시를 업데이트합니다.
+        # (별도 태스크로 분리하거나, 여기서 동기적으로 처리)
+        await create_or_update_profile_cache(session, server, character_id)
 
         # 3. 클라이언트가 요청한 옵션에 맞는 DPS 결과를 선택하여 반환합니다.
         if average_set_dmg:
             results_to_return = all_results.get("normalized", {})
         else:
             results_to_return = all_results.get("normal", {})
-        
-        # [NEW] full_results도 함께 반환하여 프론트엔드에서 캐시 업데이트에 사용하도록 함
-        results_to_return["full_dps_data"] = all_results 
 
     if not results_to_return or "error" in results_to_return:
         return jsonify(results_to_return or {"error": "DPS 계산에 실패했습니다."}), 500
@@ -522,27 +526,50 @@ async def buff_skill():
 
 # app.py 파일에 이 함수 전체를 추가해주세요.
 # CharacterAnalyzer, Path, json, datetime 등이 import 되어 있는지 확인하세요.
-async def create_or_update_profile_cache(
-    session, server, character_id, profile_data, equipment_data,
-    is_buffer=False, dps_data=None, total_buff_score=None
-):
-    """
-    캐릭터의 프로필 캐시 파일을 생성하거나 업데이트합니다.
-    이 함수는 이미 가져오고/계산된 데이터를 기반으로 동작합니다.
-    """
-    if not profile_data or not equipment_data:
-        print(f"Error: Missing profile_data or equipment_data for cache update for {character_id}")
+async def create_or_update_profile_cache(session, server, character_id):
+    """캐릭터의 프로필 정보를 API에서 가져와 profile.json 캐시 파일을 생성하거나 업데이트합니다."""
+    # 상세 프로필 정보를 가져옵니다.
+    profile_data = await async_get_profile(session, server, character_id)
+    if not profile_data:
         return None
 
-    adventure_name = profile_data.get("adventureName")
-    if not adventure_name:
-        print(f"Error: Missing adventureName for cache update for {character_id}")
-        return None
+    # [NEW] 버퍼 여부 판별
+    is_buffer = False
+    total_buff_score = None # 기본값
+    buff_skill_data = await async_get_buff_skill(session, server, character_id)
+    if buff_skill_data and buff_skill_data.get("skill", {}).get("buff", {}).get("skillInfo", {}).get("name"):
+        skill_name = buff_skill_data["skill"]["buff"]["skillInfo"]["name"]
+        if any(buffer_skill in skill_name for buffer_skill in BUFFER_SKILLS):
+            is_buffer = True
+            # 버퍼일 경우 버프 능력치 계산
+            buff_analyzer = BufferAnalyzer(API_KEY, server, character_id)
+            buff_results = await buff_analyzer.run_buff_power_analysis(session)
+            if buff_results and "total_buff_score" in buff_results:
+                total_buff_score = buff_results["total_buff_score"]
+
+
+    normal_dps = None
+    normalized_dps = None
+    equip_data = None
+
+    if not is_buffer: # [MODIFIED] 버퍼가 아닐 때만 DPS 계산
+        analyzer = CharacterAnalyzer(API_KEY, server, character_id)
+        all_dps_results = await analyzer.run_analysis_for_all_dps(session)
+
+        if "error" not in all_dps_results:
+            normal_dps = all_dps_results.get("normal", {}).get("dps")
+            normalized_dps = all_dps_results.get("normalized", {}).get("dps")
+            equip_data = all_dps_results.get("equipment_data")
+    else: # [NEW] 버퍼일 경우 장비 정보는 buffCalc에서 가져오지 않으므로, 여기서 가져옴
+        equip_data = await async_get_equipment(session, server, character_id)
+
+
 
     # 세트 아이템 정보를 추출합니다.
+    equip_data = await async_get_equipment(session, server, character_id) # Equipment data needed for setItemInfo
     set_info = {}
-    if equipment_data and equipment_data.get("setItemInfo"):
-        set_info_list = equipment_data["setItemInfo"]
+    if equip_data and equip_data.get("setItemInfo"):
+        set_info_list = equip_data["setItemInfo"]
         if set_info_list and isinstance(set_info_list, list) and len(set_info_list) > 0:
             set_info_data = set_info_list[0]
             set_info = {
@@ -562,16 +589,17 @@ async def create_or_update_profile_cache(
         "level": profile_data.get("level"),
         "serverId": server,
         **set_info,
-        "dps": {
-            "normal": dps_data.get("normal") if dps_data else None,
-            "normalized": dps_data.get("normalized") if dps_data else None
+        "dps": { # 버퍼일 경우 None이 될 수 있음
+            "normal": normal_dps,
+            "normalized": normalized_dps
         },
         "is_buffer": is_buffer,
-        "total_buff_score": total_buff_score,
+        "total_buff_score": total_buff_score, # [NEW] total_buff_score 추가
         "last_updated": datetime.datetime.utcnow().isoformat() + "Z"
     }
 
     # 구성된 데이터를 profile.json 파일로 저장합니다.
+    adventure_name = profile_data.get("adventureName")
     char_dir = Path(DATA_DIR) / server / adventure_name / character_id
     char_dir.mkdir(parents=True, exist_ok=True)
     profile_path = char_dir / "profile.json"
@@ -579,131 +607,6 @@ async def create_or_update_profile_cache(
         json.dump(cache_content, f, ensure_ascii=False, indent=2)
 
     return cache_content
-@app.route("/update_profile_cache_backend", methods=["POST"])
-async def update_profile_cache_backend():
-    data = request.json
-    server = data.get("server")
-    character_id = data.get("characterId")
-    profile_data_from_frontend = data.get("profileData")
-    equipment_data_from_frontend = data.get("equipmentData")
-    is_buffer = data.get("isBuffer", False)
-    dps_data_from_frontend = data.get("dpsData")
-    total_buff_score_from_frontend = data.get("totalBuffScore")
-
-    if not all([server, character_id, profile_data_from_frontend, equipment_data_from_frontend]):
-        return jsonify({"error": "Missing required data for cache update."}), 400
-
-    async with aiohttp.ClientSession() as session:
-        updated_profile = await create_or_update_profile_cache(
-            session, server, character_id, profile_data_from_frontend, equipment_data_from_frontend,
-            is_buffer=is_buffer, dps_data=dps_data_from_frontend, total_buff_score=total_buff_score_from_frontend
-        )
-        if not updated_profile:
-            return jsonify({"error": "Failed to update profile cache."}), 500
-        return jsonify({"status": "success", "profile": updated_profile})
-
-async def _process_character_for_search(session, server, char_summary_data, average_set_dmg): # [MODIFIED] character_id 대신 char_summary_data 직접 전달
-    character_id = char_summary_data['characterId']
-    # [NEW] adventureName은 profile_data에서만 가져올 수 있으므로, 먼저 profile을 캐시에서 확인하거나 API 호출
-    # searchCharacters API는 adventureName을 직접 제공하지 않으므로, profile_data를 가져와야 합니다.
-    profile_data_initial = await async_get_profile(session, server, character_id)
-    if not profile_data_initial:
-        return None
-    adventure_name = profile_data_initial.get("adventureName")
-    if not adventure_name:
-        return None
-
-    char_dir = Path(DATA_DIR) / server / adventure_name / character_id
-    profile_path = char_dir / "profile.json"
-
-    # [NEW] 캐시 파일이 존재하면 읽어서 반환
-    if profile_path.exists():
-        try:
-            with open(profile_path, "r", encoding="utf-8") as f:
-                cached_data = json.load(f)
-                # cached_data에 dps 또는 total_buff_score가 없거나 업데이트가 필요한 경우
-                # (예: average_set_dmg 옵션 변경 또는 오래된 캐시)
-                # 여기서는 간단히 캐시가 있으면 사용하도록 함.
-                # 필요에 따라 캐시 만료 로직 (예: 'last_updated' 기반) 추가 가능
-                return cached_data
-        except json.JSONDecodeError:
-            print(f"Warning: Could not decode profile.json for {character_id}. Recalculating.")
-            # JSON 디코딩 실패 시 아래 API 호출 로직으로 넘어감
-
-    # [MODIFIED] 캐시가 없거나 유효하지 않으면 API 호출하여 계산 및 캐시 생성
-    # profile_task, equipment_task, buff_skill_task는 여기서 직접 생성
-    profile_task = asyncio.create_task(async_get_profile(session, server, character_id))
-    equipment_task = asyncio.create_task(async_get_equipment(session, server, character_id))
-    buff_skill_task = asyncio.create_task(async_get_buff_skill(session, server, character_id))
-
-    profile_data, equipment_data, buff_skill_data = await asyncio.gather(
-        profile_task, equipment_task, buff_skill_task
-    )
-
-    if not profile_data or not equipment_data:
-        return None
-
-    # is_buffer 판별
-    is_buffer = False
-    if buff_skill_data and buff_skill_data.get("skill", {}).get("buff", {}).get("skillInfo", {}).get("name"):
-        skill_name = buff_skill_data["skill"]["buff"]["skillInfo"]["name"]
-        if any(buffer_skill in skill_name for buffer_skill in BUFFER_SKILLS):
-            is_buffer = True
-
-    # DPS 또는 Buff Score 계산
-    normal_dps = None
-    normalized_dps = None
-    total_buff_score = None
-    full_dps_data = None # 캐시 업데이트를 위해 전체 DPS 데이터를 저장
-
-    if is_buffer:
-        buff_analyzer = BufferAnalyzer(API_KEY, server, character_id)
-        buff_results = await buff_analyzer.run_buff_power_analysis(session)
-        if buff_results and "total_buff_score" in buff_results:
-            total_buff_score = buff_results["total_buff_score"]
-    else:
-        analyzer = CharacterAnalyzer(API_KEY, server, character_id)
-        all_dps_results = await analyzer.run_analysis_for_all_dps(session)
-        if "error" not in all_dps_results:
-            normal_dps = all_dps_results.get("normal", {}).get("dps")
-            normalized_dps = all_dps_results.get("normalized", {}).get("dps")
-            full_dps_data = all_dps_results # 전체 DPS 데이터를 캐시 저장용으로 보존
-
-    # 캐시 업데이트 (API 호출 후)
-    await create_or_update_profile_cache(
-        session, server, character_id, profile_data, equipment_data,
-        is_buffer=is_buffer,
-        dps_data={"normal": normal_dps, "normalized": normalized_dps}, # 간소화된 DPS 데이터 전달
-        total_buff_score=total_buff_score
-    )
-
-    # 검색 결과 카드에 필요한 정보 반환 (profile.json의 내용과 유사)
-    set_info = {}
-    if equipment_data.get("setItemInfo"):
-        set_info_list = equipment_data["setItemInfo"]
-        if set_info_list and isinstance(set_info_list, list) and len(set_info_list) > 0:
-            set_info_data = set_info_list[0]
-            set_info = {
-                "setItemName": set_info_data.get("setItemName", ""),
-                "setItemRarityName": set_info_data.get("setItemRarityName", ""),
-                "setPoint": set_info_data.get("active", {}).get("setPoint", {}).get("current", 0)
-            }
-
-    return {
-        "characterId": profile_data.get("characterId"),
-        "characterName": profile_data.get("characterName"),
-        "adventureName": profile_data.get("adventureName"),
-        "jobName": profile_data.get("jobName"),
-        "jobGrowName": profile_data.get("jobGrowName"),
-        "fame": profile_data.get("fame"),
-        "level": profile_data.get("level"),
-        "serverId": server,
-        **set_info,
-        "dps": { "normal": normal_dps, "normalized": normalized_dps },
-        "is_buffer": is_buffer,
-        "total_buff_score": total_buff_score,
-        "last_updated": datetime.datetime.utcnow().isoformat() + "Z"
-    }
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
