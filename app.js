@@ -45,31 +45,40 @@ function render() {
     ui.switchView(state.view);
 
     if (state.view === 'main') {
-        ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
-        resultsDiv.innerHTML = '';
+            ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
 
-        if (state.displayedResults.length > 0) {
-            state.displayedResults.forEach(profile => {
-                const card = ui.createCharacterCard(profile, state.searchTerm);
-                resultsDiv.appendChild(card);
-            });
-        } else if (state.searchTerm && !state.isLoading && state.allSearchResults.length === 0) {
-             resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
-        } else if (state.searchTerm && state.isLoading) {
-             resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
+            const resultsSection = document.querySelector('.results-section'); 
+            if (!state.searchTerm || (state.searchTerm && !state.isLoading && state.allSearchResults.length === 0)) {
+                if (resultsSection) {
+                    resultsSection.style.display = 'none';
+                }
+            } else {
+                if (resultsSection) {
+                    resultsSection.style.display = 'block'; 
+                }
+                resultsDiv.innerHTML = ''; 
+
+                if (state.displayedResults.length > 0) {
+                    state.displayedResults.forEach(profile => {
+                        const card = ui.createCharacterCard(profile, state.searchTerm);
+                        resultsDiv.appendChild(card);
+                    });
+                } else if (state.searchTerm && state.isLoading) {
+                    resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
+                }
+            }
+            ui.showMoreResultsIndicator(state.displayedResults.length < state.allSearchResults.length);
+
+        } else if (state.view === 'detail' && state.characterDetail.profile) {
+            ui.renderCharacterDetail(
+                state.characterDetail.profile,
+                state.characterDetail.equipment,
+                state.characterDetail.setItemInfo,
+                state.characterDetail.fameHistory,
+                state.characterDetail.gearHistory,
+                state.dps
+            );
         }
-        ui.showMoreResultsIndicator(state.displayedResults.length < state.allSearchResults.length);
-
-    } else if (state.view === 'detail' && state.characterDetail.profile) {
-        ui.renderCharacterDetail(
-            state.characterDetail.profile,
-            state.characterDetail.equipment,
-            state.characterDetail.setItemInfo,
-            state.characterDetail.fameHistory,
-            state.characterDetail.gearHistory,
-            state.dps
-        );
-    }
 }
 
 function updateURL(view, server, name) {
