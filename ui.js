@@ -235,7 +235,7 @@ function renderBuffPowerDetailsWidget(profile) {
             </div>
              <div class="buff-power-row">
                 <span class="buff-power-label">3a (stat)</span>
-                <span class="buff-power-value">${thirdAwakening.increase_percent ? `${thirdAwakening.increase_percent}%` : '-'}</span>
+                <span class="buff-power-value">${thirdAwakening.stat_bonus?.toLocaleString() || (thirdAwakening.increase_percent ? `${thirdAwakening.increase_percent}%` : '-')}</span>
             </div>
             <div class="buff-power-row">
                 <span class="buff-power-label">aura (stat)</span>

@@ -518,48 +518,177 @@ class BufferAnalyzer:
             coeffs = BUFF_TABLES[self.job_code].get(skill_level)
             consts = FORMULA_CONSTANTS.get(skill_name)
             if not coeffs or not consts: return {}
-            stat_bonus = coeffs["stat"] * (((stat + consts["X"]) / (consts["c"] + 1)) * (buff_power + consts["Y"]) * consts["Z"])
-            return {"stat_bonus": round(stat_bonus), "atk_bonus": coeffs["atk"]}
+            
+            multiplier = (((stat + consts["X"]) / (consts["c"] + 1)) * (buff_power + consts["Y"]) * consts["Z"])
+            
+            stat_bonus = coeffs["stat"] * multiplier
+            atk_bonus = coeffs["atk"] * multiplier
+            
+            return {"stat_bonus": round(stat_bonus), "atk_bonus": round(atk_bonus)}
         return {}
 
-    async def run_buff_power_analysis(self, session):
-        """[수정됨] 버프 강화 로직과 스킬 레벨 적용 로직이 개선되었습니다."""
-        endpoints = {"profile": f"/characters/{self.CHARACTER_ID}", "status": f"/characters/{self.CHARACTER_ID}/status", "skills": f"/characters/{self.CHARACTER_ID}/skill/style", "current_gear": f"/characters/{self.CHARACTER_ID}/equip/equipment", "current_avatar": f"/characters/{self.CHARACTER_ID}/equip/avatar", "current_creature": f"/characters/{self.CHARACTER_ID}/equip/creature", "buff_gear": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/equipment"}
-        tasks = {name: fetch_json(session, f"{self.BASE_URL}{path}", self.API_KEY) for name, path in endpoints.items()}
-        api_data = await asyncio.gather(*tasks.values())
-        data = dict(zip(tasks.keys(), api_data))
 
-        if not data.get("profile"): return {"error": "캐릭터 정보를 불러올 수 없습니다."}
-        self.job_code = JOB_ID_TO_CODE.get(data["profile"]["jobId"])
-        if not self.job_code: return {"error": "Not a sader."}
+    def _calculate_buff(self, skill_name_key, skill_level, calculated_stats, first_awakening_buff=None):
+        """[개선됨] 3차 각성기 계산 시 1차 각성기 결과값을 참조합니다."""
+        if not self.job_code: return {}
+        skill_name = SKILL_NAMES[self.job_code][skill_name_key]
+        stat, buff_power = calculated_stats.get("stat", 0), calculated_stats.get("buff_power", 0)
+        
+        if skill_name_key == "3a":
+            percent_increase = common_3a_table.get(skill_level, {}).get("percent", 0)
+            # 1차 각성 버프의 stat_bonus가 있으면, 이를 기반으로 3차 각성 최종 수치를 계산
+            if first_awakening_buff and 'stat_bonus' in first_awakening_buff:
+                one_a_stat_bonus = first_awakening_buff['stat_bonus']
+                three_a_stat_bonus = one_a_stat_bonus * (percent_increase / 100)
+                return {"stat_bonus": round(three_a_stat_bonus)}
+            else:
+                # 1차 각성 정보가 없으면, 기존처럼 퍼센트만 반환 (안전 장치)
+                return {"increase_percent": percent_increase}
 
-        # [개선됨] 버프 강화 장비를 부위별로 정확하게 교체
-        current_gear_by_slot = {item['slotId']: item for item in data["current_gear"].get("equipment", [])}
-        for item in data["buff_gear"].get("equipment", []):
-            current_gear_by_slot[item['slotId']] = item
-        
-        buff_gear_set = {
-            "equipment": list(current_gear_by_slot.values()),
-            "avatar": data.get("current_avatar", {}).get("avatar", []), # 스위칭용 아바타 API가 없으므로 현재 아바타 사용
-            "creature": data.get("current_creature", {}).get("creature")
-        }
-        current_gear_set = {"equipment": data["current_gear"].get("equipment",[]), "avatar": data["current_avatar"].get("avatar",[]), "creature": data.get("current_creature", {}).get("creature")}
+        if skill_name_key == "aura":
+            table = msader_aura_table if self.job_code == "M_SADER" else common_aura_table
+            return {"stat_bonus": table.get(skill_level, {}).get("stat", 0)}
 
-        base_stats = {s["name"]: s["value"] for s in data["status"]["status"]}
-        stats_for_main_buff = self._parse_stats_from_gear_set(buff_gear_set, base_stats)
-        stats_for_current_gear = self._parse_stats_from_gear_set(current_gear_set, base_stats)
+        if skill_name_key == "1a":
+            coeffs = common_1a_table.get(skill_level)
+            consts = FORMULA_CONSTANTS.get(skill_name)
+            if not coeffs or not consts: return {}
+            multiplier = (((stat + consts["X"]) / (consts["c"] + 1)) * (buff_power + consts["Y"]) * consts["Z"])
+            stat_increase = coeffs["stat"] * multiplier
+            return {"stat_bonus": round(stat_increase)}
 
-        final_buffs = {}
-        skill_info = {s["name"]: s["level"] for s in data["skills"]["skill"]["style"]["active"]}
-        job_skills = SKILL_NAMES[self.job_code]
+        if skill_name_key == "main":
+            coeffs = BUFF_TABLES[self.job_code].get(skill_level)
+            consts = FORMULA_CONSTANTS.get(skill_name)
+            if not coeffs or not consts: return {}
+            multiplier = (((stat + consts["X"]) / (consts["c"] + 1)) * (buff_power + consts["Y"]) * consts["Z"])
+            stat_bonus = coeffs["stat"] * multiplier
+            atk_bonus = coeffs["atk"] * multiplier
+            return {"stat_bonus": round(stat_bonus), "atk_bonus": round(atk_bonus)}
+            
+        return {}
+
+def _parse_stats_from_gear_set(self, gear_set, base_stats):
+    """[개선됨] 장비의 모든 텍스트(설명, 옵션 등)를 분석하여 스킬 레벨 보너스를 정확히 계산합니다."""
+    stats = {
+        "Intelligence": base_stats.get("Intelligence", 0),
+        "Spirit": base_stats.get("Spirit", 0),
+        "Stamina": base_stats.get("Stamina", 0)
+    }
+    total_buff_power = 0
+    skill_lv_bonuses = {"main": 0, "1a": 0, "3a": 0, "aura": 0}
+
+    all_items = gear_set.get("equipment", [])
+    if gear_set.get("avatar"): all_items.extend(gear_set.get("avatar", []))
+    if gear_set.get("creature"): all_items.append(gear_set["creature"])
+    
+    for item in all_items:
+        if not item: continue
         
-        main_buff_lv = skill_info.get(job_skills["main"], 0) + stats_for_main_buff["skill_lv_bonuses"].get("main", 0)
-        final_buffs["main"] = self._calculate_buff("main", main_buff_lv, stats_for_main_buff)
+        all_statuses = item.get("itemStatus", [])
+        if item.get("enchant"): all_statuses.extend(item["enchant"].get("status", []))
+        if item.get("tune"): all_statuses.extend(item["tune"].get("status", []))
         
-        # [개선됨] 1각/3각/오라에도 스킬 레벨 보너스 적용
-        for buff_type in ["1a", "3a", "aura"]:
-            skill_name = job_skills[buff_type]
-            skill_level = skill_info.get(skill_name, 0) + stats_for_current_gear["skill_lv_bonuses"].get(buff_type, 0)
-            final_buffs[buff_type] = self._calculate_buff(buff_type, skill_level, stats_for_current_gear)
+        for stat in all_statuses:
+            name, value = stat.get("name", ""), stat.get("value", 0)
+            if "Buff Power" in name: total_buff_power += value
+            elif "Intelligence" in name: stats["Intelligence"] += value
+            elif "Spirit" in name: stats["Spirit"] += value
+            elif "Stamina" in name: stats["Stamina"] += value
+            elif "All Stats" in name:
+                stats["Intelligence"] += value; stats["Spirit"] += value; stats["Stamina"] += value
         
-        return {"characterName": data["profile"]["characterName"], "jobName": data["profile"]["jobName"], "buffs": final_buffs}
+        # 텍스트로 된 모든 스킬 레벨 옵션을 분석합니다.
+        all_text_sources = []
+        if item.get("itemExplainDetail"): all_text_sources.append(item["itemExplainDetail"])
+        for stat in all_statuses: all_text_sources.append(stat.get("name", "")) # Status 이름 자체도 분석
+        if item.get("fusionOption"):
+            for opt in item["fusionOption"].get("options", []):
+                all_text_sources.append(opt.get("explainDetail", ""))
+
+        for text_block in all_text_sources:
+            if not text_block: continue
+            for line in text_block.split('\n'):
+                line_lower = line.lower()
+                
+                # 패턴 1: "Lv. X (Buff|Active) skill levels +Y"
+                match = re.search(r"lv\.\s*(\d+)\s*(?:buff|active) skill levels\s*\+\s*(\d+)", line_lower)
+                if match:
+                    lvl, bonus = int(match.group(1)), int(match.group(2))
+                    if lvl == 35: skill_lv_bonuses["main"] += bonus
+                    if lvl == 50: skill_lv_bonuses["1a"] += bonus
+                    if lvl == 48: skill_lv_bonuses["aura"] += bonus
+                    if lvl == 100: skill_lv_bonuses["3a"] += bonus
+                    continue
+                
+                # 패턴 2: "Level X-Y All Skill +Z"
+                match = re.search(r"level\s*(\d+)-(\d+)\s*all skill\s*\+\s*(\d+)", line_lower)
+                if match:
+                    start_lvl, end_lvl, bonus = int(match.group(1)), int(match.group(2)), int(match.group(3))
+                    if start_lvl <= 30 <= end_lvl: skill_lv_bonuses["main"] += bonus
+                    if start_lvl <= 50 <= end_lvl: skill_lv_bonuses["1a"] += bonus
+                    if start_lvl <= 48 <= end_lvl: skill_lv_bonuses["aura"] += bonus
+                    if start_lvl <= 100 <= end_lvl: skill_lv_bonuses["3a"] += bonus
+                    continue
+                
+                # 패턴 3: 단순 "Lv. X Skills +Y"
+                match = re.search(r"lv\.(\d+)\s*skills\s*\+\s*(\d+)", line_lower)
+                if match:
+                    lvl, bonus = int(match.group(1)), int(match.group(2))
+                    if lvl == 35: skill_lv_bonuses["main"] += bonus
+                    if lvl == 50: skill_lv_bonuses["1a"] += bonus
+                    if lvl == 48: skill_lv_bonuses["aura"] += bonus
+                    if lvl == 100: skill_lv_bonuses["3a"] += bonus
+
+    applicable_stat = 0
+    if self.job_code in ["F_SADER", "ENCHANTRESS"]: applicable_stat = stats["Intelligence"]
+    elif self.job_code == "MUSE": applicable_stat = stats["Spirit"]
+    elif self.job_code == "M_SADER": applicable_stat = max(stats["Stamina"], stats["Spirit"])
+            
+    return {"stat": applicable_stat, "buff_power": total_buff_power, "skill_lv_bonuses": skill_lv_bonuses}
+
+# buffCalc.py 파일의 run_buff_power_analysis 함수를 아래 코드로 수정
+
+async def run_buff_power_analysis(self, session):
+    """[개선됨] 1차 각성기 버프를 먼저 계산하고 그 결과를 3차 각성기 계산에 넘겨줍니다."""
+    endpoints = {"profile": f"/characters/{self.CHARACTER_ID}", "status": f"/characters/{self.CHARACTER_ID}/status", "skills": f"/characters/{self.CHARACTER_ID}/skill/style", "current_gear": f"/characters/{self.CHARACTER_ID}/equip/equipment", "current_avatar": f"/characters/{self.CHARACTER_ID}/equip/avatar", "current_creature": f"/characters/{self.CHARACTER_ID}/equip/creature", "buff_gear": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/equipment"}
+    tasks = {name: fetch_json(session, f"{self.BASE_URL}{path}", self.API_KEY) for name, path in endpoints.items()}
+    api_data = await asyncio.gather(*tasks.values())
+    data = dict(zip(tasks.keys(), api_data))
+
+    if not data.get("profile"): return {"error": "Can not load the character information."}
+    self.job_code = JOB_ID_TO_CODE.get(data["profile"]["jobGrowId"])
+    if not self.job_code: return {"error": "Not a sader."}
+
+    current_gear_by_slot = {item['slotId']: item for item in data["current_gear"].get("equipment", [])}
+    for item in data["buff_gear"].get("equipment", []):
+        current_gear_by_slot[item['slotId']] = item
+    
+    buff_gear_set = { "equipment": list(current_gear_by_slot.values()), "avatar": data.get("current_avatar", {}).get("avatar", []), "creature": data.get("current_creature", {}).get("creature") }
+    current_gear_set = {"equipment": data["current_gear"].get("equipment",[]), "avatar": data["current_avatar"].get("avatar",[]), "creature": data.get("current_creature", {}).get("creature")}
+
+    base_stats = {s["name"]: s["value"] for s in data["status"]["status"]}
+    stats_for_main_buff = self._parse_stats_from_gear_set(buff_gear_set, base_stats)
+    stats_for_current_gear = self._parse_stats_from_gear_set(current_gear_set, base_stats)
+
+    final_buffs = {}
+    skill_info = {s["name"]: s["level"] for s in data["skills"]["skill"]["style"]["active"]}
+    job_skills = SKILL_NAMES[self.job_code]
+    
+    # 메인 버프 계산
+    main_buff_lv = skill_info.get(job_skills["main"], 0) + stats_for_main_buff["skill_lv_bonuses"].get("main", 0)
+    final_buffs["main"] = self._calculate_buff("main", main_buff_lv, stats_for_main_buff)
+    
+    # 1차 각성기 버프 계산
+    skill_level_1a = skill_info.get(job_skills["1a"], 0) + stats_for_current_gear["skill_lv_bonuses"].get("1a", 0)
+    final_buffs["1a"] = self._calculate_buff("1a", skill_level_1a, stats_for_current_gear)
+
+    # 3차 각성기 버프 계산 (1차 각성기 결과를 인자로 전달)
+    skill_level_3a = skill_info.get(job_skills["3a"], 0) + stats_for_current_gear["skill_lv_bonuses"].get("3a", 0)
+    final_buffs["3a"] = self._calculate_buff("3a", skill_level_3a, stats_for_current_gear, final_buffs["1a"])
+
+    # 오라 스킬 계산
+    skill_level_aura = skill_info.get(job_skills["aura"], 0) + stats_for_current_gear["skill_lv_bonuses"].get("aura", 0)
+    final_buffs["aura"] = self._calculate_buff("aura", skill_level_aura, stats_for_current_gear)
+    
+    return {"characterName": data["profile"]["characterName"], "jobName": data["profile"]["jobName"], "buffs": final_buffs}
