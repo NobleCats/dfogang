@@ -29,10 +29,10 @@ function getSetIconPath(setName) {
     return "assets/sets/Unknown.png";
 }
 
-export function createCharacterCard(profile, searchName) {
+export function createCharacterCard(profile, searchName, dpsToShow) {
     const spritePath = `assets/characters/${profile.jobName}.png`;
     const setIconPath = getSetIconPath(profile.setItemName ?? "");
-    const rarityName = profile.setItemRarityName ?? "None";
+    const rarityName = profile.setItemRarityName ?? ""; 
     let rarityStyle = 'padding:2px 0;';
     if (rarityName === "Primeval") {
         rarityStyle = `background: linear-gradient(to bottom, #57e95b, #3a8390); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`;
@@ -64,7 +64,7 @@ export function createCharacterCard(profile, searchName) {
 
         <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);"> <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">DPS</span>
             <span style="font-size: 1.2em; color: var(--color-accent-blue);">${
-            profile.dps != null ? profile.dps.toLocaleString() : 'N/A'
+            dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A'
             }</span>
         </div>
     `;
@@ -206,7 +206,7 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
                 <div class="character-canvas" id="character-canvas-container"></div>
                 <div id="set-info-container" class="detail-widget" style="margin-top: 24px;"></div>
             </div>
-            <div id="dps-widget-area"></div> {/* This is the existing placeholder */}
+            <div id="dps-widget-area"></div>
             <div class="detail-widget detail-widget-fame">
                 <h3 class="widget-title">Fame Trend</h3>
                 <div id="fame-chart-container" style="width: 100%; height: 265px;">
@@ -225,11 +225,8 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
     
-    // Clear the existing content of dps-widget-area before appending
-    const dpsWidgetArea = document.getElementById('dps-widget-area');
-    dpsWidgetArea.innerHTML = ''; // Add this line to clear the content
     const dpsWidget = renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState);
-    dpsWidgetArea.appendChild(dpsWidget); // Append the new widget
+    document.getElementById('dps-widget-area').appendChild(dpsWidget);
 }
 function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
@@ -309,6 +306,8 @@ function renderCharacterCanvas(profile, equipmentList) {
     drawCharacterText(profile);
 }
 
+// ui.js
+
 function renderSetItems(setItemInfo) {
     const container = document.getElementById("set-info-container");
     container.innerHTML = "";
@@ -320,7 +319,7 @@ function renderSetItems(setItemInfo) {
     container.style.display = 'block';
     
     setItemInfo.forEach(item => {
-        const rarityName = item.setItemRarityName ?? "None";
+        const rarityName = item.setItemRarityName ?? "";
         let rarityStyle = `color: ${rarityColors[Object.keys(rarityColors).find(key => rarityName.includes(key)) || "None"]};`;
         if (rarityName === "Primeval") {
             rarityStyle = `background: linear-gradient(to bottom, #57e95b, #3a8390); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`;
@@ -328,9 +327,9 @@ function renderSetItems(setItemInfo) {
 
         container.innerHTML += `
             <div style="text-align:center;">
-                <div style="font-family: var(--font-dfo); font-size:22px; font-weight:700; color:#eee; margin-bottom:4px;">${item.setItemName}</div>
+                <div style="font-family: var(--font-dfo); font-size:22px; font-weight:700; color:#eee; margin-bottom:4px;">${item.setItemName ?? ''}</div>
                 <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName}" style="height: 24px;">
+                    <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName ?? ''}" style="height: 24px;">
                     <span style="font-size:16px; font-weight:500; ${rarityStyle}">${rarityName}</span>
                 </div>
                 <div style="font-size:14px; color:var(--color-text-secondary); margin-top:2px;">(${item.active?.setPoint?.current ?? 0})</div>

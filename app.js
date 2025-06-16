@@ -45,40 +45,39 @@ function render() {
     ui.switchView(state.view);
 
     if (state.view === 'main') {
-            ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
+        ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
 
-            const resultsSection = document.querySelector('.results-section'); 
-            if (!state.searchTerm || (state.searchTerm && !state.isLoading && state.allSearchResults.length === 0)) {
-                if (resultsSection) {
-                    resultsSection.style.display = 'none';
-                }
-            } else {
-                if (resultsSection) {
-                    resultsSection.style.display = 'block'; 
-                }
-                resultsDiv.innerHTML = ''; 
-
-                if (state.displayedResults.length > 0) {
-                    state.displayedResults.forEach(profile => {
-                        const card = ui.createCharacterCard(profile, state.searchTerm);
-                        resultsDiv.appendChild(card);
-                    });
-                } else if (state.searchTerm && state.isLoading) {
-                    resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
-                }
+        const resultsSection = document.querySelector('.results-section'); 
+        if (!state.searchTerm || (state.searchTerm && !state.isLoading && state.allSearchResults.length === 0)) {
+            if (resultsSection) {
+                resultsSection.style.display = 'none';
             }
-            ui.showMoreResultsIndicator(state.displayedResults.length < state.allSearchResults.length);
+        } else {
+            if (resultsSection) {
+                resultsSection.style.display = 'block'; 
+            }
+            resultsDiv.innerHTML = ''; 
 
-        } else if (state.view === 'detail' && state.characterDetail.profile) {
-            ui.renderCharacterDetail(
-                state.characterDetail.profile,
-                state.characterDetail.equipment,
-                state.characterDetail.setItemInfo,
-                state.characterDetail.fameHistory,
-                state.characterDetail.gearHistory,
-                state.dps
-            );
+            if (state.displayedResults.length > 0) {
+                state.displayedResults.forEach(profile => {
+                    const card = ui.createCharacterCard(profile, state.searchTerm);
+                    resultsDiv.appendChild(card);
+                });
+            } else if (state.searchTerm && state.isLoading) {
+                resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
+            }
         }
+        ui.showMoreResultsIndicator(state.displayedResults.length < state.allSearchResults.length);
+    } else if (state.view === 'detail' && state.characterDetail.profile) {
+        ui.renderCharacterDetail(
+            state.characterDetail.profile,
+            state.characterDetail.equipment,
+            state.characterDetail.setItemInfo,
+            state.characterDetail.fameHistory,
+            state.characterDetail.gearHistory,
+            state.dps
+        );
+    }
 }
 
 function updateURL(view, server, name) {
@@ -97,7 +96,7 @@ async function performSearch(server, name) {
     state.allSearchResults = [];
     state.displayedResults = [];
     render(); 
-    
+
     const announcementSection = document.querySelector('.announcement-section');
     if (announcementSection) {
         announcementSection.style.display = 'none';
@@ -105,7 +104,7 @@ async function performSearch(server, name) {
 
     await api.logSearch(server, name);
     const results = await api.searchCharacters(server, name, state.dps.options.average_set_dmg);
-    
+
     state.allSearchResults = results;
     state.displayedResults = results.slice(0, state.resultsPerPage);
 
@@ -200,13 +199,9 @@ function handleMainDpsToggleClick(event) {
 
     state.dps.options[optionName] = optionValue;
     
-    if (state.searchTerm) { 
-        performSearch(state.server, state.searchTerm);
-    }
-    updateURL(state.view, state.server, state.searchTerm);
+    // updateURL(state.view, state.server, state.searchTerm); 
     render();
 }
-
 
 function handleDpsToggleClick(event) { 
     const toggle = event.target.closest('[data-dps-option]');
@@ -347,6 +342,7 @@ async function init() {
             await performSearch(server, name);
         }
     }
+
     setupAccordions();
     render();
 }
