@@ -29,7 +29,7 @@ function getSetIconPath(setName) {
     return "assets/sets/Unknown.png";
 }
 
-export function createCharacterCard(profile, searchName) {
+export function createCharacterCard(profile, searchName, dpsToShow) {
     const spritePath = `assets/characters/${profile.jobName}.png`;
     const setIconPath = getSetIconPath(profile.setItemName ?? "");
     const rarityName = profile.setItemRarityName ?? "None";
@@ -64,7 +64,7 @@ export function createCharacterCard(profile, searchName) {
 
         <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);"> <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">DPS</span>
             <span style="font-size: 1.2em; color: var(--color-accent-blue);">${
-            profile.dps != null ? profile.dps.toLocaleString() : 'N/A'
+            dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A'
             }</span>
         </div>
     `;

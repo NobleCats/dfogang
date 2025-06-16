@@ -145,18 +145,29 @@ async def get_character_card_data(session, server, character_id, average_set_dmg
 async def search():
     data = request.json
     server, name = data.get("server"), data.get("name")
-    average_set_dmg = data.get("average_set_dmg", False)
 
     async with aiohttp.ClientSession() as session:
         characters = await async_search_characters(session, server, name)
         if not characters:
-            return jsonify({"results": []}) # 에러 대신 빈 리스트 반환
+            return jsonify({"results": []})
 
-        # 각 캐릭터에 대한 정보 조회 태스크 생성
-        tasks = [get_character_card_data(session, server, char["characterId"], average_set_dmg) for char in characters]
+        tasks = []
+        for char in characters:
+            character_id = char["characterId"]
+            adventure_name = char["adventureName"] # 검색 결과에서 모험단 이름 가져오기
+            
+            # profile.json 경로 설정
+            profile_path = Path(DATA_DIR) / server / adventure_name / character_id / "profile.json"
+            
+            if profile_path.exists():
+                # 캐시가 존재하면 파일 읽기
+                with open(profile_path, "r", encoding="utf-8") as f:
+                    tasks.append(asyncio.sleep(0, result=json.load(f))) # 비동기 작업처럼 만들기
+            else:
+                # 캐시가 없으면 생성 작업 추가
+                tasks.append(create_or_update_profile_cache(session, server, character_id))
+
         results = await asyncio.gather(*tasks)
-
-        # None 값을 제외하고 최종 결과 필터링
         final_result = [res for res in results if res is not None]
 
     return jsonify({"results": final_result})
@@ -433,13 +444,8 @@ def history_cleaner(history):
 
     return cleaned_history[-30:]
 
-# --- 신규 DPS 계산 엔드포인트 ---
 @app.route("/dps", methods=["POST"])
 async def get_dps():
-    """
-    클라이언트로부터 server, characterName 및 계산 옵션을 받아
-    dmgCalc 모듈을 사용하여 DPS를 계산하고 결과를 반환합니다.
-    """
     if CharacterAnalyzer is None:
         return jsonify({"error": "DPS 분석 모듈(dmgCalc.py)이 로드되지 않았습니다."}), 500
 
@@ -447,8 +453,7 @@ async def get_dps():
     server = data.get("server")
     character_name = data.get("characterName")
     
-    cleansing_cdr = data.get("cleansing_cdr", True)
-    weapon_cdr = data.get("weapon_cdr", True)
+    # 클라이언트가 요청한 옵션
     average_set_dmg = data.get("average_set_dmg", False)
 
     if not server or not character_name:
@@ -459,19 +464,82 @@ async def get_dps():
         if not character_id:
             return jsonify({"error": f"캐릭터 '{character_name}'를(을) 찾을 수 없습니다."}), 404
 
-        analyzer = CharacterAnalyzer(
-            api_key=API_KEY, server=server, character_id=character_id,
-            cleansing_cdr=cleansing_cdr, weapon_cdr=weapon_cdr,
-            average_set_dmg=average_set_dmg
-        )
-        
-        results = await analyzer.run_analysis(session)
+        # 1. 새 함수를 호출하여 모든 DPS 결과와 최신 정보를 가져옵니다.
+        analyzer = CharacterAnalyzer(API_KEY, server, character_id)
+        all_results = await analyzer.run_analysis_for_all_dps(session)
 
-    if "error" in results:
-        return jsonify(results), 500
+        # 2. 백그라운드에서 캐시를 업데이트합니다.
+        # (별도 태스크로 분리하거나, 여기서 동기적으로 처리)
+        await create_or_update_profile_cache(session, server, character_id)
 
-    return jsonify(results)
+        # 3. 클라이언트가 요청한 옵션에 맞는 DPS 결과를 선택하여 반환합니다.
+        if average_set_dmg:
+            results_to_return = all_results.get("normalized", {})
+        else:
+            results_to_return = all_results.get("normal", {})
+            
+    if not results_to_return or "error" in results_to_return:
+        return jsonify(results_to_return or {"error": "DPS 계산에 실패했습니다."}), 500
+
+    return jsonify(results_to_return)
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
+async def create_or_update_profile_cache(session, server, character_id):
+    """캐릭터의 프로필 정보를 API에서 가져와 profile.json 캐시 파일을 생성하거나 업데이트합니다."""
+    profile_data = await async_get_profile(session, server, character_id)
+    if not profile_data:
+        return None
+
+    # CharacterAnalyzer를 한 번만 생성하고 한 번만 실행합니다.
+    analyzer = CharacterAnalyzer(API_KEY, server, character_id)
+    all_dps_results = await analyzer.run_analysis_for_all_dps(session)
+
+    if "error" in all_dps_results:
+        return None # 에러 발생 시 캐시 생성 중단
+
+    # 결과에서 DPS 값과 장비 정보 추출
+    normal_dps = all_dps_results.get("normal", {}).get("dps")
+    normalized_dps = all_dps_results.get("normalized", {}).get("dps")
+    equip_data = all_dps_results.get("equipment_data")
+
+    # 세트 정보 추출
+    set_info = {}
+    if equip_data and equip_data.get("setItemInfo"):
+        set_info_data = equip_data["setItemInfo"][0]
+        set_info = {
+            "setItemName": set_info_data.get("setItemName", ""),
+            "setItemRarityName": set_info_data.get("setItemRarityName", ""),
+            "setPoint": set_info_data.get("active", {}).get("setPoint", {}).get("current", 0)
+        }
+
+    # profile.json에 저장할 최종 데이터
+    cache_content = {
+        "characterId": profile_data.get("characterId"),
+        "characterName": profile_data.get("characterName"),
+        "adventureName": profile_data.get("adventureName"),
+        "jobName": profile_data.get("jobName"),
+        "jobGrowName": profile_data.get("jobGrowName"),
+        "fame": profile_data.get("fame"),
+        "level": profile_data.get("level"),
+        "serverId": server,
+        **set_info,
+        "dps": {
+            "normal": normal_dps,
+            "normalized": normalized_dps
+        },
+        "last_updated": datetime.datetime.utcnow().isoformat() + "Z"
+    }
+
+    # 파일 저장
+    adventure_name = profile_data.get("adventureName")
+    char_dir = Path(DATA_DIR) / server / adventure_name / character_id
+    char_dir.mkdir(parents=True, exist_ok=True)
+    profile_path = char_dir / "profile.json"
+    with open(profile_path, "w", encoding="utf-8") as f:
+        json.dump(cache_content, f, ensure_ascii=False, indent=2)
+
+    return cache_content
+

@@ -47,18 +47,22 @@ function render() {
     if (state.view === 'main') {
         ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
         resultsDiv.innerHTML = '';
-
         if (state.displayedResults.length > 0) {
             state.displayedResults.forEach(profile => {
-                const card = ui.createCharacterCard(profile, state.searchTerm);
+                const dpsToShow = state.dps.options.average_set_dmg 
+                                ? profile.dps.normalized 
+                                : profile.dps.normal;
+
+                const card = ui.createCharacterCard(profile, state.searchTerm, dpsToShow);
                 resultsDiv.appendChild(card);
             });
         } else if (state.searchTerm && !state.isLoading && state.allSearchResults.length === 0) {
-             resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
+            resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
         } else if (state.searchTerm && state.isLoading) {
-             resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
+            resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
         }
         ui.showMoreResultsIndicator(state.displayedResults.length < state.allSearchResults.length);
+
 
     } else if (state.view === 'detail' && state.characterDetail.profile) {
         ui.renderCharacterDetail(
@@ -186,13 +190,9 @@ function handleMainDpsToggleClick(event) {
 
     state.dps.options[optionName] = optionValue;
     
-    if (state.searchTerm) { 
-        performSearch(state.server, state.searchTerm);
-    }
-    updateURL(state.view, state.server, state.searchTerm);
+    // updateURL(state.view, state.server, state.searchTerm); 
     render();
 }
-
 
 function handleDpsToggleClick(event) { 
     const toggle = event.target.closest('[data-dps-option]');
