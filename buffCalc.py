@@ -4,7 +4,7 @@ import re
 import json
 import os
 from buff_tables import (
-    BUFF_TABLES, common_1a_table, common_3a_table, 
+    BUFF_TABLES, common_1a_table, common_3a_table,
     msader_aura_table, common_aura_table
 )
 
@@ -21,7 +21,7 @@ async def fetch_json(session, url, api_key):
                 response.raise_for_status()
                 return await response.json()
         except (aiohttp.ClientError, asyncio.TimeoutError) as e:
-            print(f"API 요청 실패 (시도 {attempt + 1}/{retries}): {url}, 오류: {e}")
+            print(f"API FAILED (TRY: {attempt + 1}/{retries}): {url}, ERROR: {e}")
             if attempt < retries - 1: await asyncio.sleep(0.5)
             else: return None
     return None
@@ -53,16 +53,20 @@ class BufferAnalyzer:
 
     def _parse_stats_from_gear_set(self, gear_set, base_stats, character_job_id, parsing_for=['main', '1a', '3a', 'aura']):
         """[최종] 어떤 버프를 위해 파싱하는지(parsing_for)에 따라 필요한 스킬 옵션만 검사합니다."""
-        stats = { "Intelligence": base_stats.get("Intelligence", 0), "Spirit": base_stats.get("Spirit", 0), "Stamina": base_stats.get("Stamina", 0) }
+        # Initialize stats with base_stats provided
+        stats = {
+            "Intelligence": base_stats.get("Intelligence", 0),
+            "Spirit": base_stats.get("Spirit", 0),
+            "Vitality": base_stats.get("Vitality", 0)
+        }
         total_buff_power, skill_lv_bonuses = 0, {"main": 0, "1a": 0, "3a": 0, "aura": 0}
-        
+
         all_items = gear_set.get("equipment", [])
         if gear_set.get("avatar"): all_items.extend(gear_set.get("avatar", []))
         if gear_set.get("creature") and gear_set["creature"]: all_items.append(gear_set["creature"])
-        
+
         skill_name_to_type = {v.lower(): k for k, v in SKILL_NAMES[self.job_code].items()}
-        
-        print(f"\n--- Parsing For: {', '.join(parsing_for).upper()} ---")
+
         for item in all_items:
             if not item: continue
             item_name, item_slot = item.get("itemName", "Unknown Item"), item.get("slotName")
@@ -71,12 +75,12 @@ class BufferAnalyzer:
             # 칭호 하드코딩
             if item_slot == "Title":
                 if full_item_details.get("fame", 0) >= 849 and '1a' in parsing_for:
-                    skill_lv_bonuses["1a"] += 2; print(f"[AURA-LOG] '{item_name}' (Hardcoded Title Rule): +2 to 1a (from Fame >= 849)")
+                    skill_lv_bonuses["1a"] += 2
                 if "Phantom City" in item_name:
                     if 'main' in parsing_for: skill_lv_bonuses["main"] += 1
-                    if '1a' in parsing_for: skill_lv_bonuses["1a"] += 1; print(f"[AURA-LOG] '{item_name}' (Hardcoded Title Rule): +1 to 1a (from 'Phantom City' name)")
-                    if 'aura' in parsing_for: skill_lv_bonuses["aura"] += 1; print(f"[AURA-LOG] '{item_name}' (Hardcoded Title Rule): +1 to aura (from 'Phantom City' name)")
-            
+                    if '1a' in parsing_for: skill_lv_bonuses["1a"] += 1
+                    if 'aura' in parsing_for: skill_lv_bonuses["aura"] += 1
+
             # 모든 reinforceSkill 파싱
             for r_skill_source in [full_item_details.get("itemReinforceSkill", []), full_item_details.get("itemBuff", {}).get("reinforceSkill", [])]:
                 for r_skill_group in r_skill_source:
@@ -88,10 +92,8 @@ class BufferAnalyzer:
                                 if '1a' in parsing_for and min_lvl <= 50 <= max_lvl: skill_lv_bonuses["1a"] += bonus
                                 if 'aura' in parsing_for and min_lvl <= 48 <= max_lvl: # [수정] 오라 레벨 48로 변경
                                     skill_lv_bonuses["aura"] += bonus
-                                    print(f"[AURA-LOG] '{item_name}' (RangeSkill): +{bonus} to aura (Lvl {min_lvl}-{max_lvl})")
                                 if '3a' in parsing_for and min_lvl <= 100 <= max_lvl: skill_lv_bonuses["3a"] += bonus
-            
-    
+
 
             # Enchant reinforceSkill 파싱
             for r_skill_group in item.get("enchant", {}).get("reinforceSkill", []):
@@ -101,8 +103,7 @@ class BufferAnalyzer:
                         skill_type, bonus = skill_name_to_type[skill_name_lower], skill.get("value", 0)
                         if bonus > 0:
                             skill_lv_bonuses[skill_type] += bonus
-                            if skill_type == 'aura': print(f"[AURA-LOG] '{item_name}' (Enchant): +{bonus} to aura ({skill['name']})")
-            
+
             # 텍스트 기반 옵션 파싱
             text_sources = {"OptionAbility": item.get("optionAbility", ""), "ItemBuff Explain": full_item_details.get("itemBuff", {}).get("explain", "")}
             for emblem in item.get("emblems") or []: text_sources[f"Emblem({emblem.get('itemName')})"] = emblem.get("itemName", "")
@@ -119,34 +120,31 @@ class BufferAnalyzer:
                         if skill_name in skill_name_to_type:
                             skill_type = skill_name_to_type[skill_name]
                             skill_lv_bonuses[skill_type] += bonus
-                            if skill_type == 'aura': print(f"[AURA-LOG] '{item_name}' ({origin}): +{bonus} to aura")
                     elif match_level:
                         lvl, bonus = int(match_level.group(1)), int(match_level.group(2))
                         if 25 <= lvl <= 35: skill_lv_bonuses["main"] += bonus
                         if 45 <= lvl <= 50: skill_lv_bonuses["1a"] += bonus
-                        if 80 <= lvl <= 85: skill_lv_bonuses["aura"] += bonus; print(f"[AURA-LOG] '{item_name}' ({origin}): +{bonus} to aura from Lvl text")
+                        if 80 <= lvl <= 85: skill_lv_bonuses["aura"] += bonus
                     elif match_emblem:
                         skill_name = match_emblem.group(1).strip()
                         if skill_name in skill_name_to_type:
                             skill_type, bonus = skill_name_to_type[skill_name], 1
                             skill_lv_bonuses[skill_type] += bonus
-                            if skill_type == 'aura': print(f"[AURA-LOG] '{item_name}' ({origin}): +{bonus} to aura")
-            
+
                 # 기본 스탯 및 버프력 합산
             for stat in item.get("itemStatus", []) + item.get("enchant", {}).get("status", []):
                 name, value = stat.get("name", ""), stat.get("value", 0)
                 if "Buff Power" in name: total_buff_power += value
                 elif "Intelligence" in name: stats["Intelligence"] += value
                 elif "Spirit" in name: stats["Spirit"] += value
-                elif "Stamina" in name: stats["Stamina"] += value
-                elif "All Stats" in name: stats["Intelligence"] += value; stats["Spirit"] += value; stats["Stamina"] += value
-        
-        print("--- Parsing Complete ---")
-        
+                elif "Vitality" in name: stats["Vitality"] += value
+                elif "All Stats" in name: stats["Intelligence"] += value; stats["Spirit"] += value; stats["Vitality"] += value
+
+
         applicable_stat_value, applicable_stat_name = 0, ""
         if self.job_code in ["F_SADER", "ENCHANTRESS"]: applicable_stat_value, applicable_stat_name = stats["Intelligence"], "Intelligence"
         elif self.job_code == "MUSE": applicable_stat_value, applicable_stat_name = stats["Spirit"], "Spirit"
-        elif self.job_code == "M_SADER": applicable_stat_value, applicable_stat_name = (stats["Stamina"], "Stamina") if stats["Stamina"] > stats["Spirit"] else (stats["Spirit"], "Spirit")
+        elif self.job_code == "M_SADER": applicable_stat_value, applicable_stat_name = (stats["Vitality"], "Vitality") if stats["Vitality"] > stats["Spirit"] else (stats["Spirit"], "Spirit")
         return { "stat_value": applicable_stat_value, "stat_name": applicable_stat_name, "buff_power": total_buff_power, "skill_lv_bonuses": skill_lv_bonuses }
 
     def _calculate_buff(self, skill_name_key, skill_level, calculated_stats, first_awakening_buff=None):
@@ -156,11 +154,10 @@ class BufferAnalyzer:
             "applied_stat_name": calculated_stats.get("stat_name"),
             "applied_stat_value": calculated_stats.get("stat_value")
         }
-        
+
         if skill_name_key == "aura":
                 table = msader_aura_table if self.job_code == "M_SADER" else common_aura_table
                 stat_bonus = table.get(skill_level, {}).get("stat", 0)
-                print(f"[AURA-CALC] Final Stat Bonus (from Lv.{skill_level}): {stat_bonus}")
                 base_result.update({"stat_bonus": stat_bonus})
                 return base_result
         if skill_name_key == "1a":
@@ -182,7 +179,7 @@ class BufferAnalyzer:
             if not coeffs or not consts: return {}
             multiplier = (((stat + consts["X"]) / (consts["c"] + 1)) * (buff_power + consts["Y"]) * consts["Z"])
             base_result.update({
-                "stat_bonus": round(coeffs["stat"] * multiplier), 
+                "stat_bonus": round(coeffs["stat"] * multiplier),
                 "atk_bonus": round(coeffs["atk"] * multiplier)
             })
             return base_result
@@ -190,7 +187,17 @@ class BufferAnalyzer:
 
 
     async def run_buff_power_analysis(self, session):
-        endpoints = {"profile": f"/characters/{self.CHARACTER_ID}", "status": f"/characters/{self.CHARACTER_ID}/status", "skills": f"/characters/{self.CHARACTER_ID}/skill/style","current_equipment": f"/characters/{self.CHARACTER_ID}/equip/equipment", "current_avatar": f"/characters/{self.CHARACTER_ID}/equip/avatar", "current_creature": f"/characters/{self.CHARACTER_ID}/equip/creature", "buff_equipment": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/equipment", "buff_avatar": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/avatar", "buff_creature": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/creature"}
+        endpoints = {
+            "profile": f"/characters/{self.CHARACTER_ID}",
+            "status": f"/characters/{self.CHARACTER_ID}/status",
+            "skills": f"/characters/{self.CHARACTER_ID}/skill/style",
+            "current_equipment": f"/characters/{self.CHARACTER_ID}/equip/equipment",
+            "current_avatar": f"/characters/{self.CHARACTER_ID}/equip/avatar",
+            "current_creature": f"/characters/{self.CHARACTER_ID}/equip/creature",
+            "buff_equipment": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/equipment",
+            "buff_avatar": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/avatar",
+            "buff_creature": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/creature"
+        }
         tasks = {name: fetch_json(session, f"{self.BASE_URL}{path}", self.API_KEY) for name, path in endpoints.items()}
         api_data = await asyncio.gather(*tasks.values())
         data = dict(zip(tasks.keys(), api_data))
@@ -202,8 +209,17 @@ class BufferAnalyzer:
         if not self.job_code: return {"error": "Not a sader."}
 
         item_ids_to_fetch = set()
-        gear_sources = [data.get(k, {}).get(v, []) for k, v in {"current_equipment": "equipment", "current_avatar": "avatar", "buff_equipment": "equipment", "buff_avatar": "avatar"}.items()]
-        creature_sources = [data.get("current_creature", {}).get("creature"), data.get("buff_creature", {}).get("creature")]
+        gear_sources = [
+            data.get("current_equipment", {}).get("equipment", []),
+            data.get("current_avatar", {}).get("avatar", []),
+            data.get("buff_equipment", {}).get("equipment", []),
+            data.get("buff_avatar", {}).get("avatar", [])
+        ]
+        creature_sources = [
+            data.get("current_creature", {}).get("creature"),
+            data.get("buff_creature", {}).get("creature")
+        ]
+
         for source in gear_sources:
             for item in source:
                 if item and item.get("itemId"): item_ids_to_fetch.add(item["itemId"])
@@ -212,24 +228,50 @@ class BufferAnalyzer:
                 item_ids_to_fetch.add(creature["itemId"])
                 for artifact in creature.get("artifact", []):
                     if artifact and artifact.get("itemId"): item_ids_to_fetch.add(artifact["itemId"])
+
         item_tasks = [fetch_json(session, f"https://api.dfoneople.com/df/items/{item_id}", self.API_KEY) for item_id in item_ids_to_fetch]
         self.item_details_cache = {res['itemId']: res for res in await asyncio.gather(*item_tasks) if res and 'itemId' in res}
         
-        base_stats = {s["name"]: s["value"] for s in data["status"]["status"]}
+        
+        # --- 이 위치에 추가 ---
+        if "status" not in data or not data["status"]:
+            print(f"ERROR: 'status' data is missing or empty. Full data received: {data}")
+            return {"error": "Character status data is not available."}
+        # --- 여기까지 추가 ---
+
+        # 1. "최종 스탯" (Final Stats) - from /status endpoint
+        base_stats_from_status_api = {}
+        if data.get("status") and data["status"].get("status"):
+            for s in data["status"]["status"]:
+                name = s.get("name")
+                value = s.get("value", 0)
+                if name in base_stats_from_status_api:
+                    base_stats_from_status_api[name] = max(base_stats_from_status_api[name], value)
+                else:
+                    base_stats_from_status_api[name] = value
+
+        print(f"DEBUG: Base Stats from Status API: {base_stats_from_status_api}")
+
         all_skills = data.get("skills", {}).get("skill", {}).get("style", {}).get("active", []) + \
-                 data.get("skills", {}).get("skill", {}).get("style", {}).get("passive", [])
+                     data.get("skills", {}).get("skill", {}).get("style", {}).get("passive", [])
         skill_info = {s["name"]: s["level"] for s in all_skills}
         job_skills = SKILL_NAMES[self.job_code]
         final_buffs = {}
 
-        current_gear_set = {"equipment": data.get("current_equipment", {}).get("equipment", []), "avatar": data.get("current_avatar", {}).get("avatar", []), "creature": data.get("current_creature", {}).get("creature"), "type": "Current"}
-        stats_for_current_gear = self._parse_stats_from_gear_set(current_gear_set, base_stats, character_job_id, parsing_for=['1a', '3a', 'aura'])
-    
+        # Use "최종 스탯" for 1a, 3a, Aura (current gear set)
+        current_gear_set = {
+            "equipment": data.get("current_equipment", {}).get("equipment", []),
+            "avatar": data.get("current_avatar", {}).get("avatar", []),
+            "creature": data.get("current_creature", {}).get("creature"),
+            "type": "Current"
+        }
+        stats_for_current_gear = self._parse_stats_from_gear_set(current_gear_set, base_stats_from_status_api, character_job_id, parsing_for=['1a', '3a', 'aura'])
+
         base_level_1a = skill_info.get(job_skills["1a"], 0)
         # ### [신규] 1차 각성기 스킬 레벨 +1 보정 ###
         if base_level_1a > 0:
             base_level_1a += 1
-            
+
         bonus_level_1a = stats_for_current_gear["skill_lv_bonuses"].get("1a", 0)
         skill_level_1a = base_level_1a + bonus_level_1a
         final_buffs["1a"] = self._calculate_buff("1a", skill_level_1a, stats_for_current_gear)
@@ -238,37 +280,50 @@ class BufferAnalyzer:
         skill_level_3a = skill_info.get(job_skills["3a"], 0) + stats_for_current_gear["skill_lv_bonuses"].get("3a", 0)
         final_buffs["3a"] = self._calculate_buff("3a", skill_level_3a, stats_for_current_gear, final_buffs.get("1a"))
         if final_buffs.get("3a"): final_buffs["3a"]["level"] = skill_level_3a
-        
-        print("\n--- Calculating Aura Buff ---")
+
         base_level_aura = skill_info.get(job_skills["aura"], 0)
         bonus_level_aura = stats_for_current_gear["skill_lv_bonuses"].get("aura", 0)
         skill_level_aura = base_level_aura + bonus_level_aura
-        print(f"[AURA LOG] Base Level from API: {base_level_aura}")
-        print(f"[AURA LOG] Bonus Level from Gear: {bonus_level_aura}")
-        print(f"[AURA LOG] -> Final Skill Level: {skill_level_aura}")
-        
+
         final_buffs["aura"] = self._calculate_buff("aura", skill_level_aura, stats_for_current_gear)
         if final_buffs.get("aura"): final_buffs["aura"]["level"] = skill_level_aura
 
+        # 2. "버프 스탯" (Buff Stats) - Merged buff gear + base stats from status API
+        # Start with base stats from status API
+        buff_base_stats = {s["name"]: s["value"] for s in data["status"]["status"]}
+
+        # Merge equipment: buff equipment takes precedence over current equipment for main buff
+        merged_equipment_by_slot = {item['slotId']: item for item in data.get("current_equipment", {}).get("equipment", []) if item and 'slotId' in item}
+        for item in data.get("buff_equipment", {}).get("equipment", []):
+            if item and 'slotId' in item: merged_equipment_by_slot[item['slotId']] = item
+
+        # Merge avatar: buff avatar takes precedence
+        merged_avatar = data.get("buff_avatar", {}).get("avatar", []) or data.get("current_avatar", {}).get("avatar", [])
+
+        # Merge creature: buff creature takes precedence
+        merged_creature = data.get("buff_creature", {}).get("creature") or data.get("current_creature", {}).get("creature")
+
+        merged_buff_gear_set = {
+            "equipment": list(merged_equipment_by_slot.values()),
+            "avatar": merged_avatar,
+            "creature": merged_creature,
+            "type": "Buff"
+        }
+
+        # Parse stats for the main buff using the merged buff gear set and the "최종 스탯" as the starting point.
+        stats_for_main_buff = self._parse_stats_from_gear_set(merged_buff_gear_set, buff_base_stats, character_job_id, parsing_for=['main'])
 
         buff_skill_info = data.get("buff_equipment", {}).get("skill", {}).get("buff", {}).get("skillInfo", {})
         final_main_buff_level_from_api = buff_skill_info.get("option", {}).get("level")
-        merged_equipment_by_slot = {item['slotId']: item for item in current_gear_set["equipment"] if item and 'slotId' in item}
-        for item in data.get("buff_equipment", {}).get("equipment", []):
-            if item and 'slotId' in item: merged_equipment_by_slot[item['slotId']] = item
-        merged_avatar = data.get("buff_avatar", {}).get("avatar", []) or current_gear_set["avatar"]
-        merged_creature = data.get("buff_creature", {}).get("creature") or current_gear_set["creature"]
-        merged_buff_gear_set = {"equipment": list(merged_equipment_by_slot.values()), "avatar": merged_avatar, "creature": merged_creature, "type": "Buff"}
-        stats_for_main_buff = self._parse_stats_from_gear_set(merged_buff_gear_set, base_stats, character_job_id, parsing_for=['main'])
-    
+
         if final_main_buff_level_from_api is not None:
             main_buff_lv = final_main_buff_level_from_api
         else:
             main_buff_lv = skill_info.get(job_skills["main"], 0) + stats_for_main_buff["skill_lv_bonuses"].get("main", 0)
         final_buffs["main"] = self._calculate_buff("main", main_buff_lv, stats_for_main_buff)
         if final_buffs.get("main"): final_buffs["main"]["level"] = main_buff_lv
-        return { 
-            "characterName": profile["characterName"], 
-            "jobName": profile["jobName"], 
+        return {
+            "characterName": profile["characterName"],
+            "jobName": profile["jobName"],
             "buffs": final_buffs
         }
