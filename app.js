@@ -40,8 +40,6 @@ const detailView = document.getElementById('detail-view');
 let mainViewDpsOptions = null;
 const resultsWrapper = document.getElementById('results-wrapper');
 
-// app.js
-
 function render() {
     ui.setLoading(state.isLoading || state.dps.isCalculating);
     ui.switchView(state.view);
@@ -50,30 +48,23 @@ function render() {
         ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
         resultsDiv.innerHTML = '';
 
-        if (state.displayedResults.length > 0) {
+         if (state.displayedResults.length > 0) {
             state.displayedResults.forEach(profile => {
-                let displayLabel, displayValue;
+                const dpsToShow = (profile.dps && typeof profile.dps === 'object')
+                    ? (state.dps.options.average_set_dmg ? profile.dps.normalized : profile.dps.normal)
+                    : null;
 
-                if (profile.is_buffer) {
-                    displayLabel = 'Buff Power';
-                    displayValue = profile.buff_power;
-                } else {
-                    displayLabel = 'DPS';
-                    const dpsObject = profile.dps || {};
-                    displayValue = state.dps.options.average_set_dmg
-                                   ? dpsObject.normalized
-                                   : dpsObject.normal;
-                }
 
-                const card = ui.createCharacterCard(profile, state.searchTerm, displayLabel, displayValue);
+                const card = ui.createCharacterCard(profile, state.searchTerm, dpsToShow);
                 resultsDiv.appendChild(card);
             });
         } else if (state.searchTerm && !state.isLoading && state.allSearchResults.length === 0) {
-             resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
+            resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
         } else if (state.searchTerm && state.isLoading) {
-             resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
+            resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
         }
         ui.showMoreResultsIndicator(state.displayedResults.length < state.allSearchResults.length);
+
 
     } else if (state.view === 'detail' && state.characterDetail.profile) {
         ui.renderCharacterDetail(
@@ -148,37 +139,16 @@ async function showCharacterDetail(server, name) {
     state.isLoading = true;
     state.view = 'detail';
     render();
-
-    const profile = await api.getCharacterProfile(server, name);
-
-    if (!profile) {
-        alert('Failed to load character profile.');
-        state.view = 'main';
-        state.isLoading = false;
-        render();
-        return;
-    }
-
-    let equipmentResponse, fameHistory, gearHistory, dpsResult;
-
-    if (profile.is_buffer) {
-        [equipmentResponse, fameHistory, gearHistory] = await Promise.all([
-            api.getCharacterEquipment(server, name),
-            api.getFameHistory(server, name),
-            api.getGearHistory(server, name)
-        ]);
-        state.dps.result = null;
-    } else {
-        [equipmentResponse, fameHistory, gearHistory, dpsResult] = await Promise.all([
-            api.getCharacterEquipment(server, name),
-            api.getFameHistory(server, name),
-            api.getGearHistory(server, name),
-            api.getCharacterDps(server, name, state.dps.options)
-        ]);
-        state.dps.result = dpsResult;
-    }
-
-    if (equipmentResponse) {
+    
+    const [profile, equipmentResponse, fameHistory, gearHistory, dpsResult] = await Promise.all([
+        api.getCharacterProfile(server, name),
+        api.getCharacterEquipment(server, name),
+        api.getFameHistory(server, name),
+        api.getGearHistory(server, name),
+        api.getCharacterDps(server, name, state.dps.options)
+    ]);
+    
+    if (profile && equipmentResponse) {
         const equipment = equipmentResponse.equipment;
         state.characterDetail = { 
             profile: { ...profile, server: server, characterName: name },
@@ -187,14 +157,16 @@ async function showCharacterDetail(server, name) {
             fameHistory: fameHistory?.records, 
             gearHistory 
         };
+        state.dps.result = dpsResult;
     } else {
-        alert('Failed to load character equipment details.');
+        alert('Failed to load character details.');
         state.view = 'main';
     }
 
     state.isLoading = false;
     render();
 }
+
 async function recalculateDps() {
     if (!state.characterDetail.profile) return;
     
