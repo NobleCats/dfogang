@@ -434,7 +434,7 @@ class CharacterAnalyzer:
 
         # --- 1. 데이터 로딩 (API 호출) ---
         endpoints = ["equip/equipment", "equip/avatar", "equip/creature", "equip/flag", "status"]
-        tasks = [fetch_json(session, f"{self.BASE_URL}/characters/{self.CHARACTER_ID}/{ep}", self.API_KEY) for ep in endpoints]
+        tasks = [fetch_json(session, f"{self.BASE_URL}/characters/{self.CHARACTER_ID}/{ep}") for ep in endpoints]
         responses = await asyncio.gather(*tasks)
         char_data = dict(zip(["equipment", "avatar", "creature", "flag", "status"], responses))
 
