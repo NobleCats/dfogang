@@ -485,7 +485,7 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 250px;
+    width: 100%;
 }
 .dps-toggle-label {
     font-size: 15px;
