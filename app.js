@@ -47,11 +47,13 @@ function render() {
     if (state.view === 'main') {
         ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
         resultsDiv.innerHTML = '';
-        if (state.displayedResults.length > 0) {
+
+         if (state.displayedResults.length > 0) {
             state.displayedResults.forEach(profile => {
-                const dpsToShow = state.dps.options.average_set_dmg 
-                                ? profile.dps.normalized 
-                                : profile.dps.normal;
+                const dpsToShow = (profile.dps && typeof profile.dps === 'object')
+                    ? (state.dps.options.average_set_dmg ? profile.dps.normalized : profile.dps.normal)
+                    : null;
+
 
                 const card = ui.createCharacterCard(profile, state.searchTerm, dpsToShow);
                 resultsDiv.appendChild(card);
