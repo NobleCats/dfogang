@@ -13,12 +13,12 @@ SEMAPHORE = asyncio.Semaphore(100)
 
 try:
     from dmgCalc import CharacterAnalyzer
-    from buffCalc import BufferAnalyzer, JOB_ID_TO_CODE 
+    from buffCalc import BufferAnalyzer, SADER_JOB_MAP
 except ImportError:
     print("오류: dmgCalc.py 또는 buffCalc.py 파일을 찾을 수 없습니다.")
     CharacterAnalyzer = None
     BufferAnalyzer = None
-    JOB_ID_TO_CODE = {}
+    SADER_JOB_MAP = {}
 
 # --- 기본 설정 ---
 app = Flask(__name__)
@@ -74,7 +74,6 @@ async def async_get_character_id(session, server, name):
     return None
 
 # --- 기존 라우트 (변경 없음) ---
-
 @app.route("/profile", methods=["POST"])
 async def profile():
     data = request.json
@@ -89,20 +88,18 @@ async def profile():
         if not profile_data:
             return jsonify({"error": "Failed to fetch profile"}), 500
         
-        # --- 아래 로직 추가 ---
-        # jobGrowId를 기반으로 버퍼인지 판별하고 is_buffer 플래그를 추가합니다.
+        # [수정] 새로운 2단계 판별 로직 적용
+        job_id = profile_data.get("jobId")
         job_grow_id = profile_data.get("jobGrowId")
-        job_code = JOB_ID_TO_CODE.get(job_grow_id)
+        job_code = SADER_JOB_MAP.get(job_id, {}).get(job_grow_id)
         
         if job_code:
             profile_data["is_buffer"] = True
-            # 상세 정보 화면을 위해 버프력 상세 정보도 함께 보내줍니다.
             analyzer = BufferAnalyzer(API_KEY, server, character_id)
             buff_results = await analyzer.run_buff_power_analysis(session)
             profile_data["buff_details"] = buff_results
         else:
             profile_data["is_buffer"] = False
-        # --- 여기까지 추가 ---
             
         return jsonify(profile_data)
     
@@ -471,37 +468,27 @@ async def get_dps():
 
 
 async def create_or_update_profile_cache(session, server, character_id):
-    """
-    [최종 수정] jobId 대신 jobGrowId를 사용하여 버퍼를 판별합니다.
-    """
     profile_data = await async_get_profile(session, server, character_id)
     if not profile_data:
         return None
 
-    # [수정] jobId 대신 jobGrowId를 가져옵니다.
+    # [수정] 새로운 2단계 판별 로직 적용
+    job_id = profile_data.get("jobId")
     job_grow_id = profile_data.get("jobGrowId")
+    job_code = SADER_JOB_MAP.get(job_id, {}).get(job_grow_id)
     
-    # 디버깅용 print 문도 jobGrowId를 보도록 수정합니다.
-    print(f"DEBUG :: Character: {profile_data.get('characterName')}, JobGrowID from API: {job_grow_id}")
+    print(f"DEBUG :: Character: {profile_data.get('characterName')}, JobID: {job_id}, JobGrowID: {job_grow_id}, Found JobCode: {job_code}")
 
-    # [수정] job_grow_id를 사용하여 job_code를 찾습니다.
-    job_code = JOB_ID_TO_CODE.get(job_grow_id)
-    
     cache_content = {}
-
     if job_code:  # 버퍼일 경우
         analyzer = BufferAnalyzer(API_KEY, server, character_id)
         buff_results = await analyzer.run_buff_power_analysis(session)
-
         if "error" in buff_results:
             return None
-        
         main_buff_stats = buff_results.get("buffs", {}).get("main", {})
         total_stat, total_atk = main_buff_stats.get("stat_bonus", 0), main_buff_stats.get("atk_bonus", 0)
         buff_power_score = ((total_stat + 25250) / 25250) * ((total_atk + 3000) / 3000) * 30750
-
         cache_content = {"is_buffer": True, "buff_power": round(buff_power_score), "buff_details": buff_results}
-
     else:  # 딜러일 경우
         analyzer = CharacterAnalyzer(API_KEY, server, character_id)
         all_dps_results = await analyzer.run_analysis_for_all_dps(session)

@@ -148,16 +148,37 @@ async function showCharacterDetail(server, name) {
     state.isLoading = true;
     state.view = 'detail';
     render();
-    
-    const [profile, equipmentResponse, fameHistory, gearHistory, dpsResult] = await Promise.all([
-        api.getCharacterProfile(server, name),
-        api.getCharacterEquipment(server, name),
-        api.getFameHistory(server, name),
-        api.getGearHistory(server, name),
-        api.getCharacterDps(server, name, state.dps.options)
-    ]);
-    
-    if (profile && equipmentResponse) {
+
+    const profile = await api.getCharacterProfile(server, name);
+
+    if (!profile) {
+        alert('Failed to load character profile.');
+        state.view = 'main';
+        state.isLoading = false;
+        render();
+        return;
+    }
+
+    let equipmentResponse, fameHistory, gearHistory, dpsResult;
+
+    if (profile.is_buffer) {
+        [equipmentResponse, fameHistory, gearHistory] = await Promise.all([
+            api.getCharacterEquipment(server, name),
+            api.getFameHistory(server, name),
+            api.getGearHistory(server, name)
+        ]);
+        state.dps.result = null;
+    } else {
+        [equipmentResponse, fameHistory, gearHistory, dpsResult] = await Promise.all([
+            api.getCharacterEquipment(server, name),
+            api.getFameHistory(server, name),
+            api.getGearHistory(server, name),
+            api.getCharacterDps(server, name, state.dps.options)
+        ]);
+        state.dps.result = dpsResult;
+    }
+
+    if (equipmentResponse) {
         const equipment = equipmentResponse.equipment;
         state.characterDetail = { 
             profile: { ...profile, server: server, characterName: name },
@@ -166,16 +187,14 @@ async function showCharacterDetail(server, name) {
             fameHistory: fameHistory?.records, 
             gearHistory 
         };
-        state.dps.result = dpsResult;
     } else {
-        alert('Failed to load character details.');
+        alert('Failed to load character equipment details.');
         state.view = 'main';
     }
 
     state.isLoading = false;
     render();
 }
-
 async function recalculateDps() {
     if (!state.characterDetail.profile) return;
     
