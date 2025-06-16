@@ -552,15 +552,20 @@ async def create_or_update_profile_cache(session, server, character_id):
     is_buffer = False
     total_buff_score = None # 기본값
     buff_skill_data = await async_get_buff_skill(session, server, character_id)
-    if buff_skill_data and buff_skill_data.get("skill", {}).get("buff", {}).get("skillInfo", {}).get("name"):
-        skill_name = buff_skill_data["skill"]["buff"]["skillInfo"]["name"]
-        if any(buffer_skill in skill_name for buffer_skill in BUFFER_SKILLS):
-            is_buffer = True
-            # 버퍼일 경우 버프 능력치 계산
-            buff_analyzer = BufferAnalyzer(API_KEY, server, character_id)
-            buff_results = await buff_analyzer.run_buff_power_analysis(session)
-            if buff_results and "total_buff_score" in buff_results:
-                total_buff_score = buff_results["total_buff_score"]
+    
+    skill_name = None
+    if buff_skill_data:
+        skill = buff_skill_data.get("skill")
+        if skill and skill.get("buff") and skill.get("buff").get("skillInfo"):
+            skill_name = skill.get("buff").get("skillInfo").get("name")
+
+    if skill_name and any(buffer_skill in skill_name for buffer_skill in BUFFER_SKILLS):
+        is_buffer = True
+        # 버퍼일 경우 버프 능력치 계산
+        buff_analyzer = BufferAnalyzer(API_KEY, server, character_id)
+        buff_results = await buff_analyzer.run_buff_power_analysis(session)
+        if buff_results and "total_buff_score" in buff_results:
+            total_buff_score = buff_results["total_buff_score"]
 
 
     normal_dps = None
