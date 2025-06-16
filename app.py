@@ -292,6 +292,7 @@ async def equipment():
 
     return jsonify({"equipment": new_eq, "explorerName": adventure_name, "fame": fame})
 
+    
 @app.route("/buff_power", methods=["POST"])
 async def buff_power():
     if BufferAnalyzer is None:
@@ -308,6 +309,10 @@ async def buff_power():
         buff_results = await async_get_buff_power(session, server, character_id)
         if not buff_results or "error" in buff_results:
             return jsonify(buff_results or {"error": "버프 계산에 실패했습니다."}), 500
+        
+        # [수정] 버퍼 정보 조회 시에도 캐시를 업데이트하도록 함수 호출 추가
+        await create_or_update_profile_cache(session, server, character_id)
+        
         return jsonify(buff_results)
 
 
