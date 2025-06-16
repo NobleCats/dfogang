@@ -6,23 +6,30 @@ import time
 import argparse
 import json
 import os
+import itertools
 
 # --- 유틸리티 함수 ---
-async def fetch_json(session, url, api_key):
-    """주어진 URL로 비동기 GET 요청을 보내고 JSON 응답을 반환합니다."""
-    # [NEW] 웹 브라우저처럼 보이기 위한 헤더 정보
+async def fetch_json(session, url):
+    """주어진 URL로 비동기 GET 요청을 보내고 JSON 응답을 반환합니다. (API 키 순환 적용)"""
     headers = {
         'User-Agent': 'DFO-History-App/1.0 (https://api-dfohistory.duckdns.org)'
     }
     retries = 3
     for attempt in range(retries):
         try:
-            if 'apikey=' not in url:
-                separator = '?' if '?' not in url else '&'
-                url += f"{separator}apikey={api_key}"
+            # 요청마다 다음 키를 순서대로 가져옵니다.
+            current_api_key = get_next_api_key()
 
-            # [MODIFIED] session.get 호출에 headers=headers 추가
-            async with session.get(url, headers=headers, timeout=10) as response:
+            if 'apikey=' in url:
+                import re
+                # 이미 apikey가 있다면 교체
+                url_with_key = re.sub(r'apikey=[^&]*', f'apikey={current_api_key}', url)
+            else:
+                # apikey가 없다면 추가
+                separator = '?' if '?' not in url else '&'
+                url_with_key = f"{url}{separator}apikey={current_api_key}"
+
+            async with session.get(url_with_key, headers=headers, timeout=10) as response:
                 response.raise_for_status()
                 return await response.json()
         except (aiohttp.ClientError, asyncio.TimeoutError) as e:
@@ -32,6 +39,24 @@ async def fetch_json(session, url, api_key):
             else:
                 return None
     return None
+
+try:
+    with open('DFO_API_KEY', 'r') as f:
+        # 파일의 첫 줄만 읽고, 쉼표로 구분하여 키 리스트 생성
+        api_keys_str = f.readline().strip()
+        # 키가 비어있는 경우를 대비하여 필터링
+        API_KEYS = [key.strip() for key in api_keys_str.split(',') if key.strip()]
+except FileNotFoundError:
+    print("오류: DFO_API_KEY 파일을 찾을 수 없습니다. 기본 키를 사용합니다.")
+    API_KEYS = ['sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ']
+
+if not API_KEYS:
+    raise ValueError("오류: DFO_API_KEY 파일에 유효한 키가 없습니다.")
+
+key_cycler = itertools.cycle(API_KEYS)
+def get_next_api_key():
+    """순환하며 다음 API 키를 반환합니다."""
+    return next(key_cycler)
 
 # --- 메인 분석 클래스 ---
 class CharacterAnalyzer:
@@ -434,8 +459,8 @@ class CharacterAnalyzer:
             if flag.get("itemId"): item_ids_to_fetch.add(flag["itemId"])
             for gem in flag.get("gems", []):
                 if gem.get("itemId"): item_ids_to_fetch.add(gem["itemId"])
-
-        item_tasks = [fetch_json(session, f"https://api.dfoneople.com/df/items/{item_id}", self.API_KEY) for item_id in item_ids_to_fetch]
+                
+        item_tasks = [fetch_json(session, f"https://api.dfoneople.com/df/items/{item_id}") for item_id in item_ids_to_fetch]
         item_responses = await asyncio.gather(*item_tasks)
         self.item_details_cache = {res['itemId']: res for res in item_responses if res and 'itemId' in res}
 

@@ -4,6 +4,7 @@ import re
 import json
 import os
 import argparse
+import itertools
 
 # Assume buff_tables.py exists in the same directory or is importable
 from buff_tables import (
@@ -11,21 +12,57 @@ from buff_tables import (
     msader_aura_table, common_aura_table
 )
 
+try:
+    with open('DFO_API_KEY', 'r') as f:
+        # 파일의 첫 줄만 읽고, 쉼표로 구분하여 키 리스트 생성
+        api_keys_str = f.readline().strip()
+        # 키가 비어있는 경우를 대비하여 필터링
+        API_KEYS = [key.strip() for key in api_keys_str.split(',') if key.strip()]
+except FileNotFoundError:
+    print("오류: DFO_API_KEY 파일을 찾을 수 없습니다. 기본 키를 사용합니다.")
+    API_KEYS = ['sRngDaw09CPuVYcpzfL1VG5F8ozrWnQQ']
+
+# 키 리스트가 비어있지 않은지 확인
+if not API_KEYS:
+    raise ValueError("오류: DFO_API_KEY 파일에 유효한 키가 없습니다.")
+
+# 키 순환기(Iterator) 생성
+key_cycler = itertools.cycle(API_KEYS)
+
+def get_next_api_key():
+    """순환하며 다음 API 키를 반환합니다."""
+    return next(key_cycler)
+
 # --- 유틸리티 함수 ---
-async def fetch_json(session, url, api_key):
-    headers = {'User-Agent': 'DFO-History-App/1.0 (https://api-dfohistory.duckdns.org)'}
+async def fetch_json(session, url):
+    """주어진 URL로 비동기 GET 요청을 보내고 JSON 응답을 반환합니다. (API 키 순환 적용)"""
+    headers = {
+        'User-Agent': 'DFO-History-App/1.0 (https://api-dfohistory.duckdns.org)'
+    }
     retries = 3
     for attempt in range(retries):
         try:
-            if 'apikey=' not in url:
+            # 요청마다 다음 키를 순서대로 가져옵니다.
+            current_api_key = get_next_api_key()
+
+            if 'apikey=' in url:
+                import re
+                # 이미 apikey가 있다면 교체
+                url_with_key = re.sub(r'apikey=[^&]*', f'apikey={current_api_key}', url)
+            else:
+                # apikey가 없다면 추가
                 separator = '?' if '?' not in url else '&'
-                url += f"{separator}apikey={api_key}"
-            async with session.get(url, headers=headers, timeout=10) as response:
+                url_with_key = f"{url}{separator}apikey={current_api_key}"
+
+            async with session.get(url_with_key, headers=headers, timeout=10) as response:
                 response.raise_for_status()
                 return await response.json()
         except (aiohttp.ClientError, asyncio.TimeoutError) as e:
-            if attempt < retries - 1: await asyncio.sleep(0.5)
-            else: return None
+            print(f"API 요청 실패 (시도 {attempt + 1}/{retries}): {url}, 오류: {e}")
+            if attempt < retries - 1:
+                await asyncio.sleep(0.5)
+            else:
+                return None
     return None
 
 # --- 상수 정의 ---
@@ -308,7 +345,7 @@ class BufferAnalyzer:
         }
         tasks = {}
         for name, path in endpoints.items():
-            tasks[name] = fetch_json(session, f"{self.BASE_URL}{path}", self.API_KEY)
+            tasks[name] = fetch_json(session, f"{self.BASE_URL}{path}")
             
         api_data = await asyncio.gather(*tasks.values())
         data = dict(zip(tasks.keys(), api_data))
@@ -348,7 +385,15 @@ class BufferAnalyzer:
 
         # Also collect item IDs from buff enhancement equipment
         buff_equip_data = data.get("buff_equip_equipment", {}).get("skill", {}).get("buff", {})
-        buff_enhancement_equipment = buff_equip_data.get("equipment", [])
+        
+        # [수정] buff_equip_data가 None일 경우를 대비하여 방어 코드 추가
+        if buff_equip_data is None:
+            buff_equip_data = {}
+
+        buff_enhancement_equipment = buff_equip_data.get("equipment") # .get의 기본값을 사용하지 않고 값을 직접 가져옴
+        if buff_enhancement_equipment is None: # [수정] 가져온 값이 None인지 확인
+            buff_enhancement_equipment = [] # None이면 빈 리스트로 교체
+
         gear_sources_for_fetching.append(buff_enhancement_equipment)
         
         # Collect item IDs from buff enhancement creature
@@ -391,7 +436,7 @@ class BufferAnalyzer:
                             for emblem in emblems:
                                 if isinstance(emblem, dict) and emblem.get("itemId"): item_ids_to_fetch.add(emblem["itemId"])
         
-        item_tasks = [fetch_json(session, f"https://api.dfoneople.com/df/items/{item_id}", self.API_KEY) for item_id in item_ids_to_fetch]
+        item_tasks = [fetch_json(session, f"https://api.dfoneople.com/df/items/{item_id}") for item_id in item_ids_to_fetch]
         self.item_details_cache = {res['itemId']: res for res in await asyncio.gather(*item_tasks) if res and 'itemId' in res}
         
         if "status" not in data or not data["status"]:
