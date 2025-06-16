@@ -32,7 +32,7 @@ function getSetIconPath(setName) {
 export function createCharacterCard(profile, searchName, dpsToShow) {
     const spritePath = `assets/characters/${profile.jobName}.png`;
     const setIconPath = getSetIconPath(profile.setItemName ?? "");
-    const rarityName = profile.setItemRarityName ?? "None";
+    const rarityName = profile.setItemRarityName ?? ""; 
     let rarityStyle = 'padding:2px 0;';
     if (rarityName === "Primeval") {
         rarityStyle = `background: linear-gradient(to bottom, #57e95b, #3a8390); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`;
@@ -306,6 +306,8 @@ function renderCharacterCanvas(profile, equipmentList) {
     drawCharacterText(profile);
 }
 
+// ui.js
+
 function renderSetItems(setItemInfo) {
     const container = document.getElementById("set-info-container");
     container.innerHTML = "";
@@ -317,7 +319,7 @@ function renderSetItems(setItemInfo) {
     container.style.display = 'block';
     
     setItemInfo.forEach(item => {
-        const rarityName = item.setItemRarityName ?? "None";
+        const rarityName = item.setItemRarityName ?? "";
         let rarityStyle = `color: ${rarityColors[Object.keys(rarityColors).find(key => rarityName.includes(key)) || "None"]};`;
         if (rarityName === "Primeval") {
             rarityStyle = `background: linear-gradient(to bottom, #57e95b, #3a8390); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`;
@@ -325,9 +327,9 @@ function renderSetItems(setItemInfo) {
 
         container.innerHTML += `
             <div style="text-align:center;">
-                <div style="font-family: var(--font-dfo); font-size:22px; font-weight:700; color:#eee; margin-bottom:4px;">${item.setItemName}</div>
+                <div style="font-family: var(--font-dfo); font-size:22px; font-weight:700; color:#eee; margin-bottom:4px;">${item.setItemName ?? ''}</div>
                 <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName}" style="height: 24px;">
+                    <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName ?? ''}" style="height: 24px;">
                     <span style="font-size:16px; font-weight:500; ${rarityStyle}">${rarityName}</span>
                 </div>
                 <div style="font-size:14px; color:var(--color-text-secondary); margin-top:2px;">(${item.active?.setPoint?.current ?? 0})</div>
