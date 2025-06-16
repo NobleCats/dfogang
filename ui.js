@@ -48,7 +48,7 @@ export function createCharacterCard(profile, searchName, dpsToShow, isBuffer) {
 
     let dpsOrBuffDisplay = '';
     if (isBuffer) {
-        dpsOrBuffDisplay = `<span style="font-size: 1.2em; color: var(--color-accent-blue);">${profile.buff_power != null ? profile.buff_power.toLocaleString() : 'N/A'} (Buff)</span>`;
+        dpsOrBuffDisplay = `<span style="font-size: 1.2em; color: var(--color-accent-blue);">${profile.buff_power != null ? profile.buff_power.toLocaleString() : 'N/A'}</span>`;
     } else {
         dpsOrBuffDisplay = `<span style="font-size: 1.2em; color: var(--color-accent-blue);">${dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A'}</span>`;
     }
