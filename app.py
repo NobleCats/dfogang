@@ -107,6 +107,22 @@ async def profile():
             return jsonify({"error": "Failed to fetch profile"}), 500
 
         return jsonify(profile_data)
+    
+@app.route("/update_character_cache", methods=["POST"])
+async def update_character_cache_route():
+    data = request.json
+    server = data.get("server")
+    character_id = data.get("characterId")
+
+    if not server or not character_id:
+        return jsonify({"error": "server or characterId is null"}), 400
+
+    async with aiohttp.ClientSession() as session:
+        # create_or_update_profile_cache 함수 호출
+        updated_profile = await create_or_update_profile_cache(session, server, character_id)
+        if not updated_profile:
+            return jsonify({"error": "Failed to update character cache."}), 500
+        return jsonify({"status": "success", "profile": updated_profile})
 
 async def get_character_card_data(session, server, character_id, average_set_dmg):
     """단일 캐릭터의 장비 정보와 DPS 정보를 비동기적으로 함께 가져옵니다."""

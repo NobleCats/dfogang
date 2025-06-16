@@ -165,39 +165,62 @@ async function showCharacterDetail(server, name) {
     state.view = 'detail';
     render();
 
-    const [profile, equipmentResponse, fameHistory, gearHistory] = await Promise.all([
-        api.getCharacterProfile(server, name),
+    let characterId = null;
+    let profileDataInitial = await api.getCharacterProfile(server, name);
+    if (profileDataInitial && profileDataInitial.characterId) {
+        characterId = profileDataInitial.characterId;
+    } else {
+        console.error('Failed to get character ID for detail view.');
+        state.view = 'main';
+        state.isLoading = false;
+        render();
+        return;
+    }
+
+    let updatedProfileFromCache = await api.updateCharacterCache(server, characterId);
+    if (updatedProfileFromCache && updatedProfileFromCache.profile) {
+        profileDataInitial = updatedProfileFromCache.profile;
+    } else {
+        console.warn('Failed to update character cache, proceeding with potentially stale data.');
+    }
+
+
+    const [equipmentResponse, fameHistory, gearHistory] = await Promise.all([
         api.getCharacterEquipment(server, name),
         api.getFameHistory(server, name),
         api.getGearHistory(server, name),
     ]);
 
-    let isBuffer = false;
+    const isBuffer = profileDataInitial.is_buffer || false;
     let dpsResult = null;
-    let buffData = null;
+    let buffResults = null;
 
-    if (profile && profile.characterId) {
-        const buffSkillInfo = await api.getCharacterBuffSkill(server, profile.characterId);
-        const bufferSkills = ["Divine Invocation", "Valor Blessing", "Forbidden Curse", "Lovely Tempo"];
-        const buffSkillName = buffSkillInfo?.skill?.buff?.skillInfo?.name;
-        if (buffSkillName && bufferSkills.some(skill => buffSkillName.includes(skill))) {
-            isBuffer = true;
-            buffData = await api.getCharacterBuffPower(server, profile.characterId); 
-        } else {
-            dpsResult = await api.getCharacterDps(server, name, state.dps.options);
+    if (isBuffer) {
+        buffResults = { total_buff_score: profileDataInitial.total_buff_score, buffs: {} }; 
+        if (profileDataInitial && profileDataInitial.characterId) {
+            const fullBuffResults = await api.getCharacterBuffPower(server, profileDataInitial.characterId);
+            if(fullBuffResults) {
+                buffResults = fullBuffResults; 
+            }
+        }
+    } else {
+        dpsResult = { dps: profileDataInitial.dps.normal, finalDamage: null, cooldownReduction: null }; 
+        if(state.dps.options.average_set_dmg){
+            dpsResult = { dps: profileDataInitial.dps.normalized, finalDamage: null, cooldownReduction: null };
         }
     }
 
-    if (profile && equipmentResponse) {
+
+    if (profileDataInitial && equipmentResponse) {
         const equipment = equipmentResponse.equipment;
         state.characterDetail = {
-            profile: { ...profile, server: server, characterName: name },
+            profile: { ...profileDataInitial, server: server, characterName: name },
             equipment: equipment?.equipment,
             setItemInfo: equipment?.setItemInfo,
             fameHistory: fameHistory?.records,
             gearHistory,
             isBuffer: isBuffer,
-            buffData: buffData,
+            buffResults: buffResults,
         };
         state.dps.result = dpsResult;
     } else {
@@ -253,15 +276,33 @@ function handleDpsToggleClick(event) {
     const optionName = toggle.dataset.dpsOption;
     const optionValue = toggle.dataset.dpsValue === 'true';
 
-    if (state.characterDetail.isBuffer) {
-        console.log("Buffer character, cannot change DPS options.");
-        return;
-    }
-
     if (state.dps.options[optionName] === optionValue) return;
 
     state.dps.options[optionName] = optionValue;
-    recalculateDps();
+
+    if (state.view === 'detail' && !state.characterDetail.isBuffer) {
+        state.dps.isCalculating = true;
+        render();
+
+        api.getCharacterDps(state.characterDetail.profile.serverId, state.characterDetail.profile.characterName, state.dps.options)
+            .then(newDpsResult => {
+                state.dps.result = newDpsResult;
+                state.dps.isCalculating = false;
+                render();
+            })
+            .catch(error => {
+                console.error("Error recalculating DPS:", error);
+                state.dps.isCalculating = false;
+                render();
+            });
+    }
+
+    if (state.searchTerm) {
+        performSearch(state.server, state.searchTerm); 
+    }
+
+    updateURL(state.view, state.server, state.searchTerm);
+    render();
 }
 
 function handleSearchClick() {

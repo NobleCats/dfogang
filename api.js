@@ -19,6 +19,9 @@ async function postData(endpoint, body) {
         return null;
     }
 }
+export async function updateCharacterCache(server, characterId) {
+    return await postData("/update_character_cache", { server, characterId });
+}
 
 export async function getCharacterDps(server, characterName, options) {
     return await postData("/dps", {
