@@ -152,27 +152,40 @@ class BufferAnalyzer:
     def _calculate_buff(self, skill_name_key, skill_level, calculated_stats, first_awakening_buff=None):
         if not self.job_code: return {}
         skill_name, (stat, buff_power) = SKILL_NAMES[self.job_code][skill_name_key], (calculated_stats.get("stat_value", 0), calculated_stats.get("buff_power", 0))
+        base_result = {
+            "applied_stat_name": calculated_stats.get("stat_name"),
+            "applied_stat_value": calculated_stats.get("stat_value")
+        }
         
         if skill_name_key == "aura":
-            table = msader_aura_table if self.job_code == "M_SADER" else common_aura_table
-            stat_bonus = table.get(skill_level, {}).get("stat", 0)
-            print(f"[AURA-CALC] Final Stat Bonus (from Lv.{skill_level}): {stat_bonus}")
-            return {"stat_bonus": stat_bonus}
+                table = msader_aura_table if self.job_code == "M_SADER" else common_aura_table
+                stat_bonus = table.get(skill_level, {}).get("stat", 0)
+                print(f"[AURA-CALC] Final Stat Bonus (from Lv.{skill_level}): {stat_bonus}")
+                base_result.update({"stat_bonus": stat_bonus})
+                return base_result
         if skill_name_key == "1a":
             consts, table = FORMULA_CONSTANTS.get(skill_name), common_1a_table
             coeffs = table.get(skill_level)
             if not coeffs or not consts: return {}
             multiplier = (((stat + consts["X"]) / (consts["c"] + 1)) * (buff_power + consts["Y"]) * consts["Z"])
-            return {"stat_bonus": round(coeffs["stat"] * multiplier)}
+            base_result.update({"stat_bonus": round(coeffs["stat"] * multiplier)})
+            return base_result
         if skill_name_key == "3a":
             percent_increase = common_3a_table.get(skill_level, {}).get("percent", 0)
-            return {"stat_bonus": round(first_awakening_buff['stat_bonus'] * (percent_increase / 100))} if first_awakening_buff and 'stat_bonus' in first_awakening_buff else {"increase_percent": percent_increase}
+            base_result.update({"increase_percent": percent_increase})
+            if first_awakening_buff and 'stat_bonus' in first_awakening_buff:
+                base_result["stat_bonus"] = round(first_awakening_buff['stat_bonus'] * (percent_increase / 100))
+            return base_result
         if skill_name_key == "main":
             consts, table = FORMULA_CONSTANTS.get(skill_name), BUFF_TABLES[self.job_code]
             coeffs = table.get(skill_level)
             if not coeffs or not consts: return {}
             multiplier = (((stat + consts["X"]) / (consts["c"] + 1)) * (buff_power + consts["Y"]) * consts["Z"])
-            return {"stat_bonus": round(coeffs["stat"] * multiplier), "atk_bonus": round(coeffs["atk"] * multiplier)}
+            base_result.update({
+                "stat_bonus": round(coeffs["stat"] * multiplier), 
+                "atk_bonus": round(coeffs["atk"] * multiplier)
+            })
+            return base_result
         return {}
 
 
@@ -202,61 +215,60 @@ class BufferAnalyzer:
         item_tasks = [fetch_json(session, f"https://api.dfoneople.com/df/items/{item_id}", self.API_KEY) for item_id in item_ids_to_fetch]
         self.item_details_cache = {res['itemId']: res for res in await asyncio.gather(*item_tasks) if res and 'itemId' in res}
         
-        # 기본 스탯, 스킬 정보 로드
         base_stats = {s["name"]: s["value"] for s in data["status"]["status"]}
-        skill_info = {s["name"]: s["level"] for s in data["skills"]["skill"]["style"]["active"]}
+        all_skills = data.get("skills", {}).get("skill", {}).get("style", {}).get("active", []) + \
+                 data.get("skills", {}).get("skill", {}).get("style", {}).get("passive", [])
+        skill_info = {s["name"]: s["level"] for s in all_skills}
         job_skills = SKILL_NAMES[self.job_code]
         final_buffs = {}
 
-        # 2. 각성기/오라에 사용할 순수 스탯 값 결정
-        applicable_stat_name = ""
-        if self.job_code in ["F_SADER", "ENCHANTRESS"]: applicable_stat_name = "Intelligence"
-        elif self.job_code == "MUSE": applicable_stat_name = "Spirit"
-        elif self.job_code == "M_SADER": # 남크루는 스태미나/정신력 중 높은 쪽을 따름
-            applicable_stat_name = "Stamina" if base_stats.get("Stamina", 0) > base_stats.get("Spirit", 0) else "Spirit"
-        
-        raw_stat_for_awakenings = base_stats.get(applicable_stat_name, 0)
-
-        # 3. '현재 착용 장비'에서 보너스 레벨과 '버프력'만 파싱
         current_gear_set = {"equipment": data.get("current_equipment", {}).get("equipment", []), "avatar": data.get("current_avatar", {}).get("avatar", []), "creature": data.get("current_creature", {}).get("creature"), "type": "Current"}
-        stats_for_current_gear = self._parse_stats_from_gear_set(current_gear_set, base_stats, character_job_id)
-        # 각성기 계산용 스탯 객체 생성
-        awakening_calc_stats = {"stat_value": raw_stat_for_awakenings, "buff_power": stats_for_current_gear["buff_power"], "stat_name": applicable_stat_name}
+        stats_for_current_gear = self._parse_stats_from_gear_set(current_gear_set, base_stats, character_job_id, parsing_for=['1a', '3a', 'aura'])
+    
+        base_level_1a = skill_info.get(job_skills["1a"], 0)
+        # ### [신규] 1차 각성기 스킬 레벨 +1 보정 ###
+        if base_level_1a > 0:
+            base_level_1a += 1
+            
+        bonus_level_1a = stats_for_current_gear["skill_lv_bonuses"].get("1a", 0)
+        skill_level_1a = base_level_1a + bonus_level_1a
+        final_buffs["1a"] = self._calculate_buff("1a", skill_level_1a, stats_for_current_gear)
+        if final_buffs.get("1a"): final_buffs["1a"]["level"] = skill_level_1a
 
-        # 1a, 3a, Aura 계산
-        for skill_key in ["1a", "3a", "aura"]:
-            base_level = skill_info.get(job_skills[skill_key], 0)
-            # 1a +1 보정
-            if skill_key == "1a" and base_level > 0: base_level += 1
-            bonus_level = stats_for_current_gear["skill_lv_bonuses"].get(skill_key, 0)
-            final_level = base_level + bonus_level
-            
-            # 계산 실행
-            additional_args = [final_buffs.get("1a")] if skill_key == "3a" else []
-            result = self._calculate_buff(skill_key, final_level, awakening_calc_stats, *additional_args)
-            if result:
-                result["level"] = final_level
-                result["applied_stat_name"] = applicable_stat_name
-                result["applied_stat_value"] = raw_stat_for_awakenings
-            final_buffs[skill_key] = result
-            
-        # 4. '버프 강화 정보' 덮어쓰기 후 메인 버프 계산
+        skill_level_3a = skill_info.get(job_skills["3a"], 0) + stats_for_current_gear["skill_lv_bonuses"].get("3a", 0)
+        final_buffs["3a"] = self._calculate_buff("3a", skill_level_3a, stats_for_current_gear, final_buffs.get("1a"))
+        if final_buffs.get("3a"): final_buffs["3a"]["level"] = skill_level_3a
+        
+        print("\n--- Calculating Aura Buff ---")
+        base_level_aura = skill_info.get(job_skills["aura"], 0)
+        bonus_level_aura = stats_for_current_gear["skill_lv_bonuses"].get("aura", 0)
+        skill_level_aura = base_level_aura + bonus_level_aura
+        print(f"[AURA LOG] Base Level from API: {base_level_aura}")
+        print(f"[AURA LOG] Bonus Level from Gear: {bonus_level_aura}")
+        print(f"[AURA LOG] -> Final Skill Level: {skill_level_aura}")
+        
+        final_buffs["aura"] = self._calculate_buff("aura", skill_level_aura, stats_for_current_gear)
+        if final_buffs.get("aura"): final_buffs["aura"]["level"] = skill_level_aura
+
+
+        buff_skill_info = data.get("buff_equipment", {}).get("skill", {}).get("buff", {}).get("skillInfo", {})
+        final_main_buff_level_from_api = buff_skill_info.get("option", {}).get("level")
         merged_equipment_by_slot = {item['slotId']: item for item in current_gear_set["equipment"] if item and 'slotId' in item}
         for item in data.get("buff_equipment", {}).get("equipment", []):
             if item and 'slotId' in item: merged_equipment_by_slot[item['slotId']] = item
         merged_avatar = data.get("buff_avatar", {}).get("avatar", []) or current_gear_set["avatar"]
         merged_creature = data.get("buff_creature", {}).get("creature") or current_gear_set["creature"]
-        
         merged_buff_gear_set = {"equipment": list(merged_equipment_by_slot.values()), "avatar": merged_avatar, "creature": merged_creature, "type": "Buff"}
-        stats_for_main_buff = self._parse_stats_from_gear_set(merged_buff_gear_set, base_stats, character_job_id)
-        
-        final_main_buff_level_from_api = data.get("buff_equipment", {}).get("skill", {}).get("buff", {}).get("skillInfo", {}).get("option", {}).get("level")
-        main_buff_lv = final_main_buff_level_from_api or (skill_info.get(job_skills["main"], 0) + stats_for_main_buff["skill_lv_bonuses"].get("main", 0))
-        
+        stats_for_main_buff = self._parse_stats_from_gear_set(merged_buff_gear_set, base_stats, character_job_id, parsing_for=['main'])
+    
+        if final_main_buff_level_from_api is not None:
+            main_buff_lv = final_main_buff_level_from_api
+        else:
+            main_buff_lv = skill_info.get(job_skills["main"], 0) + stats_for_main_buff["skill_lv_bonuses"].get("main", 0)
         final_buffs["main"] = self._calculate_buff("main", main_buff_lv, stats_for_main_buff)
-        if final_buffs.get("main"):
-            final_buffs["main"]["level"] = main_buff_lv
-            final_buffs["main"]["applied_stat_name"] = stats_for_main_buff.get("stat_name")
-            final_buffs["main"]["applied_stat_value"] = stats_for_main_buff.get("stat_value")
-
-        return { "characterName": profile["characterName"], "jobName": profile["jobName"], "buffs": final_buffs }
+        if final_buffs.get("main"): final_buffs["main"]["level"] = main_buff_lv
+        return { 
+            "characterName": profile["characterName"], 
+            "jobName": profile["jobName"], 
+            "buffs": final_buffs
+        }

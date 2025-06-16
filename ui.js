@@ -218,17 +218,21 @@ function renderBuffPowerDetailsWidget(profile) {
         if (!skillData || !skillData.level) return '';
 
         const titleMap = { main: "Main Buff", "1a": "1st Awakening", "3a": "3rd Awakening", aura: "Aura" };
-        let detailsHtml = `
-            <div class="buff-power-row sub-detail">
-                <span class="buff-power-label">Applied ${skillData.applied_stat_name || 'Stat'}</span>
-                <span class="buff-power-value">${skillData.applied_stat_value?.toLocaleString() || '-'}</span>
+        let detailsHtml = '';
+
+        if (skillData.applied_stat_name && skillData.applied_stat_value) {
+            detailsHtml += `
+            <div class="buff-power-row sub-detail" style="margin-top: 8px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--color-border);">
+                <span class="buff-power-label" style="font-style: italic;">Applied ${skillData.applied_stat_name}</span>
+                <span class="buff-power-value" style="font-weight: 400; color: var(--color-text-secondary);">${skillData.applied_stat_value.toLocaleString()}</span>
             </div>
-        `;
+            `;
+        }
 
         if (skillData.stat_bonus) {
             detailsHtml += `
                 <div class="buff-power-row">
-                    <span class="buff-power-label">Stat Bonus</span>
+                    <span class="buff-power-label">${skillKey === 'aura' ? 'Aura Stat Bonus' : 'Stat Bonus'}</span>
                     <span class="buff-power-value">${skillData.stat_bonus.toLocaleString()}</span>
                 </div>`;
         }
@@ -239,19 +243,27 @@ function renderBuffPowerDetailsWidget(profile) {
                     <span class="buff-power-value">${skillData.atk_bonus.toLocaleString()}</span>
                 </div>`;
         }
+        if (skillData.increase_percent) {
+             detailsHtml += `
+                <div class="buff-power-row">
+                    <span class="buff-power-label">1a Synergy</span>
+                    <span class="buff-power-value">${skillData.increase_percent}%</span>
+                </div>`;
+        }
+
 
         return `
-            <div class="buff-power-skill-block">
-                <div class="buff-power-skill-header">
-                    <span class="buff-power-skill-name">${titleMap[skillKey]}</span>
-                    <span class="buff-power-skill-level">(Lv. ${skillData.level})</span>
+            <div class="buff-power-skill-block" style="margin-bottom: 16px;">
+                <div class="buff-power-row">
+                    <span class="buff-power-label" style="font-weight: 500; font-size: 1.1em; color: var(--color-text-primary);">${titleMap[skillKey]}</span>
+                    <span class="buff-power-value" style="font-size: 1.1em;">Lv. ${skillData.level}</span>
                 </div>
-                <div class="buff-power-skill-details">${detailsHtml}</div>
+                <div class="buff-power-skill-details" style="padding-left: 16px; margin-top: 4px;">${detailsHtml}</div>
             </div>
         `;
     };
 
-    let content = '<div class="buff-power-details-container">';
+    let content = '<div class="buff-power-details-container" style="display: flex; flex-direction: column; gap: 16px; margin-top: 8px;">';
     content += createSkillBlock('main', buffs.main);
     content += createSkillBlock('1a', buffs['1a']);
     content += createSkillBlock('3a', buffs['3a']);
