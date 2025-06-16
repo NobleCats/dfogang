@@ -15,7 +15,7 @@ const rarityColors = {
 };
 const SET_CATEGORIES = [
     "Dragon", "Magic", "Alpha", "Shadow", "Ethereal", "Valkyrie",
-    "Nature", "Fairy", "Energy", "Serendipity", "Cleansing", "Gold"
+    "Nature", "Fairy", "Energy", "Serendipity", "Cleansing", "Gold", "Tales"
 ];
 
 function getSetIconPath(setName) {
