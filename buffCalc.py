@@ -181,10 +181,8 @@ class BufferAnalyzer:
                     if numeric_match:
                         parsed_value = int(numeric_match.group(1))
                     else:
-                        # Skip if it's a non-numeric string not relevant to buff calculation
-                        # print(f"    DEBUG: Could not extract numeric value from string stat for {item_name}: {name}: {value_raw}")
                         continue
-                else: # Already an int or float
+                else:
                     parsed_value = int(value_raw) # Ensure it's an integer
 
                 # Only add relevant stats
@@ -199,7 +197,6 @@ class BufferAnalyzer:
                     stats["Spirit"] += parsed_value
                     stats["Vitality"] += parsed_value
                 
-                # For other stats not directly used in buff calculation, just log them if needed for debugging
                 print(f"    DEBUG: Parsed stat for {item_name}: {name}: {parsed_value} (Source: {'Item Status' if stat_entry in full_item_details.get('itemStatus', []) else 'Enchant Status'})")
 
 
@@ -208,7 +205,6 @@ class BufferAnalyzer:
         elif self.job_code == "MUSE": applicable_stat_value, applicable_stat_name = stats["Spirit"], "Spirit"
         elif self.job_code == "M_SADER": applicable_stat_value, applicable_stat_name = (stats["Vitality"], "Vitality") if stats["Vitality"] > stats["Spirit"] else (stats["Spirit"], "Spirit")
 
-        # Include the full stats dictionary for detailed breakdown
         return { "stat_value": applicable_stat_value, "stat_name": applicable_stat_name, "buff_power": total_buff_power, "skill_lv_bonuses": skill_lv_bonuses, "stats_breakdown": stats }
 
 
@@ -277,6 +273,7 @@ class BufferAnalyzer:
         self.job_code = SADER_JOB_MAP.get(character_job_id, {}).get(profile.get("jobGrowId"))
         self.character_job_id = character_job_id
         if not self.job_code: return {"error": "Not a sader."}
+
 
         item_ids_to_fetch = set()
 
@@ -347,6 +344,27 @@ class BufferAnalyzer:
         final_calculated_buff_power = buff_power_from_status_api * (1 + buff_power_amp_from_status_api * 0.01)
         print(f"DEBUG: Final calculated Buff Power: {final_calculated_buff_power}")
 
+        # Determine the applicable stat name and value based on character's job (consolidated logic)
+        # MOVED THIS BLOCK AFTER base_stats_from_status_api IS POPULATED
+        applicable_stat_name = ""
+        applicable_stat_value = 0 # Initialize here to ensure it's always set
+
+        if self.job_code == "F_SADER" or self.job_code == "ENCHANTRESS":
+            applicable_stat_name = "Intelligence"
+            applicable_stat_value = base_stats_from_status_api.get("Intelligence", 0)
+        elif self.job_code == "MUSE":
+            applicable_stat_name = "Spirit"
+            applicable_stat_value = base_stats_from_status_api.get("Spirit", 0)
+        elif self.job_code == "M_SADER":
+            if base_stats_from_status_api.get("Vitality", 0) > base_stats_from_status_api.get("Spirit", 0):
+                applicable_stat_name = "Vitality"
+                applicable_stat_value = base_stats_from_status_api.get("Vitality", 0)
+            else:
+                applicable_stat_name = "Spirit"
+                applicable_stat_value = base_stats_from_status_api.get("Spirit", 0)
+        # No need for an else here, as "Not a sader" check handles unrecognised jobs.
+        # This ensures applicable_stat_name and applicable_stat_value are always set by this point.
+
 
         all_skills = data.get("skills", {}).get("skill", {}).get("style", {}).get("active", []) + \
                      data.get("skills", {}).get("skill", {}).get("style", {}).get("passive", [])
@@ -392,14 +410,53 @@ class BufferAnalyzer:
         print(f"Skill Level Bonuses from Buff Enhancement Gear: {parsed_stats_from_buff_enhancement_gear['skill_lv_bonuses']}")
         print("-------------------------------------------------------------------\n")
 
-        # --- 새로운 기능 추가: 버프 강화 장비 슬롯과 현재 장착 장비 비교 및 스탯 출력 ---
+        # --- 현재 장착 장비와 버프 강화 장비 슬롯 비교 및 스탯 추출 ---
+        buff_enh_item_stats_sum = {"Intelligence": 0, "Spirit": 0, "Vitality": 0}
+        current_item_stats_sum = {"Intelligence": 0, "Spirit": 0, "Vitality": 0}
+        
+        buff_enh_buff_power_amp = 0
+        current_buff_power_amp = 0
+
         print("\n--- Current Equipment Stats (Matching Buff Enhancement Slots) ---")
         for buff_enh_item in buff_enhancement_equipment:
             buff_enh_slot_name = buff_enh_item.get("slotName")
             buff_enh_item_name = buff_enh_item.get("itemName")
             
+            # Sum stats from buff enhancement gear (both itemStatus and enchant status)
+            buff_enh_full_item_details = self.item_details_cache.get(buff_enh_item.get("itemId"), {})
+            
+            buff_enh_stats_to_process = []
+            if buff_enh_full_item_details.get("itemStatus"):
+                buff_enh_stats_to_process.extend(buff_enh_full_item_details.get("itemStatus", []))
+            if buff_enh_item.get("enchant", {}).get("status"):
+                buff_enh_stats_to_process.extend(buff_enh_item.get("enchant", {}).get("status", []))
+            elif buff_enh_full_item_details.get("enchant", {}).get("status"):
+                buff_enh_stats_to_process.extend(buff_enh_full_item_details.get("enchant", {}).get("status", []))
+
+            for stat_entry in buff_enh_stats_to_process:
+                name = stat_entry.get("name", "")
+                value_raw = stat_entry.get("value", 0)
+                parsed_value = 0
+                if isinstance(value_raw, str):
+                    numeric_match = re.search(r'(\d+)', value_raw)
+                    if numeric_match:
+                        parsed_value = int(numeric_match.group(1))
+                else:
+                    parsed_value = int(value_raw)
+
+                if "Intelligence" in name: buff_enh_item_stats_sum["Intelligence"] += parsed_value
+                elif "Spirit" in name: buff_enh_item_stats_sum["Spirit"] += parsed_value
+                elif "Vitality" in name: buff_enh_item_stats_sum["Vitality"] += parsed_value
+                elif "All Stats" in name:
+                    buff_enh_item_stats_sum["Intelligence"] += parsed_value
+                    buff_enh_item_stats_sum["Spirit"] += parsed_value
+                    buff_enh_item_stats_sum["Vitality"] += parsed_value
+                elif "Buff Power Amp." in name:
+                    buff_enh_buff_power_amp += parsed_value
+
+
             found_match = False
-            for current_item in current_equipment_data: # Only check equipment, not avatar/creature for now
+            for current_item in current_equipment_data:
                 if current_item.get("slotName") == buff_enh_slot_name:
                     found_match = True
                     current_item_name = current_item.get("itemName")
@@ -407,14 +464,13 @@ class BufferAnalyzer:
                     
                     print(f"Matching Slot: {buff_enh_slot_name} (Buff Enhancement: {buff_enh_item_name} | Current: {current_item_name})")
                     
-                    # 3. 해당 장비의 인챈트 스탯 출력
+                    # 3. 해당 장비의 인챈트 스탯 출력 및 합산
                     print(f"  Current Equipment's Enchant Stats for '{current_item_name}':")
                     current_enchant_status = current_item.get("enchant", {}).get("status", [])
                     if current_enchant_status:
                         for stat_entry in current_enchant_status:
                             name = stat_entry.get("name", "")
                             value_raw = stat_entry.get("value", 0)
-                            # Convert value to integer, handling potential '%'
                             parsed_value = 0
                             if isinstance(value_raw, str):
                                 numeric_match = re.search(r'(\d+)', value_raw)
@@ -423,10 +479,20 @@ class BufferAnalyzer:
                             else:
                                 parsed_value = int(value_raw)
                             print(f"    - {name}: {parsed_value}")
+                            # Sum current item's enchant stats
+                            if "Intelligence" in name: current_item_stats_sum["Intelligence"] += parsed_value
+                            elif "Spirit" in name: current_item_stats_sum["Spirit"] += parsed_value
+                            elif "Vitality" in name: current_item_stats_sum["Vitality"] += parsed_value
+                            elif "All Stats" in name:
+                                current_item_stats_sum["Intelligence"] += parsed_value
+                                current_item_stats_sum["Spirit"] += parsed_value
+                                current_item_stats_sum["Vitality"] += parsed_value
+                            elif "Buff Power Amp." in name:
+                                current_buff_power_amp += parsed_value
                     else:
                         print("    No enchant stats found.")
 
-                    # 4. 해당 장비의 itemId로 검색하여, 장비 자체의 스탯 또한 출력
+                    # 4. 해당 장비의 itemId로 검색하여, 장비 자체의 스탯 또한 출력 및 합산
                     print(f"  Current Equipment's Base Item Stats for '{current_item_name}':")
                     current_full_item_details = self.item_details_cache.get(current_item_id, {})
                     current_item_status = current_full_item_details.get("itemStatus", [])
@@ -434,7 +500,6 @@ class BufferAnalyzer:
                         for stat_entry in current_item_status:
                             name = stat_entry.get("name", "")
                             value_raw = stat_entry.get("value", 0)
-                            # Convert value to integer, handling potential '%'
                             parsed_value = 0
                             if isinstance(value_raw, str):
                                 numeric_match = re.search(r'(\d+)', value_raw)
@@ -443,34 +508,51 @@ class BufferAnalyzer:
                             else:
                                 parsed_value = int(value_raw)
                             print(f"    - {name}: {parsed_value}")
+                            # Sum current item's base stats
+                            if "Intelligence" in name: current_item_stats_sum["Intelligence"] += parsed_value
+                            elif "Spirit" in name: current_item_stats_sum["Spirit"] += parsed_value
+                            elif "Vitality" in name: current_item_stats_sum["Vitality"] += parsed_value
+                            elif "All Stats" in name:
+                                current_item_stats_sum["Intelligence"] += parsed_value
+                                current_item_stats_sum["Spirit"] += parsed_value
+                                current_item_stats_sum["Vitality"] += parsed_value
+                            elif "Buff Power Amp." in name:
+                                current_buff_power_amp += parsed_value
                     else:
                         print("    No base item stats found (or not fetched).")
-                    break # Found a match, move to next buff enhancement item
+                    break
             
             if not found_match:
                 print(f"No matching current equipment found for Buff Enhancement Slot: {buff_enh_slot_name} ({buff_enh_item_name})")
         print("-------------------------------------------------------------------\n")
 
+        # --- 메인 버프 계산을 위한 스탯 및 Buff Power Amp. 조정 (수정된 로직) ---
+        adjusted_main_buff_stat_value = base_stats_from_status_api.get(applicable_stat_name, 0)
+        adjusted_buff_power_amp_for_main = buff_power_amp_from_status_api
 
-        # Determine the applicable stat for all buffs based on base_stats_from_status_api
-        applicable_stat_value = 0
-        applicable_stat_name = ""
-        if self.job_code in ["F_SADER", "ENCHANTRESS"]:
-            applicable_stat_value = base_stats_from_status_api.get("Intelligence", 0)
-            applicable_stat_name = "Intelligence"
-        elif self.job_code == "MUSE":
-            applicable_stat_value = base_stats_from_status_api.get("Spirit", 0)
-            applicable_stat_name = "Spirit"
-        elif self.job_code == "M_SADER":
-            if base_stats_from_status_api.get("Vitality", 0) > base_stats_from_status_api.get("Spirit", 0):
-                applicable_stat_value = base_stats_from_status_api.get("Vitality", 0)
-                applicable_stat_name = "Vitality"
-            else:
-                applicable_stat_value = base_stats_from_status_api.get("Spirit", 0)
-                applicable_stat_name = "Spirit"
+        # 1. 현재 장착 중인 동일 부위 장비가 제공하는 스탯/Amp.를 빼고
+        adjusted_main_buff_stat_value -= current_item_stats_sum.get(applicable_stat_name, 0)
+        adjusted_buff_power_amp_for_main -= current_buff_power_amp
 
-        calculated_stats_for_all_buffs = {
-            "stat_value": applicable_stat_value,
+        # 2. 버프 강화에 등록된 장비가 제공하는 스탯/Amp.를 더합니다.
+        adjusted_main_buff_stat_value += buff_enh_item_stats_sum.get(applicable_stat_name, 0)
+        adjusted_buff_power_amp_for_main += buff_enh_buff_power_amp
+
+        # DEBUG: Log adjusted values
+        print(f"DEBUG: Original Buff Power Amp. from status API: {buff_power_amp_from_status_api}")
+        print(f"DEBUG: Buff Enhancement Gear Buff Power Amp. (sum): {buff_enh_buff_power_amp}")
+        print(f"DEBUG: Current Matching Gear Buff Power Amp. (sum): {current_buff_power_amp}")
+        print(f"DEBUG: Adjusted Buff Power Amp. for main buff calculation: {adjusted_buff_power_amp_for_main}")
+
+        # Recalculate final buff power using adjusted Buff Power Amp. for main buff only
+        adjusted_final_calculated_buff_power_for_main = buff_power_from_status_api * (1 + adjusted_buff_power_amp_for_main * 0.01)
+        print(f"DEBUG: Adjusted Final calculated Buff Power for main buff: {adjusted_final_calculated_buff_power_for_main}")
+
+
+        # For other buffs (1a, 3a, aura), use the original values from status API + current gear bonuses
+        # applicable_stat_value here refers to the ORIGINAL stat from status API
+        calculated_stats_for_other_buffs = {
+            "stat_value": base_stats_from_status_api.get(applicable_stat_name, 0),
             "stat_name": applicable_stat_name,
             "buff_power": final_calculated_buff_power,
             "skill_lv_bonuses": {
@@ -481,27 +563,42 @@ class BufferAnalyzer:
             }
         }
 
-        # Calculate Aura first
+        # Main buff calculation will use the adjusted values
+        calculated_stats_for_main_buff = {
+            "stat_value": adjusted_main_buff_stat_value,
+            "stat_name": applicable_stat_name,
+            "buff_power": adjusted_final_calculated_buff_power_for_main,
+            "skill_lv_bonuses": {
+                "main": 0,
+                "1a": parsed_stats_from_current_gear["skill_lv_bonuses"].get("1a", 0),
+                "3a": parsed_stats_from_current_gear["skill_lv_bonuses"].get("3a", 0),
+                "aura": parsed_stats_from_current_gear["skill_lv_bonuses"].get("aura", 0),
+            }
+        }
+
+        # Calculate Aura first (using calculated_stats_for_other_buffs)
         base_level_aura = skill_info.get(job_skills["aura"], 0)
-        bonus_level_aura = calculated_stats_for_all_buffs["skill_lv_bonuses"].get("aura", 0)
+        bonus_level_aura = calculated_stats_for_other_buffs["skill_lv_bonuses"].get("aura", 0)
         skill_level_aura = base_level_aura + bonus_level_aura
 
-        final_buffs["aura"] = self._calculate_buff("aura", skill_level_aura, calculated_stats_for_all_buffs)
+        final_buffs["aura"] = self._calculate_buff("aura", skill_level_aura, calculated_stats_for_other_buffs)
         if final_buffs.get("aura"): final_buffs["aura"]["level"] = skill_level_aura
 
         aura_stat_bonus_value = final_buffs["aura"].get("stat_bonus", 0)
 
+        # Calculate 1a (using calculated_stats_for_other_buffs)
         base_level_1a = skill_info.get(job_skills["1a"], 0)
         if base_level_1a > 0:
             base_level_1a += 1
 
-        bonus_level_1a = calculated_stats_for_all_buffs["skill_lv_bonuses"].get("1a", 0)
+        bonus_level_1a = calculated_stats_for_other_buffs["skill_lv_bonuses"].get("1a", 0)
         skill_level_1a = base_level_1a + bonus_level_1a
-        final_buffs["1a"] = self._calculate_buff("1a", skill_level_1a, calculated_stats_for_all_buffs, aura_stat_bonus=aura_stat_bonus_value)
+        final_buffs["1a"] = self._calculate_buff("1a", skill_level_1a, calculated_stats_for_other_buffs, aura_stat_bonus=aura_stat_bonus_value)
         if final_buffs.get("1a"): final_buffs["1a"]["level"] = skill_level_1a
 
-        skill_level_3a = skill_info.get(job_skills["3a"], 0) + calculated_stats_for_all_buffs["skill_lv_bonuses"].get("3a", 0)
-        final_buffs["3a"] = self._calculate_buff("3a", skill_level_3a, calculated_stats_for_all_buffs, final_buffs.get("1a"), aura_stat_bonus=aura_stat_bonus_value)
+        # Calculate 3a (using calculated_stats_for_other_buffs)
+        skill_level_3a = skill_info.get(job_skills["3a"], 0) + calculated_stats_for_other_buffs["skill_lv_bonuses"].get("3a", 0)
+        final_buffs["3a"] = self._calculate_buff("3a", skill_level_3a, calculated_stats_for_other_buffs, final_buffs.get("1a"), aura_stat_bonus=aura_stat_bonus_value)
         if final_buffs.get("3a"): final_buffs["3a"]["level"] = skill_level_3a
 
         # Fetch main buff level directly from buff_equip_equipment API
@@ -513,22 +610,27 @@ class BufferAnalyzer:
            main_buff_equip_data["skill"]["buff"]["skillInfo"].get("option"):
             main_buff_lv = main_buff_equip_data["skill"]["buff"]["skillInfo"]["option"].get("level", 0)
 
-        final_buffs["main"] = self._calculate_buff("main", main_buff_lv, calculated_stats_for_all_buffs, aura_stat_bonus=aura_stat_bonus_value)
+        final_buffs["main"] = self._calculate_buff("main", main_buff_lv, calculated_stats_for_main_buff, aura_stat_bonus=aura_stat_bonus_value)
         if final_buffs.get("main"): final_buffs["main"]["level"] = main_buff_lv
 
 
-        print(f"DEBUG: Final calculated stats used for buffs:")
-        print(f"  Applied Stat Name: {calculated_stats_for_all_buffs['stat_name']}")
-        print(f"  Applied Stat Value: {calculated_stats_for_all_buffs['stat_value']}")
-        print(f"  Total Buff Power: {calculated_stats_for_all_buffs['buff_power']}")
-        print(f"  Skill Level Bonuses (from Current Gear): {calculated_stats_for_all_buffs['skill_lv_bonuses']}")
+        print(f"DEBUG: Final calculated stats used for buffs (Overall Character Stats):")
+        print(f"  Applied Stat Name: {applicable_stat_name}")
+        print(f"  Applied Stat Value: {base_stats_from_status_api.get(applicable_stat_name, 0)}")
+        print(f"  Total Buff Power: {final_calculated_buff_power}")
+        print(f"  Skill Level Bonuses (from Current Gear): {calculated_stats_for_other_buffs['skill_lv_bonuses']}")
+
 
         return {
             "characterName": profile["characterName"],
             "jobName": profile["jobName"],
             "buffs": final_buffs,
             "buff_enhancement_stats": parsed_stats_from_buff_enhancement_gear["stats_breakdown"],
-            "buff_enhancement_skill_lv_bonuses": parsed_stats_from_buff_enhancement_gear["skill_lv_bonuses"]
+            "buff_enhancement_skill_lv_bonuses": parsed_stats_from_buff_enhancement_gear["skill_lv_bonuses"],
+            "adjusted_main_buff_calculation_values": {
+                "adjusted_stat_value": adjusted_main_buff_stat_value,
+                "adjusted_buff_power": adjusted_final_calculated_buff_power_for_main
+            }
         }
 
 async def main():
