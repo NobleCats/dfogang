@@ -165,71 +165,102 @@ async function showCharacterDetail(server, name) {
     state.view = 'detail';
     render();
 
-    let characterId = null;
-    let profileDataInitial = await api.getCharacterProfile(server, name);
-    if (profileDataInitial && profileDataInitial.characterId) {
-        characterId = profileDataInitial.characterId;
-    } else {
-        console.error('Failed to get character ID for detail view.');
+    // 1. 필요한 모든 API 호출을 병렬로 수행 (캐시 사용 없이 실시간 데이터)
+    const [
+        profileResponse,
+        equipmentResponse,
+        fameHistoryResponse,
+        gearHistoryResponse,
+        buffSkillResponse
+    ] = await Promise.all([
+        api.getCharacterProfile(server, name),
+        api.getCharacterEquipment(server, name),
+        api.getFameHistory(server, name),
+        api.getGearHistory(server, name),
+        api.getCharacterBuffSkill(server, await api.getCharacterProfile(server, name).then(p => p?.characterId)) // characterId를 먼저 가져와야 함
+    ]);
+
+    // 초기 필수 데이터 확인
+    if (!profileResponse || !equipmentResponse) {
+        console.error('Failed to load character base details.');
         state.view = 'main';
         state.isLoading = false;
         render();
         return;
     }
 
-    let updatedProfileFromCache = await api.updateCharacterCache(server, characterId);
-    if (updatedProfileFromCache && updatedProfileFromCache.profile) {
-        profileDataInitial = updatedProfileFromCache.profile;
-    } else {
-        console.warn('Failed to update character cache, proceeding with potentially stale data.');
+    const profile = { ...profileResponse, server: server, characterName: name };
+    const equipment = equipmentResponse.equipment;
+    const setItemInfo = equipmentResponse.setItemInfo;
+    const fameHistory = fameHistoryResponse?.records;
+    const gearHistory = gearHistoryResponse;
+
+    // 2. 버퍼 여부 판별
+    let isBuffer = false;
+    const buffSkillName = buffSkillResponse?.skill?.buff?.skillInfo?.name;
+    const bufferSkills = ["Divine Invocation", "Valor Blessing", "Forbidden Curse", "Lovely Tempo"];
+    if (buffSkillName && bufferSkills.some(skill => buffSkillName.includes(skill))) {
+        isBuffer = true;
     }
 
-
-    const [equipmentResponse, fameHistory, gearHistory] = await Promise.all([
-        api.getCharacterEquipment(server, name),
-        api.getFameHistory(server, name),
-        api.getGearHistory(server, name),
-    ]);
-
-    const isBuffer = profileDataInitial.is_buffer || false;
+    // 3. DPS 또는 버프 능력치 실시간 계산 및 저장
     let dpsResult = null;
     let buffResults = null;
+    let characterId = profile.characterId; // 프로필 응답에서 characterId 사용
 
     if (isBuffer) {
-        buffResults = { total_buff_score: profileDataInitial.total_buff_score, buffs: {} }; 
-        if (profileDataInitial && profileDataInitial.characterId) {
-            const fullBuffResults = await api.getCharacterBuffPower(server, profileDataInitial.characterId);
-            if(fullBuffResults) {
-                buffResults = fullBuffResults; 
-            }
+        if (characterId) {
+            buffResults = await api.getCharacterBuffPower(server, characterId);
+        } else {
+            console.error("Character ID not found for buff calculation.");
         }
     } else {
-        dpsResult = { dps: profileDataInitial.dps.normal, finalDamage: null, cooldownReduction: null }; 
-        if(state.dps.options.average_set_dmg){
-            dpsResult = { dps: profileDataInitial.dps.normalized, finalDamage: null, cooldownReduction: null };
+        if (characterId) {
+            dpsResult = await api.getCharacterDps(server, name, state.dps.options);
+        } else {
+            console.error("Character ID not found for DPS calculation.");
         }
     }
 
+    // 4. State 업데이트 (화면 표시를 위한 데이터)
+    state.characterDetail = {
+        profile: profile,
+        equipment: equipment,
+        setItemInfo: setItemInfo,
+        fameHistory: fameHistory,
+        gearHistory: gearHistory,
+        isBuffer: isBuffer,
+        buffResults: buffResults,
+    };
+    // DPS 결과는 dpsResult에서 직접 할당 (api.getCharacterDps가 이제 full_dps_data를 포함하여 반환)
+    state.dps.result = dpsResult ? dpsResult : null;
 
-    if (profileDataInitial && equipmentResponse) {
-        const equipment = equipmentResponse.equipment;
-        state.characterDetail = {
-            profile: { ...profileDataInitial, server: server, characterName: name },
-            equipment: equipment?.equipment,
-            setItemInfo: equipment?.setItemInfo,
-            fameHistory: fameHistory?.records,
-            gearHistory,
-            isBuffer: isBuffer,
-            buffResults: buffResults,
-        };
-        state.dps.result = dpsResult;
-    } else {
-        console.error('Failed to load character details.');
-        state.view = 'main';
-    }
 
     state.isLoading = false;
-    render();
+    render(); // 화면에 최신 데이터로 렌더링
+
+    // 5. 모든 계산 및 디스플레이 완료 후, profile.json 캐시 업데이트 요청
+    // 이 부분은 비동기로 백그라운드에서 진행될 수 있습니다.
+    const dpsDataForCache = dpsResult?.full_dps_data || { normal: null, normalized: null };
+    const totalBuffScoreForCache = buffResults?.total_buff_score || null;
+
+    api.updateProfileCacheBackend({
+        server: server,
+        characterId: characterId,
+        profileData: profile, // 실시간으로 가져온 프로필 데이터
+        equipmentData: equipmentResponse, // 실시간으로 가져온 장비 데이터
+        isBuffer: isBuffer,
+        dpsData: dpsDataForCache.dps, // DPS는 'dps' 키 아래에 normal, normalized를 가질 것으로 예상
+        totalBuffScore: totalBuffScoreForCache
+    }).then(response => {
+        if (response && response.status === "success") {
+            console.log("Profile cache updated successfully.");
+        } else {
+            console.error("Failed to update profile cache backend:", response);
+        }
+    }).catch(error => {
+        console.error("Error updating profile cache backend:", error);
+    });
 }
 
 async function recalculateDps() {
@@ -280,6 +311,7 @@ function handleDpsToggleClick(event) {
 
     state.dps.options[optionName] = optionValue;
 
+    // 상세 뷰에서 DPS 토글 시 재계산 (버퍼는 해당 없음)
     if (state.view === 'detail' && !state.characterDetail.isBuffer) {
         state.dps.isCalculating = true;
         render();
@@ -288,7 +320,26 @@ function handleDpsToggleClick(event) {
             .then(newDpsResult => {
                 state.dps.result = newDpsResult;
                 state.dps.isCalculating = false;
-                render();
+                render(); // 새 DPS로 화면 갱신
+
+                // DPS가 재계산되었으니 캐시도 업데이트
+                api.updateProfileCacheBackend({
+                    server: state.characterDetail.profile.serverId,
+                    characterId: state.characterDetail.profile.characterId,
+                    profileData: state.characterDetail.profile, // 현재 프로필 데이터 사용
+                    equipmentData: { equipment: state.characterDetail.equipment, setItemInfo: state.characterDetail.setItemInfo }, // 현재 장비 데이터 사용
+                    isBuffer: false, // DPS 캐릭터이므로 false
+                    dpsData: newDpsResult.full_dps_data.dps, // 최신 계산된 DPS 데이터
+                    totalBuffScore: null
+                }).then(response => {
+                    if (response && response.status === "success") {
+                        console.log("Profile cache updated after DPS toggle.");
+                    } else {
+                        console.error("Failed to update profile cache after DPS toggle:", response);
+                    }
+                }).catch(error => {
+                    console.error("Error updating profile cache after DPS toggle:", error);
+                });
             })
             .catch(error => {
                 console.error("Error recalculating DPS:", error);
@@ -297,8 +348,9 @@ function handleDpsToggleClick(event) {
             });
     }
 
+    // 메인 뷰에서 DPS 토글 시 검색 결과 재렌더링 (캐시 업데이트는 search 엔드포인트가 처리)
     if (state.searchTerm) {
-        performSearch(state.server, state.searchTerm); 
+        performSearch(state.server, state.searchTerm);
     }
 
     updateURL(state.view, state.server, state.searchTerm);
