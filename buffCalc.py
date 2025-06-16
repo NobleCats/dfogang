@@ -318,9 +318,6 @@ class BufferAnalyzer:
         character_job_id = profile.get("jobId")
         character_job_grow_id = profile.get("jobGrowId") # jobGrowId도 명확하게 변수로 받기
 
-        # DEBUG: Print retrieved Job IDs
-        print(f"DEBUG: Retrieved Character JobId: {character_job_id}")
-        print(f"DEBUG: Retrieved Character JobGrowId: {character_job_grow_id}")
 
         # Apply .strip() to job IDs to remove any hidden whitespace
         character_job_id_stripped = character_job_id.strip() if character_job_id else character_job_id
@@ -328,13 +325,6 @@ class BufferAnalyzer:
 
         self.job_code = SADER_JOB_MAP.get(character_job_id_stripped, {}).get(character_job_grow_id_stripped)
         self.character_job_id = character_job_id_stripped # Use stripped version for consistency
-        if not self.job_code: # Not a sader.
-            # DEBUG: Print Job IDs if not a sader
-            print(f"DEBUG: JobId '{character_job_id_stripped}' NOT found in SADER_JOB_MAP keys or JobGrowId '{character_job_grow_id_stripped}' not mapped.")
-            if character_job_id_stripped in SADER_JOB_MAP:
-                print(f"DEBUG: Available JobGrowIds for this JobId: {SADER_JOB_MAP[character_job_id_stripped].keys()}")
-            return {"error": "Not a sader."}
-
 
         item_ids_to_fetch = set()
 
@@ -456,13 +446,6 @@ class BufferAnalyzer:
             "creature": current_creature[0] if current_creature else None,
             "type": "Current"
         }
-
-        # 버프 강화 장비 세트 구성 (파싱에 사용될 뿐, 스탯 합산은 아래에서 직접 수행)
-        buff_enhancement_gear_set = {
-            "equipment": buff_enhancement_equipment,
-            "type": "Buff Enhancement"
-        }
-
         # 현재 장비 세트 파싱 (스킬 레벨 보너스만, 스탯은 status API와 아래 조정 로직 활용)
         parsed_stats_from_current_gear = self._parse_stats_from_gear_set(
             current_gear_set_for_calculation,
@@ -476,7 +459,6 @@ class BufferAnalyzer:
         adjusted_main_buff_stat_value = applicable_stat_value
         adjusted_buff_power_amp_for_main = buff_power_amp_from_status_api
         adjusted_buff_power_from_status_api_for_main = buff_power_from_status_api
-
 
         # --- 장비(Equipment) 스탯 조정 ---
         current_equipment_by_slot = {item.get("slotName"): item for item in current_equipment_data if item.get("slotName")}
@@ -599,7 +581,7 @@ class BufferAnalyzer:
         # --- 아바타 엠블렘 스탯 조정 (버프 강화 아바타의 특정 슬롯이 현재 장착 아바타와 일치할 경우에만 적용) ---
         current_avatar_by_slot = {item.get("slotName"): item for item in current_avatar_data if item.get("slotName")}
 
-        for buff_enh_avatar in buff_enhancement_avatars:
+        for buff_enh_avatar in buff_enhancement_avatars or []:
             buff_enh_slot_name = buff_enh_avatar.get("slotName")
             
             if buff_enh_slot_name and buff_enh_slot_name in current_avatar_by_slot:
@@ -737,9 +719,38 @@ class BufferAnalyzer:
         final_buffs["main"] = main_buff_result
         if final_buffs.get("main"): final_buffs["main"]["level"] = main_buff_lv
 
+        # Calculate total_buff_score
+        total_buff_score = 0
+        if "aura" in final_buffs and "1a" in final_buffs and "3a" in final_buffs and "main" in final_buffs:
+            aura_stat = final_buffs["aura"].get("stat_bonus", 0)
+            # Use 'stat_bonus' from 3a if available, otherwise 0
+            # 3a's stat bonus is derived from 1a's stat bonus.
+            # So, if 1a's stat bonus is 0, 3a's will also be 0 or calculated as 0
+            # if 3a is missing stat_bonus due to some error, it would be 0
+            # We must use stat_bonus, not increase_percent.
+            three_a_stat = final_buffs["3a"].get("stat_bonus", 0) 
+            
+            main_buff_stat = final_buffs["main"].get("stat_bonus", 0)
+            main_buff_atk = final_buffs["main"].get("atk_bonus", 0)
+
+            # Apply 1.05 multiplier for Enchantress
+            if self.job_code == "ENCHANTRESS":
+                main_buff_stat *= 1.05
+                main_buff_atk *= 1.05
+
+            numerator_stat = aura_stat + three_a_stat + main_buff_stat + 25250
+            denominator_stat = 25250
+
+            numerator_atk = main_buff_atk + 3000
+            denominator_atk = 3000
+
+            total_buff_score = (numerator_stat / denominator_stat) * \
+                               (numerator_atk / denominator_atk) * 30750
+            total_buff_score = round(total_buff_score)
 
         return {
-            "buffs": final_buffs
+            "buffs": final_buffs,
+            "total_buff_score": total_buff_score # Add this line
         }
 
 async def main():
