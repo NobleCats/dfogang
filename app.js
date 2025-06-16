@@ -48,26 +48,40 @@ function render() {
         ui.renderMainDpsOptions(mainViewDpsOptions, state.dps.options);
 
         const resultsSection = document.querySelector('.results-section'); 
+        const announcementSection = document.querySelector('.announcement-section');
         if (!state.searchTerm || (state.searchTerm && !state.isLoading && state.allSearchResults.length === 0)) {
             if (resultsSection) {
                 resultsSection.style.display = 'none';
+            }
+            if (announcementSection) {
+                announcementSection.style.display = 'block'; 
             }
         } else {
             if (resultsSection) {
                 resultsSection.style.display = 'block'; 
             }
+            if (announcementSection) {
+                announcementSection.style.display = 'none'; 
+            }
             resultsDiv.innerHTML = ''; 
 
             if (state.displayedResults.length > 0) {
                 state.displayedResults.forEach(profile => {
-                    const card = ui.createCharacterCard(profile, state.searchTerm);
+                    const dpsToShow = (profile.dps && typeof profile.dps === 'object')
+                        ? (state.dps.options.average_set_dmg ? profile.dps.normalized : profile.dps.normal)
+                        : null;
+
+                    const card = ui.createCharacterCard(profile, state.searchTerm, dpsToShow);
                     resultsDiv.appendChild(card);
                 });
             } else if (state.searchTerm && state.isLoading) {
                 resultsDiv.innerHTML = `<div style="color:var(--color-text-secondary);">Searching for "${state.searchTerm}"...</div>`;
+            } else if (state.searchTerm && !state.isLoading && state.allSearchResults.length === 0) {
+                resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
             }
         }
         ui.showMoreResultsIndicator(state.displayedResults.length < state.allSearchResults.length);
+
     } else if (state.view === 'detail' && state.characterDetail.profile) {
         ui.renderCharacterDetail(
             state.characterDetail.profile,
@@ -96,7 +110,7 @@ async function performSearch(server, name) {
     state.allSearchResults = [];
     state.displayedResults = [];
     render(); 
-
+    
     const announcementSection = document.querySelector('.announcement-section');
     if (announcementSection) {
         announcementSection.style.display = 'none';
@@ -104,7 +118,7 @@ async function performSearch(server, name) {
 
     await api.logSearch(server, name);
     const results = await api.searchCharacters(server, name, state.dps.options.average_set_dmg);
-
+    
     state.allSearchResults = results;
     state.displayedResults = results.slice(0, state.resultsPerPage);
 
@@ -166,7 +180,7 @@ async function showCharacterDetail(server, name) {
         };
         state.dps.result = dpsResult;
     } else {
-        alert('Failed to load character details.');
+        console.error('Failed to load character details.');
         state.view = 'main';
     }
 
@@ -199,9 +213,13 @@ function handleMainDpsToggleClick(event) {
 
     state.dps.options[optionName] = optionValue;
     
-    // updateURL(state.view, state.server, state.searchTerm); 
+    if (state.searchTerm) { 
+        performSearch(state.server, state.searchTerm);
+    }
+    updateURL(state.view, state.server, state.searchTerm);
     render();
 }
+
 
 function handleDpsToggleClick(event) { 
     const toggle = event.target.closest('[data-dps-option]');
@@ -220,7 +238,7 @@ function handleSearchClick() {
     const server = serverSelect.value;
     const name = searchInput.value.trim();
     if (!name) {
-        alert("Please enter a name!");
+        console.warn("Please enter a name!");
         return;
     }
     updateURL('main', server, name);
@@ -342,7 +360,6 @@ async function init() {
             await performSearch(server, name);
         }
     }
-
     setupAccordions();
     render();
 }

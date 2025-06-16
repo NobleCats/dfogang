@@ -32,7 +32,7 @@ function getSetIconPath(setName) {
 export function createCharacterCard(profile, searchName, dpsToShow) {
     const spritePath = `assets/characters/${profile.jobName}.png`;
     const setIconPath = getSetIconPath(profile.setItemName ?? "");
-    const rarityName = profile.setItemRarityName ?? ""; 
+    const rarityName = profile.setItemRarityName ?? "None";
     let rarityStyle = 'padding:2px 0;';
     if (rarityName === "Primeval") {
         rarityStyle = `background: linear-gradient(to bottom, #57e95b, #3a8390); -webkit-background-clip: text; -webkit-text-fill-color: transparent;`;
