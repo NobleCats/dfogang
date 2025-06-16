@@ -140,7 +140,6 @@ body {
 .accordion-container {
     display: flex;
     flex-direction: column;
-    gap: 12px; 
 }
 
 .accordion-item {
@@ -155,7 +154,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 24px;
+    padding: 14px 24px;
     cursor: pointer;
     background-color: var(--color-surface);
     color: var(--color-text-primary);
@@ -213,6 +212,21 @@ body {
 .accordion-content li {
     margin-bottom: 5px;
 }
+
+.accordion-container .accordion-item:first-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.accordion-container .accordion-item:last-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.accordion-container .accordion-item:not(:first-child):not(:last-child) {
+    border-radius: 0;
+}
+
 
 .search-section {
     grid-row: 1; 
