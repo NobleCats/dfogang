@@ -40,16 +40,6 @@ export function createCharacterCard(profile, searchName, dpsToShow) {
         const colorKey = Object.keys(rarityColors).find(key => rarityName.includes(key)) || "None";
         rarityStyle = `color: ${rarityColors[colorKey]};`;
     }
-
-    // [MODIFIED] Determine DPS display based on is_buffer
-     let dpsContent;
-    if (profile.is_buffer) {
-        dpsContent = `<span style="font-size: 1.2em; color: var(--color-accent-blue);">BUFFER</span>`;
-    } else {
-        dpsContent = `<span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">DPS</span>
-                      <span style="font-size: 1.2em; color: var(--color-accent-blue);">${dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A'}</span>`;
-    }
-
     const card = document.createElement('div');
     card.className = 'card';
     card.dataset.characterId = profile.characterId;
@@ -57,22 +47,26 @@ export function createCharacterCard(profile, searchName, dpsToShow) {
     card.dataset.serverId = profile.serverId;
     card.innerHTML = `
         <div style="position: absolute; top: 16px; right: 16px; text-align: right;">
-            <div style="font-size: 0.8em; color:var(--color-text-secondary);"><span class="math-inline">\{profile\.serverId\}</div\>
-<div style\="display\:flex; align\-items\:center; justify\-content\: flex\-end; margin\-top\:4px;"\>
-<img src\="assets/image/fame\.png" alt\="Fame" style\="width\:15px; height\:13px; margin\-right\:4px;"\>
-<span style\="color\:var\(\-\-color\-fame\); font\-size\:0\.9em; font\-weight\: 500;"\></span>{profile.fame?.toLocaleString() ?? '-'}</span>
+            <div style="font-size: 0.8em; color:var(--color-text-secondary);">${profile.serverId}</div>
+            <div style="display:flex; align-items:center; justify-content: flex-end; margin-top:4px;">
+                <img src="assets/image/fame.png" alt="Fame" style="width:15px; height:13px; margin-right:4px;">
+                <span style="color:var(--color-fame); font-size:0.9em; font-weight: 500;">${profile.fame?.toLocaleString() ?? '-'}</span>
             </div>
         </div>
-        <div class="character-sprite-container"> <img src="<span class="math-inline">\{spritePath\}" alt\="</span>{profile.jobName}"> </div>
+        <div class="character-sprite-container"> <img src="${spritePath}" alt="${profile.jobName}"> </div>
 
-        <div style="color:<span class="math-inline">\{profile\.adventureName \=\=\= searchName ? 'var\(\-\-color\-fame\)' \: 'var\(\-\-color\-text\-secondary\)'\}; font\-weight\:500;"\></span>{profile.adventureName ?? '-'}</div>
-        <div style="font-family: var(--font-display); color:#eee; font-size:1.8em; font-weight:600;"><span class="math-inline">\{profile\.characterName ?? '\-'\}</div\>
-<div style\="color\:\#A0844B; font\-size\:0\.8em;"\>\[</span>{profile.jobGrowName ?? '-'}]</div>
-        <div style="display: flex; align-items: center; gap: 2px;"> <img src="<span class="math-inline">\{setIconPath\}" alt\="Set Icon"\> <span style\="</span>{rarityStyle};"> ${rarityName}</span>
+        <div style="color:${profile.adventureName === searchName ? 'var(--color-fame)' : 'var(--color-text-secondary)'}; font-weight:500;">${profile.adventureName ?? '-'}</div>
+        <div style="font-family: var(--font-display); color:#eee; font-size:1.8em; font-weight:600;">${profile.characterName ?? '-'}</div>
+        <div style="color:#A0844B; font-size:0.8em;">[${profile.jobGrowName ?? '-'}]</div>
+        <div style="display: flex; align-items: center; gap: 2px;"> <img src="${setIconPath}" alt="Set Icon"> <span style="${rarityStyle};"> ${rarityName}</span>
             ${profile.setPoint > 0 ? `<span style="color:#aaa; font-size: 0.9em; margin-left: 4px;">(${profile.setPoint})</span>` : ''}
         </div>
 
-        <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);"> ${dpsContent} </div>
+        <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);"> <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">DPS</span>
+            <span style="font-size: 1.2em; color: var(--color-accent-blue);">${
+            dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A'
+            }</span>
+        </div>
     `;
     return card;
 }
@@ -105,19 +99,6 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
 
     const container = document.createElement('div');
     container.className = 'dps-calculator-container';
-
-    // [NEW] If character is a buffer, display "BUFFER" and skip DPS options
-    if (profile.is_buffer) {
-        container.innerHTML = `
-            <div style="text-align: center; padding: 20px 0;">
-                <span style="font-family: var(--font-dfo); font-size: 2.5em; color: var(--color-accent-blue);">BUFFER</span>
-                <p style="color: var(--color-text-secondary); margin-top: 10px;">This character is identified as a buffer. DPS calculations are not applicable.</p>
-            </div>
-        `;
-        widgetDiv.appendChild(container);
-        return widgetDiv;
-    }
-
 
     let isCleansingSetEquipped = false;
     if (setItemInfo && Array.isArray(setItemInfo)) {
@@ -169,8 +150,8 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
                 <div class="dps-toggle-group">
                     <div class="dps-toggle-label">${labels.title}</div>
                     <div class="dps-toggle-switch">
-                        <div class="dps-toggle-option <span class="math-inline">\{\!dpsOptions\.weapon\_cdr ? 'active' \: ''\}" data\-dps\-option\="weapon\_cdr" data\-dps\-value\="false"\></span>{labels.false}</div>
-                        <div class="dps-toggle-option <span class="math-inline">\{dpsOptions\.weapon\_cdr ? 'active' \: ''\}" data\-dps\-option\="weapon\_cdr" data\-dps\-value\="true"\></span>{labels.true}</div>
+                        <div class="dps-toggle-option ${!dpsOptions.weapon_cdr ? 'active' : ''}" data-dps-option="weapon_cdr" data-dps-value="false">${labels.false}</div>
+                        <div class="dps-toggle-option ${dpsOptions.weapon_cdr ? 'active' : ''}" data-dps-option="weapon_cdr" data-dps-value="true">${labels.true}</div>
                     </div>
                 </div>
             `;
@@ -196,11 +177,11 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState) {
         <div class="dps-stats-display" style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
             <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
                 <span>Applied Damage:</span>
-                <span style="color: var(--color-text-primary); font-weight: 500;"><span class="math-inline">\{appliedDamage\}</span\>
-</div\>
-<div style\="display\: flex; justify\-content\: space\-between; align\-items\: center; font\-size\: 1\.0em; color\: var\(\-\-color\-text\-secondary\);"\>
-<span\>Applied Cooldown Reduction\:</span\>
-<span style\="color\: var\(\-\-color\-text\-primary\); font\-weight\: 500;"\></span>{appliedCooldownReduction}</span>
+                <span style="color: var(--color-text-primary); font-weight: 500;">${appliedDamage}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                <span>Applied Cooldown Reduction:</span>
+                <span style="color: var(--color-text-primary); font-weight: 500;">${appliedCooldownReduction}</span>
             </div>
         </div>
         <div class="dps-result-display" style="margin-top: 16px;">
@@ -263,8 +244,8 @@ function renderCharacterCanvas(profile, equipmentList) {
 
     container.innerHTML = `
         <img class="background" src="assets/image/background.png" alt="Background" style="width:100%; height:100%; position:absolute; z-index:0; border-radius:8px;">
-        <img class="character-sprite" src="assets/characters/<span class="math-inline">\{profile\.jobName\}\.png"
-style\="position\:absolute; bottom\:0; left\:50%; transform\:translateX\(\-50%\); height\:</span>{250 * SCALE * 0.75}px; z-index:1;" />
+        <img class="character-sprite" src="assets/characters/${profile.jobName}.png"
+             style="position:absolute; bottom:0; left:50%; transform:translateX(-50%); height:${250 * SCALE * 0.75}px; z-index:1;" />
         <div id="equipment-layer" style="position:absolute; width:100%; height:100%; z-index:2;"></div>
         <canvas id="reinforce-canvas" width="492" height="354" style="position:absolute; left:0; top:0; z-index:5;"></canvas>
         <canvas id="text-canvas" width="492" height="354" style="position:absolute; left:0; top:0; z-index:4;"></canvas>
@@ -280,11 +261,11 @@ style\="position\:absolute; bottom\:0; left\:50%; transform\:translateX\(\-50%\)
             const iconSize = 28 * SCALE;
 
             const itemEl = document.createElement("div");
-            itemEl.style.cssText = `position:absolute; left:<span class="math-inline">\{x \* SCALE\}px; top\:</span>{y * SCALE}px; width:<span class="math-inline">\{iconSize\}px; height\:</span>{iconSize}px;`;
+            itemEl.style.cssText = `position:absolute; left:${x * SCALE}px; top:${y * SCALE}px; width:${iconSize}px; height:${iconSize}px;`;
 
             itemEl.innerHTML = `
-                <img src="https://img-api.dfoneople.com/df/items/<span class="math-inline">\{eq\.itemId\}" style\="width\:100%; height\:100%; position\:absolute; z\-index\:2;"\>
-<img src\="assets/equipments/edge/</span>{eq.itemRarity}.png" style="width:100%; height:100%; position:absolute; z-index:3;">
+                <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" style="width:100%; height:100%; position:absolute; z-index:2;">
+                <img src="assets/equipments/edge/${eq.itemRarity}.png" style="width:100%; height:100%; position:absolute; z-index:3;">
             `;
             
             if (eq.upgradeInfo) {
@@ -297,15 +278,15 @@ style\="position\:absolute; bottom\:0; left\:50%; transform\:translateX\(\-50%\)
                 fusionIconWrapper.style.cssText = `position:absolute; right:0; top:0; z-index:4;`;
                 
                 if (keywordMatch) {
-                    fusionIconWrapper.innerHTML = `<img src="assets/sets/<span class="math-inline">\{fusionRarity\}/</span>{keywordMatch}.png" style="width:<span class="math-inline">\{27 \* SCALE \* 0\.75\}px; height\:</span>{12 * SCALE * 0.75}px;">`;
+                    fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/${keywordMatch}.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
                 } else if (distKeywords.some(word => itemName.includes(word))) {
-                    fusionIconWrapper.innerHTML = `<img src="assets/fusions/<span class="math-inline">\{baseRarity\}/Dist\.png" style\="width\:</span>{27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
+                    fusionIconWrapper.innerHTML = `<img src="assets/fusions/${baseRarity}/Dist.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
                 } else {
                     fusionIconWrapper.style.width = `${28 * SCALE * 0.75}px`;
                     fusionIconWrapper.style.height = `${13 * SCALE * 0.75}px`;
                     fusionIconWrapper.innerHTML = `
-                        <img src="assets/fusions/<span class="math-inline">\{baseRarity\}/Base\.png" style\="width\:100%; height\:100%; position\:absolute; left\:0; top\:0;"\>
-<img src\="assets/fusions/</span>{fusionRarity}/Core.png" style="width:100%; height:100%; position:absolute; left:0; top:0;">
+                        <img src="assets/fusions/${baseRarity}/Base.png" style="width:100%; height:100%; position:absolute; left:0; top:0;">
+                        <img src="assets/fusions/${fusionRarity}/Core.png" style="width:100%; height:100%; position:absolute; left:0; top:0;">
                     `;
                 }
                 itemEl.appendChild(fusionIconWrapper);
@@ -354,10 +335,10 @@ function renderSetItems(setItemInfo) {
 
         container.innerHTML += `
             <div style="text-align:center;">
-                <div style="font-family: var(--font-dfo); font-size:22px; font-weight:700; color:#eee; margin-bottom:4px;"><span class="math-inline">\{item\.setItemName ?? ''\}</div\>
-<div style\="display\:flex; align\-items\:center; justify\-content\:center; gap\:8px;"\>
-<img src\="</span>{getSetIconPath(item.setItemName)}" alt="${item.setItemName ?? ''}" style="height: 24px;">
-                    <span style="font-size:16px; font-weight:500; <span class="math-inline">\{rarityStyle\}"\></span>{rarityName}</span>
+                <div style="font-family: var(--font-dfo); font-size:22px; font-weight:700; color:#eee; margin-bottom:4px;">${item.setItemName ?? ''}</div>
+                <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <img src="${getSetIconPath(item.setItemName)}" alt="${item.setItemName ?? ''}" style="height: 24px;">
+                    <span style="font-size:16px; font-weight:500; ${rarityStyle}">${rarityName}</span>
                 </div>
                 <div style="font-size:14px; color:var(--color-text-secondary); margin-top:2px;">(${item.active?.setPoint?.current ?? 0})</div>
             </div>
@@ -453,7 +434,7 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
     ctx.textBaseline = "top";
     points.forEach(pt => {
         const d = new Date(pt.date);
-        const label = `<span class="math-inline">\{String\(d\.getMonth\(\) \+ 1\)\.padStart\(2, "0"\)\}/</span>{String(d.getDate()).padStart(2, "0")}`;
+        const label = `${String(d.getMonth() + 1).padStart(2, "0")}/${String(d.getDate()).padStart(2, "0")}`;
         ctx.fillStyle = textColor;
         ctx.fillText(label, pt.x, canvas.height - paddingY + 4);
     });
@@ -567,11 +548,11 @@ async function renderHistoryPanel(gearHistory) {
 
             itemRow.innerHTML = `
                 <div style="position: relative;" class="history-icon-wrapper">
-                    <img src="<span class="math-inline">\{beforeIcon\}" class\="history\-icon"\>
-</div\>
-<div class\="history\-arrow"\>→</div\>
-<div style\="position\: relative;" class\="history\-icon\-wrapper"\>
-<img src\="</span>{afterIcon}" class="history-icon">
+                    <img src="${beforeIcon}" class="history-icon">
+                </div>
+                <div class="history-arrow">→</div>
+                <div style="position: relative;" class="history-icon-wrapper">
+                    <img src="${afterIcon}" class="history-icon">
                     ${fameIndicator}
                 </div>
             `;
