@@ -255,6 +255,33 @@ window.onpopstate = (event) => {
     }
 };
 
+function setupAccordions() {
+    document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const content = document.getElementById(`accordion-content-${header.dataset.accordionId}`);
+            if (content) {
+                document.querySelectorAll('.accordion-header.active').forEach(activeHeader => {
+                    if (activeHeader !== header) {
+                        activeHeader.classList.remove('active');
+                        const activeContent = document.getElementById(`accordion-content-${activeHeader.dataset.accordionId}`);
+                        activeContent.classList.remove('open');
+                        activeContent.style.maxHeight = 0;
+                    }
+                });
+
+                header.classList.toggle('active');
+                content.classList.toggle('open');
+
+                if (content.classList.contains('open')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.style.maxHeight = 0;
+                }
+            }
+        });
+    });
+}
+
 async function init() {
     mainViewDpsOptions = document.getElementById('main-view-dps-options'); 
 
@@ -306,6 +333,7 @@ async function init() {
             await performSearch(server, name);
         }
     }
+    setupAccordions();
     render();
 }
 

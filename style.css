@@ -201,6 +201,99 @@ button:hover {
     background-color: var(--color-accent-blue-hover);
 }
 
+.announcement-section {
+    width: 100%;
+    max-width: 800px; 
+    margin: 60px auto 60px auto; 
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.announcement-section .section-title {
+    font-family: var(--font-dfo);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; 
+}
+
+.accordion-item {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden; 
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    cursor: pointer;
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 18px;
+    transition: background-color 0.2s ease;
+}
+
+.accordion-header:hover {
+    background-color: var(--color-surface-light);
+}
+
+.accordion-header.active {
+    border-bottom: 1px solid var(--color-accent-blue); 
+}
+
+.accordion-header-icon {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-accent-blue);
+    transition: transform 0.3s ease;
+}
+
+.accordion-header.active .accordion-header-icon {
+    transform: rotate(45deg); 
+}
+
+.accordion-content {
+    max-height: 0; 
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out, opacity 0.4s ease-out;
+    padding: 0 24px;
+    opacity: 0; 
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.accordion-content.open {
+    max-height: 500px; 
+    padding: 20px 24px; 
+    opacity: 1; 
+}
+
+.accordion-content p {
+    margin-bottom: 10px;
+}
+
+.accordion-content ul {
+    margin-left: 20px;
+    list-style-type: disc;
+}
+
+.accordion-content li {
+    margin-bottom: 5px;
+}
 /*
  * =================================
  * Search Results & Character Cards
