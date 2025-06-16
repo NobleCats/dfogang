@@ -41,6 +41,7 @@ SADER_JOB_MAP = {
     "fc067d0781f1d01ef8f0b215440bac6d": {"5dff544828c42d8fc109f2f747d50c7f": "ENCHANTRESS"},
     "dbbdf2dd28072b26f22b77454d665f21": {"ba2ae3598c3af10c26562e073bc92060": "MUSE"},
 }
+# FORMULA_CONSTANTS는 더 이상 공식에 직접 사용되지 않지만, 다른 곳에서 참조될 수 있으므로 유지
 FORMULA_CONSTANTS = {
     "Valor Blessing":  {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379}, "Divine Invocation": {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379},
     "Forbidden Curse": {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379}, "Lovely Tempo":    {"c": 665, "X": 4350, "Y": 3500, "Z": 0.000379},
@@ -55,7 +56,10 @@ class BufferAnalyzer:
         self.character_job_id = None
 
     def _parse_stats_from_gear_set(self, gear_set, base_stats, character_job_id, parsing_for=['main', '1a', '3a', 'aura']):
-        """[최종] 어떤 버프를 위해 파싱하는지(parsing_for)에 따라 필요한 스킬 옵션만 검사합니다."""
+        """
+        주어진 장비 세트에서 스탯, 버프 파워, 스킬 레벨 보너스를 파싱합니다.
+        이는 상태 API의 기본값을 제외한 순수 장비로 인한 스탯을 계산합니다.
+        """
         stats = {
             "Intelligence": base_stats.get("Intelligence", 0),
             "Spirit": base_stats.get("Spirit", 0),
@@ -64,12 +68,9 @@ class BufferAnalyzer:
         total_buff_power, skill_lv_bonuses = 0, {"main": 0, "1a": 0, "3a": 0, "aura": 0}
 
         all_items_to_process = []
-        
-        # Original items from the gear_set (which might be current_equipment, avatar, creature, or buff_enhancement_equipment)
         all_items_to_process.extend(gear_set.get("equipment", []))
         if gear_set.get("avatar"): all_items_to_process.extend(gear_set.get("avatar", []))
         
-        # Creature handling (can be list or single dict)
         creature_data = gear_set.get("creature")
         if isinstance(creature_data, dict):
             all_items_to_process.append(creature_data)
@@ -78,21 +79,13 @@ class BufferAnalyzer:
 
         skill_name_to_type = {v.lower(): k for k, v in SKILL_NAMES[self.job_code].items()}
 
-        print(f"DEBUG: Parsing gear set of type: {gear_set.get('type', 'Unknown')}")
-
         for item in all_items_to_process:
             if not item: continue
             item_name, item_slot = item.get("itemName", "Unknown Item"), item.get("slotName")
             item_id = item.get("itemId")
             full_item_details = self.item_details_cache.get(item_id, {})
 
-            print(f"  DEBUG: Processing item: {item_name} (Slot: {item_slot}, ID: {item_id})")
-            if not full_item_details:
-                print(f"    DEBUG: No full_item_details found in cache for {item_name} (ID: {item_id}). This means item details API was not fetched or failed.")
-
-            # --- Start parsing from full_item_details (if available in cache) ---
-            
-            # 칭호 하드코딩 (full_item_details에서 fame 확인)
+            # 칭호 하드코딩
             if item_slot == "Title":
                 if full_item_details.get("fame", 0) >= 849 and '1a' in parsing_for:
                     skill_lv_bonuses["1a"] += 2
@@ -101,7 +94,7 @@ class BufferAnalyzer:
                     if '1a' in parsing_for: skill_lv_bonuses["1a"] += 1
                     if 'aura' in parsing_for: skill_lv_bonuses["aura"] += 1
 
-            # 모든 reinforceSkill 파싱 (full_item_details에서)
+            # 모든 reinforceSkill 파싱
             for r_skill_source in [full_item_details.get("itemReinforceSkill", []), full_item_details.get("itemBuff", {}).get("reinforceSkill", [])]:
                 for r_skill_group in r_skill_source:
                     if r_skill_group.get("jobId") is None or r_skill_group.get("jobId") == character_job_id:
@@ -123,9 +116,39 @@ class BufferAnalyzer:
                         if bonus > 0:
                             skill_lv_bonuses[skill_type] += bonus
 
-            # 텍스트 기반 옵션 파싱 (full_item_details와 item에서)
+            # 텍스트 기반 옵션 파싱
             text_sources = {"OptionAbility": item.get("optionAbility", ""), "ItemBuff Explain": full_item_details.get("itemBuff", {}).get("explain", "")}
-            for emblem in item.get("emblems") or []: text_sources[f"Emblem({emblem.get('itemName')})"] = emblem.get("itemName", "")
+            
+            emblems_list = item.get("emblems")
+            if emblems_list is not None:
+                for emblem_data in emblems_list:
+                    emblem_item_id = emblem_data.get("itemId")
+                    if emblem_item_id:
+                        emblem_details = self.item_details_cache.get(emblem_item_id, {})
+                        item_status_for_emblem = emblem_details.get("itemStatus") # Get itemStatus
+                        if item_status_for_emblem: # Check for itemStatus existence
+                            for stat_entry in item_status_for_emblem:
+                                name = stat_entry.get("name", "")
+                                value_raw = stat_entry.get("value", 0)
+                                parsed_value = 0
+                                if isinstance(value_raw, str):
+                                    numeric_match = re.search(r'(\d+)', value_raw)
+                                    if numeric_match:
+                                        parsed_value = int(numeric_match.group(1))
+                                else:
+                                    parsed_value = int(value_raw)
+
+                                if "Intelligence" in name: stats["Intelligence"] += parsed_value
+                                elif "Spirit" in name: stats["Spirit"] += parsed_value
+                                elif "Vitality" in name: stats["Vitality"] += parsed_value
+                                elif "All Stats" in name:
+                                    stats["Intelligence"] += parsed_value
+                                    stats["Spirit"] += parsed_value
+                                    stats["Vitality"] += parsed_value
+                                elif "Buff Power" in name: # Buff Power can be on emblems
+                                    total_buff_power += parsed_value
+
+
             for origin, text_block in text_sources.items():
                 if not text_block: continue
                 for line in text_block.split('\n'):
@@ -150,31 +173,26 @@ class BufferAnalyzer:
                             skill_type, bonus = skill_name_to_type[skill_name], 1
                             skill_lv_bonuses[skill_type] += bonus
 
-            # --- Start parsing stats from full_item_details AND item's enchant ---
+            # 기본 스탯 및 버프력 합산
             stats_to_process = []
             if full_item_details.get("itemStatus"):
                 stats_to_process.extend(full_item_details.get("itemStatus", []))
             
-            # Prioritize item.enchant as it contains the character-specific enchant
             if item.get("enchant", {}).get("status"):
                 stats_to_process.extend(item.get("enchant", {}).get("status", []))
             elif full_item_details.get("enchant", {}).get("status"):
                 stats_to_process.extend(full_item_details.get("enchant", {}).get("status", []))
 
-            # Add any buff power from full_item_details as well
             if full_item_details.get("itemBuff", {}).get("buffPower"):
                 try:
                     total_buff_power += int(full_item_details["itemBuff"]["buffPower"])
-                    print(f"    DEBUG: Parsed Buff Power from full_item_details for {item_name}: {full_item_details['itemBuff']['buffPower']} (Source: Item Buff)")
                 except ValueError:
-                    print(f"    DEBUG: Could not convert Buff Power to int for {item_name}: {full_item_details['itemBuff']['buffPower']}")
-
+                    pass
 
             for stat_entry in stats_to_process:
                 name = stat_entry.get("name", "")
                 value_raw = stat_entry.get("value", 0)
 
-                # Convert value to integer, handling potential '%'
                 parsed_value = 0
                 if isinstance(value_raw, str):
                     numeric_match = re.search(r'(\d+)', value_raw)
@@ -183,12 +201,10 @@ class BufferAnalyzer:
                     else:
                         continue
                 else:
-                    parsed_value = int(value_raw) # Ensure it's an integer
+                    parsed_value = int(value_raw)
 
-                # Only add relevant stats
                 if "Buff Power" in name:
                     total_buff_power += parsed_value
-                    print(f"    DEBUG: Parsed Buff Power for {item_name}: {name}: {parsed_value} (Source: {'Item Status' if stat_entry in full_item_details.get('itemStatus', []) else 'Enchant Status'})")
                 elif "Intelligence" in name: stats["Intelligence"] += parsed_value
                 elif "Spirit" in name: stats["Spirit"] += parsed_value
                 elif "Vitality" in name: stats["Vitality"] += parsed_value
@@ -197,8 +213,6 @@ class BufferAnalyzer:
                     stats["Spirit"] += parsed_value
                     stats["Vitality"] += parsed_value
                 
-                print(f"    DEBUG: Parsed stat for {item_name}: {name}: {parsed_value} (Source: {'Item Status' if stat_entry in full_item_details.get('itemStatus', []) else 'Enchant Status'})")
-
 
         applicable_stat_value, applicable_stat_name = 0, ""
         if self.job_code in ["F_SADER", "ENCHANTRESS"]: applicable_stat_value, applicable_stat_name = stats["Intelligence"], "Intelligence"
@@ -214,9 +228,7 @@ class BufferAnalyzer:
 
         # Apply aura_stat_bonus to the stat value for main, 1a, and 3a buffs
         if skill_name_key in ["main", "1a", "3a"]:
-            print(f"DEBUG: Buff '{skill_name_key}' - Initial stat: {stat}, Aura stat bonus: {aura_stat_bonus}")
             stat += aura_stat_bonus
-            print(f"DEBUG: Buff '{skill_name_key}' - Stat after adding aura bonus: {stat}")
 
         base_result = {
             "applied_stat_name": calculated_stats.get("stat_name"),
@@ -229,26 +241,41 @@ class BufferAnalyzer:
                 base_result.update({"stat_bonus": stat_bonus})
                 return base_result
         if skill_name_key == "1a":
-            consts, table = FORMULA_CONSTANTS.get(skill_name), common_1a_table
+            # New formula for 1a: c * (stat / 750 + 1) + c * ((stat + 5250) / 750 + 1) * (buffpower + 5000) * 0.000025
+            table = common_1a_table
             coeffs = table.get(skill_level)
-            if not coeffs or not consts: return {}
-            multiplier = (((stat + consts["X"]) / (consts["c"] + 1)) * (buff_power + consts["Y"]) * consts["Z"])
-            base_result.update({"stat_bonus": round(coeffs["stat"] * multiplier)})
+            if not coeffs: return {} 
+
+            c_val = coeffs["stat"] # c는 stat에 대해 진행
+            
+            stat_bonus_calc = c_val * (stat / 750 + 1) + c_val * ((stat + 5250) / 750 + 1) * (buff_power + 5000) * 0.000025
+            
+            base_result.update({"stat_bonus": round(stat_bonus_calc)})
             return base_result
         if skill_name_key == "3a":
+            # New formula for 3a: 1a 결과에 3a의 퍼센트값을 곱합니다.
             percent_increase = common_3a_table.get(skill_level, {}).get("percent", 0)
             base_result.update({"increase_percent": percent_increase})
             if first_awakening_buff and 'stat_bonus' in first_awakening_buff:
                 base_result["stat_bonus"] = round(first_awakening_buff['stat_bonus'] * (percent_increase / 100))
             return base_result
         if skill_name_key == "main":
-            consts, table = FORMULA_CONSTANTS.get(skill_name), BUFF_TABLES[self.job_code]
+            # New formula for main: c * (stat / 665 + 1) + c * ((stat + 4350) / 665 + 1) * (buffpower + 3500) * 0.000379
+            table = BUFF_TABLES[self.job_code]
             coeffs = table.get(skill_level)
-            if not coeffs or not consts: return {}
-            multiplier = (((stat + consts["X"]) / (consts["c"] + 1)) * (buff_power + consts["Y"]) * consts["Z"])
+            if not coeffs: return {}
+
+            # stat에 대해 진행
+            c_stat = coeffs["stat"]
+            stat_bonus_calc = c_stat * (stat / 665 + 1) + c_stat * ((stat + 4350) / 665 + 1) * (buff_power + 3500) * 0.000379
+            
+            # atk에 대해 진행
+            c_atk = coeffs["atk"]
+            atk_bonus_calc = c_atk * (stat / 665 + 1) + c_atk * ((stat + 4350) / 665 + 1) * (buff_power + 3500) * 0.000379
+            
             base_result.update({
-                "stat_bonus": round(coeffs["stat"] * multiplier),
-                "atk_bonus": round(coeffs["atk"] * multiplier)
+                "stat_bonus": round(stat_bonus_calc),
+                "atk_bonus": round(atk_bonus_calc)
             })
             return base_result
         return {}
@@ -261,7 +288,9 @@ class BufferAnalyzer:
             "current_equipment": f"/characters/{self.CHARACTER_ID}/equip/equipment",
             "current_avatar": f"/characters/{self.CHARACTER_ID}/equip/avatar",
             "current_creature": f"/characters/{self.CHARACTER_ID}/equip/creature",
-            "buff_equip_equipment": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/equipment"
+            "buff_equip_equipment": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/equipment",
+            "buff_equip_creature": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/creature",
+            "buff_equip_avatar": f"/characters/{self.CHARACTER_ID}/skill/buff/equip/avatar"
         }
         tasks = {name: fetch_json(session, f"{self.BASE_URL}{path}", self.API_KEY) for name, path in endpoints.items()}
         api_data = await asyncio.gather(*tasks.values())
@@ -280,6 +309,8 @@ class BufferAnalyzer:
         # Collect item IDs from current equipment, avatar, creature
         current_equipment_data = data.get("current_equipment", {}).get("equipment", [])
         current_avatar_data = data.get("current_avatar", {}).get("avatar", [])
+        
+        # Ensure current_creature is always a list for consistency in gear_sources
         temp_current_creature = data.get("current_creature", {}).get("creature")
         current_creature = []
         if isinstance(temp_current_creature, list):
@@ -287,29 +318,58 @@ class BufferAnalyzer:
         elif isinstance(temp_current_creature, dict):
             current_creature.append(temp_current_creature)
 
-        gear_sources = [
-            current_equipment_data,
-            current_avatar_data,
-            current_creature
-        ]
+        # Initialize gear_sources_for_fetching with all known lists, ensuring they are lists (even empty)
+        gear_sources_for_fetching = []
+        gear_sources_for_fetching.append(current_equipment_data)
+        gear_sources_for_fetching.append(current_avatar_data)
+        gear_sources_for_fetching.append(current_creature) # Now guaranteed to be a list
 
         # Also collect item IDs from buff enhancement equipment
         buff_equip_data = data.get("buff_equip_equipment", {}).get("skill", {}).get("buff", {})
         buff_enhancement_equipment = buff_equip_data.get("equipment", [])
-        gear_sources.append(buff_enhancement_equipment)
+        gear_sources_for_fetching.append(buff_enhancement_equipment)
 
-        # DEBUG: Log Item IDs from buff enhancement equipment
-        buff_enhancement_item_ids = [item.get("itemId") for item in buff_enhancement_equipment if item.get("itemId")]
-        print(f"DEBUG: Item IDs found in Buff Enhancement Equipment: {buff_enhancement_item_ids}")
+        # Collect item IDs from buff enhancement creature
+        buff_equip_creature_data = data.get("buff_equip_creature", {}).get("skill", {}).get("buff", {})
+        buff_enhancement_creature = buff_equip_creature_data.get("creature")
+        # Ensure buff_enhancement_creature is a list for consistency
+        buff_enh_creature_list = []
+        if isinstance(buff_enhancement_creature, dict):
+            buff_enh_creature_list.append(buff_enhancement_creature)
+        elif isinstance(buff_enhancement_creature, list):
+            buff_enh_creature_list.extend(buff_enhancement_creature)
+        gear_sources_for_fetching.append(buff_enh_creature_list)
+
+        # Collect item IDs from buff enhancement avatar
+        buff_equip_avatar_data = data.get("buff_equip_avatar", {}).get("skill", {}).get("buff", {})
+        buff_enhancement_avatars = buff_equip_avatar_data.get("avatar", [])
+        gear_sources_for_fetching.append(buff_enhancement_avatars)
 
 
-        for source in gear_sources:
-            for item in source:
-                if isinstance(item, dict) and item.get("itemId"):
+        for source_list in gear_sources_for_fetching:
+            if not isinstance(source_list, (list, tuple)):
+                continue 
+
+            for item in source_list:
+                if not isinstance(item, dict): # Ensure item is a dictionary
+                    continue
+
+                if item.get("itemId"):
                     item_ids_to_fetch.add(item["itemId"])
-                    for artifact in item.get("artifact", []):
-                        if isinstance(artifact, dict) and artifact.get("itemId"): item_ids_to_fetch.add(artifact["itemId"])
+                    artifacts = item.get("artifact")
+                    if artifacts is not None:
+                        if isinstance(artifacts, list):
+                            for artifact in artifacts:
+                                if isinstance(artifact, dict) and artifact.get("itemId"): item_ids_to_fetch.add(artifact["itemId"])
+                        elif isinstance(artifacts, dict):
+                            if artifacts.get("itemId"): item_ids_to_fetch.add(artifacts["itemId"])
 
+                    emblems = item.get("emblems")
+                    if emblems is not None:
+                        if isinstance(emblems, list):
+                            for emblem in emblems:
+                                if isinstance(emblem, dict) and emblem.get("itemId"): item_ids_to_fetch.add(emblem["itemId"])
+        
         item_tasks = [fetch_json(session, f"https://api.dfoneople.com/df/items/{item_id}", self.API_KEY) for item_id in item_ids_to_fetch]
         self.item_details_cache = {res['itemId']: res for res in await asyncio.gather(*item_tasks) if res and 'itemId' in res}
 
@@ -335,19 +395,13 @@ class BufferAnalyzer:
                 elif name == "Buff Power Amp.":
                     buff_power_amp_from_status_api = value
 
-        # status API에서 받아온 직후의 스탯 값 로깅
-        print(f"DEBUG: Base stats received from status API (includes equipment stats): {base_stats_from_status_api}")
-        print(f"DEBUG: Buff Power from status API: {buff_power_from_status_api}")
-        print(f"DEBUG: Buff Power Amp. from status API: {buff_power_amp_from_status_api}")
+        # Original stats from Status API (important for base values)
+        # Removed all initial DEBUG prints here.
 
-        # Calculate final buff power using the formula
-        final_calculated_buff_power = buff_power_from_status_api * (1 + buff_power_amp_from_status_api * 0.01)
-        print(f"DEBUG: Final calculated Buff Power: {final_calculated_buff_power}")
 
-        # Determine the applicable stat name and value based on character's job (consolidated logic)
-        # MOVED THIS BLOCK AFTER base_stats_from_status_api IS POPULATED
+        # Determine the applicable stat name and value based on character's job
         applicable_stat_name = ""
-        applicable_stat_value = 0 # Initialize here to ensure it's always set
+        applicable_stat_value = 0 
 
         if self.job_code == "F_SADER" or self.job_code == "ENCHANTRESS":
             applicable_stat_name = "Intelligence"
@@ -362,8 +416,6 @@ class BufferAnalyzer:
             else:
                 applicable_stat_name = "Spirit"
                 applicable_stat_value = base_stats_from_status_api.get("Spirit", 0)
-        # No need for an else here, as "Not a sader" check handles unrecognised jobs.
-        # This ensures applicable_stat_name and applicable_stat_value are always set by this point.
 
 
         all_skills = data.get("skills", {}).get("skill", {}).get("style", {}).get("active", []) + \
@@ -379,21 +431,21 @@ class BufferAnalyzer:
             "type": "Current"
         }
 
-        # 버프 강화 장비 세트 구성
+        # 버프 강화 장비 세트 구성 (파싱에 사용될 뿐, 스탯 합산은 아래에서 직접 수행)
         buff_enhancement_gear_set = {
             "equipment": buff_enhancement_equipment,
             "type": "Buff Enhancement"
         }
 
-        # 현재 장비 세트 파싱 (스킬 레벨 보너스와 장비 자체 스탯 포함)
+        # 현재 장비 세트 파싱 (스킬 레벨 보너스만, 스탯은 status API와 아래 조정 로직 활용)
         parsed_stats_from_current_gear = self._parse_stats_from_gear_set(
             current_gear_set_for_calculation,
-            {"Intelligence": 0, "Spirit": 0, "Vitality": 0},
+            {"Intelligence": 0, "Spirit": 0, "Vitality": 0}, # base_stats 0으로 넘겨서 순수 장비 스탯만 파싱
             character_job_id,
             parsing_for=['main', '1a', '3a', 'aura']
         )
 
-        # 버프 강화 장비 세트 파싱
+        # 버프 강화 장비 세트 파싱 (스킬 레벨 보너스만)
         parsed_stats_from_buff_enhancement_gear = self._parse_stats_from_gear_set(
             buff_enhancement_gear_set,
             {"Intelligence": 0, "Spirit": 0, "Vitality": 0},
@@ -401,160 +453,205 @@ class BufferAnalyzer:
             parsing_for=['main']
         )
 
-        # 버프 강화 장비에서 파싱된 스탯 출력
-        print("\n--- Buff Enhancement Equipment Stats (Parsed from Item Details) ---")
-        print(f"Intelligence: {parsed_stats_from_buff_enhancement_gear['stats_breakdown']['Intelligence']}")
-        print(f"Spirit: {parsed_stats_from_buff_enhancement_gear['stats_breakdown']['Spirit']}")
-        print(f"Vitality: {parsed_stats_from_buff_enhancement_gear['stats_breakdown']['Vitality']}")
-        print(f"Buff Power from Buff Enhancement Gear: {parsed_stats_from_buff_enhancement_gear['buff_power']}")
-        print(f"Skill Level Bonuses from Buff Enhancement Gear: {parsed_stats_from_buff_enhancement_gear['skill_lv_bonuses']}")
-        print("-------------------------------------------------------------------\n")
 
-        # --- 현재 장착 장비와 버프 강화 장비 슬롯 비교 및 스탯 추출 ---
-        buff_enh_item_stats_sum = {"Intelligence": 0, "Spirit": 0, "Vitality": 0}
-        current_item_stats_sum = {"Intelligence": 0, "Spirit": 0, "Vitality": 0}
-        
-        buff_enh_buff_power_amp = 0
-        current_buff_power_amp = 0
+        # --- 메인 버프 계산을 위한 스탯 및 Buff Power Amp. 조정 ---
+        # 초기값은 status API에서 가져온 캐릭터의 전체 스탯
+        adjusted_main_buff_stat_value = applicable_stat_value
+        adjusted_buff_power_amp_for_main = buff_power_amp_from_status_api
+        adjusted_buff_power_from_status_api_for_main = buff_power_from_status_api
 
-        print("\n--- Current Equipment Stats (Matching Buff Enhancement Slots) ---")
+        # --- 장비(Equipment) 스탯 조정 ---
+        current_equipment_by_slot = {item.get("slotName"): item for item in current_equipment_data if item.get("slotName")}
+
         for buff_enh_item in buff_enhancement_equipment:
             buff_enh_slot_name = buff_enh_item.get("slotName")
-            buff_enh_item_name = buff_enh_item.get("itemName")
             
-            # Sum stats from buff enhancement gear (both itemStatus and enchant status)
-            buff_enh_full_item_details = self.item_details_cache.get(buff_enh_item.get("itemId"), {})
-            
-            buff_enh_stats_to_process = []
-            if buff_enh_full_item_details.get("itemStatus"):
-                buff_enh_stats_to_process.extend(buff_enh_full_item_details.get("itemStatus", []))
-            if buff_enh_item.get("enchant", {}).get("status"):
-                buff_enh_stats_to_process.extend(buff_enh_item.get("enchant", {}).get("status", []))
-            elif buff_enh_full_item_details.get("enchant", {}).get("status"):
-                buff_enh_stats_to_process.extend(buff_enh_full_item_details.get("enchant", {}).get("status", []))
+            if buff_enh_slot_name and buff_enh_slot_name in current_equipment_by_slot:
+                current_matching_item = current_equipment_by_slot[buff_enh_slot_name]
 
-            for stat_entry in buff_enh_stats_to_process:
-                name = stat_entry.get("name", "")
-                value_raw = stat_entry.get("value", 0)
-                parsed_value = 0
-                if isinstance(value_raw, str):
-                    numeric_match = re.search(r'(\d+)', value_raw)
-                    if numeric_match:
-                        parsed_value = int(numeric_match.group(1))
-                else:
-                    parsed_value = int(value_raw)
+                # 현재 장착 중인 장비 (해당 슬롯)의 스탯/Amp.를 뺍니다.
+                current_item_subtract_stat = 0
+                current_item_subtract_amp = 0
+                current_full_item_details = self.item_details_cache.get(current_matching_item.get("itemId"), {})
+                stats_to_process = []
+                if current_full_item_details.get("itemStatus"): stats_to_process.extend(current_full_item_details.get("itemStatus", []))
+                if current_matching_item.get("enchant", {}).get("status"): stats_to_process.extend(current_matching_item.get("enchant", {}).get("status", []))
+                elif current_full_item_details.get("enchant", {}).get("status"): stats_to_process.extend(current_full_item_details.get("enchant", {}).get("status", []))
 
-                if "Intelligence" in name: buff_enh_item_stats_sum["Intelligence"] += parsed_value
-                elif "Spirit" in name: buff_enh_item_stats_sum["Spirit"] += parsed_value
-                elif "Vitality" in name: buff_enh_item_stats_sum["Vitality"] += parsed_value
-                elif "All Stats" in name:
-                    buff_enh_item_stats_sum["Intelligence"] += parsed_value
-                    buff_enh_item_stats_sum["Spirit"] += parsed_value
-                    buff_enh_item_stats_sum["Vitality"] += parsed_value
-                elif "Buff Power Amp." in name:
-                    buff_enh_buff_power_amp += parsed_value
+                for stat_entry in stats_to_process:
+                    name = stat_entry.get("name", "")
+                    value_raw = stat_entry.get("value", 0)
+                    parsed_value = 0
+                    if isinstance(value_raw, str):
+                        numeric_match = re.search(r'(\d+)', value_raw)
+                        if numeric_match: parsed_value = int(numeric_match.group(1))
+                        else: continue
+                    else: parsed_value = int(value_raw)
+
+                    if name == applicable_stat_name or name == "All Stats": current_item_subtract_stat += parsed_value
+                    elif "Buff Power Amp." in name: current_item_subtract_amp += parsed_value
+                
+                adjusted_main_buff_stat_value -= current_item_subtract_stat
+                adjusted_buff_power_amp_for_main -= current_item_subtract_amp
 
 
-            found_match = False
-            for current_item in current_equipment_data:
-                if current_item.get("slotName") == buff_enh_slot_name:
-                    found_match = True
-                    current_item_name = current_item.get("itemName")
-                    current_item_id = current_item.get("itemId")
+                # 버프 강화 장비 (해당 슬롯)의 스탯/Amp.를 더합니다.
+                buff_enh_item_add_stat = 0
+                buff_enh_item_add_amp = 0
+                buff_enh_full_item_details = self.item_details_cache.get(buff_enh_item.get("itemId"), {})
+                stats_to_process = []
+                if buff_enh_full_item_details.get("itemStatus"): stats_to_process.extend(buff_enh_full_item_details.get("itemStatus", []))
+                if buff_enh_item.get("enchant", {}).get("status"): stats_to_process.extend(buff_enh_item.get("enchant", {}).get("status", []))
+                elif buff_enh_full_item_details.get("enchant", {}).get("status"): stats_to_process.extend(buff_enh_full_item_details.get("enchant", {}).get("status", []))
+
+                for stat_entry in stats_to_process:
+                    name = stat_entry.get("name", "")
+                    value_raw = stat_entry.get("value", 0)
+                    parsed_value = 0
+                    if isinstance(value_raw, str):
+                        numeric_match = re.search(r'(\d+)', value_raw)
+                        if numeric_match: parsed_value = int(numeric_match.group(1))
+                        else: continue
+                    else: parsed_value = int(value_raw)
                     
-                    print(f"Matching Slot: {buff_enh_slot_name} (Buff Enhancement: {buff_enh_item_name} | Current: {current_item_name})")
+                    if name == applicable_stat_name or name == "All Stats": buff_enh_item_add_stat += parsed_value
+                    elif "Buff Power Amp." in name: buff_enh_item_add_amp += parsed_value
+
+                adjusted_main_buff_stat_value += buff_enh_item_add_stat
+                adjusted_buff_power_amp_for_main += buff_enh_item_add_amp
+
+
+        # --- 크리처 스탯 조정 (버프 강화 크리처가 있을 때만 적용) ---
+        if buff_enh_creature_list: # Check if the list contains any creature
+            # 현재 장착 중인 크리처 스탯 및 버프 파워를 합산 (뺄 값)
+            current_creature_subtract_stat = 0
+            current_creature_subtract_amp = 0
+            current_creature_subtract_bp = 0
+            if current_creature: # current_creature is already a list guaranteed from above
+                creature_id = current_creature[0].get("itemId")
+                full_item_details = self.item_details_cache.get(creature_id, {})
+                stats_to_process = []
+                if full_item_details.get("itemStatus"): stats_to_process.extend(full_item_details.get("itemStatus", []))
+                if current_creature[0].get("enchant", {}).get("status"): stats_to_process.extend(current_creature[0].get("enchant", {}).get("status", []))
+                elif full_item_details.get("enchant", {}).get("status"): stats_to_process.extend(full_item_details.get("enchant", {}).get("status", []))
+
+                for stat_entry in stats_to_process:
+                    name = stat_entry.get("name", "")
+                    value_raw = stat_entry.get("value", 0)
+                    parsed_value = 0
+                    if isinstance(value_raw, str):
+                        numeric_match = re.search(r'(\d+)', value_raw)
+                        if numeric_match: parsed_value = int(numeric_match.group(1))
+                        else: continue
+                    else: parsed_value = int(value_raw)
                     
-                    # 3. 해당 장비의 인챈트 스탯 출력 및 합산
-                    print(f"  Current Equipment's Enchant Stats for '{current_item_name}':")
-                    current_enchant_status = current_item.get("enchant", {}).get("status", [])
-                    if current_enchant_status:
-                        for stat_entry in current_enchant_status:
-                            name = stat_entry.get("name", "")
-                            value_raw = stat_entry.get("value", 0)
-                            parsed_value = 0
-                            if isinstance(value_raw, str):
-                                numeric_match = re.search(r'(\d+)', value_raw)
-                                if numeric_match:
-                                    parsed_value = int(numeric_match.group(1))
-                            else:
-                                parsed_value = int(value_raw)
-                            print(f"    - {name}: {parsed_value}")
-                            # Sum current item's enchant stats
-                            if "Intelligence" in name: current_item_stats_sum["Intelligence"] += parsed_value
-                            elif "Spirit" in name: current_item_stats_sum["Spirit"] += parsed_value
-                            elif "Vitality" in name: current_item_stats_sum["Vitality"] += parsed_value
-                            elif "All Stats" in name:
-                                current_item_stats_sum["Intelligence"] += parsed_value
-                                current_item_stats_sum["Spirit"] += parsed_value
-                                current_item_stats_sum["Vitality"] += parsed_value
-                            elif "Buff Power Amp." in name:
-                                current_buff_power_amp += parsed_value
-                    else:
-                        print("    No enchant stats found.")
-
-                    # 4. 해당 장비의 itemId로 검색하여, 장비 자체의 스탯 또한 출력 및 합산
-                    print(f"  Current Equipment's Base Item Stats for '{current_item_name}':")
-                    current_full_item_details = self.item_details_cache.get(current_item_id, {})
-                    current_item_status = current_full_item_details.get("itemStatus", [])
-                    if current_item_status:
-                        for stat_entry in current_item_status:
-                            name = stat_entry.get("name", "")
-                            value_raw = stat_entry.get("value", 0)
-                            parsed_value = 0
-                            if isinstance(value_raw, str):
-                                numeric_match = re.search(r'(\d+)', value_raw)
-                                if numeric_match:
-                                    parsed_value = int(numeric_match.group(1))
-                            else:
-                                parsed_value = int(value_raw)
-                            print(f"    - {name}: {parsed_value}")
-                            # Sum current item's base stats
-                            if "Intelligence" in name: current_item_stats_sum["Intelligence"] += parsed_value
-                            elif "Spirit" in name: current_item_stats_sum["Spirit"] += parsed_value
-                            elif "Vitality" in name: current_item_stats_sum["Vitality"] += parsed_value
-                            elif "All Stats" in name:
-                                current_item_stats_sum["Intelligence"] += parsed_value
-                                current_item_stats_sum["Spirit"] += parsed_value
-                                current_item_stats_sum["Vitality"] += parsed_value
-                            elif "Buff Power Amp." in name:
-                                current_buff_power_amp += parsed_value
-                    else:
-                        print("    No base item stats found (or not fetched).")
-                    break
+                    if name == applicable_stat_name or name == "All Stats": current_creature_subtract_stat += parsed_value
+                    elif "Buff Power" in name: current_creature_subtract_bp += parsed_value
+                    elif "Buff Power Amp." in name: current_creature_subtract_amp += parsed_value
             
-            if not found_match:
-                print(f"No matching current equipment found for Buff Enhancement Slot: {buff_enh_slot_name} ({buff_enh_item_name})")
-        print("-------------------------------------------------------------------\n")
+            adjusted_main_buff_stat_value -= current_creature_subtract_stat
+            adjusted_buff_power_amp_for_main -= current_creature_subtract_amp
+            adjusted_buff_power_from_status_api_for_main -= current_creature_subtract_bp
 
-        # --- 메인 버프 계산을 위한 스탯 및 Buff Power Amp. 조정 (수정된 로직) ---
-        adjusted_main_buff_stat_value = base_stats_from_status_api.get(applicable_stat_name, 0)
-        adjusted_buff_power_amp_for_main = buff_power_amp_from_status_api
 
-        # 1. 현재 장착 중인 동일 부위 장비가 제공하는 스탯/Amp.를 빼고
-        adjusted_main_buff_stat_value -= current_item_stats_sum.get(applicable_stat_name, 0)
-        adjusted_buff_power_amp_for_main -= current_buff_power_amp
+            # 버프 강화 크리처 스탯 및 버프 파워를 합산 (더할 값)
+            buff_enh_creature_add_stat = 0
+            buff_enh_creature_add_amp = 0
+            buff_enh_creature_add_bp = 0
+            processed_buff_enh_creature = buff_enh_creature_list[0]
+            if processed_buff_enh_creature:
+                creature_id = processed_buff_enh_creature.get("itemId")
+                full_item_details = self.item_details_cache.get(creature_id, {})
+                stats_to_process = []
+                if full_item_details.get("itemStatus"): stats_to_process.extend(full_item_details.get("itemStatus", []))
+                if processed_buff_enh_creature.get("enchant", {}).get("status"): stats_to_process.extend(processed_buff_enh_creature.get("enchant", {}).get("status", []))
+                elif full_item_details.get("enchant", {}).get("status"): stats_to_process.extend(full_item_details.get("enchant", {}).get("status", []))
 
-        # 2. 버프 강화에 등록된 장비가 제공하는 스탯/Amp.를 더합니다.
-        adjusted_main_buff_stat_value += buff_enh_item_stats_sum.get(applicable_stat_name, 0)
-        adjusted_buff_power_amp_for_main += buff_enh_buff_power_amp
+                for stat_entry in stats_to_process:
+                    name = stat_entry.get("name", "")
+                    value_raw = stat_entry.get("value", 0)
+                    parsed_value = 0
+                    if isinstance(value_raw, str):
+                        numeric_match = re.search(r'(\d+)', value_raw)
+                        if numeric_match: parsed_value = int(numeric_match.group(1))
+                        else: continue
+                    else: parsed_value = int(value_raw)
+                    
+                    if name == applicable_stat_name or name == "All Stats": buff_enh_creature_add_stat += parsed_value
+                    elif "Buff Power" in name: buff_enh_creature_add_bp += parsed_value
+                    elif "Buff Power Amp." in name: buff_enh_creature_add_amp += parsed_value
 
-        # DEBUG: Log adjusted values
-        print(f"DEBUG: Original Buff Power Amp. from status API: {buff_power_amp_from_status_api}")
-        print(f"DEBUG: Buff Enhancement Gear Buff Power Amp. (sum): {buff_enh_buff_power_amp}")
-        print(f"DEBUG: Current Matching Gear Buff Power Amp. (sum): {current_buff_power_amp}")
-        print(f"DEBUG: Adjusted Buff Power Amp. for main buff calculation: {adjusted_buff_power_amp_for_main}")
+            adjusted_main_buff_stat_value += buff_enh_creature_add_stat
+            adjusted_buff_power_amp_for_main += buff_enh_creature_add_amp
+            adjusted_buff_power_from_status_api_for_main += buff_enh_creature_add_bp
 
-        # Recalculate final buff power using adjusted Buff Power Amp. for main buff only
-        adjusted_final_calculated_buff_power_for_main = buff_power_from_status_api * (1 + adjusted_buff_power_amp_for_main * 0.01)
-        print(f"DEBUG: Adjusted Final calculated Buff Power for main buff: {adjusted_final_calculated_buff_power_for_main}")
+
+        # --- 아바타 엠블렘 스탯 조정 (버프 강화 아바타의 특정 슬롯이 현재 장착 아바타와 일치할 경우에만 적용) ---
+        current_avatar_by_slot = {item.get("slotName"): item for item in current_avatar_data if item.get("slotName")}
+
+        for buff_enh_avatar in buff_enhancement_avatars:
+            buff_enh_slot_name = buff_enh_avatar.get("slotName")
+            
+            if buff_enh_slot_name and buff_enh_slot_name in current_avatar_by_slot:
+                current_matching_avatar = current_avatar_by_slot[buff_enh_slot_name]
+
+                # 현재 장착 중인 아바타 (해당 슬롯)의 엠블렘 스탯을 뺍니다.
+                emblems_to_subtract = current_matching_avatar.get("emblems")
+                if emblems_to_subtract is not None:
+                    current_avatar_sub_stat = 0
+                    for emblem_data in emblems_to_subtract:
+                        emblem_id = emblem_data.get("itemId")
+                        if emblem_id:
+                            emblem_details = self.item_details_cache.get(emblem_id, {})
+                            item_status_for_emblem = emblem_details.get("itemStatus")
+                            if item_status_for_emblem:
+                                for stat_entry in item_status_for_emblem:
+                                    name = stat_entry.get("name", "")
+                                    value_raw = stat_entry.get("value", 0)
+                                    parsed_value = 0
+                                    if isinstance(value_raw, str):
+                                        numeric_match = re.search(r'(\d+)', value_raw)
+                                        if numeric_match: parsed_value = int(numeric_match.group(1))
+                                        else: continue
+                                    else: parsed_value = int(value_raw)
+
+                                    if name == applicable_stat_name or name == "All Stats": current_avatar_sub_stat += parsed_value
+                    adjusted_main_buff_stat_value -= current_avatar_sub_stat
+
+
+                # 버프 강화 아바타 (해당 슬롯)의 엠블렘 스탯을 더합니다.
+                emblems_to_add = buff_enh_avatar.get("emblems")
+                if emblems_to_add is not None:
+                    buff_enh_avatar_add_stat = 0
+                    for emblem_data in emblems_to_add:
+                        emblem_id = emblem_data.get("itemId")
+                        if emblem_id:
+                            emblem_details = self.item_details_cache.get(emblem_id, {})
+                            item_status_for_emblem = emblem_details.get("itemStatus")
+                            if item_status_for_emblem:
+                                for stat_entry in item_status_for_emblem:
+                                    name = stat_entry.get("name", "")
+                                    value_raw = stat_entry.get("value", 0)
+                                    parsed_value = 0
+                                    if isinstance(value_raw, str):
+                                        numeric_match = re.search(r'(\d+)', value_raw)
+                                        if numeric_match: parsed_value = int(numeric_match.group(1))
+                                        else: continue
+                                    else: parsed_value = int(value_raw)
+
+                                    if name == applicable_stat_name or name == "All Stats": buff_enh_avatar_add_stat += parsed_value
+                    adjusted_main_buff_stat_value += buff_enh_avatar_add_stat
+
+
+        # Final values for logging before returning
+        adjusted_final_calculated_buff_power_for_main = adjusted_buff_power_from_status_api_for_main * (1 + adjusted_buff_power_amp_for_main * 0.01)
 
 
         # For other buffs (1a, 3a, aura), use the original values from status API + current gear bonuses
-        # applicable_stat_value here refers to the ORIGINAL stat from status API
         calculated_stats_for_other_buffs = {
-            "stat_value": base_stats_from_status_api.get(applicable_stat_name, 0),
+            "stat_value": applicable_stat_value,
             "stat_name": applicable_stat_name,
-            "buff_power": final_calculated_buff_power,
+            "buff_power": (buff_power_from_status_api * (1 + buff_power_amp_from_status_api * 0.01)), # Original full buff power
             "skill_lv_bonuses": {
                 "main": 0,
                 "1a": parsed_stats_from_current_gear["skill_lv_bonuses"].get("1a", 0),
@@ -614,23 +711,8 @@ class BufferAnalyzer:
         if final_buffs.get("main"): final_buffs["main"]["level"] = main_buff_lv
 
 
-        print(f"DEBUG: Final calculated stats used for buffs (Overall Character Stats):")
-        print(f"  Applied Stat Name: {applicable_stat_name}")
-        print(f"  Applied Stat Value: {base_stats_from_status_api.get(applicable_stat_name, 0)}")
-        print(f"  Total Buff Power: {final_calculated_buff_power}")
-        print(f"  Skill Level Bonuses (from Current Gear): {calculated_stats_for_other_buffs['skill_lv_bonuses']}")
-
-
         return {
-            "characterName": profile["characterName"],
-            "jobName": profile["jobName"],
-            "buffs": final_buffs,
-            "buff_enhancement_stats": parsed_stats_from_buff_enhancement_gear["stats_breakdown"],
-            "buff_enhancement_skill_lv_bonuses": parsed_stats_from_buff_enhancement_gear["skill_lv_bonuses"],
-            "adjusted_main_buff_calculation_values": {
-                "adjusted_stat_value": adjusted_main_buff_stat_value,
-                "adjusted_buff_power": adjusted_final_calculated_buff_power_for_main
-            }
+            "buffs": final_buffs
         }
 
 async def main():
