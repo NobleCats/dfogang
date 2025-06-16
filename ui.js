@@ -225,8 +225,16 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
     renderFameChart(fameHistory);
     await renderHistoryPanel(gearHistory);
     
+    // Get the DPS widget area and clear its content before appending
+    const dpsWidgetArea = document.getElementById('dps-widget-area');
+    if (dpsWidgetArea) { // Check if the element exists
+        dpsWidgetArea.innerHTML = ''; // Clear existing content
+    }
+
     const dpsWidget = renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState);
-    document.getElementById('dps-widget-area').appendChild(dpsWidget);
+    if (dpsWidgetArea) { // Check again before appending
+        dpsWidgetArea.appendChild(dpsWidget);
+    }
 }
 function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
@@ -272,7 +280,7 @@ function renderCharacterCanvas(profile, equipmentList) {
                 if (keywordMatch) {
                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/${keywordMatch}.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
                 } else if (distKeywords.some(word => itemName.includes(word))) {
-                    fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/Dist.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
+                    fusionIconWrapper.innerHTML = `<img src="assets/fusions/${baseRarity}/Dist.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
                 } else {
                     fusionIconWrapper.style.width = `${28 * SCALE * 0.75}px`;
                     fusionIconWrapper.style.height = `${13 * SCALE * 0.75}px`;

@@ -51,10 +51,9 @@ class CharacterAnalyzer:
         self.AVERAGE_SET_DMG = average_set_dmg
         
         self.WEAPON_NAMES_WITH_CONDITIONAL_EFFECT = {
-            "Falke the Ally", "Falke the Friend", "Falke the Family",
-            "Secret Solo", "Secret Duet", "Secret Concert",
-            "Mist Traveler", "Mist Explorer", "Mist Pioneer",
-            "Malefic Dawn", "Malefic Daybreak", "Malefic Twilight"
+            "Falke the Ally", "Falke the Friend", "Secret Solo", "Secret Duet",
+            "Mist Traveler", "Mist Explorer", "Malefic Dawn", "Malefic Daybreak",
+            "Falke the Family", "Secret Concert", "Mist Pioneer", "Malefic Twilight"
         }
         
         # 데이터 캐시 및 상수
@@ -238,6 +237,7 @@ class CharacterAnalyzer:
                     match = re.search(rf"{key}[^+]*\+([\d.]+)", explain_txt)
                     if match: self.elemental_dmg_sum[element] += float(match.group(1))
 
+
     def parse_item_stats_from_cache(self, item_id):
         res = self.item_details_cache.get(item_id)
         if not res: return
@@ -290,6 +290,7 @@ class CharacterAnalyzer:
         if self.AVERAGE_SET_DMG:
             parts = setItemRarityName.strip().split()
             values = {
+                "Rare":      [0.0, 0.0, 0.0, 0.0, 0.0], # Added 'Rare' with placeholder values
                 "Unique":   [48.5, 68.3, 88.1, 107.9, 127.7],
                 "Legendary": [184.6, 204.4, 224.2, 244.0, 263.8],
                 "Epic":     [318.4, 338.2, 358.0, 377.8, 397.6],
@@ -300,9 +301,17 @@ class CharacterAnalyzer:
                 step = parts[1]    # I, II, III, IV, V
                 step_map = {"I": 0, "II": 1, "III": 2, "IV": 3, "V": 4}
                 index = step_map.get(step.upper())
-                self.overall_dmg_calc(values[rarity][index], source="[AVERAGE SET]")
+                # Ensure rarity exists in values before accessing
+                if rarity in values and index is not None and index < len(values[rarity]):
+                    self.overall_dmg_calc(values[rarity][index], source="[AVERAGE SET]")
+                else: # Handle cases where rarity or index might not be found
+                    print(f"Warning: Could not find average set damage for rarity '{rarity}' step '{step}'")
             elif len(parts) == 1:
-                self.overall_dmg_calc(values["Primeval"], source="[AVERAGE SET]")
+                # Ensure "Primeval" exists in values before accessing
+                if "Primeval" in values:
+                    self.overall_dmg_calc(values["Primeval"], source="[AVERAGE SET]")
+                else: # Handle cases where Primeval might not be found
+                    print(f"Warning: Could not find average set damage for Primeval rarity")
             return
         if self.is_paradise_set(setItemName):
             reinforce_acc, reinforce_total, overall_damage = 0, 0, 0
@@ -376,16 +385,18 @@ class CharacterAnalyzer:
     def analyze_creature(self, res):
         if not res: return
         creature = res.get("creature", {})
-        if creature.get("itemId"): self.parse_creature_item_from_cache(creature["itemId"], source=f"[CREATURE] {creature.get('itemName')}")
-        for artifact in creature.get("artifact", []):
-            if artifact.get("itemId"): self.parse_creature_item_from_cache(artifact["itemId"], source=f"[ARTIFACT] {artifact.get('itemName')}")
+        if creature:
+            if creature.get("itemId"): self.parse_creature_item_from_cache(creature["itemId"], source=f"[CREATURE] {creature.get('itemName')}")
+            for artifact in creature.get("artifact", []):
+                if artifact.get("itemId"): self.parse_creature_item_from_cache(artifact["itemId"], source=f"[ARTIFACT] {artifact.get('itemName')}")
 
     def analyze_insignia(self, res):
         if not res: return
         flag = res.get("flag", {})
-        if flag.get("itemId"): self.parse_creature_item_from_cache(flag["itemId"], source=f"[INSIGNIA] {flag.get('itemName')}")
-        for gem in flag.get("gems", []):
-            if gem.get("itemId"): self.parse_creature_item_from_cache(gem["itemId"], source=f"[INSIGNIA GEM] {gem.get('itemName')}")
+        if flag:
+            if flag.get("itemId"): self.parse_creature_item_from_cache(flag["itemId"], source=f"[INSIGNIA] {flag.get('itemName')}")
+            for gem in flag.get("gems", []):
+                if gem.get("itemId"): self.parse_creature_item_from_cache(gem["itemId"], source=f"[INSIGNIA GEM] {gem.get('itemName')}")
         
 
     async def run_analysis_for_all_dps(self, session):
@@ -476,15 +487,10 @@ async def main():
     async with aiohttp.ClientSession() as session:
         start_time = time.time()
         print("캐릭터 정보 분석을 시작합니다...")
-        results = await analyzer.run_analysis(session)
+        results = await analyzer.run_analysis_for_all_dps(session)
         end_time = time.time()
         print(f"분석 완료! (소요 시간: {end_time - start_time:.2f}초)")
 
     # 결과 출력
     print("\n--- 최종 분석 결과 ---")
     print(json.dumps(results, indent=2, ensure_ascii=False))
-
-if __name__ == "__main__":
-    # 예시: 터미널에서 아래와 같이 실행
-    # python dmgCalc.py --server cain --characterId d25349b117002ecfbe3fb50c572f65dc
-    asyncio.run(main())
