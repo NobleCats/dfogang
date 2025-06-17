@@ -18,6 +18,14 @@ const SET_CATEGORIES = [
     "Nature", "Fairy", "Energy", "Serendipity", "Cleansing", "Gold", "Tales"
 ];
 
+const LOCAL_TITLE_ICONS = [
+    'PhantomCityPlatinum',
+    'NinjaKaiPlatinumTitle',
+    'FestivalsClimaxPlatinumTitle',
+    'EliteWatchmanPlatinum',
+    'DiverClubMasterPlatinum'
+];
+
 function getSetIconPath(setName) {
     if (!setName || typeof setName !== "string") return "assets/sets/Unknown.png";
     if (setName.includes("Pack")) return "assets/sets/Alpha.png";
@@ -421,8 +429,37 @@ function renderCharacterCanvas(profile, equipmentList) {
             const itemEl = document.createElement("div");
             itemEl.style.cssText = `position:absolute; left:${x * SCALE}px; top:${y * SCALE}px; width:${iconSize}px; height:${iconSize}px;`;
 
+            let itemIconHtml = '';
+            
+            if (eq.slotId === 'TITLE') {
+                const finalFallback = 'assets/equipments/Title/temp.png';
+                
+                const cleanItemName = eq.itemName.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+
+                const foundIconName = LOCAL_TITLE_ICONS.find(localName => 
+                    cleanItemName.includes(localName.toLowerCase())
+                );
+
+                let onerrorLogic = `this.onerror=null; this.src='${finalFallback}';`;
+                
+                if (foundIconName) {
+                    const specificFallback = `assets/equipments/Title/${foundIconName}.png`;
+                    onerrorLogic = `this.onerror=() => { this.onerror=null; this.src='${finalFallback}'; }; this.src='${specificFallback}';`;
+                }
+                
+                itemIconHtml = `
+                    <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" 
+                         style="width:100%; height:100%; position:absolute; z-index:2;"
+                         onerror="${onerrorLogic}">
+                `;
+            } else {
+                itemIconHtml = `
+                    <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" style="width:100%; height:100%; position:absolute; z-index:2;">
+                `;
+            }
+
             itemEl.innerHTML = `
-                <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" style="width:100%; height:100%; position:absolute; z-index:2;">
+                ${itemIconHtml}
                 <img src="assets/equipments/edge/${eq.itemRarity}.png" style="width:100%; height:100%; position:absolute; z-index:3;">
             `;
 
