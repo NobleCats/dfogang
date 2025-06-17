@@ -208,7 +208,7 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, is
             <div class="dps-result-display" style="margin-top: 16px;">
                 <span class="dps-result-label">DPS Score
                     <span class="tooltip-icon">?</span> <div class="tooltip-content">
-                        <p>DPS score is calculated based solely on the equipment equipped by the character.</p><p>It applies a common damage-cooldown ratio of 1:2 (1% Skill Damage for every 2% Cooldown Reduction) to reflect the practical utility of cooldown reduction in DNF items.</p>
+                        <p>DPS score is calculated based solely on the equipment equipped by the character.</p><p>It applies a common damage-cooldown ratio of 1:2 (1% Skill Damage for every 2% Cooldown Reduction) to reflect the practical utility of cooldown reduction in DNF items.</p><p>For actual calculations, the Damage-Cooldown Ratio has been adjusted to provide a higher conversion value for larger amounts of Cooldown Reduction provided at once.</p>
                     </div>
                     </span>
                 <span class="dps-result-value">${dpsDisplayValue}</span>
