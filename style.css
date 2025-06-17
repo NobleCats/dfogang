@@ -651,8 +651,22 @@ button:hover {
 .dps-toggle-label:hover .tooltip-content {
     visibility: visible;
     opacity: 1;
+    
+}
+.dps-result-label .tooltip-content {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute; 
+    bottom: 125%;
+    left: 90%;
+    transform: translateX(-50%);
+    width: 400px; 
 }
 
+.dps-result-label:hover .tooltip-content {
+    visibility: visible;
+    opacity: 1;
+}
 .tooltip-content::after {
     content: " ";
     position: absolute;
@@ -693,6 +707,7 @@ button:hover {
 }
 .dps-result-label {
     display: block;
+    position: relative;
     font-size: 14px;
     color: var(--color-text-secondary);
     margin-bottom: 4px;

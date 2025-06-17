@@ -78,7 +78,7 @@ export function createCharacterCard(profile, searchName, dpsToShow, isBuffer) {
         </div>
 
         <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);">
-            <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">${isBuffer ? 'Buff Score' : 'DPS'}</span>
+            <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">${isBuffer ? 'Buff Score' : 'DPS Score'}</span>
             ${dpsOrBuffDisplay}
         </div>
     `;
@@ -197,16 +197,20 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, is
         const dpsResultHtml = `
             <div class="dps-stats-display" style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
-                    <span>Applied Damage:</span>
+                    <span>Gear Damage:</span>
                     <span style="color: var(--color-text-primary); font-weight: 500;">${appliedDamage}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
-                    <span>Applied Cooldown Reduction:</span>
+                    <span>Cooldown Reduction:</span>
                     <span style="color: var(--color-text-primary); font-weight: 500;">${appliedCooldownReduction}</span>
                 </div>
             </div>
             <div class="dps-result-display" style="margin-top: 16px;">
-                <span class="dps-result-label">Expected DPS</span>
+                <span class="dps-result-label">DPS Score
+                    <span class="tooltip-icon">?</span> <div class="tooltip-content">
+                        <p>DPS score is calculated based solely on the equipment equipped by the character.</p><p>It applies a common damage-cooldown ratio of 1:2 (1% Skill Damage for every 2% Cooldown Reduction) to reflect the practical utility of cooldown reduction in DNF items.</p>
+                    </div>
+                    </span>
                 <span class="dps-result-value">${dpsDisplayValue}</span>
             </div>
         `;
