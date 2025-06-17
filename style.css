@@ -431,6 +431,16 @@ button:hover {
     border-color: var(--color-accent-blue);
 }
 
+.card-score-value {
+    font-size: 1.2em;
+    color: var(--color-accent-blue);
+    font-family: var(--font-dfo);
+}
+
+.card.is-buffer .card-score-value {
+    color: var(--color-fame);
+}
+
 /*
  * =================================
  * Detail View

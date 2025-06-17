@@ -41,17 +41,16 @@ export function createCharacterCard(profile, searchName, dpsToShow, isBuffer) {
         rarityStyle = `color: ${rarityColors[colorKey]};`;
     }
     const card = document.createElement('div');
-    card.className = 'card';
+    card.className = `card ${isBuffer ? 'is-buffer' : ''}`;
     card.dataset.characterId = profile.characterId;
     card.dataset.characterName = profile.characterName;
     card.dataset.serverId = profile.serverId;
 
     let dpsOrBuffDisplay = '';
-    if (isBuffer) {
-        dpsOrBuffDisplay = `<span style="font-size: 1.2em; color: var(--color-accent-blue);">${profile.total_buff_score != null ? profile.total_buff_score.toLocaleString() : 'N/A'}</span>`;
-    } else {
-        dpsOrBuffDisplay = `<span style="font-size: 1.2em; color: var(--color-accent-blue);">${dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A'}</span>`;
-    }
+    const scoreValue = isBuffer 
+        ? (profile.total_buff_score != null ? profile.total_buff_score.toLocaleString() : 'N/A')
+        : (dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A');
+    dpsOrBuffDisplay = `<span class="card-score-value">${scoreValue}</span>`;
 
     card.innerHTML = `
         <div style="position: absolute; top: 16px; right: 16px; text-align: right;">
