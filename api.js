@@ -1,7 +1,7 @@
 // ===================================
 //          api.js
 // ===================================
-const API_ROOT = "https://api-dfohistory.duckdns.org";
+const API_ROOT = "https://api.dfogang.com";
 
 async function postData(endpoint, body) {
     try {
