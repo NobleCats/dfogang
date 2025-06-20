@@ -453,13 +453,19 @@ function renderCharacterCanvas(profile, equipmentList) {
                 if (foundIconName) {
                     const specificFallback = `assets/equipments/Title/${foundIconName}.png`;
                     onerrorLogic = `this.onerror=() => { this.onerror=null; this.src='${finalFallback}'; }; this.src='${specificFallback}';`;
+                    itemIconHtml = `
+                        <img src="${onerrorLogic}" 
+                            style="width:100%; height:100%; position:absolute; z-index:2;">
+                `;
+                }
+                else {
+                    itemIconHtml = `
+                        <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" 
+                            style="width:100%; height:100%; position:absolute; z-index:2;"
+                            onerror="${onerrorLogic}">
+                `;
                 }
                 
-                itemIconHtml = `
-                    <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" 
-                         style="width:100%; height:100%; position:absolute; z-index:2;"
-                         onerror="${onerrorLogic}">
-                `;
             } else {
                 itemIconHtml = `
                     <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" style="width:100%; height:100%; position:absolute; z-index:2;">
