@@ -28,6 +28,7 @@ const LOCAL_TITLE_ICONS = [
     'VisitoftheLovelyButterflyPlatinum',
     'VisitoftheShiningButterflyPlatinum',
     'VisitoftheWarmButterflyPlatinum',
+    'CutieBeautyBunny',
 ];
 
 function getSetIconPath(setName) {
