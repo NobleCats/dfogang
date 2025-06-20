@@ -23,7 +23,11 @@ const LOCAL_TITLE_ICONS = [
     'NinjaKaiPlatinumTitle',
     'FestivalsClimaxPlatinumTitle',
     'EliteWatchmanPlatinum',
-    'DiverClubMasterPlatinum'
+    'DiverClubMasterPlatinum',
+    'VisitoftheDarkButterflyPlatinum',
+    'VisitoftheLovelyButterflyPlatinum',
+    'VisitoftheShiningButterflyPlatinum',
+    'VisitoftheWarmButterflyPlatinum',
 ];
 
 function getSetIconPath(setName) {
