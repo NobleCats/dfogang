@@ -453,7 +453,12 @@ function renderCharacterCanvas(profile, equipmentList) {
                 if (foundIconName) {
                     const specificFallback = `assets/equipments/Title/${foundIconName}.png`;
                     onerrorLogic = `this.onerror=() => { this.onerror=null; this.src='${finalFallback}'; }; this.src='${specificFallback}';`;
-                    itemIconHtml = onerrorLogic
+                    
+                    itemIconHtml = `
+                        <img src="assets/equipments/Title/${foundIconName}.png" 
+                            style="width:100%; height:100%; position:absolute; z-index:2;"
+                            onerror="this.onerror=null; this.src='${finalFallback}';">
+                    `;
                 }
                 else {
                     itemIconHtml = `
