@@ -83,6 +83,11 @@ function render() {
             }
         }
         ui.showMoreResultsIndicator(state.displayedResults.length < state.allSearchResults.length);
+        
+        if (searchOptionsDiv) {
+            searchOptionsDiv.style.display = state.server === 'explorer' ? 'flex' : 'none';
+            exactMatchCheckbox.checked = state.exactMatch;
+        }
 
     } else if (state.view === 'detail' && state.characterDetail.profile) {
         ui.renderCharacterDetail(
@@ -363,6 +368,14 @@ async function init() {
         });
     }
 
+    exactMatchCheckbox.addEventListener('change', () => {
+        if (state.searchTerm) {
+            handleSearchClick(); 
+        }
+    });
+
+    serverSelect.addEventListener('change', handleServerSelectChange);
+
     const resultsSection = document.querySelector('.results-section');
     if (resultsSection) {
         resultsSection.addEventListener('scroll', handleScroll);
@@ -389,6 +402,8 @@ async function init() {
         } else {
             await performSearch(server, name);
         }
+    } else {
+        handleServerSelectChange(); 
     }
     setupAccordions();
     render();

@@ -259,8 +259,46 @@ body {
 .accordion-container .accordion-item:not(:first-child):not(:last-child) {
     border-radius: 0;
 }
+.search-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text-secondary);
+    font-size: 0.9em;
+}
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
 
+.checkbox-label input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background-color: var(--color-surface);
+    margin-right: 8px;
+    cursor: pointer;
+    position: relative;
+    top: 1px;
+}
 
+.checkbox-label input[type="checkbox"]:checked {
+    background-color: var(--color-accent-blue);
+    border-color: var(--color-accent-blue);
+}
+
+.checkbox-label input[type="checkbox"]:checked::after {
+    content: '✔';
+    display: block;
+    color: var(--color-background);
+    font-size: 12px;
+    text-align: center;
+    line-height: 16px;
+}
 .search-section {
     grid-row: 1; 
     grid-column: 1; 

@@ -40,7 +40,7 @@ export async function logSearch(server, name) {
 }
 export async function searchCharacters(server, name, average_set_dmg) {
     const endpoint = server === "explorer" ? "/search_explorer" : "/search";
-    const data = await postData(endpoint, { name, server, average_set_dmg });
+    const data = await postData(endpoint, { name, server, average_set_dmg, exact_match });
     return data ? data.results : [];
 }
 export async function getCharacterProfile(server, name) {
