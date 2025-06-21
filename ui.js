@@ -22,6 +22,7 @@ const LOCAL_TITLE_ICONS = [
     'PhantomCityPlatinum',
     'NinjaKaiPlatinumTitle',
     'FestivalsClimaxPlatinumTitle',
+    'FestivalsClimax',
     'EliteWatchmanPlatinum',
     'DiverClubMasterPlatinum',
     'VisitoftheDarkButterflyPlatinum',
