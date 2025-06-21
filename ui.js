@@ -141,8 +141,8 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, is
                 <div class="dps-toggle-group">
                     <div class="dps-toggle-label">Cleansing Mode</div>
                     <div class="dps-toggle-switch">
-                        <div class="dps-toggle-option ${!dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="false">Corruption</div>
-                        <div class="dps-toggle-option ${dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="true">Cleansing</div>
+                        <div class="dps-toggle-option ${!dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="true">Corruption</div>
+                        <div class="dps-toggle-option ${dpsOptions.cleansing_cdr ? 'active' : ''}" data-dps-option="cleansing_cdr" data-dps-value="false">Cleansing</div>
                     </div>
                 </div>
             `;
