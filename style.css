@@ -213,7 +213,7 @@ body {
 }
 
 .accordion-header.active .accordion-header-icon {
-    transform: rotate(45deg); 
+    transform: rotate(135deg); 
 }
 
 .accordion-content {
