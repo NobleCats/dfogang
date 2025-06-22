@@ -877,21 +877,3 @@ export function switchView(view) {
 export function setLoading(isLoading) {
     document.getElementById('loading-spinner').style.display = isLoading ? 'block' : 'none';
 }
-
-export function showMoreResultsIndicator(hasMore) {
-    const existingIndicator = document.getElementById('load-more-indicator');
-    if (hasMore && !existingIndicator) {
-        const indicator = document.createElement('div');
-        indicator.id = 'load-more-indicator';
-        indicator.style.cssText = `
-            text-align: center;
-            color: var(--color-text-secondary);
-            margin-top: 20px;
-            font-size: 0.9em;
-            padding-bottom: 20px;
-        `;
-        document.getElementById('results-wrapper').appendChild(indicator);
-    } else if (!hasMore && existingIndicator) {
-        existingIndicator.remove();
-    }
-}

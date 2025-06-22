@@ -11,8 +11,6 @@ const state = {
     server: 'cain',
     allSearchResults: [],
     displayedResults: [],
-    resultsPerPage: 8,
-    resultsPerScroll: 4,
     searchResults: [],
     characterDetail: {
         profile: null,
@@ -82,8 +80,7 @@ function render() {
                 resultsDiv.innerHTML = `<div style="color:#f66;">No characters found for "${state.searchTerm}".</div>`;
             }
         }
-        ui.showMoreResultsIndicator(state.displayedResults.length < state.allSearchResults.length);
-
+        // showMoreResultsIndicator call removed
     } else if (state.view === 'detail' && state.characterDetail.profile) {
         ui.renderCharacterDetail(
             state.characterDetail.profile,
@@ -124,41 +121,12 @@ async function performSearch(server, name) {
     const results = await api.searchCharacters(server, name, state.dps.options.average_set_dmg);
 
     state.allSearchResults = results;
-    state.displayedResults = results.slice(0, state.resultsPerPage);
+    state.displayedResults = results;
 
     state.isLoading = false;
     render();
 }
 
-function loadMoreResults() {
-    if (state.isLoading) return;
-    if (state.displayedResults.length >= state.allSearchResults.length) return;
-
-    state.isLoading = true;
-    render();
-
-    setTimeout(() => {
-        const nextStartIndex = state.displayedResults.length;
-        const nextEndIndex = nextStartIndex + state.resultsPerScroll;
-        const newResults = state.allSearchResults.slice(nextStartIndex, nextEndIndex);
-
-        state.displayedResults.push(...newResults);
-        state.isLoading = false;
-        render();
-    }, 300);
-}
-
-
-
-function handleScroll() {
-    const scrollHeight = document.documentElement.scrollHeight;
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
-
-    if (scrollTop + clientHeight >= scrollHeight - 100) {
-        loadMoreResults();
-    }
-}
 
 async function showCharacterDetail(server, name) {
     state.isLoading = true;
@@ -362,13 +330,6 @@ async function init() {
             }
         });
     }
-
-    const resultsSection = document.querySelector('.results-section');
-    if (resultsSection) {
-        resultsSection.addEventListener('scroll', handleScroll);
-    }
-
-    window.addEventListener('scroll', handleScroll);
 
     const params = new URLSearchParams(window.location.search);
     const view = params.get('view');
