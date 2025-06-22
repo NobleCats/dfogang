@@ -548,6 +548,7 @@ button:hover {
     font-size: 15px;
     color: var(--color-text-secondary);
     font-weight: 500;
+    padding-right: 20px
 }
 .dps-toggle-label {
     position: relative; 
