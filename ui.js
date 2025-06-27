@@ -510,7 +510,7 @@ function renderCharacterCanvas(profile, equipmentList) {
                 itemEl.appendChild(fusionIconWrapper);
             }
 
-            const tuneLevel = eq.tune?.level || 0;
+            const tuneLevel = eq.tune?.[0]?.level || 0;
             if (tuneLevel >= 1 && tuneLevel <= 3) {
                 const tuneSize = [8 * SCALE, 10 * SCALE];
                 const tuneImg = document.createElement("img");
