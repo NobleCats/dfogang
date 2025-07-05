@@ -202,6 +202,19 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, is
 
         const appliedDamage = dpsResult?.finalDamage != null ? dpsResult.finalDamage.toLocaleString() : 'N/A';
         const appliedCooldownReduction = dpsResult?.cooldownReduction != null ? dpsResult.cooldownReduction.toFixed(2) + '%' : 'N/A';
+        
+        const rawObjectDps = dpsResult?.objectDps;
+        
+        let objectDpsHtml = '';
+        if (rawObjectDps != null && rawObjectDps > 0) {
+            const formattedObjectDps = rawObjectDps.toLocaleString();
+            objectDpsHtml = `
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.0em; color: var(--color-text-secondary);">
+                    <span>Object DPS:</span>
+                    <span style="color: var(--color-text-primary); font-weight: 500;">${formattedObjectDps}</span>
+                </div>
+            `;
+        }
 
         const dpsDisplayValue = dpsResult?.dps != null ? dpsResult.dps.toLocaleString() : 'N/A';
 
@@ -215,6 +228,7 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, is
                     <span>Cooldown Reduction:</span>
                     <span style="color: var(--color-text-primary); font-weight: 500;">${appliedCooldownReduction}</span>
                 </div>
+                ${objectDpsHtml}
             </div>
             <div class="dps-result-display" style="margin-top: 16px;">
                 <span class="dps-result-label">DPS Score
