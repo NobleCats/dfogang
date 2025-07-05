@@ -112,6 +112,7 @@ export function renderMainDpsOptions(container, dpsOptions) {
 function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, isBuffer) {
     const dpsOptions = dpsState.options;
     const dpsResult = dpsState.result;
+    console.log("DPS Result from Backend:", dpsResult); 
 
     const widgetDiv = document.createElement('div');
     widgetDiv.className = 'detail-widget detail-widget-dps';
