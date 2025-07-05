@@ -98,7 +98,6 @@ export function renderMainDpsOptions(container, dpsOptions) {
                 Set Normalize
                 <span class="tooltip-icon">?</span> <div class="tooltip-content">
                     <p>Calculates damage based on a comparable tier of the Death in the Shadows Set.</p>
-                    <p>(This feature was added to provide a rough standard, as object damage is not reflected in DPS calculations.)</p>
                 </div>
             </div>
             <div class="dps-toggle-switch">
@@ -191,7 +190,6 @@ function renderDpsCalculatorWidget(profile, equipment, setItemInfo, dpsState, is
                 <div class="dps-toggle-label">Set Normalize
                 <span class="tooltip-icon">?</span> <div class="tooltip-content">
                     <p>Calculates damage based on a comparable tier of the Death in the Shadows Set.</p>
-                    <p>(This feature was added to provide a rough standard, as object damage is not reflected in DPS calculations.)</p>
                 </div>
                 </div>
                 <div class="dps-toggle-switch">
