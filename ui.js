@@ -633,7 +633,7 @@ function renderFameChart(records, hoverX = null, hoverY = null) {
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
 
-    let step = fameRange <= 100 ? 10 : fameRange <= 1000 ? 100 : fameRange <= 3000 ? 200 : 1000;
+    let step = fameRange <= 100 ? 10 : fameRange <= 1000 ? 100 : fameRange <= 3000 ? 200 : fameRange <= 10000 ? 1000 : 5000;
     const firstLabel = Math.floor(fameMin / step) * step;
     const lastLabel = Math.ceil(fameMax / step) * step;
 
