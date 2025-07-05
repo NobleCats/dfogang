@@ -32,6 +32,30 @@ const LOCAL_TITLE_ICONS = [
     'CutieBeautyBunny',
 ];
 
+let detailViewObserver = null;
+
+function syncHistoryPanelHeight() {
+    const grid = document.querySelector('.detail-grid');
+    const profileWidget = document.querySelector('.detail-widget-profile');
+    const dpsWidget = document.getElementById('dps-or-buff-widget-area');
+    const fameWidget = document.querySelector('.detail-widget-fame');
+    const historyWidget = document.querySelector('.detail-widget-history');
+
+    if (!grid || !profileWidget || !dpsWidget || !fameWidget || !historyWidget) {
+        return;
+    }
+
+    const gridGap = parseFloat(getComputedStyle(grid).gap);
+
+    const totalHeight = 
+        profileWidget.offsetHeight + 
+        dpsWidget.offsetHeight + 
+        fameWidget.offsetHeight + 
+        (gridGap * 2);
+
+    historyWidget.style.maxHeight = `${totalHeight}px`;
+}
+
 function getSetIconPath(setName) {
     if (!setName || typeof setName !== "string") return "assets/sets/Unknown.png";
     if (setName.includes("Pack")) return "assets/sets/Alpha.png";
@@ -427,6 +451,23 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
         }
         dpsOrBuffWidgetArea.appendChild(widgetToRender);
     }
+
+    if (detailViewObserver) {
+        detailViewObserver.disconnect();
+    }
+
+    const widgetsToObserve = [
+        document.querySelector('.detail-widget-profile'),
+        document.getElementById('dps-or-buff-widget-area'),
+        document.querySelector('.detail-widget-fame')
+    ].filter(Boolean); 
+
+    if (widgetsToObserve.length > 0) {
+        detailViewObserver = new ResizeObserver(syncHistoryPanelHeight);
+        widgetsToObserve.forEach(widget => detailViewObserver.observe(widget));
+    }
+
+    syncHistoryPanelHeight();
 }
 
 

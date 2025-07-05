@@ -533,6 +533,8 @@ button:hover {
     grid-area: history;
     width: 542px;
     min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
     overflow: hidden;
 }
 .dps-calculator-container {
@@ -766,8 +768,8 @@ button:hover {
 
 /* History Panel Styles */
 #history-panel {
-    flex: 1;
     overflow-y: auto;
+    min-height: 0;
 }
 
 .history-date-header {
