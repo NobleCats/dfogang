@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking - DFO Gang</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ranking.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="assets/image/ch49gang.png" alt="Logo" />
+            <a href="/" class="navbar-title">DFO Gang</a>
+        </div>
+        <nav class="main-nav">
+            <a href="/">Search</a>
+            <a href="/ranking.html" class="active">Ranking</a>
+        </nav>
+    </nav>
+
+    <main class="container">
+        <section id="ranking-section">
+            <h2 class="section-title">Class Rankings</h2>
+            
+            <div id="class-grid" class="class-grid">
+                </div>
+
+            <div id="ranking-results" class="ranking-results-container" style="display: none;">
+                <div class="ranking-header">
+                    <h3 id="ranking-title"></h3>
+                    <div class="sort-buttons">
+                        <button id="sort-by-score" class="btn active">Damage</button>
+                        <button id="sort-by-fame" class="btn">Fame</button>
+                    </div>
+                </div>
+                
+                <div id="ranking-card-grid" class="ranking-card-grid">
+                    </div>
+
+                <div id="loader" class="loader" style="display: none;"></div>
+                <p id="no-results" style="display: none;"></p>
+
+                <div id="pagination" class="pagination-simple">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="ranking.js"></script>
+</body>
+</html>

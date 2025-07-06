@@ -1,0 +1,142 @@
+/* ranking.css */
+.section-title {
+    color: var(--color-text-primary);
+    font-family: var(--font-dfo);
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.class-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.class-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 20px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    color: var(--color-text-secondary);
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+.class-card:hover {
+    background-color: var(--color-surface-light);
+    transform: translateY(-5px);
+    border-color: var(--color-accent-blue);
+    color: var(--color-text-primary);
+}
+
+.ranking-results-container {
+    background-color: #1a1a1b;
+    border-radius: 8px;
+    padding: 20px 30px;
+    border: 1px solid var(--color-border);
+}
+
+.ranking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.ranking-header h3 {
+    font-family: var(--font-dfo);
+    color: var(--color-text-primary);
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.sort-buttons .btn {
+    font-family: var(--font-primary);
+    background-color: var(--color-surface);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+    padding: 8px 16px;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+.sort-buttons .btn.active {
+    background-color: var(--color-accent-blue);
+    color: white;
+    border-color: var(--color-accent-blue);
+}
+
+/* [추가] 랭킹 카드 그리드 스타일 */
+.ranking-card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-items: center;
+    padding: 20px 0;
+}
+
+/* [추가] 심플 페이지네이션 스타일 */
+.pagination-simple {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+    gap: 15px;
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.pagination-simple button {
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0 10px;
+}
+
+.pagination-simple button:hover {
+    color: var(--color-accent-blue);
+}
+
+.pagination-simple button:disabled {
+    color: var(--color-border);
+    cursor: not-allowed;
+}
+
+
+.loader {
+    border: 5px solid var(--color-surface);
+    border-top: 5px solid var(--color-accent-blue);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 40px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 반응형: 화면이 작아지면 카드 열 수를 줄임 */
+@media (max-width: 1200px) {
+    .ranking-card-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+    .ranking-card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+    .ranking-card-grid { grid-template-columns: 1fr; }
+}
