@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         classGrid: document.getElementById('class-grid'),
         rankingResults: document.getElementById('ranking-results'),
         rankingTitle: document.getElementById('ranking-title'),
-        cardGrid: document.getElementById('ranking-card-grid'), // [변경]
+        cardGrid: document.getElementById('ranking-card-grid'),
         loader: document.getElementById('loader'),
         noResults: document.getElementById('no-results'),
         pagination: document.getElementById('pagination'),
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnSortByFame: document.getElementById('sort-by-fame'),
     };
 
-    let state = { jobName: null, sortBy: 'dps', page: 1, limit: 12, totalPages: 1, isBuffer: false }; 
+    let state = { jobName: null, sortBy: 'dps', page: 1, limit: 12, totalPages: 1, isBuffer: false };
 
     const rarityColors = { "None": "#FFFFFF", "Rare": "#B36BFF", "Unique": "#FF00FF", "Legendary": "#FF7800", "Epic": "#FFB400" };
     const SET_CATEGORIES = ["Dragon", "Magic", "Alpha", "Shadow", "Ethereal", "Valkyrie", "Nature", "Fairy", "Energy", "Serendipity", "Cleansing", "Gold", "Tales"];
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const scoreDisplay = `<span class="card-score-value">${scoreValue}</span>`;
 
         card.innerHTML = `
-            <div style="position: absolute; top: 16px; right: 16px; text-align: right;">
+            <div style="position: absolute; top: 16px; right: 16px; text-align: right; z-index: 10;">
                 <div style="font-size: 0.8em; color:var(--color-text-secondary);">${profile.serverId}</div>
                 <div style="display:flex; align-items:center; justify-content: flex-end; margin-top:4px;">
                     <img src="assets/image/fame.png" alt="Fame" style="width:15px; height:13px; margin-right:4px;">
@@ -76,12 +76,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
             <div class="character-sprite-container"> <img src="${spritePath}" alt="${profile.jobName}"> </div>
+
             <div style="color:var(--color-text-secondary); font-weight:500;">${profile.adventureName ?? '-'}</div>
             <div style="font-family: var(--font-display); color:#eee; font-size:1.8em; font-weight:600;">${profile.characterName ?? '-'}</div>
             <div style="color:#A0844B; font-size:0.8em;">[${profile.jobGrowName ?? '-'}]</div>
             <div style="display: flex; align-items: center; gap: 2px;"> <img src="${setIconPath}" alt="Set Icon"> <span style="${rarityStyle};"> ${rarityName}</span>
                 ${profile.setPoint > 0 ? `<span style="color:#aaa; font-size: 0.9em; margin-left: 4px;">(${profile.setPoint})</span>` : ''}
             </div>
+
             <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);">
                 <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">${isBuffer ? 'Buff Score' : 'DPS Score'}</span>
                 ${scoreDisplay}
@@ -90,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-    // --- 핵심 기능 함수 ---
     async function fetchAndDisplayRankings() {
         if (!state.jobName) return;
         setLoading(true);
@@ -102,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             
             if (data.ranking && data.ranking.length > 0) {
-                renderRankingCards(data.ranking); // [변경]
+                renderRankingCards(data.ranking);
                 renderPagination(data.pagination);
             } else {
                 showNoResults();
@@ -115,20 +116,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function renderRankingCards(rankingData) { // [변경]
+    function renderRankingCards(rankingData) {
         elements.cardGrid.innerHTML = '';
         rankingData.forEach(item => {
             const scoreToShow = state.isBuffer ? item.total_buff_score : item.dps_normalized;
-            const profileData = {
-                ...item,
-                jobName: item.jobName || state.jobName.split(": ")[1],
-            };
+            const profileData = { ...item };
+            if (!profileData.jobName && state.jobName) {
+                 profileData.jobName = state.jobName.includes(': ') ? state.jobName.split(': ')[1] : state.jobName;
+            }
             const card = createCharacterCard(profileData, scoreToShow, state.isBuffer);
             elements.cardGrid.appendChild(card);
         });
     }
 
-    function renderPagination({ current_page, total_pages }) { // [변경]
+    function renderPagination({ current_page, total_pages }) {
         state.totalPages = total_pages;
         elements.pagination.innerHTML = '';
         if (total_pages <= 0) return;
@@ -139,23 +140,17 @@ document.addEventListener('DOMContentLoaded', () => {
             <button id="next-page" ${current_page === total_pages ? 'disabled' : ''}>&gt;</button>
         `;
 
-        document.getElementById('prev-page').addEventListener('click', () => {
-            state.page--;
-            fetchAndDisplayRankings();
-        });
-        document.getElementById('next-page').addEventListener('click', () => {
-            state.page++;
-            fetchAndDisplayRankings();
-        });
+        document.getElementById('prev-page').addEventListener('click', () => { if(state.page > 1) { state.page--; fetchAndDisplayRankings(); } });
+        document.getElementById('next-page').addEventListener('click', () => { if(state.page < state.totalPages) { state.page++; fetchAndDisplayRankings(); } });
     }
-
+    
     function setLoading(isLoading) {
         elements.loader.style.display = isLoading ? 'block' : 'none';
         elements.cardGrid.style.display = isLoading ? 'none' : 'grid';
         elements.pagination.style.display = isLoading ? 'none' : 'flex';
         if (isLoading) elements.noResults.style.display = 'none';
     }
-    
+
     function renderClassGrid() {
         elements.classGrid.innerHTML = '';
         Object.values(CLASSES).flat().forEach(jobName => {
