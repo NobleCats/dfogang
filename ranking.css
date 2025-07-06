@@ -20,11 +20,9 @@
 
 .class-group-title {
     font-family: var(--font-dfo);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--color-text-primary);
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--color-border);
+    margin-bottom: 10px;
 }
 
 .class-grid {
@@ -34,19 +32,20 @@
 }
 
 .class-card {
-    width: 121px; 
-    height: 90px;  
-    
+    width: 121px;
+    height: 90px;
+
     position: relative;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    
+    flex-direction: column; 
+    justify-content: flex-end; 
+    align-items: center; 
+
     border-radius: 8px;
     border: 1px solid var(--color-border);
     cursor: pointer;
     overflow: hidden;
-    
+
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -65,7 +64,7 @@
 }
 
 .class-card:hover::before {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .class-card-bg {
@@ -83,15 +82,15 @@
 }
 
 .class-card-name {
-    position: relative;
-    z-index: 2;
     color: #FFFFFF;
     font-family: var(--font-dfo);
-    font-size: 1.1rem; 
+    font-size: 1rem;
     font-weight: 700;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    padding: 0 5px; 
-    text-align: center;
+    text-align: center; 
+    padding-bottom: 5px; 
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
 .ranking-results-container {
