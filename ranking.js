@@ -1,29 +1,30 @@
 // ranking.js
 document.addEventListener('DOMContentLoaded', () => {
     const API_BASE_URL = 'https://api.dfogang.com';
-    const CLASSES = {
-        "Slayer (M)": ["Neo: Blade Master", "Neo: Soul Bender", "Neo: Berserker", "Neo: Asura", "Neo: Ghostblade"],
-        "Slayer (F)": ["Neo: Sword Master", "Neo: Demon Slayer", "Neo: Vagabond", "Neo: Dark Templar", "Neo: Spectre"],
-        "Fighter (M)": ["Neo: Nen Master", "Neo: Striker", "Neo: Brawler", "Neo: Grappler"],
-        "Fighter (F)": ["Neo: Nen Master", "Neo: Striker", "Neo: Brawler", "Neo: Grappler"],
-        "Mage (M)": ["Neo: Elemental Bomber", "Neo: Glacial Master", "Neo: Blood Mage", "Neo: Swift Master", "Neo: Dimension Walker"],
-        "Mage (F)": ["Neo: Elementalist", "Neo: Summoner", "Neo: Witch", "Neo: Battle Mage", "Neo: Enchantress"],
-        "Priest (M)": ["Neo: Crusader", "Neo: Monk", "Neo: Exorcist", "Neo: Avenger"],
-        "Priest (F)": ["Neo: Crusader", "Neo: Inquisitor", "Neo: Shaman", "Neo: Mistress"],
-        "Gunner (M)": ["Neo: Ranger", "Neo: Launcher", "Neo: Mechanic", "Neo: Spitfire", "Neo: Blitz"],
-        "Gunner (F)": ["Neo: Ranger", "Neo: Launcher", "Neo: Mechanic", "Neo: Spitfire"],
-        "Thief": ["Neo: Rogue", "Neo: Necromancer", "Neo: Kunoichi", "Neo: Shadow Dancer"],
-        "Agent": ["Neo: Secret Agent", "Neo: Troubleshooter", "Neo: Hitman", "Neo: Specialist"],
-        "Knight": ["Neo: Elven Knight", "Neo: Chaos", "Neo: Dragon Knight", "Neo: Lightbringer"],
-        "Demonic Lancer": ["Neo: Vanguard", "Neo: Skirmisher", "Neo: Impaler", "Neo: Dragoon"],
-        "Creator": ["Neo: Creator"],
-        "Dark Knight": ["Neo: Dark Knight"],
-        "Archer": ["Neo: Muse", "Neo: Traveler", "Neo: Hunter", "Neo: Vigilante"],
+    const JOB_GROUPS = {
+        "Slayer (M)": ["Blade Master", "Soul Bender", "Berserker", "Asura", "Ghostblade"],
+        "Slayer (F)": ["Sword Master", "Demon Slayer", "Vagabond", "Dark Templar", "Spectre"],
+        "Fighter (M)": ["Nen Master", "Striker", "Brawler", "Grappler"],
+        "Fighter (F)": ["Nen Master", "Striker", "Brawler", "Grappler"],
+        "Mage (M)": ["Elemental Bomber", "Glacial Master", "Blood Mage", "Swift Master", "Dimension Walker"],
+        "Mage (F)": ["Elementalist", "Summoner", "Witch", "Battle Mage", "Enchantress"],
+        "Priest (M)": ["Crusader", "Monk", "Exorcist", "Avenger"],
+        "Priest (F)": ["Crusader", "Inquisitor", "Shaman", "Mistress"],
+        "Gunner (M)": ["Ranger", "Launcher", "Mechanic", "Spitfire", "Blitz"],
+        "Gunner (F)": ["Ranger", "Launcher", "Mechanic", "Spitfire"],
+        "Thief": ["Rogue", "Necromancer", "Kunoichi", "Shadow Dancer"],
+        "Agent": ["Secret Agent", "Troubleshooter", "Hitman", "Specialist"],
+        "Knight": ["Elven Knight", "Chaos", "Dragon Knight", "Lightbringer"],
+        "Demonic Lancer": ["Vanguard", "Skirmisher", "Impaler", "Dragoon"],
+        "Creator": ["Creator"],
+        "Dark Knight": ["Dark Knight"],
+        "Archer": ["Muse", "Traveler", "Hunter", "Vigilante"],
     };
-    const BUFFER_CLASSES = ['Neo: Enchantress', 'Neo: Crusader', 'Neo: Muse'];
+    const NEO_PREFIX = "Neo: ";
+    const BUFFER_CLASSES = ['Enchantress', 'Crusader', 'Muse'];
 
+    const selectionContainer = document.getElementById('class-selection-container');
     const elements = {
-        classGrid: document.getElementById('class-grid'),
         rankingResults: document.getElementById('ranking-results'),
         rankingTitle: document.getElementById('ranking-title'),
         cardGrid: document.getElementById('ranking-card-grid'),
@@ -76,14 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
             <div class="character-sprite-container"> <img src="${spritePath}" alt="${profile.jobName}"> </div>
-
             <div style="color:var(--color-text-secondary); font-weight:500;">${profile.adventureName ?? '-'}</div>
             <div style="font-family: var(--font-display); color:#eee; font-size:1.8em; font-weight:600;">${profile.characterName ?? '-'}</div>
             <div style="color:#A0844B; font-size:0.8em;">[${profile.jobGrowName ?? '-'}]</div>
             <div style="display: flex; align-items: center; gap: 2px;"> <img src="${setIconPath}" alt="Set Icon"> <span style="${rarityStyle};"> ${rarityName}</span>
                 ${profile.setPoint > 0 ? `<span style="color:#aaa; font-size: 0.9em; margin-left: 4px;">(${profile.setPoint})</span>` : ''}
             </div>
-
             <div style="display: flex; align-items: center; gap: 6px; font-family: var(--font-dfo);">
                 <span style="font-size: 1em; margin-top: 2.1px; color: var(--color-text-secondary);">${isBuffer ? 'Buff Score' : 'DPS Score'}</span>
                 ${scoreDisplay}
@@ -92,6 +91,74 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
+    function renderClassSelection() {
+        selectionContainer.innerHTML = ''; 
+
+        for (const groupName in JOB_GROUPS) {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'class-group';
+
+            const title = document.createElement('h3');
+            title.className = 'class-group-title';
+            title.textContent = groupName;
+            groupDiv.appendChild(title);
+
+            const gridDiv = document.createElement('div');
+            gridDiv.className = 'class-grid';
+
+            JOB_GROUPS[groupName].forEach(jobName => {
+                const card = document.createElement('div');
+                card.className = 'class-card';
+                const imageName = jobName.replace(/ /g, '').toLowerCase();
+                
+                const staticImgPath = `assets/characters/${groupName}/${imageName}.png`;
+                const animatedGifPath = `assets/characters/${groupName}/${imageName}.gif`;
+
+                const bgDiv = document.createElement('div');
+                bgDiv.className = 'class-card-bg';
+                bgDiv.style.backgroundImage = `url('${staticImgPath}')`; 
+                card.appendChild(bgDiv);
+
+                card.addEventListener('mouseenter', () => {
+                    bgDiv.style.backgroundImage = `url('${animatedGifPath}')`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    bgDiv.style.backgroundImage = `url('${staticImgPath}')`;
+                });
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'class-card-name';
+                nameSpan.textContent = NEO_PREFIX + jobName;
+                card.appendChild(nameSpan);
+                
+                const fullJobName = `${NEO_PREFIX}${jobName}`;
+                card.addEventListener('click', () => handleClassSelect(fullJobName));
+                gridDiv.appendChild(card);
+            });
+
+            groupDiv.appendChild(gridDiv);
+            selectionContainer.appendChild(groupDiv);
+        }
+    }
+    function handleClassSelect(fullJobName) {
+        state.jobName = fullJobName;
+        state.page = 1;
+        
+        const baseJobName = fullJobName.replace(NEO_PREFIX, '');
+        state.isBuffer = BUFFER_CLASSES.includes(baseJobName);
+
+        state.sortBy = state.isBuffer ? 'buff_score' : 'dps';
+        
+        updateSortButtonsText();
+        updateActiveSortButton();
+        fetchAndDisplayRankings();
+
+        selectionContainer.style.display = 'none';
+        elements.rankingResults.style.display = 'block';
+        elements.rankingTitle.textContent = `${fullJobName} Ranking`;
+        window.scrollTo(0, 0);
+    }
+    
     async function fetchAndDisplayRankings() {
         if (!state.jobName) return;
         setLoading(true);
@@ -122,7 +189,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const scoreToShow = state.isBuffer ? item.total_buff_score : item.dps_normalized;
             const profileData = { ...item };
             if (!profileData.jobName && state.jobName) {
-                 profileData.jobName = state.jobName.includes(': ') ? state.jobName.split(': ')[1] : state.jobName;
+                 const baseJobName = state.jobName.replace(NEO_PREFIX, '');
+                 const jobGroup = Object.keys(JOB_GROUPS).find(group => JOB_GROUPS[group].includes(baseJobName));
+                 if (jobGroup) {
+                    profileData.jobName = jobGroup;
+                 }
             }
             const card = createCharacterCard(profileData, scoreToShow, state.isBuffer);
             elements.cardGrid.appendChild(card);
@@ -143,40 +214,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('prev-page').addEventListener('click', () => { if(state.page > 1) { state.page--; fetchAndDisplayRankings(); } });
         document.getElementById('next-page').addEventListener('click', () => { if(state.page < state.totalPages) { state.page++; fetchAndDisplayRankings(); } });
     }
-    
+
     function setLoading(isLoading) {
         elements.loader.style.display = isLoading ? 'block' : 'none';
         elements.cardGrid.style.display = isLoading ? 'none' : 'grid';
         elements.pagination.style.display = isLoading ? 'none' : 'flex';
         if (isLoading) elements.noResults.style.display = 'none';
-    }
-
-    function renderClassGrid() {
-        elements.classGrid.innerHTML = '';
-        Object.values(CLASSES).flat().forEach(jobName => {
-            const card = document.createElement('div');
-            card.className = 'class-card';
-            card.textContent = jobName;
-            card.dataset.jobName = jobName;
-            card.addEventListener('click', () => handleClassSelect(jobName));
-            elements.classGrid.appendChild(card);
-        });
-    }
-
-    function handleClassSelect(jobName) {
-        state.jobName = jobName;
-        state.page = 1;
-        state.isBuffer = BUFFER_CLASSES.includes(jobName);
-        state.sortBy = state.isBuffer ? 'buff_score' : 'dps';
-        
-        updateSortButtonsText();
-        updateActiveSortButton();
-        fetchAndDisplayRankings();
-
-        elements.classGrid.style.display = 'none';
-        elements.rankingResults.style.display = 'block';
-        elements.rankingTitle.textContent = `${jobName} Ranking`;
-        window.scrollTo(0, 0);
     }
 
     function updateSortButtonsText() {
@@ -213,5 +256,5 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchAndDisplayRankings();
     });
 
-    renderClassGrid();
+    renderClassSelection();
 });
