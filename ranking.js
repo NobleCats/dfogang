@@ -1,5 +1,6 @@
 // ranking.js
 document.addEventListener('DOMContentLoaded', () => {
+    // --- 설정 및 데이터 ---
     const API_BASE_URL = 'https://api.dfogang.com';
     const JOB_GROUPS = {
         "Slayer (M)": ["Blade Master", "Soul Bender", "Berserker", "Asura", "Ghostblade"],
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const NEO_PREFIX = "Neo: ";
     const BUFFER_CLASSES = ['Enchantress', 'Crusader', 'Muse'];
 
+    // --- DOM 요소 ---
     const selectionContainer = document.getElementById('class-selection-container');
     const elements = {
         rankingResults: document.getElementById('ranking-results'),
@@ -36,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setNormalizeToggle: document.getElementById('set-normalize-toggle'),
     };
 
+    // --- 상태 관리 ---
     let state = {
         jobName: null,
         sortBy: 'dps',
@@ -47,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentRankingData: []
     };
 
+    // --- 헬퍼 함수들 ---
     const rarityColors = { "None": "#FFFFFF", "Rare": "#B36BFF", "Unique": "#FF00FF", "Legendary": "#FF7800", "Epic": "#FFB400" };
     const SET_CATEGORIES = ["Dragon", "Magic", "Alpha", "Shadow", "Ethereal", "Valkyrie", "Nature", "Fairy", "Energy", "Serendipity", "Cleansing", "Gold", "Tales"];
     
@@ -75,6 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = document.createElement('div');
         card.className = `card ${isBuffer ? 'is-buffer' : ''}`;
         
+        // [수정] 카드에 데이터 속성 추가
+        card.dataset.characterName = profile.characterName;
+        card.dataset.serverId = profile.serverId;
+
         const scoreValue = isBuffer ? (profile.total_buff_score != null ? profile.total_buff_score.toLocaleString() : 'N/A') : (dpsToShow != null ? dpsToShow.toLocaleString() : 'N/A');
         const scoreDisplay = `<span class="card-score-value">${scoreValue}</span>`;
 
@@ -115,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderClassSelection() {
         selectionContainer.innerHTML = '';
-
         for (const groupName in JOB_GROUPS) {
             const groupDiv = document.createElement('div');
             groupDiv.className = 'class-group';
@@ -174,8 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
         state.isBuffer = BUFFER_CLASSES.includes(baseJobName);
         state.sortBy = state.isBuffer ? 'buff_score' : 'dps';
         
-        elements.setNormalizeToggle.style.display = state.isBuffer ? 'none' : 'flex';
-
         updateSortButtonsText();
         updateActiveSortButton();
         fetchAndDisplayRankings();
@@ -306,8 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (state.setNormalize === newValue) return;
 
         state.setNormalize = newValue;
-        state.page = 1; 
-
         elements.setNormalizeToggle.querySelector('.active').classList.remove('active');
         option.classList.add('active');
         
@@ -317,6 +320,24 @@ document.addEventListener('DOMContentLoaded', () => {
             state.page = 1; 
             fetchAndDisplayRankings();
         }
+    });
+
+    // [신규] 랭킹 카드 클릭 이벤트 리스너
+    elements.cardGrid.addEventListener('click', (event) => {
+        const card = event.target.closest('.card');
+        if (!card) return;
+
+        const characterName = card.dataset.characterName;
+        const serverId = card.dataset.serverId;
+        const setNormalizeState = state.setNormalize;
+
+        if (!characterName || !serverId) return;
+
+        // 메인 페이지(index.html)의 URL 구조에 맞춰 이동
+        const baseUrl = window.location.origin;
+        const newUrl = `${baseUrl}/?view=detail&server=${serverId}&name=${characterName}&average_set_dmg=${setNormalizeState}`;
+        
+        window.location.href = newUrl;
     });
 
     window.addEventListener('popstate', (event) => {
