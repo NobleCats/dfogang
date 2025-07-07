@@ -87,7 +87,7 @@
     z-index: 2;
 }
 .class-card:hover .class-card-gif {
-    opacity: 1;
+    opacity: 2;
 }
 
 .class-card-name {
