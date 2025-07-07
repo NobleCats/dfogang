@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let state = {
         jobName: null,
+        baseClass: null,
         sortBy: 'dps',
         page: 1,
         limit: 12,
@@ -103,15 +104,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-    function updateURL(jobName) {
+    function updateURL(jobName, baseClass) {
         const url = new URL(window.location);
-        if (jobName) {
+        if (jobName && baseClass) {
             url.searchParams.set('class', jobName);
+            url.searchParams.set('base_class', baseClass);
         } else {
             url.searchParams.delete('class');
+            url.searchParams.delete('base_class');
         }
         if (window.location.href !== url.href) {
-            history.pushState({ jobName: jobName }, '', url);
+            history.pushState({ jobName, baseClass }, '', url);
         }
     }
 
@@ -152,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.addEventListener('mouseleave', () => { if (bgPng) bgPng.style.opacity = '1'; });
                 
                 const fullJobName = `${NEO_PREFIX}${jobName}`;
-                card.addEventListener('click', () => handleClassSelect(fullJobName));
+                card.addEventListener('click', () => handleClassSelect(fullJobName, groupName));
                 gridDiv.appendChild(card);
             });
             groupDiv.appendChild(gridDiv);
@@ -160,16 +163,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function handleClassSelect(fullJobName) {
-        if (!fullJobName) {
+    function handleClassSelect(fullJobName, groupName) {
+        if (!fullJobName || !groupName) {
             selectionContainer.style.display = 'block';
             elements.rankingResults.style.display = 'none';
             elements.setNormalizeToggle.style.display = 'none';
-            updateURL(null);
+            updateURL(null, null);
             return;
         }
 
         state.jobName = fullJobName;
+        state.baseClass = groupName;
         state.page = 1;
         const baseJobName = fullJobName.replace(NEO_PREFIX, '');
         state.isBuffer = BUFFER_CLASSES.includes(baseJobName);
@@ -183,11 +187,11 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.rankingResults.style.display = 'block';
         elements.rankingTitle.textContent = `${fullJobName} Ranking`;
 
-        updateURL(fullJobName);
+        updateURL(fullJobName, groupName);
     }
      
     async function fetchAndDisplayRankings() {
-        if (!state.jobName) return;
+        if (!state.jobName || !state.baseClass) return;
         setLoading(true);
         try {
             let sortByParam = state.sortBy;
@@ -195,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 sortByParam = state.setNormalize ? 'dps_normalized' : 'dps_normal';
             }
 
-            const url = `${API_BASE_URL}/api/v1/ranking/${encodeURIComponent(state.jobName)}?sort_by=${sortByParam}&page=${state.page}&limit=${state.limit}`;
+            const url = `${API_BASE_URL}/api/v1/ranking/${encodeURIComponent(state.jobName)}?sort_by=${sortByParam}&page=${state.page}&limit=${state.limit}&base_class=${encodeURIComponent(state.baseClass)}`;
             const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             
@@ -335,16 +339,18 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('popstate', (event) => {
         const params = new URLSearchParams(window.location.search);
         const classNameFromURL = params.get('class') || null;
-        handleClassSelect(classNameFromURL);
+        const baseClassFromURL = params.get('base_class') || null;
+        handleClassSelect(classNameFromURL, baseClassFromURL);
     });
 
     function initializePage() {
         renderClassSelection();
         const params = new URLSearchParams(window.location.search);
         const classNameFromURL = params.get('class');
+        const baseClassFromURL = params.get('base_class');
 
-        if (classNameFromURL) {
-            handleClassSelect(classNameFromURL);
+        if (classNameFromURL && baseClassFromURL) {
+            handleClassSelect(classNameFromURL, baseClassFromURL);
         } else {
             elements.setNormalizeToggle.style.display = 'none';
         }
