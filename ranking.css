@@ -370,4 +370,36 @@
     opacity: 1;
 }
 
+.background-sarpoza,
+.background-doghead {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;  
+    pointer-events: none;
+}
+.background-sarpoza {
+    left: 0;
+    width: 650px;  
+    justify-content: flex-start;
+}
+
+.background-doghead {
+    right: 0;
+    width: 650px; 
+    justify-content: flex-end;
+}
+
+.background-sarpoza img,
+.background-doghead img {
+    width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    opacity: 0.2;
+    user-select: none;
+    pointer-events: none;
+    padding-top: 10vh;
+}
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }

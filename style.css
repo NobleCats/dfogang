@@ -155,7 +155,6 @@ body {
     justify-content: flex-start;
 }
 
-/* 우측 (doghead) */
 .background-doghead {
     right: 0;
     width: 650px; 
