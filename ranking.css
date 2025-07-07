@@ -76,16 +76,20 @@
     background-size: cover;
     background-position: center;
     transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 0;
 }
-
-
-.class-card:hover .class-card-gif {
-    opacity: 1; 
+.class-card-bg {
+    transition: opacity 0.2s ease-in-out, transform 0.3s ease;
+}
+.class-card:hover .class-card-bg, .class-card:hover .class-card-gif {
     transform: scale(1.1);
 }
-
 .class-card-gif {
-    opacity: 0; 
+    opacity: 0;
+    z-index: 1;
+}
+.class-card:hover .class-card-gif {
+    opacity: 1;
 }
 
 .class-card-name {
