@@ -23,19 +23,29 @@
         <section id="ranking-section">
             <h2 class="section-title">Class Rankings</h2>
             
+            <div id="ranking-options-container" class="ranking-options-container">
+                <div id="set-normalize-toggle" class="dps-toggle-group" style="display: none;">
+                    <div class="dps-toggle-label">
+                        Set Normalize
+                        <span class="tooltip-icon">?</span>
+                        <div class="tooltip-content">
+                            <p>Calculates damage based on a comparable tier of the Death in the Shadows Set.</p>
+                        </div>
+                    </div>
+                    <div class="dps-toggle-switch">
+                        <div class="dps-toggle-option" data-value="true">On</div>
+                        <div class="dps-toggle-option active" data-value="false">Off</div>
+                    </div>
+                </div>
+            </div>
+            
             <div id="class-selection-container">
                 </div>
 
             <div id="ranking-results" class="ranking-results-container" style="display: none;">
                 <div class="ranking-header">
                     <h3 id="ranking-title"></h3>
-                    <div class="controls-wrapper"> <div id="set-normalize-toggle" class="dps-toggle-group">
-                            <div class="dps-toggle-label">Set Normalize</div>
-                            <div class="dps-toggle-switch">
-                                <div class="dps-toggle-option" data-value="true">On</div>
-                                <div class="dps-toggle-option active" data-value="false">Off</div>
-                            </div>
-                        </div>
+                    <div class="controls-wrapper">
                         <div class="sort-buttons">
                             <button id="sort-by-score" class="btn active">Damage</button>
                             <button id="sort-by-fame" class="btn">Fame</button>

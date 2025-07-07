@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
         limit: 12,
         totalPages: 1,
         isBuffer: false,
-        setNormalize: false
+        setNormalize: false,
+        currentRankingData: []
     };
 
     const rarityColors = { "None": "#FFFFFF", "Rare": "#B36BFF", "Unique": "#FF00FF", "Legendary": "#FF7800", "Epic": "#FFB400" };
@@ -162,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!fullJobName) {
             selectionContainer.style.display = 'block';
             elements.rankingResults.style.display = 'none';
+            elements.setNormalizeToggle.style.display = 'none';
             updateURL(null);
             return;
         }
@@ -201,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             
             if (data.ranking && data.ranking.length > 0) {
+                state.currentRankingData = data.ranking;
                 renderRankingCards(data.ranking);
                 renderPagination(data.pagination);
             } else {
@@ -268,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const scoreSortValue = state.isBuffer ? 'buff_score' : 'dps';
         elements.btnSortByScore.classList.toggle('active', state.sortBy === scoreSortValue);
         elements.btnSortByFame.classList.toggle('active', state.sortBy === 'fame');
-        elements.setNormalizeToggle.style.display = (state.sortBy === 'dps' && !state.isBuffer) ? 'flex' : 'none';
+        elements.setNormalizeToggle.style.display = state.isBuffer ? 'none' : 'flex';
     }
 
     function showNoResults(message = 'No ranking data found for this class.') {
@@ -308,7 +311,12 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.setNormalizeToggle.querySelector('.active').classList.remove('active');
         option.classList.add('active');
         
-        fetchAndDisplayRankings();
+        if (state.sortBy !== 'dps') {
+            renderRankingCards(state.currentRankingData);
+        } else {
+            state.page = 1; 
+            fetchAndDisplayRankings();
+        }
     });
 
     window.addEventListener('popstate', (event) => {
@@ -324,6 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (classNameFromURL) {
             handleClassSelect(classNameFromURL);
+        } else {
+            elements.setNormalizeToggle.style.display = 'none';
         }
     }
 
