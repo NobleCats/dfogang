@@ -33,9 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
         pagination: document.getElementById('pagination'),
         btnSortByScore: document.getElementById('sort-by-score'),
         btnSortByFame: document.getElementById('sort-by-fame'),
+        setNormalizeToggle: document.getElementById('set-normalize-toggle'),
     };
 
-    let state = { jobName: null, sortBy: 'dps', page: 1, limit: 12, totalPages: 1, isBuffer: false };
+    let state = {
+        jobName: null,
+        sortBy: 'dps',
+        page: 1,
+        limit: 12,
+        totalPages: 1,
+        isBuffer: false,
+        setNormalize: false
+    };
 
     const rarityColors = { "None": "#FFFFFF", "Rare": "#B36BFF", "Unique": "#FF00FF", "Legendary": "#FF7800", "Epic": "#FFB400" };
     const SET_CATEGORIES = ["Dragon", "Magic", "Alpha", "Shadow", "Ethereal", "Valkyrie", "Nature", "Fairy", "Energy", "Serendipity", "Cleansing", "Gold", "Tales"];
@@ -98,9 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             url.searchParams.delete('class');
         }
-        history.pushState({ jobName: jobName }, '', url);
+        if (window.location.href !== url.href) {
+            history.pushState({ jobName: jobName }, '', url);
+        }
     }
-
 
     function renderClassSelection() {
         selectionContainer.innerHTML = '';
@@ -128,29 +138,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.innerHTML = `
                     <div class="class-card-bg" style="background-image: url('${staticImgPath}');"></div>
                     <div class="class-card-gif" style="background-image: url('${animatedGifPath}');"></div>
-                    <span class="class-card-name">${jobName}</span>
+                    <span class="class-card-name">${NEO_PREFIX}${jobName}</span>
                 `;
 
                 const bgPng = card.querySelector('.class-card-bg');
-                const bgGif = card.querySelector('.class-card-gif');
-
                 card.addEventListener('mouseenter', () => {
                     const gifLoader = new Image();
-                    gifLoader.onload = () => {
-                        if (bgPng) bgPng.style.opacity = '0';
-                    };
+                    gifLoader.onload = () => { if (bgPng) bgPng.style.opacity = '0'; };
                     gifLoader.src = animatedGifPath;
                 });
-
-                card.addEventListener('mouseleave', () => {
-                    if (bgPng) bgPng.style.opacity = '1';
-                });
+                card.addEventListener('mouseleave', () => { if (bgPng) bgPng.style.opacity = '1'; });
                 
                 const fullJobName = `${NEO_PREFIX}${jobName}`;
                 card.addEventListener('click', () => handleClassSelect(fullJobName));
                 gridDiv.appendChild(card);
             });
-
             groupDiv.appendChild(gridDiv);
             selectionContainer.appendChild(groupDiv);
         }
@@ -169,6 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const baseJobName = fullJobName.replace(NEO_PREFIX, '');
         state.isBuffer = BUFFER_CLASSES.includes(baseJobName);
         state.sortBy = state.isBuffer ? 'buff_score' : 'dps';
+        
+        elements.setNormalizeToggle.style.display = state.isBuffer ? 'none' : 'flex';
 
         updateSortButtonsText();
         updateActiveSortButton();
@@ -220,7 +224,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 scoreToShow = state.setNormalize ? item.dps_normalized : item.dps_normal;
             }
             
-            const profileData = { /* ... */ };
+            const profileData = { ...item };
+            if (!profileData.jobName) {
+                 const baseJobName = state.jobName.replace(NEO_PREFIX, '');
+                 const jobGroup = Object.keys(JOB_GROUPS).find(group => JOB_GROUPS[group].includes(baseJobName));
+                 if (jobGroup) {
+                    profileData.jobName = jobGroup;
+                 }
+            }
+
             const card = createCharacterCard(profileData, scoreToShow, state.isBuffer);
             elements.cardGrid.appendChild(card);
         });
@@ -275,6 +287,14 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchAndDisplayRankings();
     });
 
+    elements.btnSortByFame.addEventListener('click', () => {
+        if (state.sortBy === 'fame') return;
+        state.sortBy = 'fame';
+        state.page = 1;
+        updateActiveSortButton();
+        fetchAndDisplayRankings();
+    });
+
     elements.setNormalizeToggle.addEventListener('click', (event) => {
         const option = event.target.closest('.dps-toggle-option');
         if (!option) return;
@@ -295,10 +315,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(window.location.search);
         const classNameFromURL = params.get('class') || null;
         handleClassSelect(classNameFromURL);
-    });
-    window.addEventListener('popstate', (event) => {
-        const jobName = event.state?.jobName || null;
-        handleClassSelect(jobName);
     });
 
     function initializePage() {

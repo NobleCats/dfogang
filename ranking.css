@@ -5,8 +5,9 @@
     font-family: var(--font-dfo);
     text-align: center;
     margin-bottom: 40px;
-    font-size: 2rem;
+    font-size: 52px;
     font-weight: 700;
+    padding-top: 10vh;
 }
 
 .class-group {
