@@ -148,7 +148,7 @@
 .ranking-card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-    gap: 20px;
+    gap: 24px;
     justify-items: center;
     padding: 0 20px;
     max-width: 1200px;
