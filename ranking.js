@@ -141,14 +141,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleClassSelect(fullJobName) {
+        if (!fullJobName) {
+            selectionContainer.style.display = 'block';
+            elements.rankingResults.style.display = 'none';
+            updateURL(null);
+            return;
+        }
+
         state.jobName = fullJobName;
         state.page = 1;
-        
         const baseJobName = fullJobName.replace(NEO_PREFIX, '');
         state.isBuffer = BUFFER_CLASSES.includes(baseJobName);
-
         state.sortBy = state.isBuffer ? 'buff_score' : 'dps';
-        
+
         updateSortButtonsText();
         updateActiveSortButton();
         fetchAndDisplayRankings();
@@ -156,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectionContainer.style.display = 'none';
         elements.rankingResults.style.display = 'block';
         elements.rankingTitle.textContent = `${fullJobName} Ranking`;
-        
+
         updateURL(fullJobName);
     }
     
@@ -249,27 +254,23 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchAndDisplayRankings();
     });
 
-    elements.btnSortByFame.addEventListener('click', () => {
-        if (state.sortBy === 'fame') return;
-        state.sortBy = 'fame';
-        state.page = 1;
-        updateActiveSortButton();
-        fetchAndDisplayRankings();
+    window.addEventListener('popstate', (event) => {
+        const params = new URLSearchParams(window.location.search);
+        const classNameFromURL = params.get('class') || null;
+        handleClassSelect(classNameFromURL);
     });
-
     window.addEventListener('popstate', (event) => {
         const jobName = event.state?.jobName || null;
         handleClassSelect(jobName);
     });
 
     function initializePage() {
+        renderClassSelection();
         const params = new URLSearchParams(window.location.search);
         const classNameFromURL = params.get('class');
 
         if (classNameFromURL) {
             handleClassSelect(classNameFromURL);
-        } else {
-            renderClassSelection();
         }
     }
 
