@@ -180,12 +180,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateURL(fullJobName);
     }
-    
+     
     async function fetchAndDisplayRankings() {
         if (!state.jobName) return;
         setLoading(true);
         try {
-            const url = `${API_BASE_URL}/api/v1/ranking/${encodeURIComponent(state.jobName)}?sort_by=${state.sortBy}&page=${state.page}&limit=${state.limit}`;
+            let sortByParam = state.sortBy;
+            if (sortByParam === 'dps') {
+                sortByParam = state.setNormalize ? 'dps_normalized' : 'dps_normal';
+            }
+
+            const url = `${API_BASE_URL}/api/v1/ranking/${encodeURIComponent(state.jobName)}?sort_by=${sortByParam}&page=${state.page}&limit=${state.limit}`;
             const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             
@@ -208,15 +213,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderRankingCards(rankingData) {
         elements.cardGrid.innerHTML = '';
         rankingData.forEach(item => {
-            const scoreToShow = state.isBuffer ? item.total_buff_score : item.dps_normalized;
-            const profileData = { ...item };
-            if (!profileData.jobName && state.jobName) {
-                 const baseJobName = state.jobName.replace(NEO_PREFIX, '');
-                 const jobGroup = Object.keys(JOB_GROUPS).find(group => JOB_GROUPS[group].includes(baseJobName));
-                 if (jobGroup) {
-                    profileData.jobName = jobGroup;
-                 }
+            let scoreToShow;
+            if (state.isBuffer) {
+                scoreToShow = item.total_buff_score;
+            } else {
+                scoreToShow = state.setNormalize ? item.dps_normalized : item.dps_normal;
             }
+            
+            const profileData = { /* ... */ };
             const card = createCharacterCard(profileData, scoreToShow, state.isBuffer);
             elements.cardGrid.appendChild(card);
         });
@@ -252,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const scoreSortValue = state.isBuffer ? 'buff_score' : 'dps';
         elements.btnSortByScore.classList.toggle('active', state.sortBy === scoreSortValue);
         elements.btnSortByFame.classList.toggle('active', state.sortBy === 'fame');
+        elements.setNormalizeToggle.style.display = (state.sortBy === 'dps' && !state.isBuffer) ? 'flex' : 'none';
     }
 
     function showNoResults(message = 'No ranking data found for this class.') {
@@ -267,6 +272,22 @@ document.addEventListener('DOMContentLoaded', () => {
         state.sortBy = newSortBy;
         state.page = 1;
         updateActiveSortButton();
+        fetchAndDisplayRankings();
+    });
+
+    elements.setNormalizeToggle.addEventListener('click', (event) => {
+        const option = event.target.closest('.dps-toggle-option');
+        if (!option) return;
+
+        const newValue = option.dataset.value === 'true';
+        if (state.setNormalize === newValue) return;
+
+        state.setNormalize = newValue;
+        state.page = 1; 
+
+        elements.setNormalizeToggle.querySelector('.active').classList.remove('active');
+        option.classList.add('active');
+        
         fetchAndDisplayRankings();
     });
 
