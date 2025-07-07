@@ -95,13 +95,20 @@ function render() {
     }
 }
 
-function updateURL(view, server, name) {
+function updateURL(view, server, name, replace = false) {
     const params = new URLSearchParams();
     params.set('view', view);
     params.set('server', server);
-    params.set('name', name);
+    if (name) params.set('name', name);
     params.set('average_set_dmg', state.dps.options.average_set_dmg.toString());
-    history.pushState({ view, server, name, average_set_dmg: state.dps.options.average_set_dmg }, '', `?${params.toString()}`);
+
+    const newUrl = `?${params.toString()}`;
+    const currentState = window.location.search;
+
+    if (newUrl !== currentState) {
+        const historyMethod = replace ? history.replaceState : history.pushState;
+        historyMethod.call(history, { view, server, name, average_set_dmg: state.dps.options.average_set_dmg }, '', newUrl);
+    }
 }
 
 async function performSearch(server, name) {
@@ -252,31 +259,34 @@ function handleCardClick(event) {
 }
 
 function handleGoBack() {
-    state.view = 'main';
-    state.characterDetail = { profile: null, equipment: null, setItemInfo: null, fameHistory: null, gearHistory: null, isBuffer: false, buffData: null };
-    updateURL('main', state.server, state.searchTerm);
-    render();
+    history.back();
 }
 
 window.onpopstate = (event) => {
-    if (event.state) {
-        const { view, server, name, average_set_dmg } = event.state;
-        if (average_set_dmg !== undefined) {
-             state.dps.options.average_set_dmg = (average_set_dmg === 'true');
-        }
-        if (view === 'detail') {
-            showCharacterDetail(server, name);
-        } else {
-            performSearch(server, name);
-        }
+    const params = new URLSearchParams(window.location.search);
+    const view = params.get('view');
+    const server = params.get('server');
+    const name = params.get('name');
+    const average_set_dmg = params.get('average_set_dmg');
+
+    if (average_set_dmg !== null) {
+        state.dps.options.average_set_dmg = (average_set_dmg === 'true');
+    }
+
+    if (view === 'detail' && server && name) {
+        showCharacterDetail(server, name);
     } else {
         state.view = 'main';
-        state.searchTerm = '';
-        state.allSearchResults = [];
-        state.displayedResults = [];
-        searchInput.value = '';
-        state.dps.options.average_set_dmg = false;
-        render();
+        if (name) {
+            state.searchTerm = name;
+            performSearch(server, name);
+        } else {
+            state.searchTerm = '';
+            state.allSearchResults = [];
+            state.displayedResults = [];
+            searchInput.value = '';
+            render();
+        }
     }
 };
 
