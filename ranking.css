@@ -74,7 +74,7 @@
     background-size: cover;
     background-position: center;
     transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 1;
+    z-index: 2;
 }
 .class-card-bg {
     transition: opacity 0.2s ease-in-out, transform 0.3s ease;
