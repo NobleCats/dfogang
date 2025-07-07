@@ -91,6 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
+    function updateURL(jobName) {
+        const url = new URL(window.location);
+        if (jobName) {
+            url.searchParams.set('class', jobName);
+        } else {
+            url.searchParams.delete('class');
+        }
+        history.pushState({ jobName: jobName }, '', url);
+    }
+
     function renderClassSelection() {
         selectionContainer.innerHTML = ''; 
 
@@ -128,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const nameSpan = document.createElement('span');
                 nameSpan.className = 'class-card-name';
-                nameSpan.textContent = NEO_PREFIX + jobName;
+                nameSpan.textContent = jobName;
                 card.appendChild(nameSpan);
                 
                 const fullJobName = `${NEO_PREFIX}${jobName}`;
@@ -156,7 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
         selectionContainer.style.display = 'none';
         elements.rankingResults.style.display = 'block';
         elements.rankingTitle.textContent = `${fullJobName} Ranking`;
-        window.scrollTo(0, 0);
+        
+        updateURL(fullJobName);
     }
     
     async function fetchAndDisplayRankings() {
@@ -256,5 +267,21 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchAndDisplayRankings();
     });
 
-    renderClassSelection();
+    window.addEventListener('popstate', (event) => {
+        const jobName = event.state?.jobName || null;
+        handleClassSelect(jobName);
+    });
+
+    function initializePage() {
+        const params = new URLSearchParams(window.location.search);
+        const classNameFromURL = params.get('class');
+
+        if (classNameFromURL) {
+            handleClassSelect(classNameFromURL);
+        } else {
+            renderClassSelection();
+        }
+    }
+
+    initializePage();
 });
