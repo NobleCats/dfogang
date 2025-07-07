@@ -78,7 +78,9 @@
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.class-card:hover .class-card-bg {
+
+.class-card:hover .class-card-gif {
+    opacity: 1; 
     transform: scale(1.1);
 }
 
