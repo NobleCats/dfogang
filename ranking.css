@@ -58,7 +58,7 @@
     top: 0; left: 0; right: 0; bottom: 0;
     background-color: rgba(0, 0, 0, 0.3);
     transition: background-color 0.3s;
-    z-index: 2;
+    z-index: 3;
 }
 
 .class-card:hover::before {
@@ -84,10 +84,10 @@
 }
 .class-card-gif {
     opacity: 0;
-    z-index: 2;
+    z-index: 3;
 }
 .class-card:hover .class-card-gif {
-    opacity: 2;
+    opacity: 3;
 }
 
 .class-card-name {
@@ -100,7 +100,7 @@
     padding-bottom: 5px;
     width: 100%;
     box-sizing: border-box;
-    z-index: 3;
+    z-index: 4;
 }
 
 .ranking-results-container {
