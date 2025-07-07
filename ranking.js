@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderClassSelection() {
-        selectionContainer.innerHTML = ''; 
+        selectionContainer.innerHTML = '';
 
         for (const groupName in JOB_GROUPS) {
             const groupDiv = document.createElement('div');
@@ -119,27 +119,16 @@ document.addEventListener('DOMContentLoaded', () => {
             JOB_GROUPS[groupName].forEach(jobName => {
                 const card = document.createElement('div');
                 card.className = 'class-card';
-                const imageName = jobName.replace(/ /g, '').toLowerCase();
                 
+                const imageName = jobName.replace(/ /g, '').toLowerCase();
                 const staticImgPath = `assets/characters/${groupName}/${imageName}.png`;
                 const animatedGifPath = `assets/characters/${groupName}/${imageName}.gif`;
 
-                const bgDiv = document.createElement('div');
-                bgDiv.className = 'class-card-bg';
-                bgDiv.style.backgroundImage = `url('${staticImgPath}')`; 
-                card.appendChild(bgDiv);
-
-                card.addEventListener('mouseenter', () => {
-                    bgDiv.style.backgroundImage = `url('${animatedGifPath}')`;
-                });
-                card.addEventListener('mouseleave', () => {
-                    bgDiv.style.backgroundImage = `url('${staticImgPath}')`;
-                });
-
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'class-card-name';
-                nameSpan.textContent = jobName;
-                card.appendChild(nameSpan);
+                card.innerHTML = `
+                    <div class="class-card-bg" style="background-image: url('${staticImgPath}');"></div>
+                    <div class="class-card-gif" style="background-image: url('${animatedGifPath}');"></div>
+                    <span class="class-card-name">${NEO_PREFIX}${jobName}</span>
+                `;
                 
                 const fullJobName = `${NEO_PREFIX}${jobName}`;
                 card.addEventListener('click', () => handleClassSelect(fullJobName));
@@ -150,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selectionContainer.appendChild(groupDiv);
         }
     }
+
     function handleClassSelect(fullJobName) {
         state.jobName = fullJobName;
         state.page = 1;
