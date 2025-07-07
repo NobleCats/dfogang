@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         history.pushState({ jobName: jobName }, '', url);
     }
 
+
     function renderClassSelection() {
         selectionContainer.innerHTML = '';
 
@@ -127,8 +128,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.innerHTML = `
                     <div class="class-card-bg" style="background-image: url('${staticImgPath}');"></div>
                     <div class="class-card-gif" style="background-image: url('${animatedGifPath}');"></div>
-                    <span class="class-card-name">${NEO_PREFIX}${jobName}</span>
+                    <span class="class-card-name">${jobName}</span>
                 `;
+
+                const bgPng = card.querySelector('.class-card-bg');
+                const bgGif = card.querySelector('.class-card-gif');
+
+                card.addEventListener('mouseenter', () => {
+                    const gifLoader = new Image();
+                    gifLoader.onload = () => {
+                        if (bgPng) bgPng.style.opacity = '0';
+                    };
+                    gifLoader.src = animatedGifPath;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    if (bgPng) bgPng.style.opacity = '1';
+                });
                 
                 const fullJobName = `${NEO_PREFIX}${jobName}`;
                 card.addEventListener('click', () => handleClassSelect(fullJobName));
