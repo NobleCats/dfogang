@@ -146,18 +146,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="class-card-name">${jobName}</span>
                 `;
 
-                const bgPng = card.querySelector('.class-card-bg');
                 card.addEventListener('mouseenter', () => {
+                    if (card.classList.contains('is-loaded')) return;
+
                     const gifLoader = new Image();
-                    gifLoader.onload = () => { if (bgPng) bgPng.style.opacity = '0'; };
-                    gifLoader.src = animatedGifPath;
+                    gifLoader.onload = () => {
+                        card.classList.add('is-loaded');
+                    };
+                    gifLoader.src = animatedGifPath; 
                 });
-                card.addEventListener('mouseleave', () => { if (bgPng) bgPng.style.opacity = '1'; });
+
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('is-loaded');
+                });
                 
                 const fullJobName = `${NEO_PREFIX}${jobName}`;
                 card.addEventListener('click', () => handleClassSelect(fullJobName, groupName));
                 gridDiv.appendChild(card);
             });
+
             groupDiv.appendChild(gridDiv);
             selectionContainer.appendChild(groupDiv);
         }
