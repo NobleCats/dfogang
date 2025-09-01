@@ -14,9 +14,11 @@ const state = {
     cheaters: []
 };
 
+
 async function fetchAndDisplayCheaters() {
     ui.setLoading(true);
     elements.noResults.style.display = 'none';
+    elements.cardGrid.innerHTML = ''; 
 
     try {
         const response = await api.getCheaters();

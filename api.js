@@ -73,3 +73,16 @@ export async function getItemFame(itemId) {
 export async function getCharacterStatus(serverId, characterId) {
     return await postData("/character/status", { serverId, characterId });
 }
+
+export async function getCheaters() {
+    try {
+        const response = await fetch(`${API_ROOT}/cheaters`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Failed to fetch cheaters:", error);
+        return null;
+    }
+}
