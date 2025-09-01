@@ -69,3 +69,7 @@ export async function getItemFame(itemId) {
         return null;
     }
 }
+
+export async function getCharacterStatus(serverId, characterId) {
+    return await postData("/character/status", { serverId, characterId });
+}

@@ -219,6 +219,18 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 showNoResults();
             }
+
+            const cheaters = [];
+            for (const character of data.results) {
+                const statusResponse = await api.getCharacterStatus(character.serverId, character.characterId);
+                if (statusResponse && statusResponse.is_cheater) {
+                    cheaters.push(character);
+                }
+            }
+
+            state.cheaters = cheaters; 
+            console.log("Cheaters found:", state.cheaters);
+            
         } catch (error) {
             console.error('Error fetching rankings:', error);
             showNoResults('Failed to load data. Please try again later.');

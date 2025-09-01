@@ -33,44 +33,16 @@
         <img src="assets/image/doghead.png" alt="Doghead" />
     </div>
 
+    
     <main class="container">
-        <section id="ranking-section">
-            <h2 class="section-title">Class Rankings</h2>
-            
-            <div id="ranking-options-container" class="ranking-options-container">
-                <div id="set-normalize-toggle" class="dps-toggle-group" style="display: none;">
-                    <div class="dps-toggle-label">
-                        Set Normalize
-                        <span class="tooltip-icon">?</span>
-                        <div class="tooltip-content">
-                            <p>Calculates damage based on a comparable tier of the Death in the Shadows Set.</p>
-                        </div>
-                    </div>
-                    <div class="dps-toggle-switch">
-                        <div class="dps-toggle-option" data-value="true">On</div>
-                        <div class="dps-toggle-option active" data-value="false">Off</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="class-selection-container">
-                </div>
-
-            <div id="ranking-results" class="ranking-results-container" style="display: none;">
+        <section class="ranking-section">
+            <div id="cheaters-results" class="ranking-results-container">
                 <div class="ranking-header">
-                    <h3 id="ranking-title"></h3>
-                    <div class="controls-wrapper">
-                        <div class="sort-buttons">
-                            <button id="sort-by-score" class="btn active">Damage</button>
-                            <button id="sort-by-fame" class="btn">Fame</button>
-                        </div>
-                    </div>
+                    <h3 id="cheaters-title">Hall of Cheaters</h3>
                 </div>
-                
-                <div id="ranking-card-grid" class="ranking-card-grid"></div>
+                <div id="cheater-card-grid" class="ranking-card-grid"></div>
                 <div id="loader" class="loader" style="display: none;"></div>
                 <p id="no-results" style="display: none;"></p>
-                <div id="pagination" class="pagination-simple"></div>
             </div>
         </section>
     </main>
