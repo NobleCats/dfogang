@@ -471,21 +471,21 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
 }
 
 
-const loadImageWithKey = (src, key) => {
-    return new Promise((resolve) => {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = () => {
-            imageMap[key] = img;
-            resolve(img);
-        };
-        img.onerror = () => {
-            console.error(`Failed to load image: ${src}`);
-            imageMap[key] = null;
-            resolve(null);
-        };
-        img.src = src;
-    });
+const loadImageWithKey = (imageMap, src, key) => { 
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      imageMap[key] = img;
+      resolve(img);
+    };
+    img.onerror = () => {
+      console.error(`Failed to load image: ${src}`);
+      imageMap[key] = null;
+      resolve(null);
+    };
+    img.src = src;
+  });
 };
 
 async function renderCharacterCanvas(profile, equipmentList) {
@@ -514,10 +514,10 @@ async function renderCharacterCanvas(profile, equipmentList) {
     const imagesToLoad = [];
     const imageMap = {};
 
-    imagesToLoad.push(loadImage('assets/image/background.png').then(img => imageMap.background = img));
-    imagesToLoad.push(loadImage(`assets/characters/${profile.jobName}.png`).then(img => imageMap.character = img));
-    imagesToLoad.push(loadImage("assets/image/fame.png").then(img => imageMap.fame = img));
-    
+    imagesToLoad.push(loadImageWithKey(imageMap, 'assets/image/background.png', 'background')); 
+    imagesToLoad.push(loadImageWithKey(imageMap, `assets/characters/${profile.jobName}.png`, 'character')); 
+    imagesToLoad.push(loadImageWithKey(imageMap, "assets/image/fame.png", 'fame')); 
+
     if (Array.isArray(equipmentList)) {
         equipmentList.forEach(eq => {
             const slotKey = (eq.slotName || eq.slotId || '').replace(/[\s\/]/g, "");
@@ -562,6 +562,10 @@ async function renderCharacterCanvas(profile, equipmentList) {
             
             imagesToLoad.push(imagePromise);
             
+            if (eq.itemRarity) {
+                imagesToLoad.push(loadImageWithKey(imageMap, `assets/equipments/edge/${eq.itemRarity}.png`, `rarity_${eq.itemRarity}`));
+            }
+
             if (eq.upgradeInfo) {
                 const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
                 const distKeywords = ["Elegance", "Desire", "Betrayal"];
@@ -569,20 +573,20 @@ async function renderCharacterCanvas(profile, equipmentList) {
                 const keywordMatch = setItemName ? SET_CATEGORIES.find(k => (setItemName || '').includes(k)) : null;
 
                 if (keywordMatch) {
-                    imagesToLoad.push(loadImageWithKey(`assets/sets/${fusionRarity}/${keywordMatch}.png`, `fusion_${keywordMatch}`));
+                imagesToLoad.push(loadImageWithKey(imageMap, `assets/sets/${fusionRarity}/${keywordMatch}.png`, `fusion_${keywordMatch}`)); 
                 } else if (distKeywords.some(word => (itemName || '').includes(word))) {
-                    imagesToLoad.push(loadImageWithKey(`assets/sets/${fusionRarity}/Dist.png`, 'fusion_Dist'));
+                imagesToLoad.push(loadImageWithKey(imageMap, `assets/sets/${fusionRarity}/Dist.png`, 'fusion_Dist')); 
                 } else if (nabelKeywords.some(word => (itemName || '').includes(word))) {
-                    imagesToLoad.push(loadImageWithKey(`assets/sets/${fusionRarity}/Nabel.png`, 'fusion_Nabel'));
+                imagesToLoad.push(loadImageWithKey(imageMap, `assets/sets/${fusionRarity}/Nabel.png`, 'fusion_Nabel')); 
                 } else {
-                    imagesToLoad.push(loadImageWithKey(`assets/fusions/${eq.itemRarity}/Base.png`, `fusion_base_${eq.itemRarity}`));
-                    imagesToLoad.push(loadImageWithKey(`assets/fusions/${fusionRarity}/Core.png`, `fusion_core_${fusionRarity}`));
+                imagesToLoad.push(loadImageWithKey(imageMap, `assets/fusions/${eq.itemRarity}/Base.png`, `fusion_base_${eq.itemRarity}`)); 
+                imagesToLoad.push(loadImageWithKey(imageMap, `assets/fusions/${fusionRarity}/Core.png`, `fusion_core_${fusionRarity}`)); 
                 }
             }
 
             const tuneLevel = eq.tune?.[0]?.level || 0;
             if (tuneLevel >= 1 && tuneLevel <= 3) {
-                imagesToLoad.push(loadImage(`assets/equipments/etc/tune${tuneLevel}.png`).then(img => imageMap[`tune_${tuneLevel}`] = img));
+                imagesToLoad.push(loadImageWithKey(imageMap, `assets/equipments/etc/tune${tuneLevel}.png`, `tune_${tuneLevel}`)); 
             }
         });
     }
