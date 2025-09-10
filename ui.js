@@ -469,385 +469,125 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
 
     syncHistoryPanelHeight();
 }
-async function renderCharacterCanvas(profile, equipmentList) {
+
+
+function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
-    container.innerHTML = '<canvas id="merged-canvas" width="492" height="354"></canvas>';
-    const canvas = document.getElementById('merged-canvas');
-    const ctx = canvas.getContext('2d');
-    const SCALE = 1; // Assuming a global SCALE variable is defined
+    container.style.width = '492px';
+    container.style.height = '354px';
+    container.style.position = 'relative';
 
-    // Function to load an image and return a Promise
-    const loadImage = (src) => {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.crossOrigin = 'anonymous'; // This is crucial for cross-origin images
-            img.onload = () => resolve(img);
-            img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
-            img.src = src;
-        });
-    };
+    container.innerHTML = `
+        <img class="background" src="assets/image/background.png" alt="Background" style="width:100%; height:100%; position:absolute; z-index:0; border-radius:8px;">
+        <img class="character-sprite" src="assets/characters/${profile.jobName}.png"
+             style="position:absolute; bottom:0; left:50%; transform:translateX(-50%); height:${250 * SCALE * 0.75}px; z-index:1;" />
+        <div id="equipment-layer" style="position:absolute; width:100%; height:100%; z-index:2;"></div>
+        <canvas id="reinforce-canvas" width="492" height="354" style="position:absolute; left:0; top:0; z-index:5;"></canvas>
+        <canvas id="text-canvas" width="492" height="354" style="position:absolute; left:0; top:0; z-index:4;"></canvas>
+    `;
 
-    // All promises to load images
-    const imagesToLoad = [];
-    const imageMap = {};
-
-    // Load background image
-    imagesToLoad.push(loadImage('assets/image/background.png').then(img => imageMap.background = img));
-
-    // Load character sprite
-    imagesToLoad.push(loadImage(`assets/characters/${profile.jobName}.png`).then(img => imageMap.character = img));
-
-    // Load fame icon
-    imagesToLoad.push(loadImage("assets/image/fame.png").then(img => imageMap.fame = img));
-
-    // Load tune icons
-    for (let i = 1; i <= 3; i++) {
-        imagesToLoad.push(loadImage(`assets/equipments/etc/tune${i}.png`).then(img => imageMap[`tune${i}`] = img));
-    }
-
-    // Load equipment and fusion images
-    const loadedRarityEdges = new Set();
-    const loadedSets = new Set();
-    const loadedFusions = new Set();
+    const eqLayer = document.getElementById("equipment-layer");
 
     if (Array.isArray(equipmentList)) {
         equipmentList.forEach(eq => {
             const slotKey = (eq.slotName || eq.slotId).replace(/[\s\/]/g, "");
             if (!SLOT_POSITION[slotKey]) return;
-
-            // Load equipment icon
-            const itemSrc = (eq.slotId === 'TITLE' && LOCAL_TITLE_ICONS.find(localName => eq.itemName.replace(/[^a-zA-Z0-9]/g, '').toLowerCase().includes(localName.toLowerCase())))
-                ? `assets/equipments/Title/${LOCAL_TITLE_ICONS.find(localName => eq.itemName.replace(/[^a-zA-Z0-9]/g, '').toLowerCase().includes(localName.toLowerCase()))}.png`
-                : `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
-            imagesToLoad.push(loadImage(itemSrc).then(img => imageMap[`item_${eq.itemId}`] = img).catch(() => {
-                console.error(`Fallback for item ${eq.itemId}`);
-                if (eq.slotId === 'TITLE') {
-                    return loadImage('assets/equipments/Title/temp.png').then(img => imageMap[`item_${eq.itemId}`] = img);
-                }
-            }));
-            
-            // Load rarity edge
-            if (!loadedRarityEdges.has(eq.itemRarity)) {
-                imagesToLoad.push(loadImage(`assets/equipments/edge/${eq.itemRarity}.png`).then(img => imageMap[`rarity_${eq.itemRarity}`] = img));
-                loadedRarityEdges.add(eq.itemRarity);
-            }
-
-            // Load fusion icons
-            if (eq.upgradeInfo) {
-                const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
-                const distKeywords = ["Elegance", "Desire", "Betrayal"];
-                const nabelKeywords = ["Design", "Blessing", "Teana", "Creation", "Ignorance"];
-                const keywordMatch = setItemName ? SET_CATEGORIES.find(k => setItemName.includes(k)) : null;
-
-                let fusionIconSrc;
-                if (keywordMatch) {
-                    fusionIconSrc = `assets/sets/${fusionRarity}/${keywordMatch}.png`;
-                    if (!loadedSets.has(fusionIconSrc)) {
-                        imagesToLoad.push(loadImage(fusionIconSrc).then(img => imageMap[fusionIconSrc] = img));
-                        loadedSets.add(fusionIconSrc);
-                    }
-                } else if (distKeywords.some(word => itemName.includes(word))) {
-                    fusionIconSrc = `assets/sets/${fusionRarity}/Dist.png`;
-                    if (!loadedSets.has(fusionIconSrc)) {
-                        imagesToLoad.push(loadImage(fusionIconSrc).then(img => imageMap[fusionIconSrc] = img));
-                        loadedSets.add(fusionIconSrc);
-                    }
-                } else if (nabelKeywords.some(word => itemName.includes(word))) {
-                    fusionIconSrc = `assets/sets/${fusionRarity}/Nabel.png`;
-                    if (!loadedSets.has(fusionIconSrc)) {
-                        imagesToLoad.push(loadImage(fusionIconSrc).then(img => imageMap[fusionIconSrc] = img));
-                        loadedSets.add(fusionIconSrc);
-                    }
-                } else {
-                    if (!loadedFusions.has(`base_${eq.itemRarity}`)) {
-                        imagesToLoad.push(loadImage(`assets/fusions/${eq.itemRarity}/Base.png`).then(img => imageMap[`fusion_base_${eq.itemRarity}`] = img));
-                        loadedFusions.add(`base_${eq.itemRarity}`);
-                    }
-                    if (!loadedFusions.has(`core_${fusionRarity}`)) {
-                        imagesToLoad.push(loadImage(`assets/fusions/${fusionRarity}/Core.png`).then(img => imageMap[`fusion_core_${fusionRarity}`] = img));
-                        loadedFusions.add(`core_${fusionRarity}`);
-                    }
-                }
-            }
-        });
-    }
-
-    try {
-        await Promise.all(imagesToLoad);
-    } catch (error) {
-        console.error("One or more images failed to load:", error);
-        // You might want to display a fallback or an error message here
-        return; 
-    }
-
-    // Draw everything onto the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // 1. Draw background
-    ctx.drawImage(imageMap.background, 0, 0, canvas.width, canvas.height);
-
-    // 2. Draw character sprite
-    const characterSpriteHeight = 250 * SCALE * 0.75;
-    const characterSpriteWidth = imageMap.character.naturalWidth * (characterSpriteHeight / imageMap.character.naturalHeight);
-    ctx.drawImage(imageMap.character, (canvas.width - characterSpriteWidth) / 2, canvas.height - characterSpriteHeight, characterSpriteWidth, characterSpriteHeight);
-
-    // 3. Draw equipment and associated icons
-    if (Array.isArray(equipmentList)) {
-        equipmentList.forEach(eq => {
-            const slotKey = (eq.slotName || eq.slotId).replace(/[\s\/]/g, "");
-            if (!SLOT_POSITION[slotKey]) return;
-
             const [x, y] = SLOT_POSITION[slotKey];
             const iconSize = 28 * SCALE;
 
-            // Draw item icon
-            const itemImg = imageMap[`item_${eq.itemId}`];
-            if (itemImg) {
-                ctx.drawImage(itemImg, x * SCALE, y * SCALE, iconSize, iconSize);
-            }
-            // Draw rarity edge
-            const edgeImg = imageMap[`rarity_${eq.itemRarity}`];
-            if (edgeImg) {
-                ctx.drawImage(edgeImg, x * SCALE, y * SCALE, iconSize, iconSize);
+            const itemEl = document.createElement("div");
+            itemEl.style.cssText = `position:absolute; left:${x * SCALE}px; top:${y * SCALE}px; width:${iconSize}px; height:${iconSize}px;`;
+
+            let itemIconHtml = '';
+            
+            if (eq.slotId === 'TITLE') {
+                const finalFallback = 'assets/equipments/Title/temp.png';
+                
+                const cleanItemName = eq.itemName.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+
+                const foundIconName = LOCAL_TITLE_ICONS.find(localName => 
+                    cleanItemName.includes(localName.toLowerCase())
+                );
+
+                let onerrorLogic = `this.onerror=null; this.src='${finalFallback}';`;
+                
+                if (foundIconName) {
+                    const specificFallback = `assets/equipments/Title/${foundIconName}.png`;
+                    onerrorLogic = `this.onerror=() => { this.onerror=null; this.src='${finalFallback}'; }; this.src='${specificFallback}';`;
+                    
+                    itemIconHtml = `
+                        <img src="assets/equipments/Title/${foundIconName}.png" 
+                            style="width:100%; height:100%; position:absolute; z-index:2;"
+                            onerror="this.onerror=null; this.src='${finalFallback}';">
+                    `;
+                }
+                else {
+                    itemIconHtml = `
+                        <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" 
+                            style="width:100%; height:100%; position:absolute; z-index:2;"
+                            onerror="${onerrorLogic}">
+                `;
+                }
+                
+            } else {
+                itemIconHtml = `
+                    <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" style="width:100%; height:100%; position:absolute; z-index:2;">
+                `;
             }
 
-            // Draw fusion icons
+            itemEl.innerHTML = `
+                ${itemIconHtml}
+                <img src="assets/equipments/edge/${eq.itemRarity}.png" style="width:100%; height:100%; position:absolute; z-index:3;">
+            `;
+
             if (eq.upgradeInfo) {
                 const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
-                const fusionIconWrapperSize = [27 * SCALE * 0.75, 12 * SCALE * 0.75];
+                const baseRarity = eq.itemRarity;
                 const distKeywords = ["Elegance", "Desire", "Betrayal"];
                 const nabelKeywords = ["Design", "Blessing", "Teana", "Creation", "Ignorance"];
                 const keywordMatch = setItemName ? SET_CATEGORIES.find(k => setItemName.includes(k)) : null;
-                
-                let fusionImg;
+
+                const fusionIconWrapper = document.createElement('div');
+                fusionIconWrapper.style.cssText = `position:absolute; right:0; top:0; z-index:4;`;
+
                 if (keywordMatch) {
-                    fusionImg = imageMap[`assets/sets/${fusionRarity}/${keywordMatch}.png`];
-                    if(fusionImg) ctx.drawImage(fusionImg, x * SCALE + iconSize - fusionIconWrapperSize[0], y * SCALE, fusionIconWrapperSize[0], fusionIconWrapperSize[1]);
+                    fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/${keywordMatch}.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
                 } else if (distKeywords.some(word => itemName.includes(word))) {
-                    fusionImg = imageMap[`assets/sets/${fusionRarity}/Dist.png`];
-                    if(fusionImg) ctx.drawImage(fusionImg, x * SCALE + iconSize - fusionIconWrapperSize[0], y * SCALE, fusionIconWrapperSize[0], fusionIconWrapperSize[1]);
+                    fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/Dist.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
                 } else if (nabelKeywords.some(word => itemName.includes(word))) {
-                    fusionImg = imageMap[`assets/sets/${fusionRarity}/Nabel.png`];
-                    if(fusionImg) ctx.drawImage(fusionImg, x * SCALE + iconSize - fusionIconWrapperSize[0], y * SCALE, fusionIconWrapperSize[0], fusionIconWrapperSize[1]);
+                    fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/Nabel.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
                 } else {
-                    const baseImg = imageMap[`fusion_base_${eq.itemRarity}`];
-                    const coreImg = imageMap[`fusion_core_${fusionRarity}`];
-                    const fusionIconSize = [27 * SCALE * 0.75, 13 * SCALE * 0.75];
-                    if (baseImg) ctx.drawImage(baseImg, x * SCALE + iconSize - fusionIconSize[0], y * SCALE, fusionIconSize[0], fusionIconSize[1]);
-                    if (coreImg) ctx.drawImage(coreImg, x * SCALE + iconSize - fusionIconSize[0], y * SCALE, fusionIconSize[0], fusionIconSize[1]);
+                    fusionIconWrapper.style.width = `${27 * SCALE * 0.75}px`;
+                    fusionIconWrapper.style.height = `${13 * SCALE * 0.75}px`;
+                    fusionIconWrapper.innerHTML = `
+                        <img src="assets/fusions/${baseRarity}/Base.png" style="width:100%; height:100%; position:absolute; left:0; top:0;">
+                        <img src="assets/fusions/${fusionRarity}/Core.png" style="width:100%; height:100%; position:absolute; left:0; top:0;">
+                    `;
                 }
+                itemEl.appendChild(fusionIconWrapper);
             }
 
-            // Draw tune level
             const tuneLevel = eq.tune?.[0]?.level || 0;
             if (tuneLevel >= 1 && tuneLevel <= 3) {
                 const tuneSize = [8 * SCALE, 10 * SCALE];
-                const tuneImg = imageMap[`tune${tuneLevel}`];
-                if (tuneImg) {
-                    ctx.drawImage(tuneImg, x * SCALE + iconSize - tuneSize[0] - 1, y * SCALE + iconSize - tuneSize[1], tuneSize[0], tuneSize[1]);
-                }
+                const tuneImg = document.createElement("img");
+                tuneImg.src = `assets/equipments/etc/tune${tuneLevel}.png`;
+                tuneImg.style.position = "absolute";
+                tuneImg.style.width = `${tuneSize[0]}px`;
+                tuneImg.style.height = `${tuneSize[1]}px`;
+                tuneImg.style.left = `${iconSize - tuneSize[0] - 1}px`;
+                tuneImg.style.top = `${iconSize - tuneSize[1]}px`;
+                tuneImg.style.zIndex = "3";
+                itemEl.appendChild(tuneImg);
             }
+
+            eqLayer.appendChild(itemEl);
         });
     }
 
-    // 4. Draw reinforce text
-    equipmentList.forEach(eq => {
-        const slotKey = (eq.slotName || eq.slotId).replace(/[\s\/]/g, "");
-        if (!SLOT_POSITION[slotKey] || slotKey === "Title") return;
-
-        const reinforce = eq.reinforce || 0;
-        const isAmp = eq.amplificationName != null;
-        if (reinforce <= 0 && !isAmp) return;
-
-        const [baseX, baseY] = SLOT_POSITION[slotKey];
-        const scaleFactor = (slotKey === "SecondaryWeapon") ? 0.75 : 1;
-        const x = baseX * SCALE;
-        const y = baseY * SCALE;
-
-        const reinforceColor = isAmp ? "#FF00FF" : "#68D5ED";
-        const text = `+${reinforce}`;
-        const fontSize = Math.floor(9 * SCALE * scaleFactor);
-        
-        ctx.font = `${fontSize}px gulim, sans-serif`;
-        ctx.lineWidth = 4 * scaleFactor;
-        ctx.strokeStyle = "black";
-        ctx.fillStyle = reinforceColor;
-        ctx.textAlign = "left";
-        ctx.textBaseline = "top";
-        ctx.strokeText(text, x, y);
-        ctx.fillText(text, x, y);
-    });
-
-    // 5. Draw character info text
-    const font = new FontFace("GulimIndex", "url(font/gulim_index_2.ttf)");
-    await font.load();
-    document.fonts.add(font);
-
-    ctx.font = `${10 * SCALE}px GulimIndex`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "top";
-
-    const centerX = canvas.width / 2;
-    const firstline = 124 * SCALE;
-    const linespacing = 12 * SCALE;
-
-    function drawTextWithOutline(text, y, color) {
-        ctx.lineWidth = 4.5;
-        ctx.strokeStyle = "black";
-        ctx.strokeText(text, centerX, y);
-        ctx.fillStyle = color;
-        ctx.fillText(text, centerX, y);
-    }
-
-    drawTextWithOutline(profile.adventureName ?? '-', firstline, "#7db88a");
-    drawTextWithOutline(`Lv.${profile.level} ${profile.characterName}`, firstline + linespacing, "#b6aa8f");
-    drawTextWithOutline(`[${profile.jobGrowName}]`, firstline + linespacing * 2, "#A0844B");
-
-    const fameText = profile.fame?.toLocaleString() ?? '-';
-    const fameY = firstline + linespacing * 3;
-    const iconW = 15 * SCALE * 0.75;
-    const iconH = 13 * SCALE * 0.75;
-    const padding = 3 * SCALE;
-    const fameIcon = imageMap.fame;
-
-    const textMetrics = ctx.measureText(fameText);
-    const textWidth = textMetrics.width;
-    const textHeight = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;
-
-    const totalWidth = iconW + padding + textWidth;
-    const startX = (canvas.width - totalWidth) / 2;
-    const textX = startX + iconW + padding;
-    const textCenterY = fameY + textHeight / 2 + (2 * SCALE);
-    const iconY = textCenterY - iconH / 2;
-
-    ctx.drawImage(fameIcon, startX, iconY, iconW, iconH);
-
-    ctx.textAlign = "left";
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = "black";
-    ctx.strokeText(fameText, textX, fameY);
-    ctx.fillStyle = "#81C784";
-    ctx.fillText(fameText, textX, fameY);
-    ctx.textAlign = "center";
+    drawReinforceText(Array.isArray(equipmentList) ? equipmentList : []);
+    drawCharacterText(profile);
 }
-
-// function renderCharacterCanvas(profile, equipmentList) {
-//     const container = document.getElementById('character-canvas-container');
-//     container.style.width = '492px';
-//     container.style.height = '354px';
-//     container.style.position = 'relative';
-
-//     container.innerHTML = `
-//         <img class="background" src="assets/image/background.png" alt="Background" style="width:100%; height:100%; position:absolute; z-index:0; border-radius:8px;">
-//         <img class="character-sprite" src="assets/characters/${profile.jobName}.png"
-//              style="position:absolute; bottom:0; left:50%; transform:translateX(-50%); height:${250 * SCALE * 0.75}px; z-index:1;" />
-//         <div id="equipment-layer" style="position:absolute; width:100%; height:100%; z-index:2;"></div>
-//         <canvas id="reinforce-canvas" width="492" height="354" style="position:absolute; left:0; top:0; z-index:5;"></canvas>
-//         <canvas id="text-canvas" width="492" height="354" style="position:absolute; left:0; top:0; z-index:4;"></canvas>
-//     `;
-
-//     const eqLayer = document.getElementById("equipment-layer");
-
-//     if (Array.isArray(equipmentList)) {
-//         equipmentList.forEach(eq => {
-//             const slotKey = (eq.slotName || eq.slotId).replace(/[\s\/]/g, "");
-//             if (!SLOT_POSITION[slotKey]) return;
-//             const [x, y] = SLOT_POSITION[slotKey];
-//             const iconSize = 28 * SCALE;
-
-//             const itemEl = document.createElement("div");
-//             itemEl.style.cssText = `position:absolute; left:${x * SCALE}px; top:${y * SCALE}px; width:${iconSize}px; height:${iconSize}px;`;
-
-//             let itemIconHtml = '';
-            
-//             if (eq.slotId === 'TITLE') {
-//                 const finalFallback = 'assets/equipments/Title/temp.png';
-                
-//                 const cleanItemName = eq.itemName.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-
-//                 const foundIconName = LOCAL_TITLE_ICONS.find(localName => 
-//                     cleanItemName.includes(localName.toLowerCase())
-//                 );
-
-//                 let onerrorLogic = `this.onerror=null; this.src='${finalFallback}';`;
-                
-//                 if (foundIconName) {
-//                     const specificFallback = `assets/equipments/Title/${foundIconName}.png`;
-//                     onerrorLogic = `this.onerror=() => { this.onerror=null; this.src='${finalFallback}'; }; this.src='${specificFallback}';`;
-                    
-//                     itemIconHtml = `
-//                         <img src="assets/equipments/Title/${foundIconName}.png" 
-//                             style="width:100%; height:100%; position:absolute; z-index:2;"
-//                             onerror="this.onerror=null; this.src='${finalFallback}';">
-//                     `;
-//                 }
-//                 else {
-//                     itemIconHtml = `
-//                         <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" 
-//                             style="width:100%; height:100%; position:absolute; z-index:2;"
-//                             onerror="${onerrorLogic}">
-//                 `;
-//                 }
-                
-//             } else {
-//                 itemIconHtml = `
-//                     <img src="https://img-api.dfoneople.com/df/items/${eq.itemId}" style="width:100%; height:100%; position:absolute; z-index:2;">
-//                 `;
-//             }
-
-//             itemEl.innerHTML = `
-//                 ${itemIconHtml}
-//                 <img src="assets/equipments/edge/${eq.itemRarity}.png" style="width:100%; height:100%; position:absolute; z-index:3;">
-//             `;
-
-//             if (eq.upgradeInfo) {
-//                 const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
-//                 const baseRarity = eq.itemRarity;
-//                 const distKeywords = ["Elegance", "Desire", "Betrayal"];
-//                 const nabelKeywords = ["Design", "Blessing", "Teana", "Creation", "Ignorance"];
-//                 const keywordMatch = setItemName ? SET_CATEGORIES.find(k => setItemName.includes(k)) : null;
-
-//                 const fusionIconWrapper = document.createElement('div');
-//                 fusionIconWrapper.style.cssText = `position:absolute; right:0; top:0; z-index:4;`;
-
-//                 if (keywordMatch) {
-//                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/${keywordMatch}.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
-//                 } else if (distKeywords.some(word => itemName.includes(word))) {
-//                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/Dist.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
-//                 } else if (nabelKeywords.some(word => itemName.includes(word))) {
-//                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/Nabel.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
-//                 } else {
-//                     fusionIconWrapper.style.width = `${27 * SCALE * 0.75}px`;
-//                     fusionIconWrapper.style.height = `${13 * SCALE * 0.75}px`;
-//                     fusionIconWrapper.innerHTML = `
-//                         <img src="assets/fusions/${baseRarity}/Base.png" style="width:100%; height:100%; position:absolute; left:0; top:0;">
-//                         <img src="assets/fusions/${fusionRarity}/Core.png" style="width:100%; height:100%; position:absolute; left:0; top:0;">
-//                     `;
-//                 }
-//                 itemEl.appendChild(fusionIconWrapper);
-//             }
-
-//             const tuneLevel = eq.tune?.[0]?.level || 0;
-//             if (tuneLevel >= 1 && tuneLevel <= 3) {
-//                 const tuneSize = [8 * SCALE, 10 * SCALE];
-//                 const tuneImg = document.createElement("img");
-//                 tuneImg.src = `assets/equipments/etc/tune${tuneLevel}.png`;
-//                 tuneImg.style.position = "absolute";
-//                 tuneImg.style.width = `${tuneSize[0]}px`;
-//                 tuneImg.style.height = `${tuneSize[1]}px`;
-//                 tuneImg.style.left = `${iconSize - tuneSize[0] - 1}px`;
-//                 tuneImg.style.top = `${iconSize - tuneSize[1]}px`;
-//                 tuneImg.style.zIndex = "3";
-//                 itemEl.appendChild(tuneImg);
-//             }
-
-//             eqLayer.appendChild(itemEl);
-//         });
-//     }
-
-//     drawReinforceText(Array.isArray(equipmentList) ? equipmentList : []);
-//     drawCharacterText(profile);
-// }
 
 
 function renderSetItems(setItemInfo) {
