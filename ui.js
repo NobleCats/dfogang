@@ -522,7 +522,7 @@ async function renderCharacterCanvas(profile, equipmentList) {
             const imagePromise = api.getImage(itemIconSrc)
                 .then(blobUrl => loadImage(blobUrl).then(img => {
                     imageMap[`item_${eq.itemId}`] = img;
-                    URL.revokeObjectURL(blobUrl); 
+                    URL.revokeObjectURL(blobUrl);
                 }))
                 .catch(e => {
                     console.error("Failed to fetch image via proxy", e);
@@ -530,7 +530,7 @@ async function renderCharacterCanvas(profile, equipmentList) {
                 });
             
             imagesToLoad.push(imagePromise);
-
+            
             if (eq.itemRarity) {
                 imagesToLoad.push(loadImage(`assets/equipments/edge/${eq.itemRarity}.png`).then(img => imageMap[`rarity_${eq.itemRarity}`] = img));
             }
@@ -709,7 +709,7 @@ async function renderCharacterCanvas(profile, equipmentList) {
 }
 
 
-function renderCharacterCanvas2(profile, equipmentList) {
+function renderCharacterCanvasOld(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.style.width = '492px';
     container.style.height = '354px';

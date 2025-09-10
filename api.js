@@ -30,11 +30,16 @@ export async function getCharacterDps(server, characterName, options) {
     });
 }
 
+
 export async function getImage(url) {
-  const response = await fetch(url);
+  const proxyRequestUrl = `${API_ROOT}/image-proxy?url=${encodeURIComponent(url)}`;
+  
+  const response = await fetch(proxyRequestUrl);
+  
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
+  
   const blob = await response.blob();
   return URL.createObjectURL(blob);
 }
