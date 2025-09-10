@@ -554,17 +554,23 @@ async function renderCharacterCanvas(profile, equipmentList) {
                 const keywordMatch = setItemName ? SET_CATEGORIES.find(k => (setItemName || '').includes(k)) : null;
                 
                 if (keywordMatch) {
-                    fusionSrc = `assets/sets/${fusionRarity}/${keywordMatch}.png`;
+                    const currentFusionRarity = fusionRarity; 
+                    const fusionSrc = `assets/sets/${currentFusionRarity}/${keywordMatch}.png`;
                     imagesToLoad.push(loadImage(fusionSrc).then(img => imageMap[`fusion_${keywordMatch}`] = img));
                 } else if (distKeywords.some(word => (itemName || '').includes(word))) {
-                    fusionSrc = `assets/sets/${fusionRarity}/Dist.png`;
+                    const currentFusionRarity = fusionRarity; 
+                    const fusionSrc = `assets/sets/${currentFusionRarity}/Dist.png`;
                     imagesToLoad.push(loadImage(fusionSrc).then(img => imageMap.fusion_Dist = img));
                 } else if (nabelKeywords.some(word => (itemName || '').includes(word))) {
-                    fusionSrc = `assets/sets/${fusionRarity}/Nabel.png`;
+                    const currentFusionRarity = fusionRarity; 
+                    const fusionSrc = `assets/sets/${currentFusionRarity}/Nabel.png`;
                     imagesToLoad.push(loadImage(fusionSrc).then(img => imageMap.fusion_Nabel = img));
                 } else {
-                    imagesToLoad.push(loadImage(`assets/fusions/${eq.itemRarity}/Base.png`).then(img => imageMap[`fusion_base_${eq.itemRarity}`] = img));
-                    imagesToLoad.push(loadImage(`assets/fusions/${fusionRarity}/Core.png`).then(img => imageMap[`fusion_core_${fusionRarity}`] = img));
+                    const currentItemRarity = eq.itemRarity;
+                    const currentFusionRarity = fusionRarity; 
+                    
+                    imagesToLoad.push(loadImage(`assets/fusions/${currentItemRarity}/Base.png`).then(img => imageMap[`fusion_base_${currentItemRarity}`] = img));
+                    imagesToLoad.push(loadImage(`assets/fusions/${currentFusionRarity}/Core.png`).then(img => imageMap[`fusion_core_${currentFusionRarity}`] = img));
                 }
             }
 
