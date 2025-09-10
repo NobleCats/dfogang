@@ -505,29 +505,41 @@ async function renderCharacterCanvas(profile, equipmentList) {
             const slotKey = (eq.slotName || eq.slotId || '').replace(/[\s\/]/g, "");
             if (!SLOT_POSITION[slotKey]) return;
 
-            let itemIconSrc;
+            let imagePromise;
             if (eq.slotId === 'TITLE') {
                 const cleanItemName = (eq.itemName || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
                 const foundIconName = LOCAL_TITLE_ICONS.find(localName => cleanItemName.includes(localName.toLowerCase()));
 
                 if (foundIconName) {
-                    itemIconSrc = `assets/equipments/Title/${foundIconName}.png`;
+                    imagePromise = loadImage(`assets/equipments/Title/${foundIconName}.png`)
+                        .then(img => imageMap[`item_${eq.itemId}`] = img)
+                        .catch(e => {
+                            console.error(`Failed to load local title image: assets/equipments/Title/${foundIconName}.png`, e);
+                            imageMap[`item_${eq.itemId}`] = null;
+                        });
                 } else {
-                    itemIconSrc = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
+                    imagePromise = api.getImage(`https://img-api.dfoneople.com/df/items/${eq.itemId}`)
+                        .then(blobUrl => loadImage(blobUrl).then(img => {
+                            imageMap[`item_${eq.itemId}`] = img;
+                            URL.revokeObjectURL(blobUrl); 
+                        }))
+                        .catch(e => {
+                            console.error("Failed to fetch image via proxy", e);
+                            imageMap[`item_${eq.itemId}`] = null;
+                        });
                 }
             } else {
-                itemIconSrc = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
+                imagePromise = api.getImage(`https://img-api.dfoneople.com/df/items/${eq.itemId}`)
+                    .then(blobUrl => loadImage(blobUrl).then(img => {
+                        imageMap[`item_${eq.itemId}`] = img;
+                        URL.revokeObjectURL(blobUrl); 
+                    }))
+                    .catch(e => {
+                        console.error("Failed to fetch image via proxy", e);
+                        imageMap[`item_${eq.itemId}`] = null;
+                    });
             }
             
-            const imagePromise = api.getImage(itemIconSrc)
-                .then(blobUrl => loadImage(blobUrl).then(img => {
-                    imageMap[`item_${eq.itemId}`] = img;
-                    URL.revokeObjectURL(blobUrl);
-                }))
-                .catch(e => {
-                    console.error("Failed to fetch image via proxy", e);
-                    imageMap[`item_${eq.itemId}`] = null;
-                });
             
             imagesToLoad.push(imagePromise);
             
