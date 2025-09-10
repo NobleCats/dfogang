@@ -575,7 +575,7 @@ async function renderCharacterCanvas(profile, equipmentList) {
 
             const tuneLevel = eq.tune?.[0]?.level || 0;
             if (tuneLevel >= 1 && tuneLevel <= 3) {
-                imagesToLoad.push(loadImage(`assets/equipments/etc/tune${tuneLevel}.png`).then(img => imageMap[`tune_${tuneLevel}`] = img));
+                imagesToLoad.push(loadImage(`assets/equipments/etc/tune${tuneLevel}.png`).then(img => imageMap[`tune_${eq.itemId}`] = img));
             }
         });
     }
@@ -634,7 +634,7 @@ async function renderCharacterCanvas(profile, equipmentList) {
             const tuneLevel = eq.tune?.[0]?.level || 0;
             if (tuneLevel >= 1 && tuneLevel <= 3) {
                 const tuneSize = [8 * SCALE, 10 * SCALE];
-                const tuneImg = imageMap[`tune_${eq.itemId}`];
+                const tuneImg = imageMap[`tune_${tuneLevel}`];
                 if (tuneImg) {
                     const tuneX = baseX * SCALE + iconSize - tuneSize[0] - 1;
                     const tuneY = baseY * SCALE + iconSize - tuneSize[1];
