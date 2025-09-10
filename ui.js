@@ -480,8 +480,6 @@ async function renderCharacterCanvas(profile, equipmentList) {
     const canvas = document.getElementById('merged-canvas');
     const ctx = canvas.getContext('2d');
     
-    const PROXY_URL = 'http://localhost:5000/image-proxy?url='; 
-
     const loadImage = (src) => {
         return new Promise((resolve) => {
             const img = new Image();
@@ -515,16 +513,16 @@ async function renderCharacterCanvas(profile, equipmentList) {
                 if (foundIconName) {
                     itemIconSrc = `assets/equipments/Title/${foundIconName}.png`;
                 } else {
-                    itemIconSrc = `${PROXY_URL}${encodeURIComponent(`https://img-api.dfoneople.com/df/items/${eq.itemId}`)}`;
+                    itemIconSrc = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
                 }
             } else {
-                itemIconSrc = `${PROXY_URL}${encodeURIComponent(`https://img-api.dfoneople.com/df/items/${eq.itemId}`)}`;
+                itemIconSrc = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
             }
             
             const imagePromise = api.getImage(itemIconSrc)
                 .then(blobUrl => loadImage(blobUrl).then(img => {
                     imageMap[`item_${eq.itemId}`] = img;
-                    URL.revokeObjectURL(blobUrl);
+                    URL.revokeObjectURL(blobUrl); 
                 }))
                 .catch(e => {
                     console.error("Failed to fetch image via proxy", e);
@@ -532,7 +530,7 @@ async function renderCharacterCanvas(profile, equipmentList) {
                 });
             
             imagesToLoad.push(imagePromise);
-            
+
             if (eq.itemRarity) {
                 imagesToLoad.push(loadImage(`assets/equipments/edge/${eq.itemRarity}.png`).then(img => imageMap[`rarity_${eq.itemRarity}`] = img));
             }
