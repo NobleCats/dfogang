@@ -470,6 +470,24 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
     syncHistoryPanelHeight();
 }
 
+
+const loadImageWithKey = (src, key) => {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+            imageMap[key] = img;
+            resolve(img);
+        };
+        img.onerror = () => {
+            console.error(`Failed to load image: ${src}`);
+            imageMap[key] = null;
+            resolve(null);
+        };
+        img.src = src;
+    });
+};
+
 async function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.style.width = '492px';
