@@ -544,6 +544,7 @@ function renderCharacterCanvas(profile, equipmentList) {
                 const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
                 const baseRarity = eq.itemRarity;
                 const distKeywords = ["Elegance", "Desire", "Betrayal"];
+                const nabelKeywords = ["Design", "Blessing", "Teana", "Creation", "Ignorance"];
                 const keywordMatch = setItemName ? SET_CATEGORIES.find(k => setItemName.includes(k)) : null;
 
                 const fusionIconWrapper = document.createElement('div');
@@ -553,8 +554,10 @@ function renderCharacterCanvas(profile, equipmentList) {
                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/${keywordMatch}.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
                 } else if (distKeywords.some(word => itemName.includes(word))) {
                     fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/Dist.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
+                } else if (nabelKeywords.some(word => itemName.includes(word))) {
+                    fusionIconWrapper.innerHTML = `<img src="assets/sets/${fusionRarity}/Nabel.png" style="width:${27 * SCALE * 0.75}px; height:${12 * SCALE * 0.75}px;">`;
                 } else {
-                    fusionIconWrapper.style.width = `${28 * SCALE * 0.75}px`;
+                    fusionIconWrapper.style.width = `${27 * SCALE * 0.75}px`;
                     fusionIconWrapper.style.height = `${13 * SCALE * 0.75}px`;
                     fusionIconWrapper.innerHTML = `
                         <img src="assets/fusions/${baseRarity}/Base.png" style="width:100%; height:100%; position:absolute; left:0; top:0;">
