@@ -54,6 +54,7 @@ export async function logSearch(server, name) {
 }
 export async function searchCharacters(server, name, average_set_dmg) {
     const endpoint = server === "explorer" ? "/search_explorer" : "/search";
+    console.log("searchCharacters payload:", { name, server, average_set_dmg });
     const data = await postData(endpoint, { name, server, average_set_dmg });
     return data ? data.results : [];
 }
