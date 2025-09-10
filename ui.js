@@ -471,7 +471,7 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
 }
 
 
-async function renderCharacterCanvas(profile, equipmentList) {
+async function renderCharacterCanvasTest(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.style.width = '492px';
     container.style.height = '354px';
@@ -707,7 +707,7 @@ async function renderCharacterCanvas(profile, equipmentList) {
 }
 
 
-function renderCharacterCanvas2(profile, equipmentList) {
+function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.style.width = '492px';
     container.style.height = '354px';
