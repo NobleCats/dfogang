@@ -506,6 +506,7 @@ async function renderCharacterCanvas(profile, equipmentList) {
             if (!SLOT_POSITION[slotKey]) return;
 
             let imagePromise;
+
             if (eq.slotId === 'TITLE') {
                 const cleanItemName = (eq.itemName || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
                 const foundIconName = LOCAL_TITLE_ICONS.find(localName => cleanItemName.includes(localName.toLowerCase()));
@@ -543,34 +544,21 @@ async function renderCharacterCanvas(profile, equipmentList) {
             
             imagesToLoad.push(imagePromise);
             
-            if (eq.itemRarity) {
-                imagesToLoad.push(loadImage(`assets/equipments/edge/${eq.itemRarity}.png`).then(img => imageMap[`rarity_${eq.itemRarity}`] = img));
-            }
-
             if (eq.upgradeInfo) {
                 const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
                 const distKeywords = ["Elegance", "Desire", "Betrayal"];
                 const nabelKeywords = ["Design", "Blessing", "Teana", "Creation", "Ignorance"];
                 const keywordMatch = setItemName ? SET_CATEGORIES.find(k => (setItemName || '').includes(k)) : null;
-                
+
                 if (keywordMatch) {
-                    const currentFusionRarity = fusionRarity; 
-                    const fusionSrc = `assets/sets/${currentFusionRarity}/${keywordMatch}.png`;
-                    imagesToLoad.push(loadImage(fusionSrc).then(img => imageMap[`fusion_${keywordMatch}`] = img));
+                    imagesToLoad.push(loadImageWithKey(`assets/sets/${fusionRarity}/${keywordMatch}.png`, `fusion_${keywordMatch}`));
                 } else if (distKeywords.some(word => (itemName || '').includes(word))) {
-                    const currentFusionRarity = fusionRarity; 
-                    const fusionSrc = `assets/sets/${currentFusionRarity}/Dist.png`;
-                    imagesToLoad.push(loadImage(fusionSrc).then(img => imageMap.fusion_Dist = img));
+                    imagesToLoad.push(loadImageWithKey(`assets/sets/${fusionRarity}/Dist.png`, 'fusion_Dist'));
                 } else if (nabelKeywords.some(word => (itemName || '').includes(word))) {
-                    const currentFusionRarity = fusionRarity; 
-                    const fusionSrc = `assets/sets/${currentFusionRarity}/Nabel.png`;
-                    imagesToLoad.push(loadImage(fusionSrc).then(img => imageMap.fusion_Nabel = img));
+                    imagesToLoad.push(loadImageWithKey(`assets/sets/${fusionRarity}/Nabel.png`, 'fusion_Nabel'));
                 } else {
-                    const currentItemRarity = eq.itemRarity;
-                    const currentFusionRarity = fusionRarity; 
-                    
-                    imagesToLoad.push(loadImage(`assets/fusions/${currentItemRarity}/Base.png`).then(img => imageMap[`fusion_base_${currentItemRarity}`] = img));
-                    imagesToLoad.push(loadImage(`assets/fusions/${currentFusionRarity}/Core.png`).then(img => imageMap[`fusion_core_${currentFusionRarity}`] = img));
+                    imagesToLoad.push(loadImageWithKey(`assets/fusions/${eq.itemRarity}/Base.png`, `fusion_base_${eq.itemRarity}`));
+                    imagesToLoad.push(loadImageWithKey(`assets/fusions/${fusionRarity}/Core.png`, `fusion_core_${fusionRarity}`));
                 }
             }
 
