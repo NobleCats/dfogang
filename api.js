@@ -38,6 +38,7 @@ export async function getImage(url) {
   const blob = await response.blob();
   return URL.createObjectURL(blob);
 }
+
 export async function getCharacterBuffPower(server, characterId) {
     return await postData("/buff_power", { server, characterId });
 }

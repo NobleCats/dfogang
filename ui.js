@@ -521,7 +521,7 @@ async function renderCharacterCanvas(profile, equipmentList) {
                 itemIconSrc = `${PROXY_URL}${encodeURIComponent(`https://img-api.dfoneople.com/df/items/${eq.itemId}`)}`;
             }
             
-            const imagePromise = getImage(itemIconSrc)
+            const imagePromise = api.getImage(itemIconSrc)
                 .then(blobUrl => loadImage(blobUrl).then(img => {
                     imageMap[`item_${eq.itemId}`] = img;
                     URL.revokeObjectURL(blobUrl);
