@@ -471,7 +471,243 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
 }
 
 
-function renderCharacterCanvas(profile, equipmentList) {
+async function renderCharacterCanvas(profile, equipmentList) {
+    const container = document.getElementById('character-canvas-container');
+    container.style.width = '492px';
+    container.style.height = '354px';
+    container.style.position = 'relative';
+    container.innerHTML = '<canvas id="merged-canvas" width="492" height="354" style="position:absolute; left:0; top:0;"></canvas>';
+
+    const canvas = document.getElementById('merged-canvas');
+    const ctx = canvas.getContext('2d');
+
+    const loadImage = (src) => {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous'; // CORS 문제 해결
+            img.onload = () => resolve(img);
+            img.onerror = () => {
+                console.warn(`Failed to load image: ${src}`);
+                resolve(null);
+            };
+            img.src = src;
+        });
+    };
+
+    const imagesToLoad = [];
+    const imageMap = {};
+
+    // Load static images
+    imagesToLoad.push(loadImage('assets/image/background.png').then(img => imageMap.background = img));
+    imagesToLoad.push(loadImage(`assets/characters/${profile.jobName}.png`).then(img => imageMap.character = img));
+    imagesToLoad.push(loadImage("assets/image/fame.png").then(img => imageMap.fame = img));
+    
+    // Load dynamic equipment images
+    if (Array.isArray(equipmentList)) {
+        equipmentList.forEach(eq => {
+            const slotKey = (eq.slotName || eq.slotId || '').replace(/[\s\/]/g, "");
+            if (!SLOT_POSITION[slotKey]) return;
+
+            // Load item icon
+            let itemIconSrc;
+            if (eq.slotId === 'TITLE') {
+                const cleanItemName = (eq.itemName || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+                const foundIconName = LOCAL_TITLE_ICONS.find(localName => cleanItemName.includes(localName.toLowerCase()));
+                itemIconSrc = foundIconName ? `assets/equipments/Title/${foundIconName}.png` : `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
+                imagesToLoad.push(loadImage(itemIconSrc).then(img => {
+                    imageMap[`item_${eq.itemId}`] = img;
+                    // Fallback logic
+                    if (!img) return loadImage('assets/equipments/Title/temp.png').then(fallbackImg => imageMap[`item_${eq.itemId}`] = fallbackImg);
+                }));
+            } else {
+                itemIconSrc = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
+                imagesToLoad.push(loadImage(itemIconSrc).then(img => imageMap[`item_${eq.itemId}`] = img));
+            }
+
+            // Load rarity edge
+            imagesToLoad.push(loadImage(`assets/equipments/edge/${eq.itemRarity}.png`).then(img => imageMap[`rarity_${eq.itemRarity}`] = img));
+
+            // Load fusion icons
+            if (eq.upgradeInfo) {
+                const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
+                const distKeywords = ["Elegance", "Desire", "Betrayal"];
+                const nabelKeywords = ["Design", "Blessing", "Teana", "Creation", "Ignorance"];
+                const keywordMatch = setItemName ? SET_CATEGORIES.find(k => (setItemName || '').includes(k)) : null;
+
+                if (keywordMatch) {
+                    imagesToLoad.push(loadImage(`assets/sets/${fusionRarity}/${keywordMatch}.png`).then(img => imageMap[`fusion_${keywordMatch}`] = img));
+                } else if (distKeywords.some(word => (itemName || '').includes(word))) {
+                    imagesToLoad.push(loadImage(`assets/sets/${fusionRarity}/Dist.png`).then(img => imageMap.fusion_Dist = img));
+                } else if (nabelKeywords.some(word => (itemName || '').includes(word))) {
+                    imagesToLoad.push(loadImage(`assets/sets/${fusionRarity}/Nabel.png`).then(img => imageMap.fusion_Nabel = img));
+                } else {
+                    imagesToLoad.push(loadImage(`assets/fusions/${eq.itemRarity}/Base.png`).then(img => imageMap[`fusion_base_${eq.itemRarity}`] = img));
+                    imagesToLoad.push(loadImage(`assets/fusions/${fusionRarity}/Core.png`).then(img => imageMap[`fusion_core_${fusionRarity}`] = img));
+                }
+            }
+
+            // Load tune icons
+            const tuneLevel = eq.tune?.[0]?.level || 0;
+            if (tuneLevel >= 1 && tuneLevel <= 3) {
+                imagesToLoad.push(loadImage(`assets/equipments/etc/tune${tuneLevel}.png`).then(img => imageMap[`tune_${tuneLevel}`] = img));
+            }
+        });
+    }
+
+    await Promise.all(imagesToLoad);
+
+    // Drawing all elements onto the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const drawPromises = [];
+
+    // Draw background
+    if (imageMap.background) {
+        ctx.drawImage(imageMap.background, 0, 0, 492, 354);
+    }
+    
+    // Draw character sprite
+    if (imageMap.character) {
+        const charHeight = 250 * SCALE * 0.75;
+        const charWidth = imageMap.character.naturalWidth * (charHeight / imageMap.character.naturalHeight);
+        const charX = canvas.width / 2 - charWidth / 2;
+        ctx.drawImage(imageMap.character, charX, canvas.height - charHeight, charWidth, charHeight);
+    }
+
+    // Draw equipment and associated icons
+    if (Array.isArray(equipmentList)) {
+        equipmentList.forEach(eq => {
+            const slotKey = (eq.slotName || eq.slotId || '').replace(/[\s\/]/g, "");
+            const [baseX, baseY] = SLOT_POSITION[slotKey] || [0, 0];
+            const iconSize = 28 * SCALE;
+
+            const itemImg = imageMap[`item_${eq.itemId}`];
+            if (itemImg) {
+                ctx.drawImage(itemImg, baseX * SCALE, baseY * SCALE, iconSize, iconSize);
+            }
+
+            const edgeImg = imageMap[`rarity_${eq.itemRarity}`];
+            if (edgeImg) {
+                ctx.drawImage(edgeImg, baseX * SCALE, baseY * SCALE, iconSize, iconSize);
+            }
+
+            // Draw fusion icons
+            if (eq.upgradeInfo) {
+                const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
+                const fusionIconSize = [27 * SCALE * 0.75, 12 * SCALE * 0.75];
+                const fusionX = baseX * SCALE + iconSize - fusionIconSize[0];
+                const fusionY = baseY * SCALE;
+
+                if (SET_CATEGORIES.some(k => (setItemName || '').includes(k))) {
+                    const img = imageMap[`fusion_${SET_CATEGORIES.find(k => (setItemName || '').includes(k))}`];
+                    if(img) ctx.drawImage(img, fusionX, fusionY, fusionIconSize[0], fusionIconSize[1]);
+                } else if (["Elegance", "Desire", "Betrayal"].some(word => (itemName || '').includes(word))) {
+                    if (imageMap.fusion_Dist) ctx.drawImage(imageMap.fusion_Dist, fusionX, fusionY, fusionIconSize[0], fusionIconSize[1]);
+                } else if (["Design", "Blessing", "Teana", "Creation", "Ignorance"].some(word => (itemName || '').includes(word))) {
+                    if (imageMap.fusion_Nabel) ctx.drawImage(imageMap.fusion_Nabel, fusionX, fusionY, fusionIconSize[0], fusionIconSize[1]);
+                } else {
+                    const baseImg = imageMap[`fusion_base_${eq.itemRarity}`];
+                    const coreImg = imageMap[`fusion_core_${fusionRarity}`];
+                    if (baseImg) ctx.drawImage(baseImg, fusionX, fusionY, 27 * SCALE * 0.75, 13 * SCALE * 0.75);
+                    if (coreImg) ctx.drawImage(coreImg, fusionX, fusionY, 27 * SCALE * 0.75, 13 * SCALE * 0.75);
+                }
+            }
+
+            // Draw tune level
+            const tuneLevel = eq.tune?.[0]?.level || 0;
+            if (tuneLevel >= 1 && tuneLevel <= 3) {
+                const tuneSize = [8 * SCALE, 10 * SCALE];
+                const tuneImg = imageMap[`tune_${tuneLevel}`];
+                if (tuneImg) {
+                    const tuneX = baseX * SCALE + iconSize - tuneSize[0] - 1;
+                    const tuneY = baseY * SCALE + iconSize - tuneSize[1];
+                    ctx.drawImage(tuneImg, tuneX, tuneY, tuneSize[0], tuneSize[1]);
+                }
+            }
+        });
+    }
+
+    // Draw reinforce text
+    equipmentList.forEach(eq => {
+        const slotKey = (eq.slotName || eq.slotId || '').replace(/[\s\/]/g, "");
+        if (!SLOT_POSITION[slotKey] || slotKey === "Title") return;
+
+        const reinforce = eq.reinforce || 0;
+        const isAmp = eq.amplificationName != null;
+        if (reinforce > 0 || isAmp) {
+            const [baseX, baseY] = SLOT_POSITION[slotKey];
+            const scaleFactor = (slotKey === "SecondaryWeapon") ? 0.75 : 1;
+            const x = baseX * SCALE;
+            const y = baseY * SCALE;
+            const reinforceColor = isAmp ? "#FF00FF" : "#68D5ED";
+            const text = `+${reinforce}`;
+            const fontSize = Math.floor(9 * SCALE * scaleFactor);
+
+            ctx.font = `${fontSize}px gulim, sans-serif`;
+            ctx.lineWidth = 4 * scaleFactor;
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = reinforceColor;
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+            ctx.strokeText(text, x, y);
+            ctx.fillText(text, x, y);
+        }
+    });
+
+    // Draw character info text
+    const font = new FontFace("GulimIndex", "url(font/gulim_index_2.ttf)");
+    await font.load();
+    document.fonts.add(font);
+
+    ctx.font = `${10 * SCALE}px GulimIndex`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+
+    const centerX = canvas.width / 2;
+    const firstline = 124 * SCALE;
+    const linespacing = 12 * SCALE;
+
+    function drawTextWithOutline(text, y, color) {
+        ctx.lineWidth = 4.5;
+        ctx.strokeStyle = "black";
+        ctx.strokeText(text, centerX, y);
+        ctx.fillStyle = color;
+        ctx.fillText(text, centerX, y);
+    }
+
+    drawTextWithOutline(profile.adventureName ?? '-', firstline, "#7db88a");
+    drawTextWithOutline(`Lv.${profile.level} ${profile.characterName}`, firstline + linespacing, "#b6aa8f");
+    drawTextWithOutline(`[${profile.jobGrowName}]`, firstline + linespacing * 2, "#A0844B");
+
+    const fameText = profile.fame?.toLocaleString() ?? '-';
+    const fameY = firstline + linespacing * 3;
+    const iconW = 15 * SCALE * 0.75;
+    const iconH = 13 * SCALE * 0.75;
+    const padding = 3 * SCALE;
+    const fameIcon = imageMap.fame;
+
+    if (fameIcon) {
+        const textMetrics = ctx.measureText(fameText);
+        const textWidth = textMetrics.width;
+        const textHeight = textMetrics.actualBoundingBoxAscent;
+
+        const totalWidth = iconW + padding + textWidth;
+        const startX = (canvas.width - totalWidth) / 2;
+        const textX = startX + iconW + padding;
+        const textCenterY = fameY + textHeight / 2 + (2 * SCALE);
+        const iconY = textCenterY - iconH / 2;
+
+        ctx.drawImage(fameIcon, startX, iconY, iconW, iconH);
+        ctx.textAlign = "left";
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "black";
+        ctx.strokeText(fameText, textX, fameY);
+        ctx.fillStyle = "#81C784";
+        ctx.fillText(fameText, textX, fameY);
+    }
+}
+
+
+function renderCharacterCanvas2(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.style.width = '492px';
     container.style.height = '354px';
