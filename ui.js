@@ -554,13 +554,13 @@ async function renderCharacterCanvas(profile, equipmentList) {
                 const keywordMatch = setItemName ? SET_CATEGORIES.find(k => (setItemName || '').includes(k)) : null;
                 
                 if (keywordMatch) {
-                    const fusionSrc = `assets/sets/${fusionRarity}/${keywordMatch}.png`;
+                    fusionSrc = `assets/sets/${fusionRarity}/${keywordMatch}.png`;
                     imagesToLoad.push(loadImage(fusionSrc).then(img => imageMap[`fusion_${keywordMatch}`] = img));
                 } else if (distKeywords.some(word => (itemName || '').includes(word))) {
-                    const fusionSrc = `assets/sets/${fusionRarity}/Dist.png`;
+                    fusionSrc = `assets/sets/${fusionRarity}/Dist.png`;
                     imagesToLoad.push(loadImage(fusionSrc).then(img => imageMap.fusion_Dist = img));
                 } else if (nabelKeywords.some(word => (itemName || '').includes(word))) {
-                    const fusionSrc = `assets/sets/${fusionRarity}/Nabel.png`;
+                    fusionSrc = `assets/sets/${fusionRarity}/Nabel.png`;
                     imagesToLoad.push(loadImage(fusionSrc).then(img => imageMap.fusion_Nabel = img));
                 } else {
                     imagesToLoad.push(loadImage(`assets/fusions/${eq.itemRarity}/Base.png`).then(img => imageMap[`fusion_base_${eq.itemRarity}`] = img));
