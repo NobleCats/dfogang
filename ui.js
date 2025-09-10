@@ -471,7 +471,7 @@ export async function renderCharacterDetail(profile, equipment, setItemInfo, fam
 }
 
 
-async function renderCharacterCanvasTest(profile, equipmentList) {
+async function renderCharacterCanvas(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.style.width = '492px';
     container.style.height = '354px';
@@ -480,14 +480,17 @@ async function renderCharacterCanvasTest(profile, equipmentList) {
 
     const canvas = document.getElementById('merged-canvas');
     const ctx = canvas.getContext('2d');
+    
+    // Use your new backend proxy endpoint
+    const PROXY_URL = 'http://localhost:5000/image-proxy?url='; // Assumes your Flask app runs on port 5000
 
     const loadImage = (src) => {
         return new Promise((resolve) => {
             const img = new Image();
-            img.crossOrigin = 'anonymous'; // CORS 문제 해결
+            img.crossOrigin = 'anonymous'; 
             img.onload = () => resolve(img);
             img.onerror = () => {
-                console.warn(`Failed to load image: ${src}`);
+                console.error(`Failed to load image: ${src}`);
                 resolve(null);
             };
             img.src = src;
@@ -497,56 +500,59 @@ async function renderCharacterCanvasTest(profile, equipmentList) {
     const imagesToLoad = [];
     const imageMap = {};
 
-    // Load static images
+    // Load static images (no proxy needed for local files)
     imagesToLoad.push(loadImage('assets/image/background.png').then(img => imageMap.background = img));
     imagesToLoad.push(loadImage(`assets/characters/${profile.jobName}.png`).then(img => imageMap.character = img));
     imagesToLoad.push(loadImage("assets/image/fame.png").then(img => imageMap.fame = img));
     
-    // Load dynamic equipment images
+    // Load dynamic equipment images via the proxy
     if (Array.isArray(equipmentList)) {
         equipmentList.forEach(eq => {
             const slotKey = (eq.slotName || eq.slotId || '').replace(/[\s\/]/g, "");
             if (!SLOT_POSITION[slotKey]) return;
 
-            // Load item icon
             let itemIconSrc;
             if (eq.slotId === 'TITLE') {
                 const cleanItemName = (eq.itemName || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
                 const foundIconName = LOCAL_TITLE_ICONS.find(localName => cleanItemName.includes(localName.toLowerCase()));
-                itemIconSrc = foundIconName ? `assets/equipments/Title/${foundIconName}.png` : `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
-                imagesToLoad.push(loadImage(itemIconSrc).then(img => {
-                    imageMap[`item_${eq.itemId}`] = img;
-                    // Fallback logic
-                    if (!img) return loadImage('assets/equipments/Title/temp.png').then(fallbackImg => imageMap[`item_${eq.itemId}`] = fallbackImg);
-                }));
+
+                if (foundIconName) {
+                    itemIconSrc = `assets/equipments/Title/${foundIconName}.png`;
+                } else {
+                    itemIconSrc = `${PROXY_URL}${encodeURIComponent(`https://img-api.dfoneople.com/df/items/${eq.itemId}`)}`;
+                }
             } else {
-                itemIconSrc = `https://img-api.dfoneople.com/df/items/${eq.itemId}`;
-                imagesToLoad.push(loadImage(itemIconSrc).then(img => imageMap[`item_${eq.itemId}`] = img));
+                itemIconSrc = `${PROXY_URL}${encodeURIComponent(`https://img-api.dfoneople.com/df/items/${eq.itemId}`)}`;
+            }
+            imagesToLoad.push(loadImage(itemIconSrc).then(img => imageMap[`item_${eq.itemId}`] = img));
+            
+            // ... (Continue with existing logic for loading other images like rarity edge, fusion, etc.)
+            if (eq.itemRarity) {
+                imagesToLoad.push(loadImage(`assets/equipments/edge/${eq.itemRarity}.png`).then(img => imageMap[`rarity_${eq.itemRarity}`] = img));
             }
 
-            // Load rarity edge
-            imagesToLoad.push(loadImage(`assets/equipments/edge/${eq.itemRarity}.png`).then(img => imageMap[`rarity_${eq.itemRarity}`] = img));
-
-            // Load fusion icons
             if (eq.upgradeInfo) {
                 const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
                 const distKeywords = ["Elegance", "Desire", "Betrayal"];
                 const nabelKeywords = ["Design", "Blessing", "Teana", "Creation", "Ignorance"];
                 const keywordMatch = setItemName ? SET_CATEGORIES.find(k => (setItemName || '').includes(k)) : null;
 
+                let fusionSrc;
                 if (keywordMatch) {
-                    imagesToLoad.push(loadImage(`assets/sets/${fusionRarity}/${keywordMatch}.png`).then(img => imageMap[`fusion_${keywordMatch}`] = img));
+                    fusionSrc = `assets/sets/${fusionRarity}/${keywordMatch}.png`;
                 } else if (distKeywords.some(word => (itemName || '').includes(word))) {
-                    imagesToLoad.push(loadImage(`assets/sets/${fusionRarity}/Dist.png`).then(img => imageMap.fusion_Dist = img));
+                    fusionSrc = `assets/sets/${fusionRarity}/Dist.png`;
                 } else if (nabelKeywords.some(word => (itemName || '').includes(word))) {
-                    imagesToLoad.push(loadImage(`assets/sets/${fusionRarity}/Nabel.png`).then(img => imageMap.fusion_Nabel = img));
+                    fusionSrc = `assets/sets/${fusionRarity}/Nabel.png`;
+                }
+                if (fusionSrc) {
+                    imagesToLoad.push(loadImage(fusionSrc).then(img => imageMap[`fusion_${fusionSrc}`] = img));
                 } else {
                     imagesToLoad.push(loadImage(`assets/fusions/${eq.itemRarity}/Base.png`).then(img => imageMap[`fusion_base_${eq.itemRarity}`] = img));
                     imagesToLoad.push(loadImage(`assets/fusions/${fusionRarity}/Core.png`).then(img => imageMap[`fusion_core_${fusionRarity}`] = img));
                 }
             }
 
-            // Load tune icons
             const tuneLevel = eq.tune?.[0]?.level || 0;
             if (tuneLevel >= 1 && tuneLevel <= 3) {
                 imagesToLoad.push(loadImage(`assets/equipments/etc/tune${tuneLevel}.png`).then(img => imageMap[`tune_${tuneLevel}`] = img));
@@ -707,7 +713,7 @@ async function renderCharacterCanvasTest(profile, equipmentList) {
 }
 
 
-function renderCharacterCanvas(profile, equipmentList) {
+function renderCharacterCanvasOld(profile, equipmentList) {
     const container = document.getElementById('character-canvas-container');
     container.style.width = '492px';
     container.style.height = '354px';
