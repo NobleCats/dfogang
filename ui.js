@@ -480,7 +480,6 @@ async function renderCharacterCanvas(profile, equipmentList) {
     const canvas = document.getElementById('merged-canvas');
     const ctx = canvas.getContext('2d');
     
-    // 백엔드 프록시 URL
     const PROXY_URL = 'http://localhost:5000/image-proxy?url='; 
 
     const loadImage = (src) => {
@@ -499,18 +498,15 @@ async function renderCharacterCanvas(profile, equipmentList) {
     const imagesToLoad = [];
     const imageMap = {};
 
-    // 로컬 파일들을 로드하는 Promise를 배열에 추가
     imagesToLoad.push(loadImage('assets/image/background.png').then(img => imageMap.background = img));
     imagesToLoad.push(loadImage(`assets/characters/${profile.jobName}.png`).then(img => imageMap.character = img));
     imagesToLoad.push(loadImage("assets/image/fame.png").then(img => imageMap.fame = img));
     
-    // 장비 리스트에서 이미지를 로드
     if (Array.isArray(equipmentList)) {
         equipmentList.forEach(eq => {
             const slotKey = (eq.slotName || eq.slotId || '').replace(/[\s\/]/g, "");
             if (!SLOT_POSITION[slotKey]) return;
 
-            // DFO API URL에 프록시 URL을 붙여 최종 URL 생성
             let itemIconSrc;
             if (eq.slotId === 'TITLE') {
                 const cleanItemName = (eq.itemName || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
@@ -525,11 +521,10 @@ async function renderCharacterCanvas(profile, equipmentList) {
                 itemIconSrc = `${PROXY_URL}${encodeURIComponent(`https://img-api.dfoneople.com/df/items/${eq.itemId}`)}`;
             }
             
-            // getImage를 사용하여 URL을 가져온 후, loadImage로 Image 객체를 생성
             const imagePromise = getImage(itemIconSrc)
                 .then(blobUrl => loadImage(blobUrl).then(img => {
                     imageMap[`item_${eq.itemId}`] = img;
-                    URL.revokeObjectURL(blobUrl); // 메모리 해제
+                    URL.revokeObjectURL(blobUrl);
                 }))
                 .catch(e => {
                     console.error("Failed to fetch image via proxy", e);
@@ -538,7 +533,6 @@ async function renderCharacterCanvas(profile, equipmentList) {
             
             imagesToLoad.push(imagePromise);
             
-            // ... (Continue with existing logic for loading other images like rarity edge, fusion, etc.)
             if (eq.itemRarity) {
                 imagesToLoad.push(loadImage(`assets/equipments/edge/${eq.itemRarity}.png`).then(img => imageMap[`rarity_${eq.itemRarity}`] = img));
             }
@@ -574,16 +568,13 @@ async function renderCharacterCanvas(profile, equipmentList) {
 
     await Promise.all(imagesToLoad);
 
-    // Drawing all elements onto the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const drawPromises = [];
 
-    // Draw background
     if (imageMap.background) {
         ctx.drawImage(imageMap.background, 0, 0, 492, 354);
     }
     
-    // Draw character sprite
     if (imageMap.character) {
         const charHeight = 250 * SCALE * 0.75;
         const charWidth = imageMap.character.naturalWidth * (charHeight / imageMap.character.naturalHeight);
@@ -591,7 +582,6 @@ async function renderCharacterCanvas(profile, equipmentList) {
         ctx.drawImage(imageMap.character, charX, canvas.height - charHeight, charWidth, charHeight);
     }
 
-    // Draw equipment and associated icons
     if (Array.isArray(equipmentList)) {
         equipmentList.forEach(eq => {
             const slotKey = (eq.slotName || eq.slotId || '').replace(/[\s\/]/g, "");
@@ -608,7 +598,6 @@ async function renderCharacterCanvas(profile, equipmentList) {
                 ctx.drawImage(edgeImg, baseX * SCALE, baseY * SCALE, iconSize, iconSize);
             }
 
-            // Draw fusion icons
             if (eq.upgradeInfo) {
                 const { itemName, itemRarity: fusionRarity, setItemName } = eq.upgradeInfo;
                 const fusionIconSize = [27 * SCALE * 0.75, 12 * SCALE * 0.75];
@@ -630,7 +619,6 @@ async function renderCharacterCanvas(profile, equipmentList) {
                 }
             }
 
-            // Draw tune level
             const tuneLevel = eq.tune?.[0]?.level || 0;
             if (tuneLevel >= 1 && tuneLevel <= 3) {
                 const tuneSize = [8 * SCALE, 10 * SCALE];
@@ -644,7 +632,6 @@ async function renderCharacterCanvas(profile, equipmentList) {
         });
     }
 
-    // Draw reinforce text
     equipmentList.forEach(eq => {
         const slotKey = (eq.slotName || eq.slotId || '').replace(/[\s\/]/g, "");
         if (!SLOT_POSITION[slotKey] || slotKey === "Title") return;
@@ -671,7 +658,6 @@ async function renderCharacterCanvas(profile, equipmentList) {
         }
     });
 
-    // Draw character info text
     const font = new FontFace("GulimIndex", "url(font/gulim_index_2.ttf)");
     await font.load();
     document.fonts.add(font);
